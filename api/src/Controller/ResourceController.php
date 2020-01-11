@@ -15,9 +15,9 @@ use App\Service\CommonGroundService;
 /**
  * Class DashboardController
  * @package App\Controller
- * @Route("/dashboard")
+ * @Route("/resources")
  */
-class DashboardController extends AbstractController
+class ResourceController extends AbstractController
 {
 
     /**
