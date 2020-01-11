@@ -8,8 +8,8 @@ settings:
   name: db
   title: Commonground Dashboard
   version: V.0.1
-  description: '&#039;Dit is de huwelijksplanner app&#039;'
-  repro: 'https://github.com/ConductionNL/huwelijksplanner-ui'
+  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
+  repro: 'https://github.com/ConductionNL/commonground-dashboard'
   domain: db.huwelijksplanner.online  
   organisationName: Conduction
   email: info@conduction.nl
