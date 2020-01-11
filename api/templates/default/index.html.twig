@@ -1,5 +1,56 @@
-{% extends "base.html.twig" %}
+{% extends "body.html.twig" %}
 
-{% block body %}
-	Test
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/dashboard_h1.html.twig' %}
+
+            <div class="page-inner mt--5">
+                <div class="row mt--2">
+
+                {% include 'widgets/overall_statistics.html.twig' %}
+
+                {% include 'widgets/total_statistics.html.twig' %}
+
+
+            </div>
+            <div class="row">
+
+                {% include 'widgets/user_statistics.html.twig' %}
+
+                {% include 'widgets/daily_sales.html.twig' %}
+
+            </div>
+
+            <div class="row">
+
+                {% include 'widgets/users_geolocation.html.twig' %}
+
+            </div>
+
+            <div class="row">
+
+                {% include 'widgets/top_products.html.twig' %}
+
+                {% include 'widgets/suggested_people.html.twig' %}
+
+                {% include 'widgets/active_users.html.twig' %}
+
+            </div>
+            <div class="row">
+
+                {% include 'widgets/feed_activity.html.twig' %}
+
+                {% include 'widgets/support_tickets.html.twig' %}
+
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html.twig' %}
+
+    </div>
+
 {% endblock %}

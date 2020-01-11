@@ -81,13 +81,22 @@ class CommonGroundService
 	/*
 	 * Get a list of available commonground components
 	 */
-	public function getComponentList($url, $query = [], $force = false)
+	public function getComponentList()
 	{
 		$components = [
-				'vtc' => ['url'=>'vtc','authorization'=>''],
-				'vrc' => ['url'=>'vrc','authorization'=>''],
-				'pdc' => ['url'=>'pdc','authorization'=>''],
-				'wrc' => ['url'=>'wrc','authorization'=>'']
+				'cc' => ['href'=>'http://cc.zaakonline.nl','authorization'=>''],
+				'lc' => ['href'=>'http://lc.zaakonline.nl','authorization'=>''],
+				'ltc' => ['href'=>'http://ltc.zaakonline.nl','authorization'=>''],
+				'brp' => ['href'=>'http://brp.zaakonline.nl','authorization'=>''],
+				'irc' => ['href'=>'http://irc.zaakonline.nl','authorization'=>''],
+				'ptc' => ['href'=>'http://ptc.zaakonline.nl','authorization'=>''],
+				'mrc' => ['href'=>'http://mrc.zaakonline.nl','authorization'=>''],
+				'arc' => ['href'=>'http://arc.zaakonline.nl','authorization'=>''],
+				'vtc' => ['href'=>'http://vtc.zaakonline.nl','authorization'=>''],
+				'vrc' => ['href'=>'http://vrc.zaakonline.nl','authorization'=>''],
+				'pdc' => ['href'=>'http://pdc.zaakonline.nl','authorization'=>''],
+				'wrc' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
+				'orc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>'']
 		];		
 				
 		return $components;
@@ -96,44 +105,43 @@ class CommonGroundService
 	/*
 	 * Get the health of a commonground componant
 	 */
-	public function getComponentHealth($url, $query = [], $force = false)
+	public function getComponentHealth(string $component, $force = false)
 	{
 		$componentList = $this->getComponentList();
 		
+		$item = $this->cash->getItem('componentHealth_'.md5 ($component));
+		if ($item->isHit() && !$force) {
+			return $item->get();
+		}	
+		
 		//@todo trhow symfony error
-		if(!in_array($component, $componentList)){
-			
+		if(!array_key_exists($component, $componentList)){
+			return false;
 		}
 		else{
-			// Lets swap the component for a
-			$component = $componentList[$component];
+			// Lets swap the component for a 
+			
 			// Then we like to know al the component endpoints
 			$component = $this->getComponentResources($component);
 		}
 		
-		$response =  $this->client->request('GET',$component['url'],  ['Headers' =>['Authorization' => $component['authorization'],'Accept' => $component['application/health+json']]]);
-		if($response->getStatusCode() == 200){
-			$component['health'] = json_decode($response->getBody(), true);
-			
-			// If we can get a health responce on the main endpoint (and it thus is healthy enough to provide a healthcheck) we are going to check the indivual endpoints
-			$endpoints = [];
-			foreach ($component['endpoints'] as $key->$endpoint){
+		// Lets loop trough the endoints and get health (the self endpoint is included)
+		foreach ($component['endpoints'] as $key=>$endpoint){
 				
-				$endpoints[$endpoint]  = [];
-				$response =  $this->client->request('GET',$component['url'],  ['Headers' =>['Authorization' => $component['authorization'],'Accept' => $component['application/health+json']]]);
-				if($response->getStatusCode() == 200){
-					$endpoints[$endpoint] = json_decode($response->getBody(), true);
-				}
-				else{
-					$endpoints[$endpoint] = false;					
-				}
+			//var_dump($component['endpoints']);
+			//var_dump($endpoint);
+				
+			$response =  $this->client->request('GET', $component['href'].$endpoint["href"],  ['Headers' =>['Authorization' => $component['authorization'],'Accept' => 'application/health+json']]);
+			if($response->getStatusCode() == 200){
+				//$component['endpoints'][$key]['health'] = json_decode($response->getBody(), true);
+				$component['endpoints'][$key]['health'] = false;
 			}
+		}
+		
+		$item->set($component);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
 			
-			$component['endpoints'] = $endpoints;
-		}
-		else{
-			$component['health'] = false;			
-		}
 		
 		return $component;
 	}
@@ -141,27 +149,41 @@ class CommonGroundService
 	/*
 	 * Get a list of available resources on a commonground componant
 	 */
-	public function getComponentResources(string $component)
+	public function getComponentResources(string $component, $force = false)
 	{
-		$componentList = $this->getComponentList();
+		$componentList = $this->getComponentList();	
+		
+		$item = $this->cash->getItem('componentResources_'.md5 ($component));
+		if ($item->isHit() && !$force) {
+			return $item->get();
+		}	
 		
 		//@todo trhow symfony error
-		if(!in_array($component, $componentList)){
-			
+		if(!array_key_exists($component, $componentList)){
+			return false;			
 		}
 		else{
 			// Lets swap the component for a version that has an endpoint and authorization
 			$component = $componentList[$component];
 		}
 				
-		$response =  $this->client->request('GET',$component['url'],  ['Headers' =>['Authorization' => $component['authorization'],'Accept' => $component['application/ld+json']]]);
+		$response = $this->client->request('GET',$component['href'],  ['Headers' =>['Authorization' => $component['authorization'],'Accept' => 'application/ld+json']]);		
+		
 		$component['status'] = $response->getStatusCode();
 		if($response->getStatusCode() == 200){
 			$component['endpoints'] = json_decode($response->getBody(), true);
+			// Lets pull any json-ld values
+			if(array_key_exists("_links",$component['endpoints'])){
+				$component['endpoints'] = $component['endpoints']["_links"];
+			}
 		}
 		else{
 			$component['endpoints'] = [];
 		}
+		
+		$item->set($component);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
 		
 		
 		return $component;
