@@ -48,6 +48,27 @@ class CommonGroundService
 	 */
 	public function getResourceList($url, $query = [], $force = false)
 	{
+		if(!$url){
+			return false;
+		}
+		
+		$item = $this->cash->getItem('commonground_'.md5 ($url));
+		if ($item->isHit() && !$force) {
+			return $item->get();
+		}
+		
+		$response = $this->client->request('GET',$url, [
+				'query' => $query
+		]
+				);
+		
+		$response = json_decode($response->getBody(), true);
+		
+		$item->set($response);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
+		
+		return $response;
 	}
 	
 	/*
