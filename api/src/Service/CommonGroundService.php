@@ -28,10 +28,10 @@ class CommonGroundService
 				//'base_uri' => 'https://wrc.zaakonline.nl/applications/536bfb73-63a5-4719-b535-d835607b88b2/',
 				// You can set any number of default request options.
 				'timeout'  => 4000.0,
-				'Accept'  => 'application/hal+json',
-				'Content-Type'  => 'application/json',
 				// To work with NLX we need a couple of default headers
 				'headers' => [
+						'Accept'  => 'application/hal+json',
+						'Content-Type'  => 'application/vnd.api+json',
 						//'X-NLX-Request-User-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn'				// the id of the user performing the request
 						//'X-NLX-Request-Application-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// the id of the application performing the request
 						//'X-NLX-Request-Subject-Identifier' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 	// an subject identifier for purpose registration (doelbinding)
@@ -56,7 +56,7 @@ class CommonGroundService
 		
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
 		if ($item->isHit() && !$force) {
-			return $item->get();
+			//return $item->get();
 		}
 		
 		$response = $this->client->request('GET',$url, [
@@ -70,6 +70,7 @@ class CommonGroundService
 		$item->expiresAt(new \DateTime('tomorrow'));
 		$this->cash->save($item);
 		
+		
 		return $response;
 	}
 	
@@ -79,12 +80,12 @@ class CommonGroundService
 	public function getResource($url, $query = [], $force = false)
 	{
 		if(!$url){
-			return false;
+			//return false;
 		}		
 		
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
 		if ($item->isHit() && !$force) {
-			return $item->get();
+			//return $item->get();
 		}	
 		
 		$response = $this->client->request('GET',$url, [
@@ -170,7 +171,7 @@ class CommonGroundService
 		
 		$item = $this->cash->getItem('componentHealth_'.md5 ($component));
 		if ($item->isHit() && !$force) {
-			return $item->get();
+			//return $item->get();
 		}	
 		
 		//@todo trhow symfony error
@@ -214,7 +215,7 @@ class CommonGroundService
 		
 		$item = $this->cash->getItem('componentResources_'.md5 ($component));
 		if ($item->isHit() && !$force) {
-			return $item->get();
+			//return $item->get();
 		}	
 		
 		//@todo trhow symfony error
