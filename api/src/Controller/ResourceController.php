@@ -50,6 +50,22 @@ class ResourceController extends AbstractController
 	{
 		$template = $commonGroundService->getResource('https://wrc.zaakonline.nl/templates/'.$id);
 		
+		if($request->getMethod() == "POST"){
+			$template["content"] = $request->request->get('content');
+			
+			// Try to save
+			if($template = $commonGroundService->updateResource($template, 'https://wrc.zaakonline.nl/templates/'.$id)){
+				//seces
+				var_dump('succes');
+				die;
+			}
+			else{
+				// error
+				var_dump('error');
+				die;
+			}
+		}
+		
 		return ["template"=>$template];
 	}
 }
