@@ -1,0 +1,47 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/dashboard_h1.html.twig' %}
+
+            <div class="page-inner mt--5">
+				<!-- Row Card No Padding -->
+				<div class="row">
+					{% for name, component in components %}
+						<div class="col-sm-6 col-md-3">
+							<div class="card card-stats card-round">
+								<div class="card-body">
+									<div class="row align-items-center">
+										<div class="col-icon">
+											<div class="icon-big text-center {% if component.status == 200 %}icon-success{% else %}icon-danger{% endif %} bubble-shadow-small">
+												<i class="{% if component.status == 200 %}flaticon-success{% else %} flaticon-error{% endif %}"></i>
+											</div>
+										</div>
+										<div class="col col-stats ml-3 ml-sm-0">
+											<div class="numbers">
+												<p class="card-category">{{ name }}</p>
+												<h4 class="card-title">{{ component.status }}</h4>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+            	</div>
+                <div class="row mt--2">
+
+                    {% include 'widgets/components_table.html.twig' %}
+
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}

@@ -9,16 +9,13 @@
             </tr>
             </thead>
             <tbody>
+			{% for name, component in components %}
             <tr>
                 <td>Order Registratie</td>
                 <td style="color: lime">Online</td>
                 <td><a href="https://github.com/ConductionNL/orderregistratiecomponent" target="_blank">Github</a></td>
             </tr>
-            <tr>
-                <td>Locatie Catalogus</td>
-                <td style="color: red">Offline</td>
-                <td><a href="https://github.com/ConductionNL/locatiecatalogus" target="_blank">Github</a></td>
-            </tr>
+			{% endfor %}
             </tbody>
         </table>
     </div>

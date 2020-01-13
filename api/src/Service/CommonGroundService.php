@@ -28,6 +28,8 @@ class CommonGroundService
 				//'base_uri' => 'https://wrc.zaakonline.nl/applications/536bfb73-63a5-4719-b535-d835607b88b2/',
 				// You can set any number of default request options.
 				'timeout'  => 4000.0,
+				'Accept'  => 'application/hal+json',
+				'Content-Type'  => 'application/json',
 				// To work with NLX we need a couple of default headers
 				'headers' => [
 						//'X-NLX-Request-User-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn'				// the id of the user performing the request
@@ -48,6 +50,27 @@ class CommonGroundService
 	 */
 	public function getResourceList($url, $query = [], $force = false)
 	{
+		if(!$url){
+			return false;
+		}
+		
+		$item = $this->cash->getItem('commonground_'.md5 ($url));
+		if ($item->isHit() && !$force) {
+			return $item->get();
+		}
+		
+		$response = $this->client->request('GET',$url, [
+				'query' => $query
+		]
+				);
+		
+		$response = json_decode($response->getBody(), true);
+		
+		$item->set($response);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
+		
+		return $response;
 	}
 	
 	/*
@@ -77,6 +100,42 @@ class CommonGroundService
 		
 		return $response;
 	}	
+	
+	/*
+	 * Get a single resource from a common ground componant
+	 */
+	public function updateResource($resource, $url = null)
+	{
+		if(!$url){
+			return false;
+		}
+		
+		unset($resource['id']);
+		unset($resource['_links']);
+		unset($resource['_embedded']);
+		
+		$response = $this->client->request('PATCH',$url, [
+				'body' => json_encode($resource)
+			]
+		);
+		
+		$response = json_decode($response->getBody(), true);
+		
+		$item = $this->cash->getItem('commonground_'.md5 ($url));
+		$item->set($response);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
+		
+		return $response;
+	}	
+	
+	/*
+	 * Get a single resource from a common ground componant
+	 */
+	public function clearCash($url)
+	{
+		
+	}
 		
 	/*
 	 * Get a list of available commonground components

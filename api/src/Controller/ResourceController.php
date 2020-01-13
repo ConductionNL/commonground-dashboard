@@ -27,12 +27,45 @@ class ResourceController extends AbstractController
 	public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
     	$components = $commonGroundService->getComponentList();
-    	
-    	foreach($components as $key=>$component){
-    		//$components[$key] = $commonGroundService->getComponentHealth($key);
-    		$components[$key] = $commonGroundService->getComponentResources($key);
-    	}
 
     	return ["components"=>$components];
-    }
+	}
+	
+	/**
+	 * @Route("/templates")
+	 * @Template
+	 */
+	public function templatesAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+	{		
+		$templates = $commonGroundService->getResourceList('https://wrc.zaakonline.nl/templates');
+		
+		return ["templates"=>$templates];
+	}
+	
+	/**
+	 * @Route("/templates/{id}")
+	 * @Template
+	 */
+	public function templateAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService, $id)
+	{
+		$template = $commonGroundService->getResource('https://wrc.zaakonline.nl/templates/'.$id);
+		
+		if($request->getMethod() == "POST"){
+			$template["content"] = $request->request->get('content');
+			
+			// Try to save
+			if($template = $commonGroundService->updateResource($template, 'https://wrc.zaakonline.nl/templates/'.$id)){
+				//seces
+				var_dump('succes');
+				die;
+			}
+			else{
+				// error
+				var_dump('error');
+				die;
+			}
+		}
+		
+		return ["template"=>$template];
+	}
 }
