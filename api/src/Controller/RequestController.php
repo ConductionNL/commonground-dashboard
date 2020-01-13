@@ -15,9 +15,9 @@ use App\Service\CommonGroundService;
 /**
  * Class DashboardController
  * @package App\Controller
- * @Route("/dashboard")
+ * @Route("/requests")
  */
-class DashboardController extends AbstractController
+class RequestController extends AbstractController
 {
 
     /**
@@ -26,13 +26,19 @@ class DashboardController extends AbstractController
      */
 	public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-    	$components = $commonGroundService->getComponentList();
-    	
-    	foreach($components as $key=>$component){
-    		//$components[$key] = $commonGroundService->getComponentHealth($key);
-    		$components[$key] = $commonGroundService->getComponentResources($key);
-    	}
+    	$requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
 
-    	return ["components"=>$components];
-    }
+    	return ["requests"=>$requests];
+	}
+	
+	/**
+	 * @Route("/edit/{id}")
+	 * @Template
+	 */
+	public function editAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService, $id)
+	{
+		$request= $commonGroundService->getResource('//https://vrc.zaakonline.nl/requests/'.$id);
+		
+		return ["request"=>$request];
+	}
 }

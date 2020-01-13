@@ -1,0 +1,55 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/dashboard_h1.html.twig' %}
+
+            <div class="page-inner mt--5">
+                <div class="row">                
+					<div class="col-md-12">
+						<div class="card">							
+		                	<form method="post" action="{{ path('app_resource_template',{'id':template.id}) }}" class="affa-form-contact" >
+    							<div class="card-header">
+    								<div class="card-title">{{ template.id }}</div>
+    							</div><!-- /.card-header -->
+    							<div class="card-body">
+    									<div class="row">
+    										<div class="col-md-12">
+    											<div class="form-group">
+    												<label for="name">Name</label>
+    												<input type="name" class="form-control" id="name" name="name" placeholder="Enter name">
+    												<small id="name" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    											</div>
+    											<div class="form-group">
+    												<label for="comment">Description</label>
+    												<textarea class="form-control" id="description" name="description" rows="5">
+    												</textarea>
+    											</div>
+    											<div class="form-group">
+    												<label for="comment">Content</label>
+    												<textarea class="form-control" id="content" name="content" rows="50">
+    													{{ template.content }}
+    												</textarea>
+    											</div>
+    										</div><!-- /.col -->		
+    									</div><!-- /.row -->							
+    							</div><!-- /.card-body -->
+    							<div class="card-action">
+    								<button type="submit" class="btn btn-success">Submit</button>
+    								<a href="{{ path('app_resource_templates') }}" class="btn btn-danger">Cancel</a>
+    							</div><!-- /.card-action -->
+							</form>
+						</div><!-- /.card -->
+                	</div><!-- /.col -->
+            	</div><!-- /.row -->
+            </div><!-- /.page-inner -->
+        </div><!-- /.container -->
+
+    {% include 'footer.html.twig' %}
+
+    </div><!-- /.main-panel- -->
+
+{% endblock %}
