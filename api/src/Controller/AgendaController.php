@@ -28,14 +28,48 @@ class AgendaController extends AbstractController
     }
 
     /**
-     * @Route("/objecten")
+     * @Route("/alarms")
      * @Template
      */
-    public function objectenAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    public function alarmsAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
     {
-        $alarms = $commonGroundService->getResourceList('https://arc.zaakonline.nl/alarm');
+        $alarms = $commonGroundService->getResourceList('https://ac.zaakonline.nl/alarms');
 
-        return ["requests"=>$alarms];
+        var_dump($alarms);
+        return ["alarms"=>$alarms];
+    }
+
+    /**
+     * @Route("/calendars")
+     * @Template
+     */
+    public function calendarsAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    {
+        $calendars = $commonGroundService->getResourceList('https://ac.zaakonline.nl/calendars');
+
+        return ["calendars"=>$calendars];
+    }
+
+    /**
+     * @Route("/events")
+     * @Template
+     */
+    public function eventsAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    {
+        $events = $commonGroundService->getResourceList('https://ac.zaakonline.nl/events');
+
+        return ["events"=>$events];
+    }
+
+    /**
+     * @Route("/freebusies")
+     * @Template
+     */
+    public function freebusiesAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    {
+        $freebusies = $commonGroundService->getResourceList('https://ac.zaakonline.nl/freebusies');
+
+        return ["freebusies"=>$freebusies];
     }
 
     /**
