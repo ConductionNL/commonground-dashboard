@@ -1,0 +1,30 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Source Organization</th>
+                <th scope="col">Groups</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, catalogue in catalogues._embedded.item %}
+                <tr>
+                    <td>{{ catalogue.id }}</td>
+                    <td>{{ catalogue.name }}</td>
+                    <td>{{ catalogue.description }}</td>
+                    <td>{{ catalogue.logo }}</td>
+                    <td>{{ catalogue.sourceOrganization }}</td>
+                    <td>{{ catalogue.groups }}</td>
+                    <td><a href="{{ path('app_product_edit',{'id':catalogue.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

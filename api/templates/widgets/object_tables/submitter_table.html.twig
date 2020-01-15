@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Assent</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Person</th>
+                <th scope="col">Organization</th>
+                <th scope="col">Role</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, submitter in submitters._embedded.item %}
+            <tr>
+                <td>{{ submitter.assent }}</td>
+                <td>{{ submitter.contact }}</td>
+                <td>{{ submitter.person }}</td>
+                <td>{{ submitter.organization }}</td>
+                <td>{{ submitter.role }}</td>
+                <td><a href="{{ path('app_verzoekreg_edit',{'id':submitter.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -17,7 +17,7 @@
                 <td>{{ request.status }}</td>
                 <td>{{ request.target_organization }}</td>
                 <td>{{ request.submitter }}</td>
-                <td><a href="{{ path('app_request_edit',{'id':request.id}) }}">Edit</a></td>
+                <td><a href="{{ path('app_verzoekreg_edit',{'id':request.id}) }}">Edit</a></td>
             </tr>
 			{% endfor %}
             </tbody>

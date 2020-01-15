@@ -12,7 +12,7 @@
 			{% for index, template in templates._embedded.item %}
             <tr>
                 <td>{% if template.name is defined %}{{ template.name }}{% else %}{{ template.id }}{% endif %}</td>
-                <td>{{ template.templateEngine }}</td> 
+                <td>{{ template.templateEngine }}</td>
                 <td><a href="{{ path('app_resource_template',{'id':template.id}) }}">Edit</a></td>
             </tr>
 			{% endfor %}
