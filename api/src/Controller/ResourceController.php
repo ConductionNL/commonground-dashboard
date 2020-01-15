@@ -15,7 +15,7 @@ use App\Service\CommonGroundService;
 /**
  * Class DashboardController
  * @package App\Controller
- * @Route("/resources")
+ * @Route("/web-resource-catalogus")
  */
 class ResourceController extends AbstractController
 {
@@ -30,18 +30,18 @@ class ResourceController extends AbstractController
 
     	return ["components"=>$components];
 	}
-	
+
 	/**
 	 * @Route("/templates")
 	 * @Template
 	 */
 	public function templatesAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
-	{		
+	{
 		$templates = $commonGroundService->getResourceList('https://wrc.zaakonline.nl/templates');
-		
+
 		return ["templates"=>$templates];
 	}
-	
+
 	/**
 	 * @Route("/templates/{id}")
 	 * @Template
@@ -49,10 +49,10 @@ class ResourceController extends AbstractController
 	public function templateAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService, $id)
 	{
 		$template = $commonGroundService->getResource('https://wrc.zaakonline.nl/templates/'.$id);
-		
+
 		if($request->getMethod() == "POST"){
 			$template["content"] = $request->request->get('content');
-			
+
 			// Try to save
 			if($template = $commonGroundService->updateResource($template, 'https://wrc.zaakonline.nl/templates/'.$id)){
 				//seces
@@ -65,7 +65,15 @@ class ResourceController extends AbstractController
 				die;
 			}
 		}
-		
+
 		return ["template"=>$template];
 	}
+
+	/**
+     * @Route("/config")
+     */
+	public function configAction(Request $request, EntityManagerInterface $em)
+    {
+        return [];
+    }
 }
