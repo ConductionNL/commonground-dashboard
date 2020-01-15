@@ -169,20 +169,36 @@ class CommonGroundService
 	public function getComponentList()
 	{
 		$components = [
+				// Conduction componenten
 				'cc' => ['href'=>'http://cc.zaakonline.nl','authorization'=>''],
 				'lc' => ['href'=>'http://lc.zaakonline.nl','authorization'=>''],
 				'ltc' => ['href'=>'http://ltc.zaakonline.nl','authorization'=>''],
-				'brp' => ['href'=>'http://brp.zaakonline.nl','authorization'=>''],
-				'irc' => ['href'=>'http://irc.zaakonline.nl','authorization'=>''],
 				'ptc' => ['href'=>'http://ptc.zaakonline.nl','authorization'=>''],
 				'mrc' => ['href'=>'http://mrc.zaakonline.nl','authorization'=>''],
-				'ac' => ['href'=>'http://ac.zaakonline.nl','authorization'=>''],
 				'vtc' => ['href'=>'http://vtc.zaakonline.nl','authorization'=>''],
+				'wrc' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
+				'ac' => ['href'=>'http://ac.zaakonline.nl','authorization'=>''],
+				'bs' => ['href'=>'http://bs.zaakonline.nl','authorization'=>''],
+				'bc' => ['href'=>'http://bc.zaakonline.nl','authorization'=>''],				
+				'brp' => ['href'=>'http://brp.zaakonline.nl','authorization'=>''],
+				'irc' => ['href'=>'http://irc.zaakonline.nl','authorization'=>''],				
 				'vrc' => ['href'=>'http://vrc.zaakonline.nl','authorization'=>''],
 				'pdc' => ['href'=>'http://pdc.zaakonline.nl','authorization'=>''],
-				'wrc' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
-				'orc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>''],
-				'bc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>'']
+				'prc' => ['href'=>'http://pdc.zaakonline.nl','authorization'=>''],
+				'uc' => ['href'=>'http://uc.zaakonline.nl','authorization'=>''],
+				'ds' => ['href'=>'http://ds.zaakonline.nl','authorization'=>''],
+				'sso' => ['href'=>'http://sso.zaakonline.nl','authorization'=>''],				
+				'orc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>''],				
+				'stuf' => ['href'=>'http://stuf.zaakonline.nl','authorization'=>''],				
+				'crc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>''],
+				// ZGW componenten','authorization'=>''],
+				'zaken' => ['https://zaken-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'documenten' => ['https://documenten-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'catalogi' => ['https://catalogi-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'besluiten' => ['https://besluiten-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'notificaties' => ['https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'autorisaties' => ['https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'klantinteracties' => ['https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>''], //
 		];		
 				
 		return $components;
