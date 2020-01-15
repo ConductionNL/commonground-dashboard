@@ -47,8 +47,8 @@
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="/demo1/index.html">
-                                    <span class="sub-item">Health overview</span>
+                                <a href="{{ path('app_dashboard_index') }}">
+                                    <span class="sub-item">Dashboard</span>
                                 </a>
                             </li>
                             <li>
@@ -76,8 +76,23 @@
                     <div class="collapse" id="arc">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ path('app_agenda_objecten') }}">
-                                    <span class="sub-item">Objecten</span>
+                                <a href="{{ path('app_agenda_alarms') }}">
+                                    <span class="sub-item">Alarms</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_agenda_calendars') }}">
+                                    <span class="sub-item">Calendars</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_agenda_events') }}">
+                                    <span class="sub-item">Events</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_agenda_freebusies') }}">
+                                    <span class="sub-item">Freebusies</span>
                                 </a>
                             </li>
                             <li>
