@@ -6,19 +6,20 @@
         <div class="container">
 
             {% include 'widgets/dashboard_h1.html.twig' %}
-            
-            <div class="row">
-            
-                {% include 'widgets/support_tickets.html.twig' %}
 
-                {% include 'widgets/active_users.html.twig' %}
+            <div class="page-inner mt--5">
+                <div class="row mt--2">
+
+                    {% include 'widgets/support_tickets.html.twig' %}
+
+                    {% include 'widgets/active_users.html.twig' %}
 
 
+                </div>
             </div>
         </div>
-    </div>
 
-    {% include 'footer.html.twig' %}
+        {% include 'footer.html.twig' %}
 
     </div>
 

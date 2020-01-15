@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">URL</th>
+                <th scope="col">Description</th>
+                <th scope="col">Attendee</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, freebusy in freebusies %}
+            <tr>
+                <td>{{ freebusy.url }}</td>
+                <td>{{ freebusy.description }}</td>
+                <td>{{ freebusy.attendee }}</td>
+                <td>{{ freebusy.start_date }}</td>
+                <td>{{ freebusy.end_date }}</td>
+                <td><a href="{{ path('app_agenda_edit',{'id':freebusy.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
