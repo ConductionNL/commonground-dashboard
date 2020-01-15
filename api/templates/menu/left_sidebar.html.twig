@@ -59,75 +59,432 @@
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
                     <h4 class="text-section">Components</h4>
                 </li>
+
                 <li class="nav-item">
-                    <a data-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Verzoeken</p>
+                    <a data-toggle="collapse" href="#arc">
+                        <i class="flaticon-calendar"></i>
+                        <p>Agenda resource</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="base">
+                    <div class="collapse" id="arc">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ path('app_request_index') }}">
-                                    <span class="sub-item">Verzoeken</span>
+                                <a href="{{ path('app_agenda_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_agenda_config') }}">
+                                    <span class="sub-item">Config</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a data-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Verzoektypen</p>
+                    <a data-toggle="collapse" href="#bc">
+                        <i class="flaticon-message"></i>
+                        <p>Bericht service</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="base">
+                    <div class="collapse" id="bc">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="components/avatars.html">
-                                    <span class="sub-item">Verzoektypen</span>
+                                <a href="{{ path('app_bericht_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_bericht_config') }}">
+                                    <span class="sub-item">Config</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a data-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Resources</p>
+                    <a data-toggle="collapse" href="#bc">
+                        <i class="flaticon-credit-card"></i>
+                        <p>Betaal service</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="base">
+                    <div class="collapse" id="bc">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="components/avatars.html">
-                                    <span class="sub-item">Applicaties</span>
+                                <a href="{{ path('app_betaal_invoices') }}">
+                                    <span class="sub-item">Invoices</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="components/avatars.html">
-                                    <span class="sub-item">Pages</span>
+                                <a href="{{ path('app_betaal_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#brp">
+                        <i class="fas fa-layer-group"></i>
+                        <p>BRP service</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="brp">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_brp_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="components/avatars.html">
-                                    <span class="sub-item">Slugs</span>
+                                <a href="{{ path('app_brp_config') }}">
+                                    <span class="sub-item">Config</span>
                                 </a>
                             </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#cc">
+                        <i class="flaticon-user-1"></i>
+                        <p>Contact catalogus</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="cc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_contact_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_contact_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#irc">
+                        <i class="flaticon-hands"></i>
+                        <p>Instemming registratie</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="irc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_instemming_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_instemming_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#lc">
+                        <i class="flaticon-location"></i>
+                        <p>Locatie catalogus</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="lc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_locatie_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_locatie_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#ltc">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Landelijke tabellen </p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="ltc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_landelijk_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_landelijk_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#mrc">
+                        <i class="flaticon-user-6"></i>
+                        <p>Medewerker resource</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="mrc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_medewerker_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_medewerker_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#orc">
+                        <i class="flaticon-agenda-1"></i>
+                        <p>Order registratie</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="orc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_order_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_order_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#ptc">
+                        <i class="flaticon-diagram"></i>
+                        <p>Proces type</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="ptc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_proces_objecten') }}">
+                                    <span class="sub-item">Objecten</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_proces_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#pdc">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Producten en diensten</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="pdc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_product_catalogues') }}">
+                                    <span class="sub-item">Catalogues</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_customer') }}">
+                                    <span class="sub-item">Customer Types</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_groups') }}">
+                                    <span class="sub-item">Groups</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_offers') }}">
+                                    <span class="sub-item">Offers</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_products') }}">
+                                    <span class="sub-item">Products</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_suppliers') }}">
+                                    <span class="sub-item">Suppliers</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_taxes') }}">
+                                    <span class="sub-item">Taxes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_product_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#vtc">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Verzoek registratie</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="vtc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_verzoekreg_archives') }}">
+                                    <span class="sub-item">Archives</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoekreg_requests') }}">
+                                    <span class="sub-item">Requests</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoekreg_requestcases') }}">
+                                    <span class="sub-item">Request Cases</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoekreg_organizations') }}">
+                                    <span class="sub-item">Organizations</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoekreg_submitters') }}">
+                                    <span class="sub-item">Submitters</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoekreg_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#vrc">
+                        <i class="flaticon-agenda"></i>
+                        <p>Verzoek type</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="vrc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path('app_verzoektype_requesttypes') }}">
+                                    <span class="sub-item">Request types</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoektype_properties') }}">
+                                    <span class="sub-item">Properties</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_verzoektype_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#wrc">
+                        <i class="flaticon-internet"></i>
+                        <p>Web resource</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="wrc">
+                        <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ path('app_resource_templates') }}">
                                     <span class="sub-item">Templates</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ path('app_resource_config') }}">
+                                    <span class="sub-item">Config</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
+{#                <li class="nav-item">#}
+{#                    <a data-toggle="collapse" href="#base">#}
+{#                        <i class="fas fa-layer-group"></i>#}
+{#                        <p>Verzoektypen</p>#}
+{#                        <span class="caret"></span>#}
+{#                    </a>#}
+{#                    <div class="collapse" id="base">#}
+{#                        <ul class="nav nav-collapse">#}
+{#                            <li>#}
+{#                                <a href="components/avatars.html">#}
+{#                                    <span class="sub-item">Verzoektypen</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </li>#}
+
+{#                <li class="nav-item">#}
+{#                    <a data-toggle="collapse" href="#base">#}
+{#                        <i class="fas fa-layer-group"></i>#}
+{#                        <p>Contact catalogus</p>#}
+{#                        <span class="caret"></span>#}
+{#                    </a>#}
+{#                    <div class="collapse" id="base">#}
+{#                        <ul class="nav nav-collapse">#}
+{#                            <li>#}
+{#                                <a href="{{ path('') }}">#}
+{#                                    <span class="sub-item">Objects</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </li>#}
+
             </ul>
         </div>
     </div>
