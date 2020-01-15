@@ -120,7 +120,8 @@ class CommonGroundService
 		);
 
 		$response = json_decode($response->getBody(), true);
-
+		
+		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
 		$item->set($response);
 		$item->expiresAt(new \DateTime('tomorrow'));
@@ -128,7 +129,32 @@ class CommonGroundService
 
 		return $response;
 	}
-
+	
+	/*
+	 * Get a single resource from a common ground componant
+	 */
+	public function createResource($resource, $url = null)
+	{
+		if(!$url){
+			return false;
+		}
+		
+		$response = $this->client->request('post',$url, [
+				'body' => json_encode($resource)
+			]
+		);
+		
+		$response = json_decode($response->getBody(), true);
+		
+		// Lets cash this item for speed purposes
+		$item = $this->cash->getItem('commonground_'.md5 ($url.'/'.$response['id']));
+		$item->set($response);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
+		
+		return $response;
+	}	
+	
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -155,9 +181,10 @@ class CommonGroundService
 				'vrc' => ['href'=>'http://vrc.zaakonline.nl','authorization'=>''],
 				'pdc' => ['href'=>'http://pdc.zaakonline.nl','authorization'=>''],
 				'wrc' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
-				'orc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>'']
-		];
-
+				'orc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>''],
+				'bc' => ['href'=>'http://orc.zaakonline.nl','authorization'=>'']
+		];		
+				
 		return $components;
 	}
 
