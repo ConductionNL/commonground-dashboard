@@ -1,0 +1,26 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Source Organization</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, requestType in requestTypes %}
+            <tr>
+                <td>{{ requestType.id }}</td>
+                <td>{{ requestType.source_organzation }}</td>
+                <td>{{ requestType.name }}</td>
+                <td>{{ requestType.description }}</td>
+                <td><a href="{{ path('app_verzoektype_edit',{'id':requestType.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Request case</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Case number</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, requestCase in requestCases %}
+            <tr>
+                <td>{{ requestCase.id }}</td>
+                <td>{{ requestCase.request_case }}</td>
+                <td>{{ requestCase.case_number }}</td>
+                <td><a href="{{ path('app_verzoekreg_edit',{'id':requestCase.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -8,14 +8,16 @@
             {% include 'widgets/dashboard_h1.html.twig' %}
 
             <div class="page-inner mt--5">
-                <div class="row">
-                {% include 'widgets/object_tables/template_table.html.twig' %}
+                <div class="row mt--2">
 
+                    {% include 'widgets/object_tables/property_table.html.twig' %}
+
+                </div>
             </div>
-        </div>
-    </div>
 
-    {% include 'footer.html.twig' %}
+        </div>
+
+        {% include 'footer.html.twig' %}
 
     </div>
 

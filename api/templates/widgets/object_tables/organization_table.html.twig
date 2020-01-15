@@ -1,0 +1,24 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">RSIN</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, organization in organizations._embedded.item %}
+            <tr>
+                <td>{{ organization.id }}</td>
+                <td>{{ organization.rsin }}</td>
+                <td>{{ organization.status }}</td>
+                <td><a href="{{ path('app_verzoekreg_edit',{'id':organization.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
