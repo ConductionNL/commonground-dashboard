@@ -37,7 +37,7 @@
             <a href="{{ path('app_component_resource',{'component':'requests','resource':request._links.self.href}) }}">
                 <div class="d-flex">
                     <div class="avatar avatar-online">
-                     	<span class="avatar-title rounded-circle border border-white bg-info">J</span>
+                     	<span class="avatar-title rounded-circle border border-white bg-info">V</span>
                     </div>
                     <div class="flex-1 ml-3 pt-1">
                         <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %} <span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted{% endif %} pl-3">{{ request.status }}</span></h6>
