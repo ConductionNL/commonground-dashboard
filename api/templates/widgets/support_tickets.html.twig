@@ -33,8 +33,8 @@
             </div>
         </div>
         <div class="card-body">
-			{% for index, request in requests._embedded.item %}
-            <a href="{{ path('app_component_resource',{'component':'requests','resource':request._links.self.href}) }}">
+			{% for index, request in requests['hydra:member'] %}
+            <a href="{{ path('app_component_resource',{'component':'requests','resource':request['@id']}) }}">
                 <div class="d-flex">
                     <div class="avatar avatar-online">
                      	<span class="avatar-title rounded-circle border border-white bg-info">V</span>
@@ -42,12 +42,14 @@
                     <div class="flex-1 ml-3 pt-1">
                         <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %} <span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted{% endif %} pl-3">{{ request.status }}</span></h6>
                         <span class="text-muted">
-                        {% if request.submitters is defined %}
+                        {% if request.submitters is defined and request.submitters is not empty %}
                             {% for index, submitter in request.submitters %}
-                            {%  set persoon =  commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ submitter)._embedded %}
-                            {% if persoon.naam is defined %}{{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}
-                            {{ submitter }}               
-                            {%  endif %}
+                            {%  set persoon =  commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ submitter.person)._embedded %}
+                                {% if persoon.naam is defined %}
+                                    {{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}
+                                {% else %}
+                                    {{ submitter }}               
+                                {%  endif %}
                             {% endfor %}
                         {% endif %}
                         

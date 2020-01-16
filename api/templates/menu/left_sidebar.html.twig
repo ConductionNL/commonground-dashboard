@@ -67,6 +67,33 @@
                     <h4 class="text-section">Components</h4>
                 </li>
 
+				{% for index, component in components %}			
+                {% if component.resources is defined and component.resources is not empty %}	
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#{{ index }}">
+                        <i class="{{ component.icon }}"></i>
+                        <p>{{ component.context['hydra:title'] }}</p>
+                        <span class="caret"></span>
+                    </a>
+                    {% if component.resources is defined %}
+                    <div class="collapse" id="{{ index }}">
+                        <ul class="nav nav-collapse">
+				            {% for name,href in component.resources %}	
+				            {% if name not in ['@context','@id','@type'] %}
+                            <li>
+                                <a href="{{ path('app_component_resourcelist',{'component':index,'resourcetype':href}) }}">
+                                    <span class="sub-item">{{ name }}</span>
+                                </a>
+                            </li>
+                   	        {% endif %}
+							{% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </li>         
+                    {% endif %}       
+                {% endfor %}
+               {#
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#arc">
                         <i class="flaticon-calendar"></i>
@@ -104,27 +131,6 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#bc">
-                        <i class="flaticon-message"></i>
-                        <p>Bericht service</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="bc">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path('app_bericht_objecten') }}">
-                                    <span class="sub-item">Objecten</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('app_bericht_config') }}">
-                                    <span class="sub-item">Config</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
 
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#bc">

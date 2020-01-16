@@ -17,6 +17,19 @@
     							</div><!-- /.card-header -->
     							<div class="card-body">
     									{{ jsondump }}
+    									{# for key,property in resource._embedded %}
+    										{% if property is not iterable %}
+    										    {{ key }} -> {{ property }}
+    										{% else %}
+    									    {% for subkey,subproperty in property %}
+    										{% if subproperty is not iterable %}
+    									    	{{ key }} -> {{ subkey }} -> {{ property }}
+    									    {% endif %}
+    									    {% endfor %}
+    											
+    										{% endif %}
+    									
+    									{% endfor #}
     							</div><!-- /.card-body -->
     							<div class="card-action">
     								
@@ -28,10 +41,10 @@
 					<div class="col-md-4">
 						<div class="card">							
     							<div class="card-header">
-    								<div class="card-title">Template usage</div>
+    								<div class="card-title">Connected Resources</div>
     							</div><!-- /.card-header -->
     							<div class="card-body">			
-    								<small class="form-text text-muted">This template is used in the following places</small>	
+    								<small class="form-text text-muted">This resource is connected to the following resources</small>	
     							
     							
             				   {% for name, links in resource._links %}
@@ -40,8 +53,15 @@
             				   		<p>
             				   	   		<b>{{ name|capitalize }}</b>
                 				        {% for href, link in links %}
+                				        
+    										{% if link is iterable %}
+                				        {% set resource = commonground_resource(component.href~link.href) %}
                 				   	    {# <a href="">{{ commonground_resource(page.href).name }}</a> #}
-                				   	 	<br> {{ link.href }}
+                				   	    {# if link matches '^\/' %}
+                				   	 	<br> {{ component.href }}{{ link.href }}
+                                        {% else #}
+                				   	 	<br><a href="{{ path('app_component_resource',{'component':'requests','resource':link.href}) }}">{% if resource.name is defined %}{{ resource.name }}{% else %}{{ resource.id }}{% endif %}</a>
+                                        {% endif %}
                 				       {% endfor %}
                 				   </p>
                 				   {% endif %}

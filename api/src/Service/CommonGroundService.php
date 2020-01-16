@@ -30,7 +30,7 @@ class CommonGroundService
 				'timeout'  => 4000.0,
 				// To work with NLX we need a couple of default headers
 				'headers' => [
-						'Accept'  => 'application/hal+json',
+						'Accept'  => 'application/ld+json',
 						'Content-Type'  => 'application/json',
 						//'X-NLX-Request-User-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn'				// the id of the user performing the request
 						//'X-NLX-Request-Application-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// the id of the application performing the request
@@ -138,7 +138,7 @@ class CommonGroundService
 			return false;
 		}
 		
-		$response = $this->client->request('post',$url, [
+		$response = $this->client->request('POST',$url, [
 				'body' => json_encode($resource)
 			]
 		);
@@ -168,40 +168,46 @@ class CommonGroundService
 	public function getComponentList()
 	{
 		$components = [
-				// Conduction componenten
-				'contacts' => ['href'=>'http://cc.zaakonline.nl','authorization'=>''],
-				'locations' => ['href'=>'http://lc.zaakonline.nl','authorization'=>''],
-				'linking table' => ['href'=>'http://ltc.zaakonline.nl','authorization'=>''],
-				'proces types' => ['href'=>'http://ptc.zaakonline.nl','authorization'=>''],
-				'employees' => ['href'=>'http://mrc.zaakonline.nl','authorization'=>''],
-				'request_types' => ['href'=>'http://vtc.zaakonline.nl','authorization'=>''],
-				'web_resources' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
-				'calendar' => ['href'=>'http://ac.zaakonline.nl','authorization'=>''],
-				'bs' => ['href'=>'http://bs.zaakonline.nl','authorization'=>''],
-				'bc' => ['href'=>'http://bc.zaakonline.nl','authorization'=>''],				
-				'brp' => ['href'=>'http://brp.zaakonline.nl','authorization'=>''],
-				'assents' => ['href'=>'http://irc.zaakonline.nl','authorization'=>''],				
-				'requests' => ['href'=>'http://vrc.zaakonline.nl','authorization'=>''],
-				'products' => ['href'=>'http://pdc.zaakonline.nl','authorization'=>''],
-				'processes' => ['href'=>'http://prc.zaakonline.nl','authorization'=>''],
-				'users' => ['href'=>'http://uc.zaakonline.nl','authorization'=>''],
-				'digispoof' => ['href'=>'http://ds.zaakonline.nl','authorization'=>''],
-				'single sign on' => ['href'=>'http://sso.zaakonline.nl','authorization'=>''],				
-				'orders' => ['href'=>'http://orc.zaakonline.nl','authorization'=>''],				
-				'stuf' => ['href'=>'http://stuf.zaakonline.nl','authorization'=>''],				
-				'contact moments' => ['href'=>'http://crc.zaakonline.nl','authorization'=>''],
-				// ZGW componenten','authorization'=>''],
-				'zaken' => ['href'=>'https://zaken-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'documenten' => ['href'=>'https://documenten-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'catalogi' => ['href'=>'https://catalogi-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'besluiten' => ['href'=>'https://besluiten-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'notificaties' => ['href'=>'https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'autorisaties' => ['href'=>'https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'klantinteracties' => ['href'=>'https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>''], 
-				// Mijnapp componenten
-				'mijnapp_backend' => ['href'=>'http://mijnapp_bo.zaakonline.nl','authorization'=>''],
-				'mijnapp_frontend' => ['href'=>'http://mijnapp.zaakonline.nl','authorization'=>''],
+				'contacts' => 		['href'=>'http://cc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-user-1','config'=>['hidden'=>['']]],
+				'locations' => 		['href'=>'http://lc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-location','config'=>['hidden'=>['']]],
+				'linking table' => 	['href'=>'http://ltc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'proces types' => 	['href'=>'http://ptc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-diagram','config'=>['hidden'=>['']]],
+				'employees' => 		['href'=>'http://mrc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-user-6','config'=>['hidden'=>['']]],
+				'request_types' => 	['href'=>'http://vtc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-agenda','config'=>['hidden'=>['']]],
+				'web_resources' => 	['href'=>'http://wrc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-internet','config'=>['hidden'=>['']]],
+				'calendar' => 		['href'=>'http://ac.zaakonline.nl','authorization'=>'','icon'=>'flaticon-calendar','config'=>['hidden'=>['']]],
+				'messages' =>		['href'=>'http://bs.zaakonline.nl','authorization'=>'','icon'=>'flaticon-message','config'=>['hidden'=>['']]],
+				'payment' =>		['href'=>'http://bc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-credit-card','config'=>['hidden'=>['']]],				
+				'brp' =>			['href'=>'http://brp.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'assents' => 		['href'=>'http://irc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-hands','config'=>['hidden'=>['']]],				
+				'requests' => 		['href'=>'http://vrc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-agenda','config'=>['hidden'=>['id','referenceId','targetOrganization','submitterPerson','submitter','properties','organizations','requestCases','openCase','parent','children','confidential','archive','currentStage']]],
+				'products' => 		['href'=>'http://pdc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'processes' => 		['href'=>'http://prc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'users' => 			['href'=>'http://uc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'digispoof' => 		['href'=>'http://ds.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'single sign on' => ['href'=>'http://sso.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],				
+				'orders' => 		['href'=>'http://orc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-agenda-1','config'=>['hidden'=>['']]],				
+				'stuf' => 			['href'=>'http://stuf.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],				
+				'contact moments' => ['href'=>'http://crc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				
+				'zaken' => 			['href'=>'https://zaken-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'documenten' => 	['href'=>'https://documenten-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'catalogi' => 		['href'=>'https://catalogi-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'besluiten' =>		['href'=>'https://besluiten-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'notificaties' => 	['href'=>'https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'autorisaties' => 	['href'=>'https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'klantinteracties' => ['href'=>'https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				
+				'mijnapp_backend' => ['href'=>'http://mijnapp_bo.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'mijnapp_frontend' => ['href'=>'http://mijnapp.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]]
 		];		
+		
+		// Lets set the context
+		foreach($components as $key => $component){
+			$components[$key]['context'] = $this->getComponentContext($component);
+			$components[$key]['resources'] = $this->getComponentResources($component);
+			
+		}
 				
 		return $components;
 	}
@@ -211,12 +217,12 @@ class CommonGroundService
 	 */
 	public function getComponent($id)
 	{
-		$componenten = $this->getComponentList();
-		if(in_array($id, $componenten)){
+		$components = $this->getComponentList();
+		if(in_array($id, $components)){
 			return false;
 		}
 		
-		return $componenten[$id];		
+		return $components[$id];		
 	}
 
 	/*
@@ -262,47 +268,85 @@ class CommonGroundService
 
 		return $component;
 	}
-
+	
 	/*
 	 * Get a list of available resources on a commonground componant
 	 */
-	public function getComponentResources(string $component, $force = false)
+	public function getResourceContext(array $component, string $resource, $force = false)
 	{
-		$componentList = $this->getComponentList();
-
-		$item = $this->cash->getItem('componentResources_'.md5 ($component));
+		//$component = $this->getComponent($component);
+		
+		$item = $this->cash->getItem('componentContext_'.md5 ($component['href']));
 		if ($item->isHit() && !$force) {
+			//var_dump($item->get());
 			//return $item->get();
 		}
+		
+		$resource= ltrim($resource, '/');
+		$resource= ucfirst($resource);
+		$resource= rtrim($resource, 's');
+		
+		$response = $this->client->request('GET',$component['href'].'/contexts/'.$resource);
+		$response = json_decode($response->getBody(), true);
+		
+		unset($response['@context']['@vocab']);
+		unset($response['@context']['hydra']);
+		
+		$item->set($response);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
+		
+		
+		return $response;
+	}
+	
+	/*
+	 * Get a list of available resources on a commonground componant
+	 */
+	public function getComponentContext(array $component, $force = false)
+	{
+		//$component = $this->getComponent($component);
 
-		//@todo trhow symfony error
-		if(!array_key_exists($component, $componentList)){
-			return false;
+		$item = $this->cash->getItem('componentContext_'.md5 ($component['href']));
+		if ($item->isHit() && !$force) {
+			//var_dump($item->get());
+			//return $item->get();
 		}
-		else{
-			// Lets swap the component for a version that has an endpoint and authorization
-			$component = $componentList[$component];
-		}
-
-		$response = $this->client->request('GET',$component['href'],  ['Headers' =>['Authorization' => $component['authorization'],'Accept' => 'application/ld+json']]);
-
-		$component['status'] = $response->getStatusCode();
-		if($response->getStatusCode() == 200){
-			$component['endpoints'] = json_decode($response->getBody(), true);
-			// Lets pull any json-ld values
-			if(array_key_exists("_links",$component['endpoints'])){
-				$component['endpoints'] = $component['endpoints']["_links"];
-			}
-		}
-		else{
-			$component['endpoints'] = [];
-		}
-
-		$item->set($component);
+		
+		$response = $this->client->request('GET',$component['href'].'/docs.jsonld');
+		$response = json_decode($response->getBody(), true);
+		
+		$item->set($response);
 		$item->expiresAt(new \DateTime('tomorrow'));
 		$this->cash->save($item);
 
 
-		return $component;
+		return $response; 
 	}
+	
+	/*
+	 * Get a list of available resources on a commonground componant
+	 */
+	public function getComponentResources(array $component, $force = false)
+	{
+		//$component = $this->getComponent($component);
+		
+		$item = $this->cash->getItem('componentContext_'.md5 ($component['href']));
+		if ($item->isHit() && !$force) {
+			//var_dump($item->get());
+			//return $item->get();
+		}
+		
+		$response = $this->client->request('GET',$component['href']);
+		$response = json_decode($response->getBody(), true);
+		
+		$item->set($response);
+		$item->expiresAt(new \DateTime('tomorrow'));
+		$this->cash->save($item);
+		
+		
+		return $response;
+	}
+	
+	
 }
