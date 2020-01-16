@@ -191,13 +191,13 @@ class CommonGroundService
 				'stuf' => ['href'=>'http://stuf.zaakonline.nl','authorization'=>''],				
 				'contact moments' => ['href'=>'http://crc.zaakonline.nl','authorization'=>''],
 				// ZGW componenten','authorization'=>''],
-				'zaken' => ['https://zaken-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'documenten' => ['https://documenten-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'catalogi' => ['https://catalogi-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'besluiten' => ['https://besluiten-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'notificaties' => ['https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'autorisaties' => ['https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'klantinteracties' => ['https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>''], //
+				'zaken' => ['href'=>'https://zaken-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'documenten' => ['href'=>'https://documenten-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'catalogi' => ['href'=>'https://catalogi-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'besluiten' => ['href'=>'https://besluiten-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'notificaties' => ['href'=>'https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'autorisaties' => ['href'=>'https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
+				'klantinteracties' => ['href'=>'https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>''], //
 		];		
 				
 		return $components;
