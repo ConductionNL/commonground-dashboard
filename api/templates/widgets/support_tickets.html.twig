@@ -41,7 +41,26 @@
                     </div>
                     <div class="flex-1 ml-3 pt-1">
                         <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %} <span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted{% endif %} pl-3">{{ request.status }}</span></h6>
-                        <span class="text-muted"> {{ request.submitter }}</span>
+                        <span class="text-muted">{% if request.submitters is defined%}{% for index, submitter in request.submitters %}{{submitter}}{% endfor %}{% endif %}{{ request.submitter }}</span>
+                        {% if 
+                                (
+                                    request.submitters is not defined or 
+                                    (
+                                        request.submitters is defined and  
+                                            (request.submitters|length == 0 or 
+                                            request.submitters is empty)
+                                        )
+                                ) 
+                            and 
+                                (
+                                    request.submitter is not defined or 
+                                        (
+                                        request.submitter is defined and 
+                                        request.submitter is empty
+                                        )
+                                ) %}
+                        <span class="text-danger">Geen indieners bekend</span>
+                        {% endif %}
                     </div>
                     <div class="float-right pt-1">
                         <small class="text-muted">{{ request.created_at }}</small> 
