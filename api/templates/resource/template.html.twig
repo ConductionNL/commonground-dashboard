@@ -73,13 +73,21 @@
     							</div><!-- /.card-header -->
     							<div class="card-body">			
     								<small class="form-text text-muted">This template is used in the following places</small>	
-    							</div><!-- /.card-body -->
     							
     							
-            				   {% for index, page in template._links.pages %}
-            				   	 {# <a href="">{{ commonground_resource(page.href).name }}</a> #}
-            				   	 {{ page.href }}
+            				   {% for name, links in template._links %}
+            				   		{% if name != "self" %}
+            				   		<br> 
+            				   		<p>
+            				   	   		<b>{{ name|capitalize }}</b>
+                				        {% for href, link in links %}
+                				   	    {# <a href="">{{ commonground_resource(page.href).name }}</a> #}
+                				   	 	<br> {{ link.href }}
+                				       {% endfor %}
+                				   </p>
+                				   {% endif %}
             				   {% endfor %}
+    							</div><!-- /.card-body -->
 						</div><!-- /.card -->
                 	</div><!-- /.col -->
             	</div><!-- /.row -->
