@@ -174,8 +174,8 @@ class CommonGroundService
 				'linking table' => ['href'=>'http://ltc.zaakonline.nl','authorization'=>''],
 				'proces types' => ['href'=>'http://ptc.zaakonline.nl','authorization'=>''],
 				'employees' => ['href'=>'http://mrc.zaakonline.nl','authorization'=>''],
-				'request types' => ['href'=>'http://vtc.zaakonline.nl','authorization'=>''],
-				'web resources' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
+				'request_types' => ['href'=>'http://vtc.zaakonline.nl','authorization'=>''],
+				'web_resources' => ['href'=>'http://wrc.zaakonline.nl','authorization'=>''],
 				'calendar' => ['href'=>'http://ac.zaakonline.nl','authorization'=>''],
 				'bs' => ['href'=>'http://bs.zaakonline.nl','authorization'=>''],
 				'bc' => ['href'=>'http://bc.zaakonline.nl','authorization'=>''],				
@@ -201,6 +201,19 @@ class CommonGroundService
 		];		
 				
 		return $components;
+	}
+	
+	/*
+	 * Get a list of available commonground components
+	 */
+	public function getComponent($id)
+	{
+		$componenten = $this->getComponentList();
+		if(in_array($id, $componenten)){
+			return false;
+		}
+		
+		return $componenten[$id];		
 	}
 
 	/*

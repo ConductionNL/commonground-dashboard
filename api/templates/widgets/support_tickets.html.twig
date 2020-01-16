@@ -34,7 +34,7 @@
         </div>
         <div class="card-body">
 			{% for index, request in requests._embedded.item %}
-            <a href="#">
+            <a href="{{ path('app_component_resource',{'component':'requests','resource':request._links.self.href}) }}">
                 <div class="d-flex">
                     <div class="avatar avatar-online">
                      	<span class="avatar-title rounded-circle border border-white bg-info">J</span>
