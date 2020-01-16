@@ -84,7 +84,7 @@ class CommonGroundService
 
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
 		if ($item->isHit() && !$force) {
-			//return $item->get();
+			return $item->get();
 		}
 
 		$response = $this->client->request('GET',$url, [
