@@ -197,7 +197,10 @@ class CommonGroundService
 				'besluiten' => ['href'=>'https://besluiten-api.vng.cloud/api/v1/schema/','authorization'=>''],
 				'notificaties' => ['href'=>'https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
 				'autorisaties' => ['href'=>'https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>''],
-				'klantinteracties' => ['href'=>'https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>''], //
+				'klantinteracties' => ['href'=>'https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>''], 
+				// Mijnapp componenten
+				'mijnapp_backend' => ['href'=>'http://mijnapp_bo.zaakonline.nl','authorization'=>''],
+				'mijnapp_frontend' => ['href'=>'http://mijnapp.zaakonline.nl','authorization'=>''],
 		];		
 				
 		return $components;
