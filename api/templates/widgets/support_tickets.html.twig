@@ -6,19 +6,25 @@
                 <div class="card-tools">
                     <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
                         id="pills-tab" role="tablist">
+                        
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-today" data-toggle="pill"
+                            <a class="nav-link active" id="pills-all" data-toggle="pill"
                                href="#pills-today" role="tab"
-                               aria-selected="true">Incomplete</a>
+                               aria-selected="true">All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-week"
+                            <a class="nav-link" id="pills-incomplete" data-toggle="pill"
+                               href="#pills-today" role="tab"
+                               aria-selected="false">Incomplete</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-todo"
                                data-toggle="pill"
                                href="#pills-week" role="tab"
                                aria-selected="false">To do</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-month" data-toggle="pill"
+                            <a class="nav-link" id="pills-done" data-toggle="pill"
                                href="#pills-month" role="tab"
                                aria-selected="false">Done</a>
                         </li>
@@ -31,12 +37,10 @@
             <a href="#">
                 <div class="d-flex">
                     <div class="avatar avatar-online">
-                                                        <span
-                                                            class="avatar-title rounded-circle border border-white bg-info">J</span>
+                     	<span class="avatar-title rounded-circle border border-white bg-info">J</span>
                     </div>
                     <div class="flex-1 ml-3 pt-1">
-                        <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %}<span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted"{% endif %}pl-3">{{ request.status }}</span></h6>
-                        &nbsp;
+                        <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %} <span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted{% endif %} pl-3">{{ request.status }}</span></h6>
                         <span class="text-muted"> {{ request.submitter }}</span>
                     </div>
                     <div class="float-right pt-1">
