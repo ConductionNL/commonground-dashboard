@@ -41,7 +41,24 @@
                     </div>
                     <div class="flex-1 ml-3 pt-1">
                         <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %} <span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted{% endif %} pl-3">{{ request.status }}</span></h6>
-                        <span class="text-muted">{% if request.submitters is defined%}{% for index, submitter in request.submitters %}{{submitter}}{% endfor %}{% endif %}{{ request.submitter }}</span>
+                        <span class="text-muted">
+                        {% if request.submitters is defined %}
+                            {% for index, submitter in request.submitters %}
+                            {%  set persoon =  commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ submitter)._embedded %}
+                            {% if persoon.naam is defined %}{{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}
+                            {{ submitter }}               
+                            {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                        
+                        {% if request.submitter is defined and request.submitter is not empty %}
+                            {% set persoon = commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ request.submitter)._embedded %}
+                            {% if persoon.naam is defined %}{{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}    
+                            {% else %} 
+                            {{ request.submitter }}                  
+                            {% endif %}                              
+                        {% endif %}                        
+                        </span>
                         {% if 
                                 (
                                     request.submitters is not defined or 
