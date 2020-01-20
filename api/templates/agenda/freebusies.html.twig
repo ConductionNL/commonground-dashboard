@@ -10,17 +10,14 @@
             <div class="page-inner mt--5">
                 <div class="row mt--2">
 
-                    {% include 'widgets/support_tickets.html.twig' %}
-
-                    {% include 'widgets/active_users.html.twig' %}
-
+                    {% include 'widgets/object_tables/freebusy_table.html.twig' %}
 
                 </div>
             </div>
+
+            {% include 'footer.html.twig' %}
+
         </div>
-
-        {% include 'footer.html.twig' %}
-
     </div>
 
 {% endblock %}
