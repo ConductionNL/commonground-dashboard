@@ -4,18 +4,20 @@
             <thead>
             <tr>
             	{% for name,iri in resourceContext['@context']  %}
-				            {% if name not in ['@vocab','hydra'] %}
+					{% if name not in component.config.hidden %}
                 			<th scope="col">{{ name }}</th>
-                   	        {% endif %}
+                   	{% endif %}
                 {% endfor %}
             </tr>
             </thead>
             <tbody>
-			{% for name, component in components %}
+			{% for index, resource in resources["hydra:member"] %}
             <tr>
-                <td>Order Registratie</td>
-                <td style="color: lime">Online</td>
-                <td><a href="https://github.com/ConductionNL/orderregistratiecomponent" target="_blank">Github</a></td>
+            	{% for property,value in resource  %}
+					{% if property not in component.config.hidden and property not in ['@id','type','@type'] %}
+                	<td >{% if value  is not iterable %}{{ value }}{% endif %}</td>
+                   	{% endif %}
+                {% endfor %}
             </tr>
 			{% endfor %}
             </tbody>
