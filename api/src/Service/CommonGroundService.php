@@ -8,18 +8,22 @@ use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use GuzzleHttp\Client ;
 use GuzzleHttp\RequestOptions;
 
+use Twig\Environment as Twig ; 
+
 class CommonGroundService
 {
 	private $params;
 	private $cache;
 	private $client;
 	private $session;
-
-	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache)
+	private $twig;
+	
+	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache, Twig $twig)
 	{
 		$this->params = $params;
 		$this->session = $session;
 		$this->cash = $cache;
+		$this->twig = $twig;
 
 		// We might want to overwrite the guzle config, so we declare it as a separate array that we can then later adjust, merge or otherwise influence
 		$this->guzzleConfig = [
@@ -289,8 +293,8 @@ class CommonGroundService
 		$response = $this->client->request('GET',$component['href'].'/contexts/'.$resource);
 		$response = json_decode($response->getBody(), true);
 		
-		unset($response['@context']['@vocab']);
-		unset($response['@context']['hydra']);
+		//unset($response['@context']['@vocab']);
+		//unset($response['@context']['hydra']);
 		
 		$item->set($response);
 		$item->expiresAt(new \DateTime('tomorrow'));
@@ -310,7 +314,7 @@ class CommonGroundService
 		$item = $this->cash->getItem('componentContext_'.md5 ($component['href']));
 		if ($item->isHit() && !$force) {
 			//var_dump($item->get());
-			//return $item->get();
+			return $item->get();
 		}
 		
 		$response = $this->client->request('GET',$component['href'].'/docs.jsonld');
@@ -346,6 +350,20 @@ class CommonGroundService
 		
 		
 		return $response;
+	}
+	
+	/*
+	 * Get a list of available resources on a commonground componant
+	 */
+	public function getTemplate(string $component,string $resourcetype, array $variables)
+	{
+		if ($this->twig->getLoader()->exists($component.$resourcetype.'.html.twig')) {
+			// the template exists, do something
+			return $this->twig->render($component.$resourcetype.'.html.twig', $variables);
+		}
+		
+		// the template dosn't exists, return falses
+		return false;
 	}
 	
 	

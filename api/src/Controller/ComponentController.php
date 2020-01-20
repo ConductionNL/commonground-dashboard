@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Ramsey\Uuid\Uuid;
+
 
 use App\Service\CommonGroundService;
 
@@ -44,51 +46,69 @@ class ComponentController extends AbstractController
 	}
 	
 	/**
-	 * @Route("/{component}/resource{resource}", requirements={"resource"=".+"})
+	 * @Route("/component/{component}{resourcetype}", requirements={"resourcetype"=".+"})
 	 * @Template
 	 */
-	public function resourceAction(Request $request, CommonGroundService $commonGroundService, $component, $resource)
+	public function resourceAction(Request $request, CommonGroundService $commonGroundService, $component, $resourcetype, $id = null)
 	{
-		$componentName = $component;
-		$components = $commonGroundService->getComponentList();
-		$component= $commonGroundService->getComponent($component);
-		$resource = $commonGroundService->getResource($component['href'].$resource);
 		
-		var_dump('App:'.$componentName.':'.rtrim(ltrim($resource, '/'), 's').'.html.twig');
+		$variables=[];
 		
-		$variables = ["component"=>$component,"resource"=>$resource,"jsondump"=> json_encode($resource)];
-		// Lets try to find a specific template
-		if ($this->get('twig')->getLoader()->exists('App:'.$componentName.':'.rtrim(ltrim($resource, '/'), 's').'.html.twig')) {
-			var_dump('found it');
-			return $this->render('App:'.$componentName.':'.rtrim(ltrim($resource, '/'), 's').'.html.twig', $variables);
+		$path_parts = pathinfo($resourcetype);
+		$variables['resourceName'] = $path_parts['dirname'];
+		$variables['id'] = $path_parts['basename'];
+		
+		$variables['component'] = $commonGroundService->getComponent($component);
+		$variables['componentName'] = $component;
+		$variables['components'] = $commonGroundService->getComponentList();
+		$variables['resourceContext'] = $commonGroundService->getResourceContext($variables['component'],$resourcetype);
+		$variables['resourceType'] = $resourcetype;
+		
+		
+		$variables['resources'] = [];
+		
+		var_dump($variables['id']);
+		
+		// Lets get all the stuff
+		if(is_string($variables['id']) && (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $variables['id']) == 1)){			
+			$variables['resourceName'] = rtrim($path_parts['dirname'], '/');
+			$variables['resource'] = $commonGroundService->getResource($variables['component']['href'].$resourcetype);
+			$variables['jsondump'] = json_encode($variables['resource']);
+			$defaultTemplate = 'component/resource.html.twig';		
+		}
+		else{
+			$variables['resourceName'] = $resourcetype;
+			$variables['resources'] = $commonGroundService->getResourceList($variables['component']['href'].$resourcetype); 
+			$defaultTemplate = 'component/index.html.twig';
 		}
 		
-		// If we dont have a specific template we are going to return the default template
-		return $variables;
-	}
-	
-	/**
-	 * @Route("/{component}/index{resourcetype}", requirements={"resourcetype"=".+"})
-	 * @Template
-	 */
-	public function resourcelistAction(Request $request, CommonGroundService $commonGroundService, $component, $resourcetype)
-	{
-		$componentName = $component;
-		$components = $commonGroundService->getComponentList();
-		$component= $commonGroundService->getComponent($component);
-		$resources = $commonGroundService->getResourceList($component['href'].$resourcetype);
-		$resourceContext = $commonGroundService->getResourceContext($component,$resourcetype);
-		
-		var_dump('App:'.$componentName.':'.ltrim($resourcetype, '/').'.html.twig');
-		
-		$variables = ["component"=>$component,"resources"=>$resources,"resourceContext"=>$resourceContext,"components"=>$components];
+		// Let proces any post requests		
+		if($request->getMethod() == "POST"){
+			
+			foreach($request->request->getAll() as $property ){
+				var_dump($property);	
+			}
+			
+			// Try to save
+			if($variables['resource'] = $commonGroundService->updateResource($variables['resource'], $variables['component']['href'].$resourcetype.$variables['id'])){
+				//seces
+				var_dump('succes');
+				die;
+			}
+			else{
+				// error
+				var_dump('error');
+				die;
+			}
+		}
+		var_dump($component,$variables['resourceName'],$id);
 		// Lets try to find a specific template
-		if ($this->get('twig')->getLoader()->exists('App:'.$componentName.':'.ltrim($resourcetype, '/').'.html.twig')) {
-			var_dump('found it');
-			return $this->render('App:'.$componentName.':'.ltrim($resourcetype, '/').'.html.twig', $variables);
+		if ($template = $commonGroundService->getTemplate($component,$variables['resourceName'],$variables)){
+			return $template;
 		}
 		
-		// If we dont have a specific template we are going to return the default template
+		die;
+		// If we dont have a specific template we are going to return the default templates
 		return $variables;
 	}
 

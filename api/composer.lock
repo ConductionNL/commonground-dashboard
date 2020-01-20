@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5cf6c5b0e2fcb4b7558cd2635260c67",
+    "content-hash": "433b438bc1058337c63e79b361f58142",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -5980,16 +5980,16 @@
         },
         {
             "name": "symfony/security-bundle",
-            "version": "v4.3.4",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-bundle.git",
-                "reference": "97ba8648e718999793e79ab4d1f1582c8d19be9d"
+                "reference": "8d157b5a96c2d7561e29eca3574344727482d3fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/97ba8648e718999793e79ab4d1f1582c8d19be9d",
-                "reference": "97ba8648e718999793e79ab4d1f1582c8d19be9d",
+                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/8d157b5a96c2d7561e29eca3574344727482d3fb",
+                "reference": "8d157b5a96c2d7561e29eca3574344727482d3fb",
                 "shasum": ""
             },
             "require": {
@@ -6001,7 +6001,7 @@
                 "symfony/security-core": "~4.3",
                 "symfony/security-csrf": "~4.2",
                 "symfony/security-guard": "~4.2",
-                "symfony/security-http": "^4.3"
+                "symfony/security-http": "~4.3.9|^4.4.1"
             },
             "conflict": {
                 "symfony/browser-kit": "<4.2",
@@ -6060,7 +6060,7 @@
             ],
             "description": "Symfony SecurityBundle",
             "homepage": "https://symfony.com",
-            "time": "2019-08-26T08:26:39+00:00"
+            "time": "2019-11-30T13:16:45+00:00"
         },
         {
             "name": "symfony/security-core",

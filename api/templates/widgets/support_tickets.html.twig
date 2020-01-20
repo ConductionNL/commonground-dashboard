@@ -34,7 +34,7 @@
         </div>
         <div class="card-body">
 			{% for index, request in requests['hydra:member'] %}
-            <a href="{{ path('app_component_resource',{'component':'requests','resource':request['@id']}) }}">
+            <a href="{{ path('app_component_resource',{'component':'requests','resourcetype':request['@id']}) }}">
                 <div class="d-flex">
                     <div class="avatar avatar-online">
                      	<span class="avatar-title rounded-circle border border-white bg-info">V</span>
@@ -44,7 +44,7 @@
                         <span class="text-muted">
                         {% if request.submitters is defined and request.submitters is not empty %}
                             {% for index, submitter in request.submitters %}
-                            {%  set persoon =  commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ submitter.person)._embedded %}
+                            {%  set persoon =  commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ submitter.person) %}
                                 {% if persoon.naam is defined %}
                                     {{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}
                                 {% else %}
@@ -54,7 +54,7 @@
                         {% endif %}
                         
                         {% if request.submitter is defined and request.submitter is not empty %}
-                            {% set persoon = commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ request.submitter)._embedded %}
+                            {% set persoon = commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ request.submitter) %}
                             {% if persoon.naam is defined %}{{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}    
                             {% else %} 
                             {{ request.submitter }}                  
