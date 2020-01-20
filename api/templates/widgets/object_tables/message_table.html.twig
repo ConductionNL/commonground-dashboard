@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Reciever</th>
+                <th scope="col">Sender</th>
+                <th scope="col">Content</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, message in messages %}
+            <tr>
+                <td>{{ message.name }}</td>
+                <td>{{ message.reciever }}</td>
+                <td>{{ message.sender }}</td>
+                <td>{{ message.content }}</td>
+                <td>{{ message.status }}</td>
+                <td><a href="{{ path('app_message_edit',{'id':message.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

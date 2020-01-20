@@ -1,0 +1,24 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Type</th>
+                <th scope="col">Organization</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, service in services %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.type }}</td>
+                <td>{{ service.organization }}</td>
+                <td><a href="{{ path('app_bericht_edit',{'id':service.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

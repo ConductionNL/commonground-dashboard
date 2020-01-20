@@ -28,14 +28,25 @@ class BerichtController extends AbstractController
     }
 
     /**
-     * @Route("/objecten")
+     * @Route("/messages")
      * @Template
      */
-    public function objectenAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    public function messagesAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-        $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
+        $messages = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/messages');
 
-        return ["requests"=>$requests];
+        return ["messages"=>$messages];
+    }
+
+    /**
+     * @Route("/services")
+     * @Template
+     */
+    public function servicesAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    {
+        $services = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/services');
+
+        return ["services"=>$services];
     }
 
     /**
