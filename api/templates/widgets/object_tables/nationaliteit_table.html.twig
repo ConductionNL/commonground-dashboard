@@ -1,0 +1,22 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ingeschreven persoon</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, nationaliteit in nationaliteiten._embedded.item %}
+            <tr>
+                <td>{{ nationaliteit.uuid }}</td>
+                <td>{{ nationaliteit.ingeschreven_persoon }}</td>=
+                <td><a href="{{ path('app_brp_edit',{'id':nationaliteit.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

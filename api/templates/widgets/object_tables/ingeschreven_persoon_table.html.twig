@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">BSN</th>
+                <th scope="col">Naam</th>
+                <th scope="col">Geboorte</th>
+                <th scope="col">Geslacht</th>
+                <th scope="col">Gezagsverhouding</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, ingeschreven_persoon in ingeschreven_personen._embedded.item %}
+            <tr>
+                <td>{{ ingeschreven_persoon.burgerservicenummer }}</td>
+                <td>{{ ingeschreven_persoon.geslachtsaanduiding }}</td>
+                <td>{{ ingeschreven_persoon.geboorte }}</td>
+                <td>{{ ingeschreven_persoon.geslacht }}</td>
+                <td>{{ ingeschreven_persoon.gezachsverhouding }}</td>
+                <td><a href="{{ path('app_brp_edit',{'id':ingeschreven_persoon.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

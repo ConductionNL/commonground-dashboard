@@ -1,0 +1,24 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Indicatie curatele register</th>
+                <th scope="col">Indicatie gezag minderjarige</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, gezags_verhouding in gezags_verhoudingen._embedded.item %}
+            <tr>
+                <td>{{ gezags_verhouding.uuid }}</td>
+                <td>{{ gezags_verhouding.indicatie_curatele_register }}</td>
+                <td>{{ gezags_verhouding.indicatie_gezag_minderjarige }}</td>
+                <td><a href="{{ path('app_brp_edit',{'id':gezags_verhouding.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Aanduiding inhouding of vermissing</th>
+                <th scope="col">Reisdocument nummer</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, reisdocument in reisdocumenten._embedded.item %}
+            <tr>
+                <td>{{ reisdocument.id }}</td>
+                <td>{{ reisdocument.aanduiding_inhouding_of_vermissing }}</td>
+                <td>{{ reisdocument.reisdocumentnummer }}</td>
+                <td><a href="{{ path('app_brp_edit',{'id':reisdocument.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

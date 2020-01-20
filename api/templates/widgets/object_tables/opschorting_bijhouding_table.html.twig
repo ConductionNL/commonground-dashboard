@@ -1,0 +1,24 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Reden</th>
+                <th scope="col">Datum</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, opschorting_bijhouding in opschortings_bijhoudingen._embedded.item %}
+                <tr>
+                    <td>{{ opschorting_bijhouding.uuid }}</td>
+                    <td>{{ opschorting_bijhouding.reden }}</td>
+                    <td>{{ opschorting_bijhouding.datum }}</td>
+                    <td><a href="{{ path('app_brp_edit',{'id':opschorting_bijhouding.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Adres 1</th>
+                <th scope="col">Adres 2</th>
+                <th scope="col">Adres 3</th>
+                <th scope="col">Onbekend vertrokken</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, verblijf_buitenland in verblijven_buitenland._embedded.item %}
+            <tr>
+                <td>{{ verblijf_buitenland.uuid }}</td>
+                <td>{{ verblijf_buitenland.adresregel1 }}</td>
+                <td>{{ verblijf_buitenland.adresregel2 }}</td>
+                <td>{{ verblijf_buitenland.adresregel3 }}</td>
+                <td>{{ verblijf_buitenland.vertrokken_onbekend_waarheen }}</td>
+                <td><a href="{{ path('app_brp_edit',{'id':verblijf_buitenland.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

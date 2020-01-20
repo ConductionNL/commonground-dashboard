@@ -1,0 +1,24 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Code</th>
+                <th scope="col">Omschrijving</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, waardetabel in waardetabellen._embedded.item %}
+            <tr>
+                <td>{{ waardetabel.id }}</td>
+                <td>{{ waardetabel.code }}</td>
+                <td>{{ waardetabel.omschrijving }}</td>
+                <td><a href="{{ path('app_brp_edit',{'id':waardetabel.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
