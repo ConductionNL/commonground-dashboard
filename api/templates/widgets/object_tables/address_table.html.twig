@@ -1,0 +1,32 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">BAG nummer</th>
+                <th scope="col">Postal code</th>
+                <th scope="col">Post office box number</th>
+                <th scope="col">Street</th>
+                <th scope="col">House number</th>
+                <th scope="col">House number suffix</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, address in addresses %}
+            <tr>
+                <td>{{ address.name }}</td>
+                <td>{{ address.bagnummeraanduiding }}</td>
+                <td>{{ address.postal_code }}</td>
+                <td>{{ address.post_office_box_number }}</td>
+                <td>{{ address.street }}</td>
+                <td>{{ address.house_number }}</td>
+                <td>{{ address.house_number_suffix }}</td>
+                <td><a href="{{ path('app_contact_edit',{'id':address.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

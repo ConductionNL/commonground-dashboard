@@ -1,0 +1,30 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Additional name</th>
+                <th scope="col">Family name</th>
+                <th scope="col">Telephones</th>
+                <th scope="col">Addresses</th>
+                <th scope="col">E-mails</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, person in persons %}
+            <tr>
+                <td>{{ person.given_name }}</td>
+                <td>{{ person.additional_name }}</td>
+                <td>{{ person.family_name }}</td>
+                <td>{{ person.telephones }}</td>
+                <td>{{ person.adresses }}</td>
+                <td>{{ person.emails }}</td>
+                <td><a href="{{ path('app_contact_edit',{'id':person.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
