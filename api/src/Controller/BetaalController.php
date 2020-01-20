@@ -39,6 +39,28 @@ class BetaalController extends AbstractController
     }
 
     /**
+     * @Route("/invoice_items")
+     * @Template
+     */
+    public function invoiceItemsAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    {
+        $invoiceItems = $commonGroundService->getResourceList('https://bc.zaakonline.nl/invoice_items');
+
+        return ["invoiceItems"=>$invoiceItems];
+    }
+
+    /**
+     * @Route("/payments")
+     * @Template
+     */
+    public function paymentsAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    {
+        $payments = $commonGroundService->getResourceList('https://bc.zaakonline.nl/payments');
+
+        return ["payments"=>$payments];
+    }
+
+    /**
      * @Route("/edit/{id}")
      * @Template
      */

@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Offer</th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, invoiceItem in invoiceItems._embedded.item %}
+            <tr>
+                <td>{{ invoiceItem.name }}</td>
+                <td>{{ invoiceItem.offer }}</td>
+                <td>{{ invoiceItem.product }}</td>
+                <td>{{ invoiceItem.quantity }}</td>
+                <td>{{ invoiceItem.price }}</td>
+                <td><a href="{{ path('app_betaal_edit',{'id':invoiceItem.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
