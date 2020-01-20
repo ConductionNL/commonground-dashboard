@@ -1,0 +1,26 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Events</th>
+                <th scope="col">Todo's</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, journal in journals %}
+            <tr>
+                <td>{{ journal.name }}</td>
+                <td>{{ journal.description }}</td>
+                <td>{{ journal.event }}</td>
+                <td>{{ journal.todo }}</td>
+                <td><a href="{{ path('app_agenda_edit',{'id':journal.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

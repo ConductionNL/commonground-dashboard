@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, todo in todos %}
+            <tr>
+                <td>{{ todo.name }}</td>
+                <td>{{ todo.start_date }}</td>
+                <td>{{ todo.end_date }}</td>
+                <td>{{ todo.created }}</td>
+                <td>{{ todo.status }}</td>
+                <td><a href="{{ path('app_agenda_edit',{'id':todo.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

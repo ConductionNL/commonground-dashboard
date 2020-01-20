@@ -73,6 +73,39 @@ class AgendaController extends AbstractController
     }
 
     /**
+     * @Route("/journals")
+     * @Template
+     */
+    public function journalsAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    {
+        $journals = $commonGroundService->getResourceList('https://ac.zaakonline.nl/journals');
+
+        return ["journals"=>$journals];
+    }
+
+    /**
+     * @Route("/resources")
+     * @Template
+     */
+    public function resourcesAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    {
+        $resources = $commonGroundService->getResourceList('https://ac.zaakonline.nl/resources');
+
+        return ["resources"=>$resources];
+    }
+
+    /**
+     * @Route("/todos")
+     * @Template
+     */
+    public function todosAction(Request $request, EntityManagerInterface $em,  CommonGroundService $commonGroundService)
+    {
+        $todos = $commonGroundService->getResourceList('https://ac.zaakonline.nl/todos');
+
+        return ["todos"=>$todos];
+    }
+
+    /**
      * @Route("/config")
      * @Template
      */
