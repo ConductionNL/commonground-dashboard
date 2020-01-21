@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Gemeentecode</th>
+                <th scope="col">Omschrijving</th>
+                <th scope="col">Nieuwe code</th>
+                <th scope="col">Datum einde</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, tabel33 in tabel33s %}
+                <tr>
+                    <td>{{ tabel33.id }}</td>
+                    <td>{{ tabel33.gemeentecode }}</td>
+                    <td>{{ tabel33.omschrijving }}</td>
+                    <td>{{ tabel33.nieuwe_code }}</td>
+                    <td>{{ tabel33.datum_einde }}</td>
+                    <td><a href="{{ path('app_landelijk_edit',{'id':tabel33.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

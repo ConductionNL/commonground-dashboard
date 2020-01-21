@@ -1,0 +1,30 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Reden</th>
+                <th scope="col">Omschrijving</th>
+                <th scope="col">Soort</th>
+                <th scope="col">Datum ingang</th>
+                <th scope="col">Datum einde</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, tabel37 in tabel37s %}
+                <tr>
+                    <td>{{ tabel37.id }}</td>
+                    <td>{{ tabel37.reden }}</td>
+                    <td>{{ tabel37.omschrijving }}</td>
+                    <td>{{ tabel37.soort }}</td>
+                    <td>{{ tabel37.datum_ingang }}</td>
+                    <td>{{ tabel37.datum_einde }}</td>
+                    <td><a href="{{ path('app_landelijk_edit',{'id':tabel37.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

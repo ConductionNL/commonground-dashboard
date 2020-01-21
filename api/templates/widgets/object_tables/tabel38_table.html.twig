@@ -1,0 +1,26 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Adelijke titel predikaat</th>
+                <th scope="col">Omschrijving</th>
+                <th scope="col">Soort</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, tabel38 in tabel38s %}
+                <tr>
+                    <td>{{ tabel38.id }}</td>
+                    <td>{{ tabel38.adellijke_titel_predikaat }}</td>
+                    <td>{{ tabel38.omschrijving }}</td>
+                    <td>{{ tabel38.soort }}</td>
+                    <td><a href="{{ path('app_landelijk_edit',{'id':tabel38.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

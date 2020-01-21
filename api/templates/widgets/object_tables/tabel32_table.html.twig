@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nationaliteitscode</th>
+                <th scope="col">Omschrijving</th>
+                <th scope="col">Datum ingang</th>
+                <th scope="col">Datum einde</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, tabel32 in tabel32s %}
+                <tr>
+                    <td>{{ tabel32.id }}</td>
+                    <td>{{ tabel32.nationaliteitcode }}</td>
+                    <td>{{ tabel32.omschrijving }}</td>
+                    <td>{{ tabel32.datum_ingang }}</td>
+                    <td>{{ tabel32.datum_einde }}</td>
+                    <td><a href="{{ path('app_landelijk_edit',{'id':tabel32.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

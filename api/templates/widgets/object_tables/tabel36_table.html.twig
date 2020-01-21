@@ -1,0 +1,22 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Voorvoegsel</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, tabel36 in tabel36s %}
+                <tr>
+                    <td>{{ tabel36.id }}</td>
+                    <td>{{ tabel36.voorvoegsel }}</td>
+                    <td><a href="{{ path('app_landelijk_edit',{'id':tabel36.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

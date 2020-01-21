@@ -1,0 +1,26 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Verblijfstitel</th>
+                <th scope="col">Omschrijving</th>
+                <th scope="col">Datum ingang</th>
+                <th scope="col">Datum einde</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, tabel56 in tabel56s %}
+                <tr>
+                    <td>{{ tabel56.verblijfstitel }}</td>
+                    <td>{{ tabel56.omschrijving }}</td>
+                    <td>{{ tabel56.datum_ingang }}</td>
+                    <td>{{ tabel56.datum_einde }}</td>
+                    <td><a href="{{ path('app_landelijk_edit',{'id':tabel56.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

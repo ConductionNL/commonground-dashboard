@@ -1,0 +1,23 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/dashboard_h1.html.twig' %}
+
+            <div class="page-inner mt--5">
+                <div class="row mt--2">
+
+                    {% include 'widgets/object_tables/tabel55_table.html.twig' %}
+
+                </div>
+            </div>
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}
