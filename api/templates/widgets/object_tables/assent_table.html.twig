@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Token</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Requester</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, assent in assents %}
+            <tr>
+                <td>{{ assent.token }}</td>
+                <td>{{ assent.name }}</td>
+                <td>{{ assent.description }}</td>
+                <td>{{ assent.statis }}</td>
+                <td>{{ assent.requester }}</td>
+                <td><a href="{{ path('app_instemming_edit',{'id':assent.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

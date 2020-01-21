@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,12 +28,14 @@ class InstemmingController extends AbstractController
     }
 
     /**
-     * @Route("/objecten")
+     * @Route("/assents")
      * @Template
      */
-    public function objectenAction(Request $request, EntityManagerInterface $em)
+    public function assentsAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-        return [];
+        $assents = $commonGroundService->getResourceList('https://irc.zaakonline.nl/assents');
+
+        return ["assents"=>$assents];
     }
 
     /**
