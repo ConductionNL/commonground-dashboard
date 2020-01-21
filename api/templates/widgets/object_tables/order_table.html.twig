@@ -1,0 +1,30 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Target organization</th>
+                <th scope="col">Price</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Items</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, order in orders %}
+            <tr>
+                <td>{{ order.name }}</td>
+                <td>{{ order.target_organization }}</td>
+                <td>{{ order.price }}</td>
+                <td>{{ order.created_at }}</td>
+                <td>{{ order.customer }}</td>
+                <td>{{ order.items }}</td>
+                <td><a href="{{ path('app_order_edit',{'id':order.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

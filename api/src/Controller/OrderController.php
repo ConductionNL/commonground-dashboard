@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,12 +28,25 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/objecten")
+     * @Route("/orders")
      * @Template
      */
-    public function objectenAction(Request $request, EntityManagerInterface $em)
+    public function ordersAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-        return [];
+        $orders = $commonGroundService->getResourceList("https://orc.zaakonline.nl/orders");
+
+        return ["orders"=>$orders];
+    }
+
+    /**
+     * @Route("/order-items")
+     * @Template
+     */
+    public function orderItemsAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    {
+        $orderItems = $commonGroundService->getResourceList("https://orc.zaakonline.nl/order_items");
+
+        return ["orderItems"=>$orderItems];
     }
 
     /**
