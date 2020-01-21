@@ -1,0 +1,30 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Map</th>
+                <th scope="col">Opening time</th>
+                <th scope="col">Closing time</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, place in places %}
+                <tr>
+                    <td>{{ place.name }}</td>
+                    <td>{{ place.telephone }}</td>
+                    <td>{{ place.photo }}</td>
+                    <td>{{ place.has_map }}</td>
+                    <td>{{ place.opening_time }}</td>
+                    <td>{{ place.closing_time }}</td>
+                    <td><a href="{{ path('app_locatie_edit',{'id':place.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

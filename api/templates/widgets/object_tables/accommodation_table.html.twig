@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Floorsize</th>
+                <th scope="col">Floor level</th>
+                <th scope="col">Attendee capacity</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+			{% for index, accommodation in accommodations %}
+            <tr>
+                <td>{{ accommodation.name }}</td>
+                <td>{{ accommodation.accommodation_category }}</td>
+                <td>{{ accommodation.floor_size }}</td>
+                <td>{{ accommodation.floor_level }}</td>
+                <td>{{ accommodation.attendee_capacity }}</td>
+                <td><a href="{{ path('app_locatie_edit',{'id':accommodation.id}) }}">Edit</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

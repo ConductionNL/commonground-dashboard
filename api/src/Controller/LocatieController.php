@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,12 +28,25 @@ class LocatieController extends AbstractController
     }
 
     /**
-     * @Route("/objecten")
+     * @Route("/accommodations")
      * @Template
      */
-    public function objectenAction(Request $request, EntityManagerInterface $em)
+    public function accomodationsAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-        return [];
+        $accommodations = $commonGroundService->getResourceList('https://lc.zaakonline.nl/accommodations');
+
+        return ["accommodations"=>$accommodations];
+    }
+
+    /**
+     * @Route("/place")
+     * @Template
+     */
+    public function placesAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    {
+        $places = $commonGroundService->getResourceList('https://lc.zaakonline.nl/places');
+
+        return ["places"=>$places];
     }
 
     /**
