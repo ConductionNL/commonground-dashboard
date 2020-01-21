@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,12 +28,14 @@ class MedewerkerController extends AbstractController
     }
 
     /**
-     * @Route("/objecten")
+     * @Route("/employees")
      * @Template
      */
-    public function objectenAction(Request $request, EntityManagerInterface $em)
+    public function employeesAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-        return [];
+        $employees = $commonGroundService->getResourceList('https://mrc.zaakonline.nl/employees');
+
+        return ["employees"=>$employees];
     }
 
     /**
