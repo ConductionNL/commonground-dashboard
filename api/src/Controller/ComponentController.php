@@ -46,8 +46,7 @@ class ComponentController extends AbstractController
 	}
 	
 	/**
-	 * @Route("/component/{component}{resourcetype}", requirements={"resourcetype"=".+"})
-	 * @Template
+	 * @Route("/{component}{resourcetype}", requirements={"resourcetype"=".+"})
 	 */
 	public function resourceAction(Request $request, CommonGroundService $commonGroundService, $component, $resourcetype, $id = null)
 	{
@@ -60,33 +59,32 @@ class ComponentController extends AbstractController
 		
 		$variables['component'] = $commonGroundService->getComponent($component);
 		$variables['componentName'] = $component;
+		
+		
 		$variables['components'] = $commonGroundService->getComponentList();
-		$variables['resourceContext'] = $commonGroundService->getResourceContext($variables['component'],$resourcetype);
-		$variables['resourceType'] = $resourcetype;
+		//$variables['resourceContext'] = $commonGroundService->getResourceContext($variables['component'],$resourcetype);
+		$variables['resourceType'] = $resourcetype;		
+		$variables['resources'] = $commonGroundService->getResource($variables['component']['href'].$resourcetype)["hydra:member"]; 
+		$variables['totalItems'] = $commonGroundService->getResource($variables['component']['href'].$resourcetype)["hydra:totalItems"];
 		
+		var_dump(count($variables['resources']));
 		
-		$variables['resources'] = [];
-		
-		var_dump($variables['id']);
-		
-		// Lets get all the stuff
-		if(is_string($variables['id']) && (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $variables['id']) == 1)){			
-			$variables['resourceName'] = rtrim($path_parts['dirname'], '/');
-			$variables['resource'] = $commonGroundService->getResource($variables['component']['href'].$resourcetype);
-			$variables['jsondump'] = json_encode($variables['resource']);
-			$defaultTemplate = 'component/resource.html.twig';		
+		if($variables['totalItems'] >= 1){
+			$defaultTemplate = 'component/resourcelist.html.twig';
 		}
 		else{
-			$variables['resourceName'] = $resourcetype;
-			$variables['resources'] = $commonGroundService->getResourceList($variables['component']['href'].$resourcetype); 
-			$defaultTemplate = 'component/index.html.twig';
+			$variables['resource']= $variables['resources'][0];
+			$variables['jsondump'] = json_encode($variables['resource']);
+			$defaultTemplate = 'component/resource.html.twig';
 		}
 		
-		// Let proces any post requests		
+		//var_dump($defaultTemplate);
+		
+		// Let proces any post requests
 		if($request->getMethod() == "POST"){
 			
 			foreach($request->request->getAll() as $property ){
-				var_dump($property);	
+				var_dump($property);
 			}
 			
 			// Try to save
@@ -101,15 +99,37 @@ class ComponentController extends AbstractController
 				die;
 			}
 		}
-		var_dump($component,$variables['resourceName'],$id);
+		
+		// Lets get all the stuff
+		/*
+		if(is_string($variables['id']) && (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $variables['id']) == 1)){	
+			$variables['resourceName'] = rtrim($path_parts['dirname'], '/');
+			$variables['resource'] = $commonGroundService->getResource($variables['component']['href'].$resourcetype);
+			$variables['jsondump'] = json_encode($variables['resource']);
+			return $this->render($defaultTemplate, $variables); 
+		}
+		else{
+			$variables['resourceName'] = $resourcetype;
+			$variables['resources'] = $commonGroundService->getResourceList($variables['component']['href'].$resourcetype); 
+		}
+		*/
+		
+		//if ($this->twig->getLoader()->exists($component.$resourcetype.'.html.twig')) {
+		//	// the template exists, do something
+		//	$defaultTemplate = $component.$resourcetype.'.html.twig';
+		//}
+		
 		// Lets try to find a specific template
-		if ($template = $commonGroundService->getTemplate($component,$variables['resourceName'],$variables)){
+		if ($template = $commonGroundService->getTemplate($component, $variables['resourceName'],$variables)){
 			return $template;
 		}
+		else{
+			
+			
+		}
 		
-		die;
 		// If we dont have a specific template we are going to return the default templates
-		return $variables;
+		return $this->render($defaultTemplate, $variables); ;
 	}
 
 }

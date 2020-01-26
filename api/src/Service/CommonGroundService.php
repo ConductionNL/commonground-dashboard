@@ -48,7 +48,15 @@ class CommonGroundService
 		// Lets start up a default client
 		$this->client= new Client($this->guzzleConfig);
 	}
-
+	
+	/*
+	 * Get a single resource from a common ground componant
+	 */
+	public function getClient()
+	{
+		return  $this->client;
+	}
+	
 	/*
 	 * Get a single resource from a common ground componant
 	 */

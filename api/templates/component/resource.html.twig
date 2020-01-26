@@ -47,25 +47,6 @@
     								<small class="form-text text-muted">This resource is connected to the following resources</small>	
     							
     							
-            				   {% for name, links in resource._links %}
-            				   		{% if name != "self" %}
-            				   		<br> 
-            				   		<p>
-            				   	   		<b>{{ name|capitalize }}</b>
-                				        {% for href, link in links %}
-                				        
-    										{% if link is iterable %}
-                				        {% set resource = commonground_resource(component.href~link.href) %}
-                				   	    {# <a href="">{{ commonground_resource(page.href).name }}</a> #}
-                				   	    {# if link matches '^\/' %}
-                				   	 	<br> {{ component.href }}{{ link.href }}
-                                        {% else #}
-                				   	 	<br><a href="{{ path('app_component_resource',{'component':'requests','resource':link.href}) }}">{% if resource.name is defined %}{{ resource.name }}{% else %}{{ resource.id }}{% endif %}</a>
-                                        {% endif %}
-                				       {% endfor %}
-                				   </p>
-                				   {% endif %}
-            				   {% endfor %}
     							</div><!-- /.card-body -->
 						</div><!-- /.card -->
                 	</div><!-- /.col -->
