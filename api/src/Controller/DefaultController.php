@@ -18,7 +18,7 @@ class DefaultController extends AbstractController
      * @Route("/")
      * @Template
      */
-	public function indexAction(Request $request, CommonGroundService$commonGroundService)
+	public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
     	$requests= $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
     	$components= $commonGroundService->getComponentList();
