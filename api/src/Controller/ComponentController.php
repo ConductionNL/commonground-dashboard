@@ -77,16 +77,24 @@ class ComponentController extends AbstractController
 			$variables['totalItems'] =$resources["hydra:totalItems"];
 			$defaultTemplate = 'component/resourcelist.html.twig';
 			
+			//var_dump($component.'/'.ltrim($variables['resourceName'], '/').'/index.html.twig');
+			
+			// Lets try to find a specific template
+			$loader = $this->get('twig')->getLoader();
+			if ($loader->exists($component.'/'.ltrim($variables['resourceName'], '/').'/index.html.twig')) {
+				$defaultTemplate = $component.'/'.ltrim($variables['resourceName'], '/').'/index.html.twig';
+			}	
+			
 		}
 		else{
 			$variables['resource']= $resources;
 			$variables['jsondump'] = json_encode($resources);
 			$defaultTemplate = 'component/resource.html.twig';
-						
-			var_dump(ltrim($variables['resourceName'], '/'));
-			
-			if ($loader->exists($component.'/'.ltrim($variables['resourceName'], '/').'.html.twig')) {
-				$defaultTemplate = $component.'/'.ltrim($variables['resourceName'], '/').'.html.twig';
+									
+			// Lets try to find a specific template
+			$loader = $this->get('twig')->getLoader();
+			if ($loader->exists($component.'/'.ltrim($variables['resourceName'], '/').'/edit.html.twig')) {
+				$defaultTemplate = $component.'/'.ltrim($variables['resourceName'], '/').'/edit.html.twig';
 			}	
 			
 		}
@@ -110,12 +118,6 @@ class ComponentController extends AbstractController
 				die;
 			}
 		}
-		
-		// Lets try to find a specific template
-		$loader = $this->get('twig')->getLoader();
-				
-		
-			
 		
 		// If we dont have a specific template we are going to return the default templates
 		return $this->render($defaultTemplate, $variables); ;
