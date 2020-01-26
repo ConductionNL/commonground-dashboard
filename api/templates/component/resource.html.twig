@@ -5,11 +5,11 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/dashboard_h1.html.twig' %}
+            {% include 'widgets/components_header.html.twig' %}
 
-            <div class="page-inner mt--5">
-                <div class="row">                
-					<div class="col-md-8">
+            <div class="page-inner">
+                <div class="row">
+        			<div class="col-md-8">
 						<div class="card">							
 		                	<form method="post" action="#" class="affa-form-contact" >
     							<div class="card-header">
@@ -36,27 +36,24 @@
     							</div><!-- /.card-action -->
 							</form>
 						</div><!-- /.card -->
-						
-                	</div><!-- /.col -->
-					<div class="col-md-4">
+                	</div><!-- /.coll -->
+        			<div class="col-md-4">        	
 						<div class="card">							
     							<div class="card-header">
     								<div class="card-title">Connected Resources</div>
     							</div><!-- /.card-header -->
     							<div class="card-body">			
     								<small class="form-text text-muted">This resource is connected to the following resources</small>	
-    							
-    							
     							</div><!-- /.card-body -->
 						</div><!-- /.card -->
-                	</div><!-- /.col -->
-            	</div><!-- /.row -->
-            </div><!-- /.page-inner -->
+                	</div><!-- /.coll -->
+        		</div><!-- /.row -->
+        	</div><!-- /.page-inner -->
         </div><!-- /.container -->
 
-    {% include 'footer.html.twig' %}
+        {% include 'footer.html.twig' %}
 
-    </div><!-- /.main-panel- -->
+    </div><!-- /.main-panel -->
 
 {% endblock %}
 
