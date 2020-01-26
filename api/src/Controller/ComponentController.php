@@ -102,20 +102,26 @@ class ComponentController extends AbstractController
 		// Let proces any post requests
 		if($request->getMethod() == "POST"){
 			
-			foreach($request->request->getAll() as $property ){
-				var_dump($property);
+			/*
+			foreach($request->request->all() as $key => $property ){
+				$variables['resource'][$key] = $property;
+				
 			}
+			*/
+			//var_dump(json_encode($variables['resource']));
 			
 			// Try to save
-			if($variables['resource'] = $commonGroundService->updateResource($variables['resource'], $variables['component']['href'].$resourcetype.$variables['id'])){
+			if($variables['resource'] = $commonGroundService->updateResource($request->request->all(), $variables['component']['href'].$resourcetype)){
 				//seces
+				//var_dump(json_encode($request->request->all()));
 				var_dump('succes');
-				die;
+				//var_dump($variables['resource']);
+				//die;
 			}
 			else{
 				// error
 				var_dump('error');
-				die;
+				//die;
 			}
 		}
 		
