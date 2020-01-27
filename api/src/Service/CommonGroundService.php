@@ -130,7 +130,14 @@ class CommonGroundService
 			]
 		);
 
+		// Temp error hunting
+		if($response->getStatusCode != '200'){
+			var_dump($response->getBody());
+			die;
+		}
+			
 		$response = json_decode($response->getBody(), true);
+		
 		
 		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
@@ -154,6 +161,12 @@ class CommonGroundService
 				'body' => json_encode($resource)
 			]
 		);
+		
+		// Temp error hunting
+		if($response->getStatusCode != '200'){
+			var_dump($response->getBody());
+			die;
+		}
 		
 		$response = json_decode($response->getBody(), true);
 		
