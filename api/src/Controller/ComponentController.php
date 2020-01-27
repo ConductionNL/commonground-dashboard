@@ -39,10 +39,13 @@ class ComponentController extends AbstractController
 	 */
 	public function componentAction(Request $request, CommonGroundService $commonGroundService, $component)
 	{
-		$components = $commonGroundService->getComponentList();
-		$component= $commonGroundService->getComponent($component);
+		$variables=[];
 		
-		return ["component"=>$component];
+		$variables['component'] = $commonGroundService->getComponent($component);
+		$variables['components'] = $commonGroundService->getComponentList();
+		$variables['componentName'] = $component;
+				
+		return $variables;
 	}
 	
 	/**
