@@ -71,6 +71,9 @@ class ComponentController extends AbstractController
 		
 		$resources = $commonGroundService->getResource($variables['component']['href'].$resourcetype);
 		
+		
+		$loader = $this->get('twig')->getLoader();
+		
 		// Lets find out if we have one or more results
 		if(array_key_exists ("hydra:member",$resources)){
 			$variables['resources'] = $resources["hydra:member"];
@@ -80,7 +83,6 @@ class ComponentController extends AbstractController
 			//var_dump($component.'/'.ltrim($variables['resourceName'], '/').'/index.html.twig');
 			
 			// Lets try to find a specific template
-			$loader = $this->get('twig')->getLoader();
 			if ($loader->exists($component.'/'.ltrim($variables['resourceName'], '/').'/index.html.twig')) {
 				$defaultTemplate = $component.'/'.ltrim($variables['resourceName'], '/').'/index.html.twig';
 			}	
@@ -92,11 +94,33 @@ class ComponentController extends AbstractController
 			$defaultTemplate = 'component/resource.html.twig';
 									
 			// Lets try to find a specific template
-			$loader = $this->get('twig')->getLoader();
 			if ($loader->exists($component.'/'.ltrim($variables['resourceName'], '/').'/edit.html.twig')) {
 				$defaultTemplate = $component.'/'.ltrim($variables['resourceName'], '/').'/edit.html.twig';
 			}	
 			
+			// Let see if the resource has a type that we need to take into acount
+			if(array_key_exists("request_type", $variables['resource']) || array_key_exists("type", $variables['resource'])){
+				// Get resource type as variable
+				$type = $variables['resource']['request_type'];
+				
+				if(!$type){
+					$type = $variables['resource']['type'];
+				}
+				
+				// Temporary overrides
+				if($type == 'http://vtc.zaakonline.nl/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1'){
+					$type = 'huwelijk';
+				}
+				if($type == 'https://vtc.zaakonline.nl/request_types/9d76fb58-0711-4437-acc4-9f4d9d403cdf'){
+					$type = 'verhuizen';
+				}
+				
+				
+												
+				if ($loader->exists($component.'/'.ltrim($variables['resourceName'], '/').'/edit_'.$type.'.html.twig')) {
+					$defaultTemplate = $component.'/'.ltrim($variables['resourceName'], '/').'/edit_'.$type.'.html.twig';
+				}
+			}	
 		}
 		
 		// Let proces any post requests
@@ -111,17 +135,12 @@ class ComponentController extends AbstractController
 			//var_dump(json_encode($variables['resource']));
 			
 			// Try to save
-			if($variables['resource'] = $commonGroundService->updateResource($request->request->all(), $variables['component']['href'].$resourcetype)){
-				//seces
-				//var_dump(json_encode($request->request->all()));
-				var_dump('succes');
-				//var_dump($variables['resource']);
-				//die;
+			if($variables['resource'] = $commonGroundService->updateResource($request->request->all(), $variables['component']['href'].$resourcetype)){				
+				$this->addFlash('success','Resource '.$variables['resource']['@id'].' is bijgewerkt');
 			}
 			else{
-				// error
-				var_dump('error');
-				//die;
+				
+				$this->addFlash('danger', 'Resource '.$variables['resource']['@id'].' kon niet worden bijgewerkt');
 			}
 		}
 		

@@ -1,0 +1,72 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/components_header.html.twig' %}
+
+            <div class="page-inner">
+                <div class="row">
+        			<div class="col-md-8">
+						<div class="card">							
+		                	<form method="post" action="#" class="affa-form-contact" >
+    							<div class="card-header">
+    								<div class="card-title">Verhuizen</div>
+    							</div><!-- /.card-header -->
+    							<div class="card-body">
+    									{{ jsondump }}
+    									{# for key,property in resource._embedded %}
+    										{% if property is not iterable %}
+    										    {{ key }} -> {{ property }}
+    										{% else %}
+    									    {% for subkey,subproperty in property %}
+    										{% if subproperty is not iterable %}
+    									    	{{ key }} -> {{ subkey }} -> {{ property }}
+    									    {% endif %}
+    									    {% endfor %}
+    											
+    										{% endif %}
+    									
+    									{% endfor #}
+    							</div><!-- /.card-body -->
+    							<div class="card-action">
+    								
+    							</div><!-- /.card-action -->
+							</form>
+						</div><!-- /.card -->
+                	</div><!-- /.coll -->
+        			<div class="col-md-4">        	
+						<div class="card">							
+    							<div class="card-header">
+    								<div class="card-title">Connected Resources</div>
+    							</div><!-- /.card-header -->
+    							<div class="card-body">			
+    								<small class="form-text text-muted">This resource is connected to the following resources</small>	
+    							</div><!-- /.card-body -->
+						</div><!-- /.card -->
+                	</div><!-- /.coll -->
+        		</div><!-- /.row -->
+        	</div><!-- /.page-inner -->
+        </div><!-- /.container -->
+
+        {% include 'footer.html.twig' %}
+
+    </div><!-- /.main-panel -->
+
+{% endblock %}
+
+{% block javascript %}
+	<!-- Summernote -->
+	<script src="/assets/js/plugin/summernote/summernote-bs4.min.js"></script>
+	
+	<script>
+		$('#content').summernote({
+			placeholder: 'Atlantis',
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+			tabsize: 2,
+			height: 300
+		});
+	</script>
+{% endblock %}
