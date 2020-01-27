@@ -44,30 +44,63 @@
                                 </div><!-- /.card-head-row -->
                             </div><!-- /.card-header -->
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                    	<td>Id</td>
-                                    	<td>Name</td>
-                                    	<td>Created</td>
-                                    	<td>Updated</td>
-                                    	<td>Edit</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                        			{% for index, resource in resources %}
-                                    <tr>
-                                        <td>{{ resource.id }}</td>
-                                        <td>{% if resource.name is defined %}{{ resource.name }}{% endif %}</td>
-                                        <td>{% if resource.createdAt is defined %}{{ resource.createdAt }}{% endif %}</td>
-                                        <td>{% if resource.UpdatedAt is defined %}{{ resource.UpdatedAt }}{% endif %}</td>
-                                        <td><a href="{{ path('app_component_resource',{'component':componentName,'resourcetype':resource['@id']}) }}" target="_blank" class="btn btn-info">
-        											<span class="btn-label">
-        												<i class="icon-note"></i>
-        											</span>Edit</a></td>
-                                    </tr>
-                        			{% endfor %}
-                                    </tbody>
+			{% for index, request in resources %}
+            <a href="{{ path('app_component_resource',{'component':'requests','resourcetype':request['@id']}) }}">
+                <div class="d-flex">
+                    <div class="avatar avatar-online">
+                     	<span class="avatar-title rounded-circle border border-white bg-info">V</span>
+                    </div>
+                    <div class="flex-1 ml-3 pt-1">
+                        <h6 class="text-uppercase fw-bold mb-1">{% if commonground_resource(request.request_type) %}{{commonground_resource(request.request_type).name  }}{% else %}{{ request.request_type }}{% endif %} <span class="{% if  request.status =='cancelled' %}text-danger{% elseif request.status=='submitted' %}text-warning{% elseif request.status=='processed' %}text-success{% elseif request.status=='incomplete' %}text-muted{% endif %} pl-3">{{ request.status }}</span></h6>
+                        <span class="text-muted">
+                        {% if request.submitters is defined and request.submitters is not empty %}
+                            {% for index, submitter in request.submitters %}
+                            {%  set persoon =  commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ submitter.person) %}
+                                {% if persoon.naam is defined %}
+                                    {{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}
+                                {% else %}
+                                    {{ submitter }}               
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                        
+                        {% if request.submitter is defined and request.submitter is not empty %}
+                            {% set persoon = commonground_resource("https://brp.zaakonline.nl/ingeschrevenpersonen/" ~ request.submitter) %}
+                            {% if persoon.naam is defined %}{{ persoon.naam.geslachtsnaam  }}, {{ persoon.naam.voornamen  }} {{ persoon.naam.voorvoegsel  }}    
+                            {% else %} 
+                            {{ request.submitter }}                  
+                            {% endif %}                              
+                        {% endif %}                        
+                        </span>
+                        {% if 
+                                (
+                                    request.submitters is not defined or 
+                                    (
+                                        request.submitters is defined and  
+                                            (request.submitters|length == 0 or 
+                                            request.submitters is empty)
+                                        )
+                                ) 
+                            and 
+                                (
+                                    request.submitter is not defined or 
+                                        (
+                                        request.submitter is defined and 
+                                        request.submitter is empty
+                                        )
+                                ) %}
+                        <span class="text-danger">Geen indiener(s) bekend</span>
+                        {% endif %}
+                    </div>
+                    <div class="float-right pt-1">
+                        <small class="text-muted">{{ request.created_at }}</small> 
+                    </div>
+                </div>
+            </a>
+            {% if loop.last == false %}
+            <div class="separator-dashed"></div>
+            {% endif %}
+			{% endfor %}    
                                 </table> 
                     		</div><!-- /.card-body -->
     						<div class="card-action">

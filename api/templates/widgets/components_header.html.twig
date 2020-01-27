@@ -2,25 +2,34 @@
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">{% block title %}{{ resourceType|trim('/')|capitalize  }}{% endblock %}</h2>
+                <h2 class="text-white pb-2 fw-bold">{% block title %}
+{% if resourceType is defined %}{{ resourceType|trim('/')|capitalize  }}{% else %}Dashboard{% endif %}{% endblock %}</h2>
                 <h5 class="text-white op-7 mb-2">{% block breadcrumbs %}
 						
 								<a href="{{ path('app_default_index') }}">
 									<i class="flaticon-home"></i>
 									Dashboard
 								</a>
+								
+								{% if component is defined %}
 								<i class="flaticon-right-arrow"></i> 
 								<a href="{{ path('app_component_component',{'component':componentName}) }}">
 									<i class="{{ component.icon }}"></i>
 									{{ componentName }}</a>
+								{% endif %}	
+								{% if resourceType is defined %}
 								<i class="flaticon-right-arrow"></i>
 								<a href="{{ path('app_component_resource',{'component':componentName,'resourcetype':resourceType}) }}">
-                                {{ resourceType|trim('/')|capitalize  }}</a>
+                                {{ resourceType|trim('/')|capitalize  }}                                
+								{% endif %}	</a>
 						</ul>{% endblock %}</h5>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
 	            {% block buttons %}
-                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage {{ componentName }}</a>
+	            
+								{% if componentName is defined %}
+                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage {{ componentName }}</a>           
+								{% endif %}	
                 {% if resources is defined %}<a href="#" class="btn btn-secondary btn-round">Add {{ resourceType|trim('/')}}</a>{% endif %}
                 
                 {% endblock %}
