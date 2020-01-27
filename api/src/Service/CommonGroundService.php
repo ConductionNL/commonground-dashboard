@@ -131,7 +131,7 @@ class CommonGroundService
 		);
 
 		// Temp error hunting
-		if($response->getStatusCode != '200'){
+		if($response->getStatusCode() != '200'){
 			var_dump($response->getBody());
 			die;
 		}
@@ -163,7 +163,7 @@ class CommonGroundService
 		);
 		
 		// Temp error hunting
-		if($response->getStatusCode != '200'){
+		if($response->getStatusCode() != '200'){
 			var_dump($response->getBody());
 			die;
 		}
@@ -242,11 +242,12 @@ class CommonGroundService
 	 */
 	public function getComponent($id)
 	{
-		$components = $this->getComponentList();
-		if(in_array($id, $components)){
+		$components= $this->getComponentList();
+		
+		if(!array_key_exists($id, $components)){
 			return false;
 		}
-		
+				
 		return $components[$id];		
 	}
 

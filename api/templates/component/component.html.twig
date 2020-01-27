@@ -15,7 +15,7 @@
 				            {% for index,href in component.resources %}	
 				            {% if index not in ['@context','@id','@type'] %}
                 			<div class="col-md-4">
-                				<a href="{{ path('app_component_resource',{'component':index,'resourcetype':href}) }}">
+                				<a href="{{ path('app_component_resource',{'component':componentName,'resourcetype':href}) }}">
     							<div class="card card-stats card-round">
     								<div class="card-body ">
     									<div class="row align-items-center">
@@ -23,11 +23,11 @@
     											<div class="icon-big text-center icon-primary bubble-shadow-small">
     												<i class="{{ component.icon }}"></i>
     											</div>
-    										</div>
+    										</div> 
     										<div class="col col-stats ml-3 ml-sm-0">
     											<div class="numbers">
     												<p class="card-category">Component</p>
-    												<h4 class="card-title">{{ index }}</h4>
+    												<h4 class="card-title">{{ index|trim('/')|capitalize }}</h4>
     											</div><!-- /.numbers -->
     										</div><!-- /.coll -->
     									</div><!-- /.row -->

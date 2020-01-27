@@ -79,7 +79,7 @@
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#{{ index }}">
                         <i class="{{ component.icon }}"></i>
-                        <p>{{ index }}</p>
+                        <p>{{ index|trim('/')|capitalize|replace({'_': ' '}) }}</p>
                         <span class="caret"></span>
                     </a>
                     {% if component.resources is defined %}
@@ -89,7 +89,7 @@
 				            {% if name not in ['@context','@id','@type'] %}
                             <li>
                                 <a href="{{ path('app_component_resource',{'component':index,'resourcetype':href}) }}">
-                                    <span class="sub-item">{{ name }}</span>
+                                    <span class="sub-item">{{ name|trim('/')|capitalize|replace({'_': ' '}) }}</span>
                                 </a>
                             </li>
                    	        {% endif %}

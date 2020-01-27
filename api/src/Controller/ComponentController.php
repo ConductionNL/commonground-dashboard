@@ -72,7 +72,7 @@ class ComponentController extends AbstractController
 		//$variables['resourceContext'] = $commonGroundService->getResourceContext($variables['component'],$resourcetype);
 		$variables['resourceType'] = $resourcetype;		
 		
-		$resources = $commonGroundService->getResource($variables['component']['href'].$resourcetype, true);
+		$resources = $commonGroundService->getResource($variables['component']['href'].$resourcetype, [], true);
 		
 		
 		$loader = $this->get('twig')->getLoader();
