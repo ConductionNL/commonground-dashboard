@@ -12,16 +12,16 @@
             </tr>
             </thead>
             <tbody>
-			{% for index, alarm in alarms %}
-            <tr>
-                <td>{{ alarm.name }}</td>
-                <td>{{ alarm.summary }}</td>
-                <td>{{ alarm.action }}</td>
-                <td>{{ alarm.trigger }}</td>
-                <td>{{ alarm.duration }}</td>
-                <td><a href="{{ path('app_agenda_edit',{'id':alarm.id}) }}">Edit</a></td>
-            </tr>
-			{% endfor %}
+            {% for index, alarm in alarms %}
+                <tr>
+                    <td>{{ alarm.name }}</td>
+                    <td>{{ alarm.summary }}</td>
+                    <td>{{ alarm.action }}</td>
+                    <td>{{ alarm.trigger }}</td>
+                    <td>{{ alarm.duration }}</td>
+                    <td><a href="{{ path('app_agenda_edit',{'id':alarm.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

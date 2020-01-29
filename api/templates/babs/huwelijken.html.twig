@@ -1,0 +1,68 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Partners</th>
+                            <th scope="col">Locatie</th>
+                            <th scope="col">Datum</th>
+                            <th scope="col">Tijdstip</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Martin Timmers en Anita Henrika de Kieft</td>
+                            <td>Utrecht, Stadhuis grote zaal</td>
+                            <td>10-2-2020</td>
+                            <td>10:50 - 11:50</td>
+                            <td style="">Aangevraagd</td>
+                            <td><a href="{{ path('app_babs_huwelijk') }}">Meer info</a></td>
+                        </tr>
+                        <tr>
+                            <td>Annemarijn van Helvert en Clinton Gavey</td>
+                            <td>Utrecht, Stadhuis kleine zaal</td>
+                            <td>17-2-2020</td>
+                            <td>10:50 - 11:50</td>
+                            <td style="color: limegreen">Bevestigd</td>
+                            <td><a href="#">Meer info</a></td>
+                        </tr>
+                        <tr>
+                            <td>Miley Sinclair en Kevin Ross</td>
+                            <td>Utrecht, Stadhuis grote zaal</td>
+                            <td>24-2-2020</td>
+                            <td>10:50 - 11:50</td>
+                            <td style="color: limegreen">Bevestigd</td>
+                            <td><a href="#">Meer info</a></td>
+                        </tr>
+                        <tr>
+                            <td>John Willem de Kieft en Ranata van der Heijden</td>
+                            <td>Utrecht, Stadskantoor</td>
+                            <td>1-3-2020</td>
+                            <td>10:50 - 11:50</td>
+                            <td>Aangevraagd</td>
+                            <td><a href="#">Meer info</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}
