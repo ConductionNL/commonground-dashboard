@@ -5,22 +5,22 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/dashboard_h1.html.twig' %}
+            {% include 'widgets/components_header.html.twig' %}
 
             <div class="page-inner mt--5">
                 <div class="row">                
 					<div class="col-md-8">
 						<div class="card">							
-		                	<form method="post" action="{{ path('app_resource_template',{'id':template.id}) }}" class="affa-form-contact" >
+		                	<form method="post" action="{{ path('app_component_resource',{'component':componentName,'resourcetype':resource['@id']}) }}" class="affa-form-contact" >
     							<div class="card-header">
-    								<div class="card-title">Template {{ template.id }}</div>
+    								<div class="card-title">Template {{ resource.id }}</div>
     							</div><!-- /.card-header -->
     							<div class="card-body">
     									<div class="row">
     										<div class="col-md-8">
     											<div class="form-group">
     												<label for="name">Name</label>
-    												<input type="name" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ template.name }}">
+    												<input type="name" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ resource.name }}">
     												<small class="form-text text-muted">The internal name of this template</small>
     											</div>	
     										</div><!-- /.col -->	
@@ -28,10 +28,10 @@
     											<div class="form-group">
     												<label for="templateEngine">Template Engine</label>
     												<select class="form-control" id="templateEngine" name="templateEngine">
-    													<option value="twig" {% if template.templateEngine == "twig" %}selected{% endif %}>Twig</option>
-    													<option value="md" {% if template.templateEngine == "md" %}selected{% endif %}>MarkDown</option>
-    													<option value="rts" {% if template.templateEngine == "rts" %}selected{% endif %}>ReStructerdText</option>
-    													<option value="txt" {% if template.templateEngine == "txt" %}selected{% endif %}>Plain Text</option>
+    													<option value="twig" {% if resource.templateEngine == "twig" %}selected{% endif %}>Twig</option>
+    													<option value="md" {% if resource.templateEngine == "md" %}selected{% endif %}>MarkDown</option>
+    													<option value="rts" {% if resource.templateEngine == "rts" %}selected{% endif %}>ReStructerdText</option>
+    													<option value="txt" {% if resource.templateEngine == "txt" %}selected{% endif %}>Plain Text</option>
     												</select>
     												<small class="form-text text-muted">Used to render to HTML</small>
     											</div>	
@@ -41,7 +41,7 @@
     										<div class="col-md-12">
     											<div class="form-group">
     												<label for="description">Description</label>
-    												<textarea class="form-control" id="description" name="description" rows="5">{{ template.description }}
+    												<textarea class="form-control" id="description" name="description" rows="5">{{ resource.description }}
     												</textarea>
     											<small class="form-text text-muted">A description of this template for internal use</small>
     											</div>
@@ -52,7 +52,7 @@
     											<div class="form-group">
     												<label for="content">Content</label>
     												<textarea class="form-control" id="content" name="content" rows="50">
-    													{{ template.content }}
+    													{{ resource.content }}
     												</textarea>
     												<small class="form-text text-muted">The actual content of this templates</small>
     											</div>
@@ -61,7 +61,7 @@
     							</div><!-- /.card-body -->
     							<div class="card-action">
     								<button type="submit" class="btn btn-success">Submit</button>
-    								<a href="{{ path('app_resource_templates') }}" class="btn btn-danger">Cancel</a>
+    								<a href="{# path('app_resource_templates') #}" class="btn btn-danger">Cancel</a>
     							</div><!-- /.card-action -->
 							</form>
 						</div><!-- /.card -->
@@ -74,19 +74,6 @@
     							<div class="card-body">			
     								<small class="form-text text-muted">This template is used in the following places</small>	
     							
-    							
-            				   {% for name, links in template._links %}
-            				   		{% if name != "self" %}
-            				   		<br> 
-            				   		<p>
-            				   	   		<b>{{ name|capitalize }}</b>
-                				        {% for href, link in links %}
-                				   	    {# <a href="">{{ commonground_resource(page.href).name }}</a> #}
-                				   	 	<br> {{ link.href }}
-                				       {% endfor %}
-                				   </p>
-                				   {% endif %}
-            				   {% endfor %}
     							</div><!-- /.card-body -->
 						</div><!-- /.card -->
                 	</div><!-- /.col -->
@@ -100,7 +87,7 @@
 
 {% endblock %}
 
-{% block javascript %}
+{# block javascript %}
 	<!-- Summernote -->
 	<script src="/assets/js/plugin/summernote/summernote-bs4.min.js"></script>
 	
@@ -112,4 +99,4 @@
 			height: 300
 		});
 	</script>
-{% endblock %}
+{% endblock #}

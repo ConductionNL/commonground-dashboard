@@ -48,7 +48,15 @@ class CommonGroundService
 		// Lets start up a default client
 		$this->client= new Client($this->guzzleConfig);
 	}
-
+	
+	/*
+	 * Get a single resource from a common ground componant
+	 */
+	public function getClient()
+	{
+		return  $this->client;
+	}
+	
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -122,7 +130,14 @@ class CommonGroundService
 			]
 		);
 
+		// Temp error hunting
+		if($response->getStatusCode() != '200'){
+			var_dump($response->getBody());
+			die;
+		}
+			
 		$response = json_decode($response->getBody(), true);
+		
 		
 		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
@@ -146,6 +161,12 @@ class CommonGroundService
 				'body' => json_encode($resource)
 			]
 		);
+		
+		// Temp error hunting
+		if($response->getStatusCode() != '200'){
+			var_dump($response->getBody());
+			die;
+		}
 		
 		$response = json_decode($response->getBody(), true);
 		
@@ -221,11 +242,12 @@ class CommonGroundService
 	 */
 	public function getComponent($id)
 	{
-		$components = $this->getComponentList();
-		if(in_array($id, $components)){
+		$components= $this->getComponentList();
+		
+		if(!array_key_exists($id, $components)){
 			return false;
 		}
-		
+				
 		return $components[$id];		
 	}
 

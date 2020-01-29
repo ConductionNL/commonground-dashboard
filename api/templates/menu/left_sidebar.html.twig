@@ -18,6 +18,7 @@
 
                     <div class="collapse in" id="collapseExample">
                         <ul class="nav">
+                        	<!--
                             <li>
                                 <a href="#profile">
                                     <span class="link-collapse">My Profile</span>
@@ -31,6 +32,12 @@
                             <li>
                                 <a href="#settings">
                                     <span class="link-collapse">Settings</span>
+                                </a>
+                            </li>
+                            -->
+                            <li>
+                                <a href="{{ path('app_logout') }}">
+                                    <span class="link-collapse">Logout</span>
                                 </a>
                             </li>
                         </ul>
@@ -72,7 +79,7 @@
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#{{ index }}">
                         <i class="{{ component.icon }}"></i>
-                        <p>{{ component.context['@id'] }}</p>
+                        <p>{{ index|trim('/')|capitalize|replace({'_': ' '}) }}</p>
                         <span class="caret"></span>
                     </a>
                     {% if component.resources is defined %}
@@ -82,7 +89,7 @@
 				            {% if name not in ['@context','@id','@type'] %}
                             <li>
                                 <a href="{{ path('app_component_resource',{'component':index,'resourcetype':href}) }}">
-                                    <span class="sub-item">{{ name }}</span>
+                                    <span class="sub-item">{{ name|trim('/')|capitalize|replace({'_': ' '}) }}</span>
                                 </a>
                             </li>
                    	        {% endif %}

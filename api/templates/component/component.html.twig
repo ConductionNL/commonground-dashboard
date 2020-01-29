@@ -5,111 +5,68 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/dashboard_h1.html.twig' %}
-
-            <div class="page-inner mt--5">
-                <div class="row">                
-					<div class="col-md-8">
-						<div class="card">							
-		                	<form method="post" action="{{ path('app_resource_template',{'id':template.id}) }}" class="affa-form-contact" >
-    							<div class="card-header">
-    								<div class="card-title">Template {{ template.id }}</div>
-    							</div><!-- /.card-header -->
-    							<div class="card-body">
-    									<div class="row">
-    										<div class="col-md-8">
-    											<div class="form-group">
-    												<label for="name">Name</label>
-    												<input type="name" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ template.name }}">
-    												<small class="form-text text-muted">The internal name of this template</small>
-    											</div>	
-    										</div><!-- /.col -->	
-    										<div class="col-md-4">
-    											<div class="form-group">
-    												<label for="templateEngine">Template Engine</label>
-    												<select class="form-control" id="templateEngine" name="templateEngine">
-    													<option value="twig" {% if template.templateEngine == "twig" %}selected{% endif %}>Twig</option>
-    													<option value="md" {% if template.templateEngine == "md" %}selected{% endif %}>MarkDown</option>
-    													<option value="rts" {% if template.templateEngine == "rts" %}selected{% endif %}>ReStructerdText</option>
-    													<option value="txt" {% if template.templateEngine == "txt" %}selected{% endif %}>Plain Text</option>
-    												</select>
-    												<small class="form-text text-muted">Used to render to HTML</small>
-    											</div>	
-    										</div><!-- /.col -->
-    									</div><!-- /.row -->	
-    									<div class="row">
-    										<div class="col-md-12">
-    											<div class="form-group">
-    												<label for="description">Description</label>
-    												<textarea class="form-control" id="description" name="description" rows="5">{{ template.description }}
-    												</textarea>
-    											<small class="form-text text-muted">A description of this template for internal use</small>
+            {% include 'widgets/components_header.html.twig' %}
+            
+            <div class="page-inner">
+                <div class="row">
+        			<div class="col-md-8">
+                        <div class="row">                        
+                        {% if component.resources is defined and component.resources is not empty %}	
+				            {% for index,href in component.resources %}	
+				            {% if index not in ['@context','@id','@type'] %}
+                			<div class="col-md-4">
+                				<a href="{{ path('app_component_resource',{'component':componentName,'resourcetype':href}) }}">
+    							<div class="card card-stats card-round">
+    								<div class="card-body ">
+    									<div class="row align-items-center">
+    										<div class="col-icon">
+    											<div class="icon-big text-center icon-primary bubble-shadow-small">
+    												<i class="{{ component.icon }}"></i>
     											</div>
-    										</div><!-- /.col -->	
-    									</div><!-- /.row -->	
-    									<div class="row">
-    										<div class="col-md-12">
-    											<div class="form-group">
-    												<label for="content">Content</label>
-    												<textarea class="form-control" id="content" name="content" rows="50">
-    													{{ template.content }}
-    												</textarea>
-    												<small class="form-text text-muted">The actual content of this templates</small>
-    											</div>
-    										</div><!-- /.col -->		
-    									</div><!-- /.row -->							
-    							</div><!-- /.card-body -->
-    							<div class="card-action">
-    								<button type="submit" class="btn btn-success">Submit</button>
-    								<a href="{{ path('app_resource_templates') }}" class="btn btn-danger">Cancel</a>
-    							</div><!-- /.card-action -->
-							</form>
-						</div><!-- /.card -->
-                	</div><!-- /.col -->
-					<div class="col-md-4">
+    										</div> 
+    										<div class="col col-stats ml-3 ml-sm-0">
+    											<div class="numbers">
+    												<p class="card-category">Component</p>
+    												<h4 class="card-title">{{ index|trim('/')|capitalize }}</h4>
+    											</div><!-- /.numbers -->
+    										</div><!-- /.coll -->
+    									</div><!-- /.row -->
+    								</div><!-- /.card-body -->
+    							</div><!-- /.card -->
+    						</a>
+                        	</div><!-- /.coll -->
+                        {% endif %}{% endfor %}{% endif %}
+                		</div><!-- /.row -->
+                	</div><!-- /.coll -->
+                	
+        			<div class="col-md-4">
 						<div class="card">							
     							<div class="card-header">
-    								<div class="card-title">Template usage</div>
+                                    <div class="card-head-row">
+        								<div class="card-title">Settings</div>
+                                        <div class="card-tools">
+                                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
+                                                id="pills-tab" role="tablist">
+                                                
+                                                <li class="nav-item">
+                                                    <a class="nav-link succes" id="pills-all" 
+                                                       href="#pills-today" >+</a>
+                                                </li>
+                                            </ul>
+                                        </div><!-- /.card-tools -->
+                                    </div><!-- /.card-head-row -->
     							</div><!-- /.card-header -->
     							<div class="card-body">			
-    								<small class="form-text text-muted">This template is used in the following places</small>	
-    							
-    							
-            				   {% for name, links in template._links %}
-            				   		{% if name != "self" %}
-            				   		<br> 
-            				   		<p>
-            				   	   		<b>{{ name|capitalize }}</b>
-                				        {% for href, link in links %}
-                				   	    {# <a href="">{{ commonground_resource(page.href).name }}</a> #}
-                				   	 	<br> {{ link.href }}
-                				       {% endfor %}
-                				   </p>
-                				   {% endif %}
-            				   {% endfor %}
+    								<small class="form-text text-muted">Een kort overzicht van wat er voor dit component is geconfigureerd</small>	
     							</div><!-- /.card-body -->
 						</div><!-- /.card -->
-                	</div><!-- /.col -->
-            	</div><!-- /.row -->
-            </div><!-- /.page-inner -->
+                	</div><!-- /.coll -->
+        		</div><!-- /.row -->
+        	</div><!-- /.page-inner -->
         </div><!-- /.container -->
 
-    {% include 'footer.html.twig' %}
+        {% include 'footer.html.twig' %}
 
-    </div><!-- /.main-panel- -->
+    </div><!-- /.main-panel -->
 
-{% endblock %}
-
-{% block javascript %}
-	<!-- Summernote -->
-	<script src="/assets/js/plugin/summernote/summernote-bs4.min.js"></script>
-	
-	<script>
-		$('#content').summernote({
-			placeholder: 'Atlantis',
-			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-			tabsize: 2,
-			height: 300
-		});
-	</script>
 {% endblock %}
