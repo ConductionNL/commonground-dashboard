@@ -1,0 +1,52 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+<div class="main-panel">
+    <div class="container">
+
+        {% include 'widgets/babs/title_h1.html.twig' %}
+
+        <div class="page-inner">
+            <div class="row">
+                <div style="margin-top: -50px;" class="col-md-8">
+                    <div class="card p-4 full-height">
+                        <h2>Plechtigheid</h2>
+                        <p>Partnerschap</p>
+                        <h2>Datum en tijdstip</h2>
+                        <p>10-2-2020<br>
+                           10:50 - 11:50</p>
+                        <h2>Locatie</h2>
+                        <p>Utrecht <br>
+                            Stadhuis grote zaal</p>
+                        <h2>Getuigen</h2>
+                        <p>Annemarijn van Helvert<br>
+                           Clinton gavey<br>
+                           Miley Sinclair</p>
+                        <h2>Extra's</h2>
+                        <p>Trouwboekje</p>
+                    </div>
+                </div>
+                <div style="margin-top: -50px;" class="col-md-4">
+                    <div class="card p-4" style="background: limegreen">
+                        <a style="width: 100%;height: 100%;" href="{{ path('app_babs_huwelijken') }}">
+                            <h2 style="color: white; text-align: center;">Accepteren</h2>
+                        </a>
+                    </div>
+                    <div class="card p-4" style="background: red">
+                        <a style="width: 100%;height: 100%;" href="{{ path('app_babs_huwelijken') }}">
+                            <h2 style="color: white; text-align: center;">Afwijzen</h2>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+</div>
+
+    {% endblock %}

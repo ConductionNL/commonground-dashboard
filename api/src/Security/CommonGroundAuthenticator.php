@@ -16,6 +16,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Service\CommonGroundService;
 
 class CommonGroundAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -24,12 +25,14 @@ class CommonGroundAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    private $commonGroundService;
+    
+    public function __construct(UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, CommonGroundService $commonGroundService)
     {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+    	$this->commonGroundService = $commonGroundService;
     }
 
     public function supports(Request $request)
@@ -74,7 +77,21 @@ class CommonGroundAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        
+    	// We need some advanced checks so we are going to true get client
+    	$client = $this->commonGroundService->getClient();
+    	
+    	// We probabibly want to make the user component configurabele
+    	$response = $client->request('POST','uc.zaakonline.nl/users/login', ['body' => json_encode($credentials)]
+    	);
+        
+    	if($response->getStatusCode() == 200){
+    		return true;    		
+    	}
+    	else{
+    		return false;    
+    	}
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
