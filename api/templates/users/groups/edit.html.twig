@@ -1,0 +1,87 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/components_header.html.twig' %}
+
+            <div class="page-inner mt--5">
+                <div class="row">                
+					<div class="col-md-8">
+						<div class="card">							
+		                	<form method="post" action="{{ path('app_component_resource',{'component':componentName,'resourcetype':resource['@id']}) }}" class="affa-form-contact" >
+    							<div class="card-header">
+    								<div class="card-title">Template {{ resource.id }}</div>
+    							</div><!-- /.card-header -->
+    							<div class="card-body">
+    									<div class="row">
+    										<div class="col-md-8">
+    											<div class="form-group">
+    												<label for="name">Name</label>
+    												<input type="name" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ resource.name }}">
+    												<small class="form-text text-muted">The name of this group</small>
+    											</div>	
+    										</div><!-- /.col -->	
+    										<div class="col-md-4">
+    											<div class="form-group">
+    												<label for="templateEngine">Parent</label>
+    												<select class="form-control" id="templateEngine" name="parent">
+    												</select>
+    												<small class="form-text text-muted">The (optional) parent group</small>
+    											</div>	
+    										</div><!-- /.col -->
+    									</div><!-- /.row -->	
+    									<div class="row">
+    										<div class="col-md-12">
+    											<div class="form-group">
+    												<label for="description">Description</label>
+    												<textarea class="form-control" id="description" name="description" rows="5">{{ resource.description }}
+    												</textarea>
+    											<small class="form-text text-muted">A description of this group for internal use</small>
+    											</div>
+    										</div><!-- /.col -->	
+    									</div><!-- /.row -->		
+    							</div><!-- /.card-body -->
+    							<div class="card-action">
+    								<button type="submit" class="btn btn-success">Submit</button>
+    								<a href="{# path('app_resource_templates') #}" class="btn btn-danger">Cancel</a>
+    							</div><!-- /.card-action -->
+							</form>
+						</div><!-- /.card -->
+                	</div><!-- /.col -->
+					<div class="col-md-4">
+						<div class="card">							
+    							<div class="card-header">
+    								<div class="card-title">Users</div>
+    							</div><!-- /.card-header -->
+    							<div class="card-body">			
+    								<small class="form-text text-muted">This users in this group</small>	
+    							
+    							</div><!-- /.card-body -->
+						</div><!-- /.card -->
+                	</div><!-- /.col -->
+            	</div><!-- /.row -->
+            </div><!-- /.page-inner -->
+        </div><!-- /.container -->
+
+    {% include 'footer.html.twig' %}
+
+    </div><!-- /.main-panel- -->
+
+{% endblock %}
+
+{# block javascript %}
+	<!-- Summernote -->
+	<script src="/assets/js/plugin/summernote/summernote-bs4.min.js"></script>
+	
+	<script>
+		$('#content').summernote({
+			placeholder: 'Atlantis',
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+			tabsize: 2,
+			height: 300
+		});
+	</script>
+{% endblock #}

@@ -60,7 +60,7 @@
                                     <tr>
                                         <td>{{ resource.id }}</td>
                                         <td>{% if resource.name is defined %}{{ resource.name }}{% endif %}</td>
-                                        <td>{% for index, page in resource.pages %} /{{  page.slug.slug }} ({{ page.application.name }}) {% endfor %}
+                                        <td>
                             		    </td>
                                         <td>{% if resource.createdAt is defined %}{{ resource.createdAt }}{% endif %}</td>
                                         <td>{% if resource.UpdatedAt is defined %}{{ resource.UpdatedAt }}{% endif %}</td>
