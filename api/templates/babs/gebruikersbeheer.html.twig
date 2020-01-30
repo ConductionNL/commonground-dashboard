@@ -1,0 +1,70 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card p-4 full-height">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Functie/Rol</th>
+                            <th><button style="float: right" class="btn btn-success">Opslaan</button></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>Dhr Erik Hendrik</td>
+                            <td>
+                                <form>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Trouwambtenaar</option>
+                                        <option>Medewerker</option>
+                                        <option>Beheerder</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Mvr Ike van den Pol</td>
+                            <td>
+                                <form>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Trouwambtenaar</option>
+                                        <option>Medewerker</option>
+                                        <option>Beheerder</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Dhr Rene Gulje</td>
+                            <td>
+                                <form>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Trouwambtenaar</option>
+                                        <option>Medewerker</option>
+                                        <option>Beheerder</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}
