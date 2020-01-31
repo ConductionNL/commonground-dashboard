@@ -10,7 +10,9 @@
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
 
-                    <div id="calendar" ></div>
+                    <div id="calendar"></div>
+                    
+                    
 
                 </div>
             </div>
@@ -21,5 +23,111 @@
         {% include 'footer.html.twig' %}
 
     </div>
+	
+{% endblock %}
 
+{% block javascript %}
+
+
+	<script>
+		/* initialize the calendar
+		-----------------------------------------------------------------*/
+		$(document).ready(function () {
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+			var className = Array('fc-primary', 'fc-danger', 'fc-black', 'fc-success', 'fc-info', 'fc-warning', 'fc-danger-solid', 'fc-warning-solid', 'fc-success-solid', 'fc-black-solid', 'fc-success-solid', 'fc-primary-solid');
+
+			$calendar = $('#calendar');
+			$calendar.fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay,listWeek'
+				},
+				selectable : true,
+				selectHelper: true,
+				select: function(start, end) {
+
+					// on select we show the Sweet Alert modal with an input
+					swal({
+						title: 'Create an Event',
+						html: '<br><input class="form-control" placeholder="Event Title" id="input-field">',
+						content: {
+							element: "input",
+							attributes: {
+								placeholder: "Event Title",
+								type: "text",
+								id: "input-field",
+								className: "form-control"
+							},
+						},
+						buttons: {
+							cancel: true,
+							confirm: true,
+						},
+					}).then(
+					function() {
+						var eventData;
+						var classRandom = className[Math.floor(Math.random()*className.length)];
+						event_title = $('#input-field').val();
+
+						if (event_title) {
+							eventData = {
+								title: event_title,
+								start: start,
+								className: classRandom,
+								end: end
+							};
+							$calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
+						}
+
+						$calendar.fullCalendar('unselect');
+					}
+					);
+				},
+				events: [
+				{
+					title: 'Huwelijk',
+					start: new Date(2020, 1, 10, 10, 50),
+					end: new Date(2020, 1, 10, 11, 11),
+					allDay: false,
+					url: '/babs/huwelijk',
+					className: 'fc-danger-solid',
+					description: 'Martin Timmers en Anita Henrika de Kieft'
+				},
+				{
+					title: 'Huwelijk',
+					start: new Date(2020,1, 17, 10, 50), 
+					end: new Date(2020, 1, 17, 11, 11),
+					allDay: false,
+					url: '/babs/huwelijk',
+					className: 'fc-success-solid',
+					description: 'Annemarijn van Helvert en Clinton Gavey'
+				},
+				{
+					title: 'Huwelijk',
+					start: new Date(2020, 1, 24, 10, 50), 
+					end: new Date(2020, 1, 24, 11, 11),
+					allDay: false,
+					url: '/babs/huwelijk',
+					className: 'fc-success-solid',
+					description: 'Miley Sinclair en Kevin Ross'
+				},
+				{
+					title: 'Huwelijk',
+					start: new Date(2020, 2, 1, 10, 50),
+					end: new Date(2020, 2, 1, 11, 11),
+					allDay: false,
+					url: '/babs/huwelijk',
+					className: 'fc-danger-solid',
+					description: 'John Willem de Kieft en Ranata van der Heijden'
+				}
+				],
+
+
+			});
+		});
+	</script>
 {% endblock %}
