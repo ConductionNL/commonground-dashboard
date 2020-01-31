@@ -130,22 +130,20 @@ class CommonGroundService
 			]
 		);
 
+		$resource = json_decode($response->getBody(), true);
+		
 		// Temp error hunting
 		if($response->getStatusCode() != '200'){
-			var_dump($response->getBody());
-			die;
+			return $resource;
 		}
-			
-		$response = json_decode($response->getBody(), true);
-		
 		
 		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
-		$item->set($response);
+		$item->set($resource);
 		$item->expiresAt(new \DateTime('tomorrow'));
 		$this->cash->save($item);
 
-		return $response;
+		return $resource;
 	}
 	
 	/*
@@ -162,18 +160,17 @@ class CommonGroundService
 			]
 		);
 		
-		// Temp error hunting
-		if($response->getStatusCode() != '200'){
-			var_dump($response->getBody());
-			die;
-		}
+		$resource = json_decode($response->getBody(), true);
 		
-		$response = json_decode($response->getBody(), true);
+		// Temp error hunting
+		if($response->getStatusCode() != '201'){
+			return $resource;
+		}
 		
 		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url.'/'.$response['id']));
-		$item->set($response);
-		$item->expiresAt(new \DateTime('tomorrow'));
+		$item->set($resource);
+		$item->$resource(new \DateTime('tomorrow'));
 		$this->cash->save($item);
 		
 		return $response;
