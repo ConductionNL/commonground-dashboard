@@ -138,11 +138,11 @@ class ComponentController extends AbstractController
 			//var_dump(json_encode($variables['resource']));
 			
 			// Try to save
-			if($variables['resource'] = $commonGroundService->updateResource($request->request->all(), $variables['component']['href'].$resourcetype)){				
+			if($variables['resource'] = $commonGroundService->updateResource($request->request->all(), $variables['component']['href'].$resourcetype) && array_key_exists ('@id', $variables['resource'])){				
 				$this->addFlash('success','Resource '.$variables['resource']['@id'].' is bijgewerkt');
 			}
 			else{
-				
+				var_dump($variables['resource']);
 				$this->addFlash('danger', 'Resource '.$variables['resource']['@id'].' kon niet worden bijgewerkt');
 			}
 		}
