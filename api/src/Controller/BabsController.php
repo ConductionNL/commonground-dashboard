@@ -104,6 +104,36 @@ class BabsController extends AbstractController
     }
 
     /**
+     * @Route("/melding/tijdstip-wijzigen")
+     * @Template
+     */
+    public function tijdstipAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "Het tijdstip van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
+        $functie = "Medewerker";
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+    }
+
+    /**
+     * @Route("/melding/babs-wijzigen")
+     * @Template
+     */
+    public function babsAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "De toegewezen babs van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
+        $functie = "Medewerker";
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+    }
+
+    /**
      * @Route("/locaties")
      * @Template
      */
