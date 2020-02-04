@@ -52,7 +52,7 @@ class BabsController extends AbstractController
 
         $babsschets = "";
 
-        $h1 = "Huwelijk van Martin Timmers en Anita Henrika de Kieft";
+        $h1 = "Martin Timmers en Anita Henrika de Kieft hebben u gekozen als trouwambtenaar";
         $functie = "Trouwambtenaar";
 
         return ["babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
