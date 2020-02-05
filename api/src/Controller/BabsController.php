@@ -52,7 +52,7 @@ class BabsController extends AbstractController
 
         $babsschets = "";
 
-        $h1 = "Huwelijk van Martin Timmers en Anita Henrika de Kieft";
+        $h1 = "Martin Timmers en Anita Henrika de Kieft hebben u gekozen als trouwambtenaar";
         $functie = "Trouwambtenaar";
 
         return ["babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
@@ -98,6 +98,36 @@ class BabsController extends AbstractController
         $babsschets = "";
 
         $h1 = "Het huwelijksoverzicht van Martin Timmers en Anita Henrika de Kieft";
+        $functie = "Medewerker";
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+    }
+
+    /**
+     * @Route("/melding/tijdstip-wijzigen")
+     * @Template
+     */
+    public function tijdstipAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "Het tijdstip van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
+        $functie = "Medewerker";
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+    }
+
+    /**
+     * @Route("/melding/babs-wijzigen")
+     * @Template
+     */
+    public function babsAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "De toegewezen babs van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
         $functie = "Medewerker";
 
         return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
