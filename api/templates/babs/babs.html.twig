@@ -1,0 +1,96 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+<div class="main-panel">
+    <div class="container">
+
+        {% include 'widgets/babs/title_h1.html.twig' %}
+
+        <div class="page-inner">
+            <div class="row">
+                <div style="margin: auto;margin-top: -50px;" class="col-md-4">
+                    <div class="card p-4 full-height">
+                        <h2>Huidige babs</h2>
+                        <p>Dhr Erik Hendrik</p>
+
+
+                    </div>
+
+                    <div class="card p-4 full-height">
+                        <h2>Babs wijzigen</h2>
+                        <br>
+                        <form>
+                            <select style="width: 75px;" class="form-control d-inline-block">
+                                <option>08</option>
+                                <option>09</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                                <option>15</option>
+                                <option>16</option>
+                            </select>
+                            -
+                            <select style="width: 75px;" class="form-control d-inline-block">
+                                <option>00</option>
+                                <option>05</option>
+                                <option>10</option>
+                                <option>15</option>
+                                <option>20</option>
+                                <option>25</option>
+                                <option>30</option>
+                                <option>35</option>
+                                <option>40</option>
+                                <option>45</option>
+                                <option>50</option>
+                                <option>55</option>
+                            </select>
+                            <br><br>
+                            <p><b>Tot</b></p>
+                            <select style="width: 75px;" class="form-control d-inline-block">
+                                <option>08</option>
+                                <option>09</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                                <option>15</option>
+                                <option>16</option>
+                            </select>
+                            -
+                            <select style="width: 75px;" class="form-control d-inline-block">
+                                <option>00</option>
+                                <option>05</option>
+                                <option>10</option>
+                                <option>15</option>
+                                <option>20</option>
+                                <option>25</option>
+                                <option>30</option>
+                                <option>35</option>
+                                <option>40</option>
+                                <option>45</option>
+                                <option>50</option>
+                                <option>55</option>
+                            </select>
+                            <br>
+
+                            <a href="{{ path('app_babs_melding') }}" class="btn btn-danger" style="margin-top: 20px">Annuleren</a>
+
+                            <button class="btn btn-success" style="margin-top: 20px">Opslaan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+</div>
+
+    {% endblock %}

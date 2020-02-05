@@ -2,6 +2,12 @@
 
 {% block content %}
 
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
     <div class="main-panel">
         <div class="container">
 
@@ -11,50 +17,61 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">Huwelijksgegevens 9/11 <i style="color: limegreen;"
+                                                                                     class="fas fa-check"></i></h2>
+                                <div class="float-right">
+                                    <button class="btn btn-danger" style="margin-right: 25px">Afwijzen</button>
+                                    <button class="btn btn-success">Accepteren</button>
+                                </div>
+                            </div>
                             <table class="table table-hover">
                                 <tr>
-                                    <th>Plechtigheid</th>
+                                    <th>Ceremonie <i style="color: limegreen;" class="fas fa-check"></i></th>
+                                    <td>Huwelijk</td>
+                                </tr>
+                                <tr>
+                                    <th>Plechtigheid <i style="color: limegreen;" class="fas fa-check"></i></th>
                                     <td>Partnerschap</td>
-                                    <td></td>
-                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <th>Datum</th>
+                                    <th>Locatie <i style="color: limegreen;" class="fas fa-check"></i></th>
+                                    <td>Utrecht, stadhuis grote zaal</td>
+                                </tr>
+                                <tr>
+                                    <th>Datum <i style="color: limegreen;" class="fas fa-check"></i></th>
                                     <td>10-2-2020</td>
-                                    <td></td>
-                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <th>Tijdstip</th>
+                                    <th>Tijdstip <i style="color: limegreen;" class="fas fa-check"></i></th>
                                     <td>10:50 - 11:50</td>
-                                    <td></td>
-                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <th>Locatie</th>
-                                    <td>Utrecht, stadhuiz grote zaal</td>
-                                    <td></td>
-                                    <td></td>
+                                    <th>Getuigen <i style="color: red;">X</i></th>
+                                    <td>John Doe<br>
+                                        Jane Doe
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th>Getuigen</th>
-                                    <td>Annemarijn van Helvert<br>
-                                        Clinton gavey<br>
-                                        Miley Sinclair</td>
-                                    <td></td>
-                                    <td></td>
+                                    <th>Tolk <i style="color: limegreen;" class="fas fa-check"></i></th>
+                                    <td style="color: lightgray">Niet van toepassing</td>
                                 </tr>
                                 <tr>
-                                    <th>Extra's</th>
+                                    <th>Extra's <i style="color: limegreen;" class="fas fa-check"></i></th>
                                     <td>Trouwboek</td>
-                                    <td></td>
-                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>Status <i style="color: red;">X</i></th>
+                                    <td>In afwachting</td>
+                                </tr>
+                                <tr>
+                                    <th>Betaald <i style="color: limegreen;" class="fas fa-check"></i></th>
+                                    <td>Ja</td>
                                 </tr>
                             </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card p-4 full-height">
+
+                            <br>
+
                             <table class="table table-hover">
                                 <tr>
                                     <th>Datum verzoek verzonden</th>
@@ -63,18 +80,6 @@
                                 <tr>
                                     <th>Tijdstip verzoek verzonden</th>
                                     <td>16:30</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card p-4">
-                            <table class="table">
-                                <tr>
-                                    <td><button style="float: right" class="btn btn-success">Accepteren</button></td>
-                                    <td><button style="float: right" class="btn btn-danger">Afwijzen</button></td>
                                 </tr>
                             </table>
                         </div>
