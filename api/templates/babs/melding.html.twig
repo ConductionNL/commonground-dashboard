@@ -18,7 +18,8 @@
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2 class="d-inline-block">Huwelijksgegevens 9/11 <i style="color: limegreen;" class="fas fa-check"></i></h2>
+                                <h2 class="d-inline-block">Huwelijksgegevens 9/11 <i style="color: limegreen;"
+                                                                                     class="fas fa-check"></i></h2>
                                 <div class="float-right">
                                     <button class="btn btn-danger" style="margin-right: 25px">Afkeuren</button>
                                     <button class="btn btn-success">Goedkeuren</button>
@@ -171,6 +172,16 @@
                                     <th>Anita Henrika de Kieft</th>
                                 </tr>
                                 <tr>
+                                    <th>Telefoonnummer</th>
+                                    <td>06 12345678</td>
+                                    <td>06 12345678</td>
+                                </tr>
+                                <tr>
+                                    <th>E-mail</th>
+                                    <td>martin@timmers.com</td>
+                                    <td>anita@dekieft.com</td>
+                                </tr>
+                                <tr>
                                     <th>Naamgebruik</th>
                                     <td>Timmers</td>
                                     <td>Henrika Timmers</td>
@@ -206,7 +217,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <th>Opmerking</th>
+                                    <th>Speciale opmerking</th>
                                     <td style="color: lightgray">Niet van toepassing</td>
                                     <td style="color: lightgray">Niet van toepassing</td>
                                 </tr>
@@ -215,10 +226,28 @@
                     </div>
                 </div>
 
-                {% include 'footer.html.twig' %}
-
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">Contact momenten</h2>
+                                <button style="padding: 7px 14px 7px 14px;" type="button"
+                                        class="btn btn-primary float-right"
+                                        data-toggle="modal" data-target="#contactModal"><i style=""
+                                                                                           class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div style="margin-left: 12.5px;border-bottom: 1px solid #ebecec">
+                                <h4 style="margin: 10px; margin-top: 20px"><b>24-1-2020</b></h4>
+                                <h5 style="margin: 10px"><b>Opmerking:</b></h5>
+                                <p style="margin: 10px">Verzocht om locatie te wijzigen naar de grote zaal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+                {% include 'footer.html.twig' %}
         </div>
     </div>
 
@@ -399,7 +428,8 @@
 
                     <form>
                         <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk te selecteren.</p>
+                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
+                            te selecteren.</p>
                         <select multiple="" class="form-control">
                             <option style="">John Doe</option>
                             <option>Jane Doe</option>
@@ -447,7 +477,8 @@
                         <p style="margin-top:80px;"><b>Uitgenodige getuigen accepteren <i style="color:limegreen"
                                                                                           class="fas fa-check"></i></b>
                         </p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk te selecteren.</p>
+                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
+                            te selecteren.</p>
                         <select multiple="" class="form-control">
                             <option>Mickey Mouse</option>
                             <option>Minnie Mouse</option>
@@ -662,7 +693,8 @@
 
                     <form>
                         <p><b>Extra's verwijderen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk te selecteren.</p>
+                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
+                            te selecteren.</p>
                         <select multiple="" class="form-control">
                             <option>Trouwboek</option>
                         </select>
@@ -683,6 +715,37 @@
                         </button>
                     </form>
 
+                </div>
+                <div class="modal-footer">
+                    <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
+                        Annuleren
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" style="text-align: center" id="contactModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Niew contact moment</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <p><b>Opmerking:</b></p>
+                        <input style="width: 80%;margin: auto;" type="text" class="form-control">
+
+                        <button type="button" class="btn btn-success float-right m-3">
+                            Opslaan
+                        </button>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
