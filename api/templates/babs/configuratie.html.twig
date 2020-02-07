@@ -1,0 +1,53 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card p-4 full-height">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Beschikbare babsen</th>
+                            <td style="padding: 5px 25px 5px 25px !important;">Dhr. Erik Hendrik<br>
+                                Dhr. Erik Hendrik<br>
+                                Dhr. Erik Hendrik
+                            </td>
+                            <td>
+                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal" data-target="#tolkModal"><i style=""
+                                                                                        class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Beschikbare locaties</th>
+                            <td style="padding: 5px 25px 5px 25px !important;">Stadskantoor<br>
+                                Stadhuis grote zaal<br>
+                                Stadhuis kleine zaal
+                            </td>
+                            <td>
+                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal" data-target="#tolkModal"><i style=""
+                                                                                        class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}
