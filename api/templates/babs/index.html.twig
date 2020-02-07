@@ -34,7 +34,9 @@
                 <div class="form-group">
                 <label>Username</label>
                     <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Dhr Erik Hendrik</option>
+                        {% for functie in functies %}
+                        <option>{{ functie|capitalize }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
