@@ -40,7 +40,9 @@ class BabsController extends AbstractController
         $h1 = "Uw overzicht van door u te sluiten huwelijken";
         $functie = "Trouwambtenaar";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie, "requests" => $requests];
     }
 
     /**
@@ -85,7 +87,9 @@ class BabsController extends AbstractController
         $h1 = "Uw overzicht van binnengekomen verzoeken";
         $functie = "Medewerker";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie, "requests"=>$requests];
     }
 
     /**
@@ -173,6 +177,21 @@ class BabsController extends AbstractController
         $babsschets = "";
 
         $h1 = "Uw overzicht van alle gebruikers en hun rollen";
+        $functie = "Beheerder";
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+    }
+
+    /**
+     * @Route("/configuratie")
+     * @Template
+     */
+    public function configuratieAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "De configuratie van de huwelijksplanner";
         $functie = "Beheerder";
 
         return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
