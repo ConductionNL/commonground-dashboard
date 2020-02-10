@@ -196,4 +196,19 @@ class BabsController extends AbstractController
 
         return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
     }
+
+    /**
+     * @Route("/tarieven")
+     * @Template
+     */
+    public function tarievenAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "De tarieven van de huwelijksplanner";
+        $functie = "Beheerder";
+
+        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+    }
 }

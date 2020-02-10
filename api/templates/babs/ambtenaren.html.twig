@@ -24,6 +24,26 @@
 
     </div>
 
+    <div id="fullCalModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="margin: auto" id="modalTitle" class="modal-title"></h4>
+                </div>
+                <div id="modalBody" class="modal-body">
+                    <p style="text-align: center;" id="huwelijkStel"></p>
+                    <p style="text-align: center;"><b>Locatie</b></p>
+                    <p style="text-align: center; margin-top: -15px" id="huwelijkLocatie"></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a class="btn btn-primary" style="color: white" id="huwelijkLink" href="" target="_blank">Huwelijk</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javascript %}
@@ -32,6 +52,7 @@
 	<script>
 		/* initialize the calendar
 		-----------------------------------------------------------------*/
+    var a = document.getElementById('huwelijkLink');
 		$(document).ready(function () {
 			var date = new Date();
 			var d = date.getDate();
@@ -46,6 +67,20 @@
 					center: 'title',
 					right: 'month,agendaWeek,agendaDay,listWeek'
 				},
+
+                // Show modal on eventClick
+                eventClick:  function(calEvent, jsEvent, view, ) {
+                    $("#modalTitle").html(calEvent.title);
+                    $("#huwelijkStel").html(calEvent.huwelijk);
+                    $("#huwelijkLocatie").html(calEvent.locatie);
+                    a.href = calEvent.link;
+                    $("#fullCalModal").modal();
+
+                    if(calEvent.url) {
+                        return false;
+                    }
+                },
+
 				selectable : true,
 				selectHelper: true,
 				select: function(start, end) {
@@ -100,9 +135,12 @@
 					start: new Date(2020, 1, 10, 10, 50),
 					end: new Date(2020, 1, 10, 12, 20),
 					allDay: false,
-					url: '/babs/huwelijk',
+                    locatie: 'Stadhuis grote zaal',
+                    huwelijk: 'M. Timmers en A. de Kieft',
+                    babs: 'Dhr. Erik Hendrik',
+                    link: '{{ path("app_babs_melding") }}',
 					className: 'fc-danger-solid',
-					description: '-'
+					description: 'Huwelijk M. Timmers en A. de Kieft '
 				},
                     {
                         title: 'Dhr. Erik  Hendrik',
