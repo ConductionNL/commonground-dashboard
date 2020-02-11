@@ -76,7 +76,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/meldingen")
+     * @Route("/medewerker/huwelijken")
      * @Template
      */
     public function meldingenAction(Request $request, CommonGroundService $commonGroundService)
@@ -84,7 +84,7 @@ class BabsController extends AbstractController
 
         $babsschets = "";
 
-        $h1 = "Uw overzicht van binnengekomen verzoeken";
+        $h1 = "Uw overzicht van binnengekomen huwelijken";
         $functie = "Medewerker";
 
         $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
@@ -93,7 +93,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/melding")
+     * @Route("/medewerker/huwelijk")
      * @Template
      */
     public function meldingAction(Request $request, CommonGroundService $commonGroundService)
@@ -168,7 +168,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/gebruikersbeheer")
+     * @Route("/beheerder/gebruikersbeheer")
      * @Template
      */
     public function gebruikersbeheerAction(Request $request, CommonGroundService $commonGroundService)
@@ -183,7 +183,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/configuratie")
+     * @Route("/beheerder/configuratie")
      * @Template
      */
     public function configuratieAction(Request $request, CommonGroundService $commonGroundService)
@@ -198,7 +198,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/tarieven")
+     * @Route("/beheerder/tarieven")
      * @Template
      */
     public function tarievenAction(Request $request, CommonGroundService $commonGroundService)
@@ -211,4 +211,19 @@ class BabsController extends AbstractController
 
         return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
     }
+//
+//    /**
+//     * @Route("/beheerder/")
+//     * @Template
+//     */
+//    public function tarievenAction(Request $request, CommonGroundService $commonGroundService)
+//    {
+//
+//        $babsschets = "";
+//
+//        $h1 = "De tarieven van de huwelijksplanner";
+//        $functie = "Beheerder";
+//
+//        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+//    }
 }
