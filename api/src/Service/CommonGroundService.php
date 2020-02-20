@@ -8,7 +8,7 @@ use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use GuzzleHttp\Client ;
 use GuzzleHttp\RequestOptions;
 
-use Twig\Environment as Twig ; 
+use Twig\Environment as Twig ;
 
 class CommonGroundService
 {
@@ -17,7 +17,7 @@ class CommonGroundService
 	private $client;
 	private $session;
 	private $twig;
-	
+
 	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache, Twig $twig)
 	{
 		$this->params = $params;
@@ -36,6 +36,7 @@ class CommonGroundService
 				'headers' => [
 						'Accept'  => 'application/ld+json',
 						'Content-Type'  => 'application/json',
+                        'Authorization'  => '45c1a4b6-59d3-4a6e-86bf-88a872f35845',
 						//'X-NLX-Request-User-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn'				// the id of the user performing the request
 						//'X-NLX-Request-Application-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// the id of the application performing the request
 						//'X-NLX-Request-Subject-Identifier' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 	// an subject identifier for purpose registration (doelbinding)
@@ -48,7 +49,7 @@ class CommonGroundService
 		// Lets start up a default client
 		$this->client= new Client($this->guzzleConfig);
 	}
-	
+
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -56,7 +57,7 @@ class CommonGroundService
 	{
 		return  $this->client;
 	}
-	
+
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -123,20 +124,20 @@ class CommonGroundService
 		}
 
 		unset($resource['_links']);
-		unset($resource['_embedded']);		
-		
+		unset($resource['_embedded']);
+
 		$response = $this->client->request('PUT', $url, [
 				'body' => json_encode($resource)
 			]
 		);
 
 		$resource = json_decode($response->getBody(), true);
-		
+
 		// Temp error hunting
 		if($response->getStatusCode() != '200'){
 			return $resource;
 		}
-		
+
 		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url));
 		$item->set($resource);
@@ -145,7 +146,7 @@ class CommonGroundService
 
 		return $resource;
 	}
-	
+
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -154,28 +155,28 @@ class CommonGroundService
 		if(!$url){
 			return false;
 		}
-		
+
 		$response = $this->client->request('POST',$url, [
 				'body' => json_encode($resource)
 			]
 		);
-		
+
 		$resource = json_decode($response->getBody(), true);
-		
+
 		// Temp error hunting
 		if($response->getStatusCode() != '201'){
 			return $resource;
 		}
-		
+
 		// Lets cash this item for speed purposes
 		$item = $this->cash->getItem('commonground_'.md5 ($url.'/'.$response['id']));
 		$item->set($resource);
 		$item->$resource(new \DateTime('tomorrow'));
 		$this->cash->save($item);
-		
+
 		return $response;
-	}	
-	
+	}
+
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -199,19 +200,19 @@ class CommonGroundService
 				'web_resources' => 	['href'=>'http://wrc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-internet','config'=>['hidden'=>['']]],
 				'calendar' => 		['href'=>'http://ac.zaakonline.nl','authorization'=>'','icon'=>'flaticon-calendar','config'=>['hidden'=>['']]],
 				'messages' =>		['href'=>'http://bs.zaakonline.nl','authorization'=>'','icon'=>'flaticon-message','config'=>['hidden'=>['']]],
-				'payment' =>		['href'=>'http://bc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-credit-card','config'=>['hidden'=>['']]],				
+				'payment' =>		['href'=>'http://bc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-credit-card','config'=>['hidden'=>['']]],
 				'brp' =>			['href'=>'http://brp.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
-				'assents' => 		['href'=>'http://irc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-hands','config'=>['hidden'=>['']]],				
+				'assents' => 		['href'=>'http://irc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-hands','config'=>['hidden'=>['']]],
 				'requests' => 		['href'=>'http://vrc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-agenda','config'=>['hidden'=>['id','referenceId','targetOrganization','submitterPerson','submitter','properties','organizations','requestCases','openCase','parent','children','confidential','archive','currentStage']]],
 				'products' => 		['href'=>'http://pdc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'processes' => 		['href'=>'http://prc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'users' => 			['href'=>'http://uc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'digispoof' => 		['href'=>'http://ds.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
-				'single sign on' => ['href'=>'http://sso.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],				
-				'orders' => 		['href'=>'http://orc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-agenda-1','config'=>['hidden'=>['']]],				
-				'stuf' => 			['href'=>'http://stuf.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],				
+				'single sign on' => ['href'=>'http://sso.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
+				'orders' => 		['href'=>'http://orc.zaakonline.nl','authorization'=>'','icon'=>'flaticon-agenda-1','config'=>['hidden'=>['']]],
+				'stuf' => 			['href'=>'http://stuf.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'contact moments' => ['href'=>'http://crc.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
-				
+
 				'zaken' => 			['href'=>'https://zaken-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'documenten' => 	['href'=>'https://documenten-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'catalogi' => 		['href'=>'https://catalogi-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
@@ -219,33 +220,33 @@ class CommonGroundService
 				'notificaties' => 	['href'=>'https://notificaties-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'autorisaties' => 	['href'=>'https://autorisaties-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'klantinteracties' => ['href'=>'https://klantinteracties-api.vng.cloud/api/v1/schema/','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
-				
+
 				'mijnapp_backend' => ['href'=>'http://mijnapp_bo.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]],
 				'mijnapp_frontend' => ['href'=>'http://mijnapp.zaakonline.nl','authorization'=>'','icon'=>'','config'=>['hidden'=>['']]]
-		];		
-		
+		];
+
 		// Lets set the context
 		foreach($components as $key => $component){
 			$components[$key]['context'] = $this->getComponentContext($component);
 			$components[$key]['resources'] = $this->getComponentResources($component);
-			
+
 		}
-				
+
 		return $components;
 	}
-	
+
 	/*
 	 * Get a list of available commonground components
 	 */
 	public function getComponent($id)
 	{
 		$components= $this->getComponentList();
-		
+
 		if(!array_key_exists($id, $components)){
 			return false;
 		}
-				
-		return $components[$id];		
+
+		return $components[$id];
 	}
 
 	/*
@@ -291,38 +292,38 @@ class CommonGroundService
 
 		return $component;
 	}
-	
+
 	/*
 	 * Get a list of available resources on a commonground componant
 	 */
 	public function getResourceContext(array $component, string $resource, $force = false)
 	{
 		//$component = $this->getComponent($component);
-		
+
 		$item = $this->cash->getItem('componentContext_'.md5 ($component['href']));
 		if ($item->isHit() && !$force) {
 			//var_dump($item->get());
 			//return $item->get();
 		}
-		
+
 		$resource= ltrim($resource, '/');
 		$resource= ucfirst($resource);
 		$resource= rtrim($resource, 's');
-		
+
 		$response = $this->client->request('GET',$component['href'].'/contexts/'.$resource);
 		$response = json_decode($response->getBody(), true);
-		
+
 		//unset($response['@context']['@vocab']);
 		//unset($response['@context']['hydra']);
-		
+
 		$item->set($response);
 		$item->expiresAt(new \DateTime('tomorrow'));
 		$this->cash->save($item);
-		
-		
+
+
 		return $response;
 	}
-	
+
 	/*
 	 * Get a list of available resources on a commonground componant
 	 */
@@ -335,42 +336,42 @@ class CommonGroundService
 			//var_dump($item->get());
 			return $item->get();
 		}
-		
+
 		$response = $this->client->request('GET',$component['href'].'/docs.jsonld');
 		$response = json_decode($response->getBody(), true);
-		
+
 		$item->set($response);
 		$item->expiresAt(new \DateTime('tomorrow'));
 		$this->cash->save($item);
 
 
-		return $response; 
+		return $response;
 	}
-	
+
 	/*
 	 * Get a list of available resources on a commonground componant
 	 */
 	public function getComponentResources(array $component, $force = false)
 	{
 		//$component = $this->getComponent($component);
-		
+
 		$item = $this->cash->getItem('componentContext_'.md5 ($component['href']));
 		if ($item->isHit() && !$force) {
 			//var_dump($item->get());
 			//return $item->get();
 		}
-		
+
 		$response = $this->client->request('GET',$component['href']);
 		$response = json_decode($response->getBody(), true);
-		
+
 		$item->set($response);
 		$item->expiresAt(new \DateTime('tomorrow'));
 		$this->cash->save($item);
-		
-		
+
+
 		return $response;
 	}
-	
+
 	/*
 	 * Get a list of available resources on a commonground componant
 	 */
@@ -380,10 +381,10 @@ class CommonGroundService
 			// the template exists, do something
 			return $this->twig->render($component.$resourcetype.'.html.twig', $variables);
 		}
-		
+
 		// the template dosn't exists, return falses
 		return false;
 	}
-	
-	
+
+
 }
