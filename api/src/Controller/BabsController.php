@@ -15,7 +15,7 @@ use App\Service\CommonGroundService;
 /**
  * Class BabsController
  * @package App\Controller
- * @Route("/")
+ * @Route("/mock")
  */
 class BabsController extends AbstractController
 {
