@@ -15,7 +15,7 @@ use App\Service\CommonGroundService;
 /**
  * Class BabsController
  * @package App\Controller
- * @Route("/babs")
+ * @Route("/")
  */
 class BabsController extends AbstractController
 {
@@ -29,10 +29,10 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/huwelijken")
+     * @Route("/trouwambtenaar/huwelijken")
      * @Template
      */
-    public function huwelijkenAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -46,10 +46,10 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/huwelijk")
+     * @Route("/trouwambtenaar/huwelijk")
      * @Template
      */
-    public function huwelijkAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -79,7 +79,7 @@ class BabsController extends AbstractController
      * @Route("/medewerker/huwelijken")
      * @Template
      */
-    public function meldingenAction(Request $request, CommonGroundService $commonGroundService)
+    public function medewerkerHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -96,7 +96,7 @@ class BabsController extends AbstractController
      * @Route("/medewerker/huwelijk")
      * @Template
      */
-    public function meldingAction(Request $request, CommonGroundService $commonGroundService)
+    public function medewerkerHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
