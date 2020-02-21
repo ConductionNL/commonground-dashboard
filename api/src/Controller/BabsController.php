@@ -15,15 +15,24 @@ use App\Service\CommonGroundService;
 /**
  * Class BabsController
  * @package App\Controller
- * @Route("/")
+ * @Route("/mock")
  */
 class BabsController extends AbstractController
 {
     /**
-     * @Route("/login")
+     * @Route("/")
      * @Template
      */
     public function indexAction(Request $request, CommonGroundService $commonGroundService)
+    {
+        return $this->redirect("/mock/login");
+    }
+
+    /**
+     * @Route("/login")
+     * @Template
+     */
+    public function loginAction(Request $request, CommonGroundService $commonGroundService)
     {
         return [];
     }
