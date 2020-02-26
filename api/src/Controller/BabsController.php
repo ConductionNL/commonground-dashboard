@@ -20,10 +20,19 @@ use App\Service\CommonGroundService;
 class BabsController extends AbstractController
 {
     /**
-     * @Route("/login")
+     * @Route("/")
      * @Template
      */
     public function indexAction(Request $request, CommonGroundService $commonGroundService)
+    {
+        return $this->redirect("/mock/login");
+    }
+
+    /**
+     * @Route("/login")
+     * @Template
+     */
+    public function loginAction(Request $request, CommonGroundService $commonGroundService)
     {
         return [];
     }
@@ -61,7 +70,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/agenda")
+     * @Route("/trouwambtenaar/agenda")
      * @Template
      */
     public function agendaAction(Request $request, CommonGroundService $commonGroundService)
@@ -138,7 +147,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/locaties")
+     * @Route("/medewerker/locatieagenda")
      * @Template
      */
     public function locatieagendaAction(Request $request, CommonGroundService $commonGroundService)
@@ -153,7 +162,7 @@ class BabsController extends AbstractController
     }
 
     /**
-     * @Route("/trouwambtenaren")
+     * @Route("/medewerker/babsagenda")
      * @Template
      */
     public function babsagendaAction(Request $request, CommonGroundService $commonGroundService)
