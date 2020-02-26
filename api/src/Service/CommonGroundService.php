@@ -36,6 +36,7 @@ class CommonGroundService
 				'headers' => [
 						'Accept'  => 'application/ld+json',
 						'Content-Type'  => 'application/json',
+						'Authorization'  => '45c1a4b6-59d3-4a6e-86bf-88a872f35845',
 						//'X-NLX-Request-User-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn'				// the id of the user performing the request
 						//'X-NLX-Request-Application-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// the id of the application performing the request
 						//'X-NLX-Request-Subject-Identifier' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 	// an subject identifier for purpose registration (doelbinding)
