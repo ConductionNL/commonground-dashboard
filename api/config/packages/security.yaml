@@ -12,6 +12,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        # The mollie webhook does not have our API key
+        schermen:
+            anonymous: true
+            pattern: ^/babs
         main:
             anonymous: true
             guard:
