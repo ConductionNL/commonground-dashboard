@@ -11,34 +11,6 @@
                 <div class="card p-4 full-height">
                     <table class="table table-hover">
                         <tr>
-                            <th>Beschikbare babsen</th>
-                            <td style="padding: 5px 25px 5px 25px !important;">Dhr. Erik Hendrik<br>
-                                Dhr. Rene Gulje<br>
-                                Mvr. Ike van den Pol
-                            </td>
-                            <td>
-                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                                        class="btn btn-primary"
-                                        data-toggle="modal" data-target="#babsenModal"><i style=""
-                                                                                          class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Beschikbare locaties</th>
-                            <td style="padding: 5px 25px 5px 25px !important;">Stadskantoor<br>
-                                Stadhuis grote zaal<br>
-                                Stadhuis kleine zaal
-                            </td>
-                            <td>
-                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                                        class="btn btn-primary"
-                                        data-toggle="modal" data-target="#locatiesModal"><i style=""
-                                                                                            class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
                             <th>Beschikbare extra's</th>
                             <td style="padding: 5px 25px 5px 25px !important;">Trouwboek<br>
                                 Ringen
@@ -47,7 +19,7 @@
                                 <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
                                         class="btn btn-primary"
                                         data-toggle="modal" data-target="#extrasModal"><i style=""
-                                                                                            class="fas fa-edit"></i>
+                                                                                          class="fas fa-edit"></i>
                                 </button>
                             </td>
                         </tr>
@@ -66,7 +38,7 @@
                                 <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
                                         class="btn btn-primary"
                                         data-toggle="modal" data-target="#verplichtModal"><i style=""
-                                                                                            class="fas fa-edit"></i>
+                                                                                             class="fas fa-edit"></i>
                                 </button>
                             </td>
                         </tr>
@@ -109,48 +81,37 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Babsen uitschakelen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
-                            te selecteren.</p>
-                        <select multiple="" class="form-control">
-                            <option>Dhr. Erik Hendirk</option>
-                            <option>Dhr. Rene Gulje</option>
-                            <option>Mvr. Ike van den Pol</option>
-                        </select>
+                    <p><b>Babsen uitschakelen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
+                    <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
+                        te selecteren.</p>
+                    <select multiple="" class="form-control">
+                        <option>Dhr. Erik Hendirk</option>
+                        <option>Dhr. Rene Gulje</option>
+                        <option>Mvr. Ike van den Pol</option>
+                    </select>
 
 
-                        <button type="button" class="btn btn-danger float-right m-3">
-                            Verwijderen
-                        </button>
+                    <button type="button" class="btn btn-danger mx-auto m-4">
+                        Verwijderen
+                    </button>
 
-                    </form>
+                    <p style="margin-top:80px;"><b>Babsen activeren <i style="color:limegreen"
+                                                                       class="fas fa-check"></i></b>
+                    </p>
+                    <select multiple="" class="form-control">
+                    </select>
 
-                    <form>
-                        <p style="margin-top:80px;"><b>Babsen activeren <i style="color:limegreen"
-                                                                           class="fas fa-check"></i></b>
-                        </p>
-                        <select multiple="" class="form-control">
-                        </select>
-
-                        <button type="button" class="btn btn-success float-right m-3">
-                            Accepteren
-                        </button>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
-                        Annuleren
+                    <button type="button" class="btn btn-success mx-auto m-4">
+                        Accepteren
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" style="text-align: center" id="locatiesModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" style="text-align: center" id="locatiesModal" tabindex="-1">
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog model-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -164,7 +125,8 @@
 
                     <form>
                         <p><b>Locaties uitschakelen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere locaties tegelijk
+                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere locaties
+                            tegelijk
                             te selecteren.</p>
                         <select multiple="" class="form-control">
                             <option>Stadskantoor</option>
@@ -173,7 +135,7 @@
                         </select>
 
 
-                        <button type="button" class="btn btn-danger float-right m-3">
+                        <button type="button" class="btn btn-danger mx-auto m-4">
                             Deactiveer
                         </button>
                     </form>
@@ -185,16 +147,11 @@
                         <select multiple="" class="form-control">
                         </select>
 
-                        <button type="button" class="btn btn-success float-right m-3">
+                        <button type="button" class="btn btn-success mx-auto m-4">
                             Activeer
                         </button>
                     </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
-                        Annuleren
-                    </button>
                 </div>
             </div>
         </div>
@@ -224,14 +181,17 @@
                         <p class="d-inline-block" style="margin: 0 5px 0 30% !important;">€ </p>
                         <input class="d-inline-block form-control" style="width: 17.5%;" type="text">
 
-                        <button type="button" class="btn btn-success float-right m-3" style="margin-top: 60px !important;">
+                        <button type="button" class="btn btn-success mx-auto m-4"
+                                style="margin-top: 60px !important;">
                             Toevoegen
                         </button>
                     </form>
 
                     <form>
-                        <p style="margin-top: 80px !important;"><b>Extra's uitschakelen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere extra's tegelijk
+                        <p style="margin-top: 80px !important;"><b>Extra's uitschakelen <i
+                                    style="color: #F25961" class="fas fa-trash"></i></b></p>
+                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere extra's
+                            tegelijk
                             te selecteren.</p>
                         <select multiple="" class="form-control">
                             <option>Trouwboek</option>
@@ -240,28 +200,23 @@
                         </select>
 
 
-                        <button type="button" class="btn btn-danger float-right m-3">
+                        <button type="button" class="btn btn-danger mx-auto m-4">
                             Deactiveer
                         </button>
                     </form>
 
                     <form>
                         <p style="margin-top:80px;"><b>Extra's activeren <i style="color:limegreen"
-                                                                             class="fas fa-check"></i></b>
+                                                                            class="fas fa-check"></i></b>
                         </p>
                         <select multiple="" class="form-control">
                         </select>
 
-                        <button type="button" class="btn btn-success float-right m-3">
+                        <button type="button" class="btn btn-success mx-auto m-4">
                             Activeer
                         </button>
                     </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
-                        Annuleren
-                    </button>
                 </div>
             </div>
         </div>
@@ -283,7 +238,8 @@
 
                     <form>
                         <p><b>Onderdelen niet verplicht maken <i style="color: #F25961">X</i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere onderdelen tegelijk
+                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere onderdelen
+                            tegelijk
                             te selecteren.</p>
                         <select multiple="" class="form-control">
                             <option>Ceremonie</option>
@@ -297,29 +253,24 @@
                         </select>
 
 
-                        <button type="button" class="btn btn-danger float-right m-3">
+                        <button type="button" class="btn btn-danger mx-auto m-4">
                             Deactiveer
                         </button>
                     </form>
 
                     <form>
-                        <p style="margin-top:80px;"><b>Onderdelen verplicht maken <i style="color:limegreen"
-                                                                             class="fas fa-check"></i></b>
+                        <p><b>Onderdelen verplicht maken <i style="color:limegreen"
+                                                                                     class="fas fa-check"></i></b>
                         </p>
                         <select multiple="" class="form-control">
                             <option>Betalen</option>
                         </select>
 
-                        <button type="button" class="btn btn-success float-right m-3">
+                        <button type="button" class="btn btn-success mx-auto m-4">
                             Activeer
                         </button>
                     </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
-                        Annuleren
-                    </button>
                 </div>
             </div>
         </div>
@@ -341,20 +292,18 @@
 
                     <form>
                         <p><b>Laatste aanpassing mogelijk:</b></p>
-                        <input style="width: 60px !important; margin-left: 19.5%; margin-right: 5px"
-                               class="form-control d-inline-block">
-                        <p class="d-inline-block"> dagen voor het huwelijk</p>
 
-                        <button style="margin-top: 80px !important;" type="button"
-                                class="btn btn-success float-right m-3">
+                        <div class="row">
+                            <input style="width: 60px !important; margin-left: 24%; margin-right: 5px"
+                                   class="form-control d-inline-block">
+                            <p class="d-inline-block mt-2 mb-0"> dagen voor het huwelijk</p>
+                        </div>
+
+                        <button type="button"
+                                class="btn btn-success mx-auto m-4">
                             Wijzigen
                         </button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button style="width: 40%;" type="button" class="btn btn-danger m-auto" data-dismiss="modal">
-                        Annuleren
-                    </button>
                 </div>
             </div>
         </div>

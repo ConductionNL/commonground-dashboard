@@ -15,24 +15,33 @@ use App\Service\CommonGroundService;
 /**
  * Class BabsController
  * @package App\Controller
- * @Route("/babs")
+ * @Route("/mock")
  */
 class BabsController extends AbstractController
 {
     /**
-     * @Route("/login")
+     * @Route("/")
      * @Template
      */
-	public function indexAction(Request $request, CommonGroundService $commonGroundService)
+    public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
-    	return [];
+        return $this->redirect("/mock/login");
     }
 
     /**
-     * @Route("/huwelijken")
+     * @Route("/login")
      * @Template
      */
-    public function huwelijkenAction(Request $request, CommonGroundService $commonGroundService)
+    public function loginAction(Request $request, CommonGroundService $commonGroundService)
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/trouwambtenaar/huwelijken")
+     * @Template
+     */
+    public function babsHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -42,14 +51,14 @@ class BabsController extends AbstractController
 
         $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie, "requests" => $requests];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests];
     }
 
     /**
-     * @Route("/huwelijk")
+     * @Route("/trouwambtenaar/huwelijk")
      * @Template
      */
-    public function huwelijkAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -57,11 +66,11 @@ class BabsController extends AbstractController
         $h1 = "Martin Timmers en Anita Henrika de Kieft hebben u gekozen als trouwambtenaar";
         $functie = "Trouwambtenaar";
 
-        return ["babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
-     * @Route("/agenda")
+     * @Route("/trouwambtenaar/agenda")
      * @Template
      */
     public function agendaAction(Request $request, CommonGroundService $commonGroundService)
@@ -72,14 +81,14 @@ class BabsController extends AbstractController
         $h1 = "Uw agenda waar u uw afpsraken in kan terug vinden";
         $functie = "Trouwambtenaar";
 
-        return ["babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
      * @Route("/medewerker/huwelijken")
      * @Template
      */
-    public function meldingenAction(Request $request, CommonGroundService $commonGroundService)
+    public function medewerkerHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -89,14 +98,14 @@ class BabsController extends AbstractController
 
         $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie, "requests"=>$requests];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests];
     }
 
     /**
      * @Route("/medewerker/huwelijk")
      * @Template
      */
-    public function meldingAction(Request $request, CommonGroundService $commonGroundService)
+    public function medewerkerHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -104,7 +113,7 @@ class BabsController extends AbstractController
         $h1 = "Het huwelijksoverzicht van Martin Timmers en Anita Henrika de Kieft";
         $functie = "Medewerker";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
@@ -119,7 +128,7 @@ class BabsController extends AbstractController
         $h1 = "Het tijdstip van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
         $functie = "Medewerker";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
@@ -134,14 +143,14 @@ class BabsController extends AbstractController
         $h1 = "De toegewezen babs van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
         $functie = "Medewerker";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
-     * @Route("/locaties")
+     * @Route("/medewerker/locatieagenda")
      * @Template
      */
-    public function locatiesAction(Request $request, CommonGroundService $commonGroundService)
+    public function locatieagendaAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -149,14 +158,14 @@ class BabsController extends AbstractController
         $h1 = "Planning Locaties";
         $functie = "Medewerker";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
-     * @Route("/trouwambtenaren")
+     * @Route("/medewerker/babsagenda")
      * @Template
      */
-    public function ambtenarenAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsagendaAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -164,7 +173,7 @@ class BabsController extends AbstractController
         $h1 = "Planning Trouwambtenaren";
         $functie = "Medewerker";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
@@ -179,7 +188,7 @@ class BabsController extends AbstractController
         $h1 = "Uw overzicht van alle gebruikers en hun rollen";
         $functie = "Beheerder";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
@@ -194,36 +203,86 @@ class BabsController extends AbstractController
         $h1 = "De configuratie van de huwelijksplanner";
         $functie = "Beheerder";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
 
     /**
-     * @Route("/beheerder/tarieven")
+     * @Route("/beheerder/ceremonies")
      * @Template
      */
-    public function tarievenAction(Request $request, CommonGroundService $commonGroundService)
+    public function ceremoniebeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
 
-        $h1 = "De tarieven van de huwelijksplanner";
+        $h1 = "Beheer van de ceremonies";
         $functie = "Beheerder";
 
-        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
     }
-//
-//    /**
-//     * @Route("/beheerder/")
-//     * @Template
-//     */
-//    public function tarievenAction(Request $request, CommonGroundService $commonGroundService)
-//    {
-//
-//        $babsschets = "";
-//
-//        $h1 = "De tarieven van de huwelijksplanner";
-//        $functie = "Beheerder";
-//
-//        return [ "babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
-//    }
+
+    /**
+     * @Route("/beheerder/plechtigheden")
+     * @Template
+     */
+    public function plechtigheidbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "Beheer van de plechtigheden";
+        $functie = "Beheerder";
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+    }
+
+    /**
+     * @Route("/beheerder/trouwambtenaren")
+     * @Template
+     */
+    public function babsbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "Beheer van de trouwambtenaren";
+        $functie = "Beheerder";
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+    }
+
+
+    /**
+     * @Route("/beheerder/locatiebeheer")
+     * @Template
+     */
+    public function locatiebeheerAction(Request $request, CommonGroundService $commonGroundService)
+
+    {
+
+        $babsschets = "";
+
+        $h1 = "Hier ziet u alle beschikbare locaties";
+        $functie = "Beheerder";
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+    }
+
+    /**
+     * @Route("/beheerder/extras")
+     * @Template
+     */
+    public function extrabeheerAction(Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $babsschets = "";
+
+        $h1 = "Beheer van de extra's";
+        $functie = "Beheerder";
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+    }
 }
+
+
+
