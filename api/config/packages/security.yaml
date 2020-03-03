@@ -1,44 +1,43 @@
 security:
-    encoders:
-        App\Security\User:
-            algorithm: auto
-
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            id: App\Security\UserProvider
+        chain_provider:
+            chain:
+                providers: [CommongroundApplicationProvider, CommongroundUserProvider]
+        commongroundUserProvider:
+            id: App\Security\User\CommongroundUserProvider
+        commongroundApplicationProvider:
+            id: App\Security\User\CommongroundApplicationProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        # In order to read the docs we must allow anonymous GET reqoust on root    
+        docs:
+            anonymous: true
+            pattern:  ^/$
+            methods: [GET]
         # The mollie webhook does not have our API key
-        mock:
+        webhook:
             anonymous: true
-            pattern: ^/mock
-        schermen:
-            anonymous: true
-            pattern: ^/babs
+            pattern: ^/payments/mollie_webhook
+            methods: [POST]
         main:
-            anonymous: true
+            provider: chain_provider
             guard:
                 authenticators:
-                    - App\Security\CommonGroundAuthenticator
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                    - App\Security\CommongroundApplicationAuthenticator
+                    - App\Security\CommongroundUserAuthenticator  
+                entry_point: App\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-    access_denied_url: /login
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/profile, roles: ROLE_USER }
