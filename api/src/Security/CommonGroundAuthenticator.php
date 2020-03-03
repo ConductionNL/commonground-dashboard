@@ -83,7 +83,7 @@ class CommonGroundAuthenticator extends AbstractFormLoginAuthenticator
     	$client = $this->commonGroundService->getClient();
     	
     	// We probabibly want to make the user component configurabele
-    	$response = $client->request('POST','uc.zaakonline.nl/users/login', ['body' => json_encode($credentials)]
+    	$response = $client->request('POST','uc.zaakonline.nl/login', ['body' => json_encode($credentials)]
     	);
         
     	if($response->getStatusCode() == 200){

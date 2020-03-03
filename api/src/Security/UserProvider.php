@@ -33,6 +33,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 	public function loadUserByUsername($username)
     {
     	$user = New User;
+    	
     	$ccuser = $this->commonGroundService->getResource('https://uc.zaakonline.nl/users',['username'=>$username]);
     	
     	//var_dump($ccuser);
