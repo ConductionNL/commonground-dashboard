@@ -4,16 +4,16 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pa
+  projectName: db
   name: db
   title: Dash Board
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/Proto-component-commonground'
-  domain: 'zaakonline.nl'
+  domain: 'huwelijksplanner.online'
   domains:
-    - zaakonline.nl
-  domainsJson: ["zaakonline.nl"]
+    - huwelijksplanner.online
+  domainsJson: ["huwelijksplanner.online"]
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
