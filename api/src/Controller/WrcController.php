@@ -60,7 +60,7 @@ class WrcController extends AbstractController
     			$this->addFlash('success', 'Template saved');
     		}
     		else{            
-    			$this->addFlash('danger', 'Template could not be saved');
+    			$this->addFlash('error', 'Template could not be saved');
     		} 		
     	}
     	
