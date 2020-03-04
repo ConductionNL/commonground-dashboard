@@ -110,7 +110,7 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 		//	return new RedirectResponse($targetPath);
 		//}
 		
-		return new RedirectResponse($this->urlGenerator->generate('app_user_settings'));
+		return new RedirectResponse($this->urlGenerator->generate('app_user_dashboard'));
 	}
 	
 	public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
