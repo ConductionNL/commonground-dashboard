@@ -47,18 +47,20 @@ class WrcController extends AbstractController
     	$template = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/templates/'.$id);
     	    	
     	// Kijken of het formulier is getriggerd
-    	if ($request->isMethod('POST')) {    		
-    		// Iets met validatie
-    		$template['title'] =  $request->request->get('title');
-    		$template['content'] =  $request->request->get('content');
+    	if ($request->isMethod('POST')) {  
     		
-    		if($template = $commonGroundService->updateResource($template)){
-    			// gelukt
-    			
-    			// throw flashbang dat opslaan is gelukt of gefaald
+    		// Passing the variables to the resource
+    		$variables = $request->request->all();
+    		foreach($variables as $key => $value){
+    			$template[$key] = $value;
     		}
-    		else{
-    			//niet gelukt
+    		
+    		/*@todo use try catch here */
+    		if($commonGroundService->updateResource($template)){            
+    			$this->addFlash('success', 'Template saved');
+    		}
+    		else{            
+    			$this->addFlash('danger', 'Template could not be saved');
     		} 		
     	}
     	

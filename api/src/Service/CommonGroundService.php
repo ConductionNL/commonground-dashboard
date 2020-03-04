@@ -238,8 +238,8 @@ class CommonGroundService
 	 */
 	public function updateResource($resource, $url = null, $query = [], $force = false, $async = false)
 	{
-		if (!$url) {
-			return false;
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
 		}
 		
 		// Split enviroments, if the env is not dev the we need add the env to the url name
@@ -315,10 +315,10 @@ class CommonGroundService
 	 */
 	public function createResource($resource, $url = null, $query = [], $force = false, $async = false)
 	{
-		if (!$url) {
-			return false;
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
 		}
-				
+		
 		// To work with NLX we need a couple of default headers
 		$headers = $this->headers;
 		$headers['X-NLX-Request-Subject-Identifier'] = $url;
