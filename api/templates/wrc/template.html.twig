@@ -10,93 +10,40 @@
 
     <div class="main-panel">
         <div class="container">
-
-            {% include 'widgets/babs/title_h1.html.twig' %}
+			
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Template bewerken','functie': 'Dashboard -> WRC -> Templates -> '~template.name }%}
 
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
+                        	<form action="{{ path('app_wrc_template') }}" method="post">
                             <div class="card-header">
-                                <h2 class="d-inline-block">9/11  <i style="color: limegreen;" class="fas fa-check"></i> Huwelijksgegevens </h2>
+                                <h2 class="d-inline-block">{{ template.name }} </h2>
                                 <div class="float-right">
-                                    <button class="btn btn-danger" style="margin-right: 25px">Afwijzen</button>
-                                    <button class="btn btn-success">Accepteren</button>
+                                    <button class="btn btn-danger" style="margin-right: 25px">Verwijderen</button>
+                                    <button class="btn btn-success">Opslaan</button>
                                 </div>
                             </div>
+                            
+							Hier dus een daadwerkelijk formulier
+
+
+							Onderstaande info moet eigenlijk in een footer
                             <table class="table table-hover">
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Ceremonie</th>
-                                    <td>Huwelijk</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Plechtigheid </th>
-                                    <td>Partnerschap</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Locatie</th>
-                                    <td>Utrecht, stadhuis grote zaal</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Datum</th>
-                                    <td>10-2-2020</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Tijdstip</th>
-                                    <td>10:50 - 11:50</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: red;">X</i> </td>
-                                    <th>Getuigen</th>
-                                    <td>John Doe<br>
-                                        Jane Doe
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i></td>
-                                    <th>Tolk</th>
-                                    <td style="color: lightgray">Niet van toepassing</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i></td>
-                                    <th>Extra's</th>
-                                    <td>Trouwboek</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: red;">X</i> </td>
-                                    <th>Status</th>
-                                    <td>In afwachting</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Betaald</th>
-                                    <td>Ja</td>
+                                    <th>Aangemaakt op</th>
+                                    <td>{{ template.dateCreated }}</td>
+                                    <th>Laats bewerkt</th>
+                                    <td>{{ template.dateModified }}</td>
                                 </tr>
                             </table>
-
-                            <br>
-
-                            <table class="table table-hover">
-                                <tr>
-                                    <th>Datum verzoek verzonden</th>
-                                    <td>15-1-2020</td>
-                                </tr>
-                                <tr>
-                                    <th>Tijdstip verzoek verzonden</th>
-                                    <td>16:30</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
+                            
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
 
             {% include 'footer.html.twig' %}
 

@@ -25,8 +25,7 @@ class WrcController extends AbstractController
 	public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
     	return [];
-    }
-    
+    }    
     
     /**
      * @Route("/templates")
@@ -45,7 +44,23 @@ class WrcController extends AbstractController
      */
     public function templateAction(Request $request, CommonGroundService $commonGroundService, $id)
     {    	
-    	$template = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates/'.$id);
+    	$template = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/templates/'.$id);
+    	    	
+    	// Kijken of het formulier is getriggerd
+    	if ($request->isMethod('POST')) {    		
+    		// Iets met validatie
+    		$template['title'] =  $request->request->get('title');
+    		$template['content'] =  $request->request->get('content');
+    		
+    		if($template = $commonGroundService->updateResource($template)){
+    			// gelukt
+    			
+    			// throw flashbang dat opslaan is gelukt of gefaald
+    		}
+    		else{
+    			//niet gelukt
+    		} 		
+    	}
     	
     	return ["template"=>$template];
     }

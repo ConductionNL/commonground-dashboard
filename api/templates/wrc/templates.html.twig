@@ -5,7 +5,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Templates','functie': 'Templates'}%}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Templates','functie': 'Templates'} %}
 
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                         {% set items = templates %}
-                        {% set view = 'app_babs_babshuwelijk' %}
+                        {% set view = 'app_wrc_template' %}
                         {% for item in items %}
                         <tr>
                             <td>{{ item.name }}</td>
