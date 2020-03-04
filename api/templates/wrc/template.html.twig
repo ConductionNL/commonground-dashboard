@@ -1,0 +1,106 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">9/11  <i style="color: limegreen;" class="fas fa-check"></i> Huwelijksgegevens </h2>
+                                <div class="float-right">
+                                    <button class="btn btn-danger" style="margin-right: 25px">Afwijzen</button>
+                                    <button class="btn btn-success">Accepteren</button>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <th>Ceremonie</th>
+                                    <td>Huwelijk</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <th>Plechtigheid </th>
+                                    <td>Partnerschap</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <th>Locatie</th>
+                                    <td>Utrecht, stadhuis grote zaal</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <th>Datum</th>
+                                    <td>10-2-2020</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <th>Tijdstip</th>
+                                    <td>10:50 - 11:50</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: red;">X</i> </td>
+                                    <th>Getuigen</th>
+                                    <td>John Doe<br>
+                                        Jane Doe
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i></td>
+                                    <th>Tolk</th>
+                                    <td style="color: lightgray">Niet van toepassing</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i></td>
+                                    <th>Extra's</th>
+                                    <td>Trouwboek</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: red;">X</i> </td>
+                                    <th>Status</th>
+                                    <td>In afwachting</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <th>Betaald</th>
+                                    <td>Ja</td>
+                                </tr>
+                            </table>
+
+                            <br>
+
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Datum verzoek verzonden</th>
+                                    <td>15-1-2020</td>
+                                </tr>
+                                <tr>
+                                    <th>Tijdstip verzoek verzonden</th>
+                                    <td>16:30</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}
