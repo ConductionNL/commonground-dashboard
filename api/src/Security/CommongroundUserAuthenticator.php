@@ -91,7 +91,7 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 		
 		$user = $users[0];
 				
-		return new CommongroundUser($user['username'], $user['id'], null, ['user'],$user['person'],$user['organization']);
+		return new CommongroundUser($user['username'], $user['id'], null, ['ROLE_USER'],$user['person'],$user['organization']);
 	}
 	
 	public function checkCredentials($credentials, UserInterface $user)
