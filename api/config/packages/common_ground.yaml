@@ -25,7 +25,7 @@ parameters:
     app_name: '%env(APP_NAME)%'   
     app_domains: '%env(json:APP_DOMAINS)%'  
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
-    auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'    
+    auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'        
     
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
