@@ -146,9 +146,11 @@ class CommonGroundService
 		//var_dump($response);
 		
 		/* @todo this should look to al @id keus not just the main root */
-		foreach($response['hydra:member'] as $key => $embedded){
-			if(array_key_exists('@id', $embedded) && $embedded['@id']){
-				$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
+		if(array_key_exists('hydra:member', $response) && $response['hydra:member']){
+			foreach($response['hydra:member'] as $key => $embedded){
+				if(array_key_exists('@id', $embedded) && $embedded['@id']){
+					$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
+				}
 			}
 		}
 		
@@ -389,20 +391,20 @@ class CommonGroundService
 	public function getComponentList()
 	{
 		$components = [
-				'cc'  => ['href'=>'http://cc.zaakonline.nl',  'authorization'=>''],
-				'lc'  => ['href'=>'http://lc.zaakonline.nl',  'authorization'=>''],
-				'ltc' => ['href'=>'http://ltc.zaakonline.nl', 'authorization'=>''],
-				'brp' => ['href'=>'http://brp.zaakonline.nl', 'authorization'=>''],
-				'irc' => ['href'=>'http://irc.zaakonline.nl', 'authorization'=>''],
-				'ptc' => ['href'=>'http://ptc.zaakonline.nl', 'authorization'=>''],
-				'mrc' => ['href'=>'http://mrc.zaakonline.nl', 'authorization'=>''],
-				'arc' => ['href'=>'http://arc.zaakonline.nl', 'authorization'=>''],
-				'vtc' => ['href'=>'http://vtc.zaakonline.nl', 'authorization'=>''],
-				'vrc' => ['href'=>'http://vrc.zaakonline.nl', 'authorization'=>''],
-				'pdc' => ['href'=>'http://pdc.zaakonline.nl', 'authorization'=>''],
-				'wrc' => ['href'=>'http://wrc.zaakonline.nl', 'authorization'=>''],
-				'orc' => ['href'=>'http://orc.zaakonline.nl', 'authorization'=>''],
-				'bc'  => ['href'=>'http://orc.zaakonline.nl', 'authorization'=>''],
+				'cc'  => ['href'=>'http://cc.huwelijksplanner.online',  'authorization'=>'',  'icon'=>''],
+				'lc'  => ['href'=>'http://lc.huwelijksplanner.online',  'authorization'=>'',  'icon'=>''],
+				'ltc' => ['href'=>'http://ltc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'brp' => ['href'=>'http://brp.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'irc' => ['href'=>'http://irc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'ptc' => ['href'=>'http://ptc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'mrc' => ['href'=>'http://mrc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'arc' => ['href'=>'http://arc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'vtc' => ['href'=>'http://vtc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'vrc' => ['href'=>'http://vrc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'pdc' => ['href'=>'http://pdc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'wrc' => ['href'=>'http://wrc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'orc' => ['href'=>'http://orc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
+				'bc'  => ['href'=>'http://orc.huwelijksplanner.online', 'authorization'=>'',  'icon'=>''],
 		];
 		
 		return $components;

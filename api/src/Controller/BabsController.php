@@ -49,7 +49,7 @@ class BabsController extends AbstractController
         $h1 = "Uw overzicht van door u te sluiten huwelijken";
         $functie = "Trouwambtenaar";
 
-        $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
+        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
 
         return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests];
     }
@@ -96,7 +96,7 @@ class BabsController extends AbstractController
         $h1 = "Uw overzicht van binnengekomen huwelijken";
         $functie = "Medewerker";
 
-        $requests = $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
+        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online//requests');
 
         return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests];
     }

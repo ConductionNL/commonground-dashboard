@@ -31,7 +31,7 @@ class UserController extends AbstractController
 	 */
 	public function login(Request $request, CommonGroundService $commonGroundService,  ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
 	{
-		return $this->render('login/index.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+		return $this->render('login/index.html.twig');
 	}
 	
 	/**
@@ -169,7 +169,7 @@ class UserController extends AbstractController
      */
     public function dashboardAction(Request $request)
     {
-        return[];
+    	return $this->redirect($this->generateUrl('app_babs_babshuwelijken'));
     }
     
     /**

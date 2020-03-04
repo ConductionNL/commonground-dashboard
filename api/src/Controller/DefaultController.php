@@ -20,7 +20,8 @@ class DefaultController extends AbstractController
      */
 	public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
-    	$requests= $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
+		//$commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
+    	$requests = [];
     	$components= $commonGroundService->getComponentList();
     	
     	return ["requests"=>$requests, "components"=>$components];
