@@ -118,9 +118,9 @@ $ helm upgrade db-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --name
 
 Or del if you want to delete an existing  one
 ```CLI
-$ helm del db-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev" 
-$ helm del db-stag --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag" 
-$ helm del db-prod --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod" 
+$ helm del db-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml"
+$ helm del db-stag --purge --kubeconfig="api/helm/kubeconfig.yaml"  
+$ helm del db-prod --purge --kubeconfig="api/helm/kubeconfig.yaml"  
 ```
 
 Note that you can replace common ground with the namespace that you want to use (normally the name of your component).
