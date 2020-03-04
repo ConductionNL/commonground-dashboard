@@ -1,0 +1,53 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+			
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Template bewerken','functie': 'Dashboard -> WRC -> Templates -> '~template.name }%}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                        	<form action="{{ path('app_wrc_template') }}" method="post">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ template.name }} </h2>
+                                <div class="float-right">
+                                    <button class="btn btn-danger" style="margin-right: 25px">Verwijderen</button>
+                                    <button class="btn btn-success">Opslaan</button>
+                                </div>
+                            </div>
+                            
+							Hier dus een daadwerkelijk formulier
+
+
+							Onderstaande info moet eigenlijk in een footer
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Aangemaakt op</th>
+                                    <td>{{ template.dateCreated }}</td>
+                                    <th>Laats bewerkt</th>
+                                    <td>{{ template.dateModified }}</td>
+                                </tr>
+                            </table>
+                            
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}

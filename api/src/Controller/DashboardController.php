@@ -25,14 +25,9 @@ class DashboardController extends AbstractController
      * @Template
      */
 	public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
-    {
-    	$components = $commonGroundService->getComponentList();
-    	
-    	foreach($components as $key=>$component){
-    		//$components[$key] = $commonGroundService->getComponentHealth($key);
-    		$components[$key] = $commonGroundService->getComponentResources($key);
-    	}
+    {    	
+    	$requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
 
-    	return ["components"=>$components];
+    	return ["requests"=>$requests];
     }
 }
