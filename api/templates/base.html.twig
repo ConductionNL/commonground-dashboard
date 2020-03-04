@@ -116,6 +116,23 @@
 	<script src="/assets/js/atlantis.min.js"></script>
 
 	<script>
+	{% for label, messages in app.flashes(['warning', 'error', 'success']) %}
+        {% for message in messages %}
+        //Notify
+        $.notify({
+        	icon: 'flaticon-alarm-1',
+        	title: '{{ label }}',
+        	message: '{{ message }}',
+        },{
+        	type: 'secondary',
+        	placement: {
+        		from: "bottom",
+        		align: "right"
+        	},
+        	time: 1000,
+        });
+        {% endfor %}
+    {% endfor %}
 	</script>
 
 	{% block javascript %}
