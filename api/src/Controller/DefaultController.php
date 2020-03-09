@@ -1,6 +1,6 @@
 <?php
 
-// src/Controller/DefaultController.php
+// src/Controller/DashboardController.php
 
 namespace App\Controller;
 
@@ -12,17 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Service\CommonGroundService;
 
+/**
+ * Class DefaultController
+ * @package App\Controller
+ */
 class DefaultController extends AbstractController
 {
+
     /**
      * @Route("/")
-     * @Template
      */
-	public function indexAction(Request $request, CommonGroundService $commonGroundService)
-    {
-    	$requests= $commonGroundService->getResourceList('https://vrc.zaakonline.nl/requests');
-    	$components= $commonGroundService->getComponentList();
-    	
-    	return ["requests"=>$requests, "components"=>$components];
+	public function indexAction()
+    {    	    	
+    	return $this->redirect($this->generateUrl('app_dashboard_index'));
     }
 }

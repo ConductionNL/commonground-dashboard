@@ -24,6 +24,16 @@
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="/assets/css/demo.css">
+	
+	<!-- overwrites -->
+	<style>
+		.logo-header  {
+			background: #CC0000 !important;
+		}
+		.navbar-header{
+			background: #CC0000 !important;
+		}
+	</style>
 </head>
 <body>
 
@@ -106,6 +116,23 @@
 	<script src="/assets/js/atlantis.min.js"></script>
 
 	<script>
+	{% for label, messages in app.flashes(['warning', 'error', 'success']) %}
+        {% for message in messages %}
+        //Notify
+        $.notify({
+        	icon: 'flaticon-alarm-1',
+        	title: '{{ label }}',
+        	message: '{{ message }}',
+        },{
+        	type: 'secondary',
+        	placement: {
+        		from: "bottom",
+        		align: "right"
+        	},
+        	time: 1000,
+        });
+        {% endfor %}
+    {% endfor %}
 	</script>
 
 	{% block javascript %}
