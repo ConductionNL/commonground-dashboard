@@ -96,9 +96,9 @@ class BabsController extends AbstractController
         $h1 = "Uw overzicht van binnengekomen huwelijken";
         $functie = "Medewerker";
 
-        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online//requests');
+        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
 
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests];
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests ];
     }
 
     /**
