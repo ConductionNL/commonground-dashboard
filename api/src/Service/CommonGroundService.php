@@ -262,7 +262,6 @@ class CommonGroundService
 		if(!$async){
 			$response = $this->client->request('PUT', $url, [
 					'body' => json_encode($resource),
-					'query' => $query,
 					'headers' => $headers,
 			]
 					);
@@ -271,7 +270,6 @@ class CommonGroundService
 			
 			$response = $this->client->requestAsync('PUT', $url, [
 					'body' => json_encode($resource),
-					'query' => $query,
 					'headers' => $headers,
 			]
 					);
