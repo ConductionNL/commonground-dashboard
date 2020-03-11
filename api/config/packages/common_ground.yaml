@@ -23,6 +23,7 @@ parameters:
     app_user_key: '%env(APP_USER_KEY)%'               
     app_env: '%env(APP_ENV)%'           
     app_name: '%env(APP_NAME)%'   
+    
     app_domains: '%env(json:APP_DOMAINS)%'  
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
     auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'        
