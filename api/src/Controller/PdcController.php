@@ -49,25 +49,49 @@ class PdcController extends AbstractController
     {
         $product = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/products/'.$id);
 
+        $groups = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
+
+        $babsschets = "";
+
         // Kijken of het formulier is getriggerd
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
             $variables = $request->request->all();
-            foreach($variables as $key => $value){
-                $product[$key] = $value;
+
+            foreach ($product['groups'] as $group){
+                $variables['groups'][] = 'groups/'.$group['id'];
             }
 
+            if($variables['addgroup'] != ""){
+                $variables['groups'][] = $variables['addgroup'];
+            }
+
+
+            if($variables['removegroup'] != ""){
+
+                foreach($variables['groups'] as $key=>$group){
+                    if($group == $variables['removegroup']){
+                        unset($variables['groups'][$key]);
+                    }
+                }
+                /*
+                */
+            }
+
+            $variables['@id'] = $product['@id'];
+
             /*@todo use try catch here */
-            if($commonGroundService->updateResource($product)){
+            if($commonGroundService->updateResource($variables)){
                 $this->addFlash('success', 'Product saved');
+                $product = $commonGroundService->getResource($variables['@id']);
             }
             else{
                 $this->addFlash('error', 'Product could not be saved');
             }
         }
 
-        return ["product"=>$product];
+        return ["babsschets" => $babsschets, "product"=>$product, "groups"=>$groups];
     }
 
     /**

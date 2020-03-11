@@ -11,7 +11,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~product.name }%}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~product.name } %}
 
             <div class="page-inner">
                 <div class="row">
@@ -28,37 +28,70 @@
                                 <div class="card-body">
                                     <div class="row">
 
-                                        {% if product.title is defined %}
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">Title</label>
-                                                    <input type="text" class="form-control form-control-lg" id="title" name ="title" placeholder="Large Input" value="{{ product.title }}">
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        {% endif %}
-
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">Name</label>
-                                                <input type="text" class="form-control form-control-lg" id="name" name ="name" placeholder="Large Input" value="{{ product.name }}">
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="name" placeholder="Large Input" value="{{ product.name }}">
                                             </div>
                                         </div> <!-- /.col -->
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">Alle groups</label>
+                                                <ul>
+                                                    {% for group in product.groups %}
+                                                        <li>{{ group.name }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 row offset-md-6">
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">Group toevoegen</label>
+                                                    <select class="form-control form-control-lg" id="addgroup"
+                                                            name="addgroup">
+                                                        <option value="">-</option>
+                                                        {% for group in groups %}
+                                                            <option value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> <!-- /.col -->
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">Group verwijderen</label>
+                                                    <select class="form-control form-control-lg" id="removegroup"
+                                                            name="removegroup">
+                                                        <option value="">-</option>
+                                                        {% for group in product.groups %}
+                                                            <option value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> <!-- /.col -->
+
+                                        </div><!-- /.col /.row -->
 
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">Description</label>
-                                                <textarea class="form-control" rows="5" id="description" name =description>{{ product.description }}</textarea>
+                                                <textarea class="form-control" rows="5" id="description"
+                                                          name=description>{{ product.description }}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
-                                    Aangemaakt op {{ product.dateCreated|date("d-m-Y H:i:s") }} en voor het laats bewerkt op {{ product.dateModified|date("d-m-Y H:i:s") }}
+                                    Aangemaakt op {{ product.dateCreated|date("d-m-Y H:i:s") }} en voor het laats
+                                    bewerkt op {{ product.dateModified|date("d-m-Y H:i:s") }}
                                 </div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
