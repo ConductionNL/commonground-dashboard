@@ -78,6 +78,9 @@ class CommonGroundService
 			$subdomain = $host[0];
 			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
+				
+		// To work with NLX we need a couple of default headers
+		$headers = $this->headers;
 		
 		$elementList = [];
 		foreach($query as $element){
@@ -88,8 +91,7 @@ class CommonGroundService
 		}
 		$elementList = implode(",", $elementList);
 		
-		// To work with NLX we need a couple of default headers
-		$headers = $this->headers;
+		
 		if($elementList){
 			$headers['X-NLX-Request-Data-Elements'] = $elementList;
 			$headers['X-NLX-Request-Data-Subject'] = $elementList;			
@@ -321,7 +323,9 @@ class CommonGroundService
 			$host = explode('.', $parsedUrl['host']);
 			$subdomain = $host[0];
 			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
-		}
+		}		
+		
+		$headers = $this->headers;
 		
 		if(!$async){
 			$response = $this->client->request('POST', $url, [
