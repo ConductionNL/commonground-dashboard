@@ -82,7 +82,7 @@ class CommonGroundService
 		$elementList = [];
 		foreach($query as $element){
 			if(!is_array($element)){
-				return;
+				break;
 			}
 			$elementList[] = implode("=",$element);
 		}
