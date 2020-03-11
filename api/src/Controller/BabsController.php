@@ -212,7 +212,6 @@ class BabsController extends AbstractController
      */
     public function ceremoniebeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $products = $commonGroundService->getResourceList("https://pdc.huwelijksplanner.online/products");
 
         $babsschets = "";
 
@@ -228,6 +227,7 @@ class BabsController extends AbstractController
      */
     public function plechtigheidbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+
         $babsschets = "";
 
         $h1 = "Beheer van de plechtigheden";
@@ -242,6 +242,7 @@ class BabsController extends AbstractController
      */
     public function babsbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+
         $babsschets = "";
 
         $h1 = "Beheer van de trouwambtenaren";
@@ -256,7 +257,9 @@ class BabsController extends AbstractController
      * @Template
      */
     public function locatiebeheerAction(Request $request, CommonGroundService $commonGroundService)
+
     {
+
         $babsschets = "";
 
         $h1 = "Hier ziet u alle beschikbare locaties";
@@ -271,6 +274,7 @@ class BabsController extends AbstractController
      */
     public function extrabeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+
         $babsschets = "";
 
         $h1 = "Beheer van de extra's";
