@@ -343,7 +343,7 @@ class CommonGroundService
 		}
 		
 		
-		if($response->getStatusCode() != 201){
+		if($response->getStatusCode() != 201 && $response->getStatusCode() != 200){
 			var_dump('POST returned:'.$response->getStatusCode());
 			var_dump($headers);
 			var_dump(json_encode($resource));
