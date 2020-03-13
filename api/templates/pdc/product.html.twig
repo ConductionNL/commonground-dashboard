@@ -15,6 +15,7 @@
 
             <div class="page-inner">
                 <div class="row">
+
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_pdc_product', {id: product.id}) }}" method="post">
@@ -56,7 +57,8 @@
                                                             name="addgroup">
                                                         <option value="">-</option>
                                                         {% for group in groups %}
-                                                            <option value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                            <option
+                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -69,7 +71,8 @@
                                                             name="removegroup">
                                                         <option value="">-</option>
                                                         {% for group in product.groups %}
-                                                            <option value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                            <option
+                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -95,13 +98,37 @@
                                 </div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.page-inner -->
+                    </div>
+                </div>
 
-            {% include 'footer.html.twig' %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2>Groups</h2>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {% for group in product.groups %}
+                                        <tr>
+                                            <td>{{ group.name }}</td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
+            </div><!-- /.row -->
+        </div><!-- /.page-inner -->
+
+        {% include 'footer.html.twig' %}
+
+    </div>
     </div>
 
 {% endblock %}
