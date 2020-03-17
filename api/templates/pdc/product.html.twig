@@ -1,0 +1,134 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~product.name } %}
+
+            <div class="page-inner">
+                <div class="row">
+
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_pdc_product', {id: product.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ product.name }} </h2>
+                                    <div class="float-right">
+                                        <button class="btn btn-danger" style="margin-right: 25px">Verwijderen</button>
+                                        <button class="btn btn-success">Opslaan</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">Name</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="name" placeholder="Large Input" value="{{ product.name }}">
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">Alle groups</label>
+                                                <ul>
+                                                    {% for group in product.groups %}
+                                                        <li>{{ group.name }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 row offset-md-6">
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">Group toevoegen</label>
+                                                    <select class="form-control form-control-lg" id="addgroup"
+                                                            name="addgroup">
+                                                        <option value="">-</option>
+                                                        {% for group in groups %}
+                                                            <option
+                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> <!-- /.col -->
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">Group verwijderen</label>
+                                                    <select class="form-control form-control-lg" id="removegroup"
+                                                            name="removegroup">
+                                                        <option value="">-</option>
+                                                        {% for group in product.groups %}
+                                                            <option
+                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> <!-- /.col -->
+
+                                        </div><!-- /.col /.row -->
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">Description</label>
+                                                <textarea class="form-control" rows="5" id="description"
+                                                          name=description>{{ product.description }}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    Aangemaakt op {{ product.dateCreated|date("d-m-Y H:i:s") }} en voor het laats
+                                    bewerkt op {{ product.dateModified|date("d-m-Y H:i:s") }}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2>Groups</h2>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {% for group in product.groups %}
+                                        <tr>
+                                            <td>{{ group.name }}</td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.row -->
+        </div><!-- /.page-inner -->
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+    </div>
+
+{% endblock %}
