@@ -59,7 +59,7 @@ class CommongroundUserProvider implements UserProviderInterface
 		
 		$user = $users[0];
 		
-		if(in_array('ROLE_USER', $user['roles'])){$user['roles'][] = 'ROLE_USER';}
+		if(!in_array('ROLE_USER', $user['roles'])){$user['roles'][] = 'ROLE_USER';}
 		
 		return new CommongroundUser($user['username'], $user['id'], null, $user['roles'] ,$user['person'],$user['organization']);
 	}
