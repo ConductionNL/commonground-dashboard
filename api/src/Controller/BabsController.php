@@ -90,15 +90,38 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
-
         $babsschets = "";
 
         $h1 = "Uw overzicht van binnengekomen huwelijken";
         $functie = "Medewerker";
 
-        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
+        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
 
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests ];
+        $huwelijken = [];
+        foreach($requests as $request ) {
+            $request['requestType'] == "http://vtc.huwelijksplanner.online/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1";
+            $huwelijken[] = $request;
+        }
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "huwelijken" => $huwelijken ];
+    }
+
+    /**
+     * @Route("/medewerker/huwelijken/{id}")
+     * @Template
+     */
+    public function medewerkerHuwelijkViewAction(Request $request, CommonGroundService $commonGroundService, $id)
+    {
+        $babsschets = "";
+
+        $h1 = "Huwelijk";
+        $functie = "Medewerker";
+
+        $huwelijk = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/'.$id);
+
+//        $huwelijk['properties']['type'] = "";
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "huwelijk" => $huwelijk ];
     }
 
     /**
