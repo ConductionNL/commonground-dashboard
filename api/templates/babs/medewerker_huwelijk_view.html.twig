@@ -18,7 +18,12 @@
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2 class="d-inline-block">9/11 <i style="color: limegreen;" class="fas fa-check"></i>
+                                <h2 class="d-inline-block">{{ confirmedChecks }}/{{ totalChecks }}
+                                    {% if confirmedChecks == totalChecks %}
+                                    <i style="color: limegreen;" class="fas fa-check"></i>
+                                    {% else %}
+                                    <i style="color:red">X</i>
+                                    {% endif %}
                                     Huwelijksgegevens </h2>
                                 <div class="float-right">
                                     <a class="btn btn-danger" style="margin-right: 25px" href="#deleteHuwelijkModal"
@@ -213,6 +218,14 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: red;">X</i>
+                                    </td>
+                                    <th>Betaald</th>
+                                    <td>Nee</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                                         {% if huwelijk.status == "incomplete" %}
                                             <i style="color: red;">X</i>
                                         {% else %}
@@ -223,15 +236,6 @@
                                     <td>{{ huwelijk.status|capitalize }}</td>
                                     <td></td>
                                 </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        <i style="color: red;">X</i>
-                                    </td>
-                                    <th>Betaald</th>
-                                    <td>Nee</td>
-                                    <td></td>
-                                </tr>
-
                             </table>
 
                             <br>
@@ -361,35 +365,61 @@
                                 </tr>
                                 <tr>
                                     <th>Naamgebruik</th>
-                                    <td><p class="mb-0 pt-1 d-inline-block">{{ huwelijk.properties.overig.naamgebruik[0] }}</p>
+                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    <td>
+                                        {% if huwelijk.properties.overig.naamgebruik[0] is defined and huwelijk.properties.overig.naamgebruik[0] is not empty %}
+                                        {% set assent1 = commonground_resource(huwelijk.properties.overig.naamgebruik.0) %}
+                                        <p class="mb-0 pt-1 d-inline-block">{{ assent1.name }}</p>
                                         <button style="padding: 4px; float: right" type="button"
                                                 class="btn btn-primary"
                                                 data-toggle="modal" data-target="#partner1NaamModal"><i style=""
                                                                                                         class="fas fa-edit"></i>
                                         </button>
-                                    </td>
-                                    <td><p class="mb-0 pt-1 d-inline-block">Henrika Timmers</p>
+                                        {% else %}
+                                        <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen naamgebruik</p>
                                         <button style="padding: 4px; float: right" type="button"
                                                 class="btn btn-primary"
-                                                data-toggle="modal" data-target="#partner2NaamModal"><i style=""
+                                                data-toggle="modal" data-target="#partner1NaamModal"><i style=""
                                                                                                         class="fas fa-edit"></i>
                                         </button>
+                                        {% endif %}
                                     </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Leeftijd</th>
-                                    <td>34 jaar</td>
-                                    <td>37 jaar</td>
+                                    {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                        <td>
+                                            {% if huwelijk.properties.overig.naamgebruik[1] is defined and huwelijk.properties.overig.naamgebruik[1] is not empty %}
+                                                {% set assent2 = commonground_resource(huwelijk.properties.overig.naamgebruik.1) %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ assent2.name }}</p>
+                                                <button style="padding: 4px; float: right" type="button"
+                                                        class="btn btn-primary"
+                                                        data-toggle="modal" data-target="#partner2NaamModal"><i style=""
+                                                                                                                class="fas fa-edit"></i>
+                                                </button>
+                                            {% else %}
+                                                <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen naamgebruik</p>
+                                                <button style="padding: 4px; float: right" type="button"
+                                                        class="btn btn-primary"
+                                                        data-toggle="modal" data-target="#partner2NaamModal"><i style=""
+                                                                                                                class="fas fa-edit"></i>
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
                                     <th>Nederlandstalig</th>
-                                    <td>Ja</td>
-                                    <td>Ja</td>
+                                    {% if huwelijk.properties.overig.nederlands is defined and huwelijk.properties.overig.nederlands is not empty %}
+                                    <td colspan="2">{{ huwelijk.properties.overig.nederlands|capitalize }}</td>
+                                    {% else %}
+                                    <td style="color: lightgray" colspan="2">Onbekend</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
-                                    <th>Oudersgegevens</th>
+                                    <th>Oudergegevens</th>
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -409,9 +439,12 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <th>Speciale opmerking</th>
-                                    <td style="color: lightgray">Niet van toepassing</td>
-                                    <td style="color: lightgray">Niet van toepassing</td>
+                                    <th>Opmerkingen</th>
+                                    {% if huwelijk.properties.overig.opmerkingen is defined and huwelijk.properties.overig.opmerkingen is not empty %}
+                                    <td colspan="2">{{ huwelijk.properties.overig.opmerkingen }}</td>
+                                    {% else %}
+                                    <td style="color: lightgray" colspan="2">Niet van toepassing</td>
+                                    {% endif %}
                                 </tr>
                             </table>
                         </div>
