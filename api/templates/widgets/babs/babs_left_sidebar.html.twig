@@ -85,10 +85,12 @@
                 <li class="nav-section">
                     <h4 style="color: black" class="text-section">Beheerder</h4>
                 </li>
+                {% if is_granted('group.beheerder') %}
                 <li class="nav-item">
                     <a href="{{ path('app_babs_gebruikersbeheer') }}">
                         Gebruikersbeheer</a>
                 </li>
+                {%endif%}
                 <li class="nav-item">
                     <a href="{{ path('app_wrc_templates') }}">
                         Templates</a>
@@ -128,6 +130,8 @@
                         </ul>
                     </div>
                 </li>
+                
+                {% if is_granted('group.beheerder') %}
                 <li class="nav-item">
                     <a href="{{ path('app_babs_configuratie') }}">
                         Configuratie</a>
@@ -169,6 +173,7 @@
                     <a href="{{ path('app_pdc_offers') }}">
                         Offers</a>
                 </li>
+                {%endif%}
             </ul>
             <img style="margin-left: 25px;margin-top: 20px; width: 200px; " src="https://platform-duic.imgix.net/app/uploads/sites/2/2016/04/Logo_gemeente_Utrecht-4.jpg?auto=format%2Ccompress&ch=Width%2CDPR%2CSave-Data&dpr=2.63&fit=max&h=430&ixjsv=2.2.4&ixlib=php-1.2.1&q=38">
         </div>
