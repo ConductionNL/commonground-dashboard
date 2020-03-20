@@ -27,49 +27,49 @@ class VrcController extends AbstractController
         return [];
     }
 
-    /**
-     * @Route("/templates")
-     * @Template
-     */
-    public function templatesAction(Request $request, CommonGroundService $commonGroundService)
-    {
-        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
-
-        $babsschets = "";
-
-        return ["babsschets"=>$babsschets, "templates"=>$templates];
-    }
-
-    /**
-     * @Route("/templates/{id}")
-     * @Template
-     */
-    public function templateAction(Request $request, CommonGroundService $commonGroundService, $id)
-    {
-        $template = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/templates/'.$id);
-
-        $babsschets = "";
-
-        // Kijken of het formulier is getriggerd
-        if ($request->isMethod('POST')) {
-
-            // Passing the variables to the resource
-            $variables = $request->request->all();
-
-            $variables['@id'] = $template['@id'];
-
-            /*@todo use try catch here */
-            if($commonGroundService->updateResource($variables)){
-                $this->addFlash('success', 'Template saved');
-                $template = $commonGroundService->getResource($variables['@id']);
-            }
-            else{
-                $this->addFlash('error', 'Template could not be saved');
-            }
-        }
-
-        return ["babsschets"=>$babsschets,"template"=>$template];
-    }
+//    /**
+//     * @Route("/templates")
+//     * @Template
+//     */
+//    public function templatesAction(Request $request, CommonGroundService $commonGroundService)
+//    {
+//        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
+//
+//        $babsschets = "";
+//
+//        return ["babsschets"=>$babsschets, "templates"=>$templates];
+//    }
+//
+//    /**
+//     * @Route("/templates/{id}")
+//     * @Template
+//     */
+//    public function templateAction(Request $request, CommonGroundService $commonGroundService, $id)
+//    {
+//        $template = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/templates/'.$id);
+//
+//        $babsschets = "";
+//
+//        // Kijken of het formulier is getriggerd
+//        if ($request->isMethod('POST')) {
+//
+//            // Passing the variables to the resource
+//            $variables = $request->request->all();
+//
+//            $variables['@id'] = $template['@id'];
+//
+//            /*@todo use try catch here */
+//            if($commonGroundService->updateResource($variables)){
+//                $this->addFlash('success', 'Template saved');
+//                $template = $commonGroundService->getResource($variables['@id']);
+//            }
+//            else{
+//                $this->addFlash('error', 'Template could not be saved');
+//            }
+//        }
+//
+//        return ["babsschets"=>$babsschets,"template"=>$template];
+//    }
 
     /**
      * @Route("/vormgeving")

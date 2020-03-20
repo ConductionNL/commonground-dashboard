@@ -24,8 +24,8 @@
                         {% for item in items %}
                         <tr>
                             <td>{{ item.name }}</td>
-                            <td>{{ item.dateCreated|date("d-m-Y H:i:s") }}</td>
-                            <td>{{ item.dateModified|date("d-m-Y H:i:s") }}</td>
+                            <td>{{ item.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                            <td>{{ item.dateModified|date("d-m-Y H:i", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: item.id}) }}"><b>MEER INFO</b></a></td>
                         </tr>
                         {% endfor %}
