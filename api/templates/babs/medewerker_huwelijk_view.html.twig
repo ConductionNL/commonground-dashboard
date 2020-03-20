@@ -20,9 +20,9 @@
                             <div class="card-header">
                                 <h2 class="d-inline-block">{{ confirmedChecks }}/{{ totalChecks }}
                                     {% if confirmedChecks == totalChecks %}
-                                    <i style="color: limegreen;" class="fas fa-check"></i>
+                                        <i style="color: limegreen;" class="fas fa-check"></i>
                                     {% else %}
-                                    <i style="color:red">X</i>
+                                        <i style="color:red">X</i>
                                     {% endif %}
                                     Huwelijksgegevens </h2>
                                 <div class="float-right">
@@ -366,26 +366,27 @@
                                 <tr>
                                     <th>Naamgebruik</th>
                                     {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
-                                    <td>
-                                        {% if huwelijk.properties.overig.naamgebruik[0] is defined and huwelijk.properties.overig.naamgebruik[0] is not empty %}
-                                        {% set assent1 = commonground_resource(huwelijk.properties.overig.naamgebruik.0) %}
-                                        <p class="mb-0 pt-1 d-inline-block">{{ assent1.name }}</p>
-                                        <button style="padding: 4px; float: right" type="button"
-                                                class="btn btn-primary"
-                                                data-toggle="modal" data-target="#partner1NaamModal"><i style=""
-                                                                                                        class="fas fa-edit"></i>
-                                        </button>
-                                        {% else %}
-                                        <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen naamgebruik</p>
-                                        <button style="padding: 4px; float: right" type="button"
-                                                class="btn btn-primary"
-                                                data-toggle="modal" data-target="#partner1NaamModal"><i style=""
-                                                                                                        class="fas fa-edit"></i>
-                                        </button>
-                                        {% endif %}
-                                    </td>
+                                        <td>
+                                            {% if huwelijk.properties.overig.naamgebruik[0] is defined and huwelijk.properties.overig.naamgebruik[0] is not empty %}
+                                                {% set assent1 = commonground_resource(huwelijk.properties.overig.naamgebruik.0) %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ assent1.name }}</p>
+                                                <button style="padding: 4px; float: right" type="button"
+                                                        class="btn btn-primary"
+                                                        data-toggle="modal" data-target="#partner1NaamModal"><i style=""
+                                                                                                                class="fas fa-edit"></i>
+                                                </button>
+                                            {% else %}
+                                                <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
+                                                    naamgebruik</p>
+                                                <button style="padding: 4px; float: right" type="button"
+                                                        class="btn btn-primary"
+                                                        data-toggle="modal" data-target="#partner1NaamModal"><i style=""
+                                                                                                                class="fas fa-edit"></i>
+                                                </button>
+                                            {% endif %}
+                                        </td>
                                     {% else %}
-                                    <td></td>
+                                        <td></td>
                                     {% endif %}
                                     {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
                                         <td>
@@ -398,7 +399,8 @@
                                                                                                                 class="fas fa-edit"></i>
                                                 </button>
                                             {% else %}
-                                                <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen naamgebruik</p>
+                                                <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
+                                                    naamgebruik</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner2NaamModal"><i style=""
@@ -413,9 +415,9 @@
                                 <tr>
                                     <th>Nederlandstalig</th>
                                     {% if huwelijk.properties.overig.nederlands is defined and huwelijk.properties.overig.nederlands is not empty %}
-                                    <td colspan="2">{{ huwelijk.properties.overig.nederlands|capitalize }}</td>
+                                        <td colspan="2">{{ huwelijk.properties.overig.nederlands|capitalize }}</td>
                                     {% else %}
-                                    <td style="color: lightgray" colspan="2">Onbekend</td>
+                                        <td style="color: lightgray" colspan="2">Onbekend</td>
                                     {% endif %}
                                 </tr>
                                 <tr>
@@ -441,9 +443,9 @@
                                 <tr>
                                     <th>Opmerkingen</th>
                                     {% if huwelijk.properties.overig.opmerkingen is defined and huwelijk.properties.overig.opmerkingen is not empty %}
-                                    <td colspan="2">{{ huwelijk.properties.overig.opmerkingen }}</td>
+                                        <td colspan="2">{{ huwelijk.properties.overig.opmerkingen }}</td>
                                     {% else %}
-                                    <td style="color: lightgray" colspan="2">Niet van toepassing</td>
+                                        <td style="color: lightgray" colspan="2">Niet van toepassing</td>
                                     {% endif %}
                                 </tr>
                             </table>
@@ -479,7 +481,7 @@
 
     {# Modals #}
 
-    <div class="modal fade" style="text-align: center" id="ceremonieModal" tabindex="-1"
+    <div class="modal fade" style="text-align: center" id="typeModal" tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog model-dialog-centered" role="document">
@@ -496,11 +498,11 @@
                     <p><b>Ceremonies:</b></p>
                     <form>
                         <div class="d-block">
-                            <select style="width: 250px;" class="form-control d-inline-block">
-                                <option>Huwelijk</option>
-                                <option>Partnerschap</option>
-                                <option>Omzetten</option>
-                            </select>
+{#                            <select style="width: 250px;" class="form-control d-inline-block">#}
+                                {% for ceremonie in ceremonies %}
+                                    {{ ceremonie.name }}
+                                {% endfor %}
+{#                            </select>#}
                         </div>
 
                         <button type="button" class="btn btn-success m-3  mx-auto">
