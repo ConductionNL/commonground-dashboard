@@ -331,6 +331,13 @@ class CommonGroundService
 		
 		$headers = $this->headers;
 		
+		unset($resource['@context']);
+		unset($resource['@id']);
+		unset($resource['@type']);
+		unset($resource['id']);
+		unset($resource['_links']);
+		unset($resource['_embedded']);
+		
 		if(!$async){
 			$response = $this->client->request('POST', $url, [
 					'body' => json_encode($resource),

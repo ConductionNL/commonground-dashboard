@@ -79,30 +79,4 @@ class WrcController extends AbstractController
     	
     	return $variables;
     }
-
-    /**
-     * @Route("/vormgeving")
-     * @Template
-     */
-    public function vormgevingAction(Request $request, CommonGroundService $commonGroundService)
-    {
-        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
-
-        $babsschets = "";
-
-        return ["babsschets"=>$babsschets, "templates"=>$templates];
-    }
-
-    /**
-     * @Route("/applicatie")
-     * @Template
-     */
-    public function applicatieAction(Request $request, CommonGroundService $commonGroundService)
-    {
-        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
-
-        $babsschets = "";
-
-        return ["babsschets"=>$babsschets, "templates"=>$templates];
-    }
 }
