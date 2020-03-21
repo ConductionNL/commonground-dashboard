@@ -8,6 +8,8 @@ use GuzzleHttp\Client;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class CommonGroundService
 {
@@ -15,13 +17,17 @@ class CommonGroundService
 	private $cache;
 	private $session;
 	private $headers;
+	private $flash;
+	private $translator;
 	
-	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache)
+	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache, FlashBagInterface $flash, TranslatorInterface $translator)
 	{
 		$this->params = $params;
 		$this->session = $session;
 		$this->cash = $cache;
 		$this->session= $session;
+		$this->flash = $flash;
+		$this->translator = $translator;
 		
 		// To work with NLX we need a couple of default headers
 		$this->headers = [
@@ -364,6 +370,38 @@ class CommonGroundService
 		$this->cash->save($item);
 		
 		return $response;
+	}
+	
+	
+	/*
+	 * The save fucntion should only be used by applications that can render flashes
+	 */
+	public function saveResource($resource, $endpoint = false)
+	{
+		
+		// If the resource exists we are going to update it, if not we are going to create it
+		if($resource['@id']){
+			if($this->updateResource($resource)){
+				// Lets renew the resource
+				$resource= $this->getResource($resource['@id']);
+				$this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
+			}
+			else{
+				$this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be saved'));
+			}
+		}
+		else{
+			if($this->createResource($resource, $endpoint)){
+				// Lets renew the resource
+				$resource= $this->getResource($resource['@id']);
+				$this->flash->add('success', $resource['name'].' '.$this->translator->trans('created'));
+			}
+			else{
+				$this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be created'));
+			}			
+		}
+		
+		return $resource;		
 	}
 	
 	/*

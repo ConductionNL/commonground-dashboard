@@ -12,21 +12,20 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Templates</th>
-                            <th scope="col">Aangemaakt</th>
-                            <th scope="col">Laatst bewerkt</th>
+                            <th scope="col">{{ 'template'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% set items = templates %}
                         {% set view = 'app_wrc_template' %}
-                        {% for item in items %}
+                        {% for resource in resources %}
                         <tr>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
-                            <td>{{ item.dateModified|date("d-m-Y H:i", "Europe/Paris") }}</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: item.id}) }}"><b>MEER INFO</b></a></td>
+                            <td>{{ resource.name }}</td>
+                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                         </tr>
                         {% endfor %}
                         </tbody>

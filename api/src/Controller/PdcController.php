@@ -17,106 +17,389 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use App\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class PdcController
  * @package App\Controller
- * @Route("/producten")
+ * @Route("/pdc")
  */
 class PdcController extends AbstractController
 {
-
+	
+	/**
+	 * @Route("/")
+	 * @Template
+	 */
+	public function indexAction()
+	{		
+		$variables = [];
+		$variables['title'] = $translator->trans('product and service catalouge');
+		$variables['subtitle'] = $translator->trans('the product and service catalouge holds al data concerning product, groups and offers');
+		
+		return $variables;
+	}
+	
     /**
      * @Route("/products")
      * @Template
      */
-    public function productsAction(Request $request, CommonGroundService $commonGroundService)
+	public function productsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-        $products = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products')["hydra:member"];
-
-        $babsschets = "";
-
-        $h1 = "Producten overzicht";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "products"=>$products];
+    	$variables = [];
+    	$variables['title'] = $translator->trans('products');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('products');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products')["hydra:member"];
+    	
+        return $variables;
     }
 
     /**
      * @Route("/products/{id}")
      * @Template
      */
-    public function productAction(Request $request, CommonGroundService $commonGroundService, $id)
+    public function productAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-        $product = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/products/'.$id);
-
-        $groups = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
-
-        $babsschets = "";
-
-        // Kijken of het formulier is getriggerd
-        if ($request->isMethod('POST')) {
-
-            // Passing the variables to the resource
-            $variables = $request->request->all();
-
-            foreach ($product['groups'] as $group){
-                $variables['groups'][] = 'groups/'.$group['id'];
-            }
-
-            if($variables['addgroup'] != ""){
-                $variables['groups'][] = $variables['addgroup'];
-            }
-
-
-            if($variables['removegroup'] != ""){
-
-                foreach($variables['groups'] as $key=>$group){
-                    if($group == $variables['removegroup']){
-                        unset($variables['groups'][$key]);
-                    }
-                }
-                /*
-                */
-            }
-
-            $variables['@id'] = $product['@id'];
-
-            /*@todo use try catch here */
-            if($commonGroundService->updateResource($variables)){
-                $this->addFlash('success', 'Product saved');
-                $product = $commonGroundService->getResource($variables['@id']);
-            }
-            else{
-                $this->addFlash('error', 'Product could not be saved');
-            }
-        }
-
-        return ["babsschets" => $babsschets, "product"=>$product, "groups"=>$groups];
+    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('catalogue');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('catalogue');
+    	
+    	// Lets see if we need to create
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/catalogues/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();    		
+    		
+    		foreach ($variables['resource']['groups'] as $group){
+    			$resource['groups'][] = 'groups/'.$group['id'];
+    		}
+    		
+    		if($resource['addgroup'] != ""){
+    			$resource['groups'][] = $resource['addgroup'];
+    		}
+    		
+    		if($resource['removegroup'] != ""){
+    			foreach($resource['groups'] as $key=>$group){
+    				if($group == $resource['removegroup']){
+    					unset($resource['groups'][$key]);
+    				}
+    			}
+    		}
+    		
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/catalogues/');
+    	}
+    	
+        return $variables;
     }
 
     /**
      * @Route("/groups")
      * @Template
      */
-    public function groupsAction(Request $request, CommonGroundService $commonGroundService)
+    public function groupsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-        $babsschets = "";
-
-        $h1 = "Groepen overzicht";
-
-        return ["babsschets" => $babsschets, "h1" => $h1];
+    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('groups');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
+    	
+    	return $variables;
+    	
+    }
+    
+    /**
+     * @Route("/group/{id}")
+     * @Template
+     */
+    public function groupAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+    	$variables = [];
+    	$variables['title'] = $translator->trans('group');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
+    	
+    	// Lets see if we need to create
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/groups/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/groups/');
+    	}
+    	return $variables;
+    	
     }
 
     /**
      * @Route("/offers")
      * @Template
      */
-    public function offersAction(Request $request, CommonGroundService $commonGroundService)
+    public function offersAction( CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-        $babsschets = "";
-
-        $h1 = "Offers overzicht";
-
-        return ["babsschets" => $babsschets, "h1" => $h1];
+    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('offers');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('offers');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/offers')["hydra:member"];
+    	
+    	return $variables;
     }
+    
+    /**
+     * @Route("/offer/{id}")
+     * @Template
+     */
+    public function offerAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+    	$variables = [];
+    	$variables['title'] = $translator->trans('offer');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('offer');
+    	
+    	// Lets see if we need to create
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/offers/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/offers/');
+    	}
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/catalogues")
+     * @Template
+     */
+    public function cataloguesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('catalogues');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('catalogues');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/catalogues/{id}")
+     * @Template
+     */
+    public function catalogueAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+    	$variables = [];
+    	$variables['title'] = $translator->trans('catalogue');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('catalogue');
+    	
+    	// Lets see if we need to create
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/catalogues/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/catalogues/');
+    	}
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/taxes")
+     * @Template
+     */
+    public function taxesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('taxes');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('taxes');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/taxes')["hydra:member"];
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/taxes/{id}")
+     * @Template
+     */
+    public function taxAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+    	$variables = [];
+    	$variables['title'] = $translator->trans('tax');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('tax');
+    	
+    	// Lets see if we need to create
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/taxes/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/taxes/');
+    	}
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/suppliers")
+     * @Template
+     */
+    public function suppliersAction( CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('suppliers');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('suppliers');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/taxes')["hydra:member"];
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/suppliers/{id}")
+     * @Template
+     */
+    public function supplierAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+    	$variables = [];
+    	$variables['title'] = $translator->trans('supplier');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('supplier');
+    	
+    	// Lets see if we need to create
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/suppliers/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/suppliers/');
+    	}
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/customer_types")
+     * @Template
+     */
+    public function customerTypesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('customer types');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('customer type');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/customer_types')["hydra:member"];
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/customer_types/{id}")
+     * @Template
+     */
+    public function customerTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {    	
+    	$variables = [];
+    	$variables['title'] = $translator->trans('customer type');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('customer type');
+    	
+    	// Lets see if we need to create 
+    	if($id == 'new'){
+    		$variables['resource'] = ['@id' => null];
+    	}
+    	else{
+    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/customer_types/'.$id);
+    	}
+    	
+    	// Lets see if there is a post to procces
+    	if ($request->isMethod('POST')) {
+    		
+    		// Passing the variables to the resource
+    		$resource = $request->request->all();    		
+    		$resource['@id'] = $variables['resource']['@id'];
+    		
+    		// If there are any sub data sources the need to be removed below in order to save the resource
+    		// unset($resource['somedatasource'])
+    		
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/customer_types/');    		
+    	}
+    	
+    	return $variables;
+    }
+    
+    
+    
 }
