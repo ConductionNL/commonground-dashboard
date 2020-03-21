@@ -90,15 +90,78 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
-
         $babsschets = "";
 
         $h1 = "Uw overzicht van binnengekomen huwelijken";
         $functie = "Medewerker";
 
-        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
+        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
 
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "requests" => $requests ];
+        $huwelijken = [];
+        foreach ($requests as $request) {
+            $request['requestType'] == "http://vtc.huwelijksplanner.online/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1";
+            $huwelijken[] = $request;
+        }
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "huwelijken" => $huwelijken];
+    }
+
+    /**
+     * @Route("/medewerker/huwelijken/{id}")
+     * @Template
+     */
+    public function medewerkerHuwelijkViewAction(Request $request, CommonGroundService $commonGroundService, $id)
+    {
+        $babsschets = "";
+
+        $h1 = "Huwelijk";
+        $functie = "Medewerker";
+
+        $huwelijk = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
+
+
+        $products = $commonGroundService->getResourceList('https://pdc.dev.huwelijksplanner.online/products');
+
+        $ceremonies = [];
+        foreach ($products as $product) {
+            if (!empty($product['groups'])) {
+                foreach ($product['groups'] as $group) {
+                    if ($group['name'] == "Ceremonies") {
+                        $ceremonies[] = $product;
+                    }
+                }
+            }
+        }
+
+        $totalChecks = 8;
+        $confirmedChecks = 0;
+
+        if (isset($huwelijk['properties']['partners'][0]) && !empty($huwelijk['properties']['partners'][0]) && isset($huwelijk['properties']['partners'][1]) && !empty($huwelijk['properties']['partners'][1])) {
+            $confirmedChecks++;
+        }
+        if (isset($huwelijk['properties']['type']) && !empty($huwelijk['properties']['type'])) {
+            $confirmedChecks++;
+        }
+        if (isset($huwelijk['properties']['plechtigheid']) && !empty($huwelijk['properties']['plechtigheid'])) {
+            $confirmedChecks++;
+        }
+        if (isset($huwelijk['properties']['locatie']) && !empty($huwelijk['properties']['locatie'])) {
+            $confirmedChecks++;
+        }
+        if (isset($huwelijk['properties']['datum']) && !empty($huwelijk['properties']['datum'])) {
+            $confirmedChecks++;
+        }
+        if (isset($huwelijk['properties']['ambtenaar']) && !empty($huwelijk['properties']['ambtenaar'])) {
+            $confirmedChecks++;
+        }
+        if (isset($huwelijk['properties']['getuigen']) && !empty($huwelijk['properties']['getuigen']) && count($huwelijk['properties']['getuigen']) > 1) {
+            $confirmedChecks++;
+        }
+        if ($huwelijk['status'] == "completed") {
+            $confirmedChecks++;
+        }
+
+        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "huwelijk" => $huwelijk, "totalChecks" => $totalChecks, "confirmedChecks" => $confirmedChecks, "ceremonies" => $ceremonies];
     }
 
     /**
