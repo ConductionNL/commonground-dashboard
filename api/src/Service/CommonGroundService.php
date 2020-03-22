@@ -117,16 +117,14 @@ class CommonGroundService
 			$response = $this->client->request('GET', $url, [
 					'query' => $query,
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		else {
 			
 			$response = $this->client->requestAsync('GET', $url, [
 					'query' => $query,
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		
 		if($response->getStatusCode() != 200){
@@ -203,16 +201,14 @@ class CommonGroundService
 			$response = $this->client->request('GET', $url, [
 					'query' => $query,
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		else {
 			
 			$response = $this->client->requestAsync('GET', $url, [
 					'query' => $query,
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		
 		if($response->getStatusCode() != 200){
@@ -283,16 +279,14 @@ class CommonGroundService
 			$response = $this->client->request('PUT', $url, [
 					'body' => json_encode($resource),
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		else {
 			
 			$response = $this->client->requestAsync('PUT', $url, [
 					'body' => json_encode($resource),
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		
 		$statusCode= $response->getStatusCode();
@@ -331,7 +325,7 @@ class CommonGroundService
 	}
 	
 	/*
-	 * Get a single resource from a common ground componant
+	 * Create a sresource on a common ground component
 	 */
 	public function createResource($resource, $url = null, $async = false)
 	{
@@ -371,15 +365,13 @@ class CommonGroundService
 			$response = $this->client->request('POST', $url, [
 					'body' => json_encode($resource),
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		else {
 			$response = $this->client->requestAsync('POST', $url, [
 					'body' => json_encode($resource),
 					'headers' => $headers,
-			]
-					);
+			]);
 		}
 		
 		
@@ -419,6 +411,76 @@ class CommonGroundService
 		return $response;
 	}
 	
+	
+	/*
+	 * Delete a single resource from a common ground component
+	 */
+	public function deleteResource($resource, $url = null, $async = false)
+	{
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
+		}
+		
+		// Split enviroments, if the env is not dev the we need add the env to the url name
+		$parsedUrl = parse_url($url);
+		
+		// We only do this on non-production enviroments
+		if($this->params->get('app_env') != "prod"){
+			
+			// Lets make sure we dont have doubles
+			$url = str_replace($this->params->get('app_env').'.','',$url);
+			
+			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
+			$host = explode('.', $parsedUrl['host']);
+			$subdomain = $host[0];
+			$url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
+		}
+		
+		// Remove trailing slash
+		$url = rtrim($url, '/');
+		
+		// Set headers
+		$headers = $this->headers;
+				
+		if(!$async){
+			$response = $this->client->request('DELETE', $url, [
+					'headers' => $headers,
+			]);
+		}
+		else {
+			$response = $this->client->requestAsync('DELETE', $url, [
+					'headers' => $headers,
+			]);
+		}
+		
+		
+		$statusCode= $response->getStatusCode();
+		$response = json_decode($response->getBody(), true);
+		
+		if($statusCode!= 201 && $statusCode != 200){
+			//Should be cases
+			if($response['@type'] == 'ConstraintViolationList'){
+				foreach($response['violations'] as $violation){
+					$this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
+				}
+				
+				return false;
+			}
+			else{
+				var_dump('POST returned:'.$statusCode);
+				var_dump($headers);
+				var_dump(json_encode($resource));
+				var_dump(json_encode($url));
+				var_dump($response);
+				die;
+			}
+		}
+		
+		// Remove the item from cash		
+		$this->cash->delete('commonground_'.md5($url));
+		
+		return true;
+	}
 	
 	/*
 	 * The save fucntion should only be used by applications that can render flashes
@@ -469,8 +531,31 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function clearCash($url)
+	public function clearCash($resource, $url = false)
 	{
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
+		}
+		
+		// Split enviroments, if the env is not dev the we need add the env to the url name
+		$parsedUrl = parse_url($url);
+		
+		// We only do this on non-production enviroments
+		if($this->params->get('app_env') != "prod"){
+			
+			// Lets make sure we dont have doubles
+			$url = str_replace($this->params->get('app_env').'.','',$url);
+			
+			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
+			$host = explode('.', $parsedUrl['host']);
+			$subdomain = $host[0];
+			$url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
+		}
+		
+		// Remove trailing slash
+		$url = rtrim($url, '/');
+		
+		$this->cash->delete('commonground_'.md5($url));
 	}
 	
 	
