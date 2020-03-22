@@ -8,6 +8,9 @@ use GuzzleHttp\Client;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class CommonGroundService
 {
@@ -15,13 +18,19 @@ class CommonGroundService
 	private $cache;
 	private $session;
 	private $headers;
+	private $requestStack;
+	private $flash;
+	private $translator;
 	
-	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache)
+	public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache, RequestStack $requestStack, FlashBagInterface $flash, TranslatorInterface $translator)
 	{
 		$this->params = $params;
 		$this->session = $session;
 		$this->cash = $cache;
 		$this->session= $session;
+		$this->requestStack = $requestStack;
+		$this->flash = $flash;
+		$this->translator = $translator;
 		
 		// To work with NLX we need a couple of default headers
 		$this->headers = [
@@ -76,26 +85,28 @@ class CommonGroundService
 			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
 			$host = explode('.', $parsedUrl['host']);
 			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
+			$url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
 		}
-				
+		
 		// To work with NLX we need a couple of default headers
 		$headers = $this->headers;
 		
-		$elementList = [];
-		foreach($query as $element){
-			if(!is_array($element)){
-				break;
-			}
-			$elementList[] = implode("=",$element);
-		}
-		$elementList = implode(",", $elementList);
-		
-		
-		if($elementList){
-			$headers['X-NLX-Request-Data-Elements'] = $elementList;
-			$headers['X-NLX-Request-Data-Subject'] = $elementList;			
-		}
+		/* This is broken
+		 $elementList = [];
+		 foreach($query as $element){
+		 if(!is_array($element)){
+		 break;
+		 }
+		 $elementList[] = implode("=",$element);
+		 }
+		 $elementList = implode(",", $elementList);
+		 
+		 
+		 if($elementList){
+		 $headers['X-NLX-Request-Data-Elements'] = $elementList;
+		 $headers['X-NLX-Request-Data-Subject'] = $elementList;
+		 }
+		 */
 		
 		$item = $this->cash->getItem('commonground_'.md5($url));
 		if ($item->isHit() && !$force) {
@@ -124,6 +135,7 @@ class CommonGroundService
 			var_dump(json_encode($headers));
 			var_dump(json_encode($url));
 			var_dump($response->getBody());
+			var_dump(json_decode($response->getBody(), true));
 			die;
 		}
 		
@@ -132,9 +144,16 @@ class CommonGroundService
 		/* @todo this should look to al @id keus not just the main root */
 		if(array_key_exists('hydra:member', $response) && $response['hydra:member']){
 			foreach($response['hydra:member'] as $key => $embedded){
+				// Set the id
 				if(array_key_exists('@id', $embedded) && $embedded['@id']){
 					$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
 				}
+				
+				// To prevent unnececary calls we cash al the items we get
+				$item = $this->cash->getItem('commonground_'.md5($response['hydra:member'][$key]['@id'] ));
+				$item->set($embedded);
+				$item->expiresAt(new \DateTime('tomorrow'));
+				$this->cash->save($item);
 			}
 		}
 		
@@ -167,17 +186,18 @@ class CommonGroundService
 			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
 			$host = explode('.', $parsedUrl['host']);
 			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
+			$url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
+		}
+		
+		$item = $this->cash->getItem('commonground_'.md5($url));
+		
+		if ($item->isHit() && !$force) {
+			return $item->get();
 		}
 		
 		// To work with NLX we need a couple of default headers
 		$headers = $this->headers;
 		$headers['X-NLX-Request-Subject-Identifier'] = $url;
-		
-		$item = $this->cash->getItem('commonground_'.md5($url));
-		if ($item->isHit() && !$force) {
-			//return $item->get();
-		}
 		
 		if(!$async){
 			$response = $this->client->request('GET', $url, [
@@ -238,7 +258,7 @@ class CommonGroundService
 			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
 			$host = explode('.', $parsedUrl['host']);
 			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
+			$url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
 		}
 		
 		// To work with NLX we need a couple of default headers
@@ -275,16 +295,27 @@ class CommonGroundService
 					);
 		}
 		
-		if($response->getStatusCode() != 200){
-			var_dump('PUT returned:'.$response->getStatusCode());
-			var_dump($headers);
-			var_dump(json_encode($resource));
-			var_dump(json_encode($url));
-			var_dump(json_encode($response->getBody()));
-			die;
-		}
-		
+		$statusCode= $response->getStatusCode();
 		$response = json_decode($response->getBody(), true);
+		
+		if($response->getStatusCode() != 200){
+			//Should be cases
+			if($response['@type'] == 'ConstraintViolationList'){
+				foreach($response['violations'] as $violation){
+					$this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
+				}
+				
+				return false;
+			}
+			else{
+				var_dump('POST returned:'.$statusCode);
+				var_dump($headers);
+				var_dump(json_encode($resource));
+				var_dump(json_encode($url));
+				var_dump($response);
+				die;
+			}
+		}
 		
 		if(array_key_exists('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
@@ -320,10 +351,21 @@ class CommonGroundService
 			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
 			$host = explode('.', $parsedUrl['host']);
 			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
-		}		
+			$url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
+		}
 		
+		// Remove trailing slash
+		$url = rtrim($url, '/');
+		
+		// Set headers
 		$headers = $this->headers;
+		
+		unset($resource['@context']);
+		unset($resource['@id']);
+		unset($resource['@type']);
+		unset($resource['id']);
+		unset($resource['_links']);
+		unset($resource['_embedded']);
 		
 		if(!$async){
 			$response = $this->client->request('POST', $url, [
@@ -341,17 +383,28 @@ class CommonGroundService
 		}
 		
 		
-		if($response->getStatusCode() != 201 && $response->getStatusCode() != 200){
-			var_dump('POST returned:'.$response->getStatusCode());
-			var_dump($headers);
-			var_dump(json_encode($resource));
-			var_dump(json_encode($url));
-			var_dump($response->getBody());
-			die;
+		$statusCode= $response->getStatusCode();
+		$response = json_decode($response->getBody(), true);
+		
+		if($statusCode!= 201 && $statusCode != 200){
+			//Should be cases
+			if($response['@type'] == 'ConstraintViolationList'){
+				foreach($response['violations'] as $violation){
+					$this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
+				}
+				
+				return false;
+			}
+			else{
+				var_dump('POST returned:'.$statusCode);
+				var_dump($headers);
+				var_dump(json_encode($resource));
+				var_dump(json_encode($url));
+				var_dump($response);
+				die;
+			}
 		}
 		
-		
-		$response = json_decode($response->getBody(), true);
 		
 		if(array_key_exists('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
@@ -366,11 +419,75 @@ class CommonGroundService
 		return $response;
 	}
 	
+	
+	/*
+	 * The save fucntion should only be used by applications that can render flashes
+	 */
+	public function saveResource($resource, $endpoint = false)
+	{
+		
+		// If the resource exists we are going to update it, if not we are going to create it
+		if($resource['@id']){
+			if($this->updateResource($resource)){
+				// Lets renew the resource
+				$resource= $this->getResource($resource['@id']);
+				$this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
+			}
+			else{
+				$this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be saved'));
+			}
+		}
+		else{
+			if($this->createResource($resource, $endpoint)){
+				// Lets renew the resource
+				$resource= $this->getResource($resource['@id']);
+				$this->flash->add('success', $resource['name'].' '.$this->translator->trans('created'));
+			}
+			else{
+				$this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be created'));
+			}
+		}
+		
+		return $resource;
+	}
+	
+	
+	/*
+	 * Get the current application from the wrc
+	 */
+	public function getApplication($force = false, $async = false)
+	{
+		$applications = $this->getResourceList('https://wrc.'.$this->getDomain().'/applications',["domain"=>$this->getDomain()],$force, $async);
+		
+		if(count($applications['hydra:member'])>0){
+			return $applications['hydra:member'][0];
+		}
+		
+		return false;
+	}
+	
 	/*
 	 * Get a single resource from a common ground componant
 	 */
 	public function clearCash($url)
 	{
+	}
+	
+	
+	/*
+	 * Get a single resource from a common ground componant
+	 */
+	public function getDomain()
+	{
+		$request = $this->requestStack->getCurrentRequest();
+		$host = $request->getHost();
+		
+		if($host == "" | $host == "localhost"){$host = $this->params->get('app_domain');}
+		
+		$host_names = explode(".", $host);
+		$host = $host_names[count($host_names)-2] . "." . $host_names[count($host_names)-1];
+		
+		return $host;
 	}
 	
 	/*
