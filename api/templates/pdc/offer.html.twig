@@ -24,20 +24,34 @@
     									<div class="col-md-3 col-sm-6">
         									<div class="form-group">
         										<label for="largeInput">{{ 'price'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="price" name ="price" placeholder="Large Input" value="{% if price.icon is defined %}{{ resource.price }}{% endif %}">
+        										<input type="text" class="form-control form-control-lg" id="price" name ="price" value="{% if price.icon is defined %}{{ resource.price }}{% endif %}">
         									</div>
         								</div> <!-- /.col -->  
     									<div class="col-md-3 col-sm-6">
         									<div class="form-group">
         										<label for="largeInput">{{ 'priceCurrency'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="priceCurrency" name ="priceCurrency" placeholder="Large Input" value="{% if resource.priceCurrency is defined %}{{ resource.priceCurrency }}{% endif %}">
+        										<input type="text" class="form-control form-control-lg" id="priceCurrency" name ="priceCurrency" value="{% if resource.priceCurrency is defined %}{{ resource.priceCurrency }}{% endif %}">
         									</div>
         								</div> <!-- /.col -->  
         								<div class="col-md-6 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="name" name ="name" placeholder="Large Input" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
+    									</div> <!-- /.col -->  
+        								<div class="col-md-6 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+        										{% if resource.sourceOrganization is not defined %}
+        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										 {% for organization in organizations %}
+                                               		<option value="{{ organization['@id'] }}">{{ organization.name }}</option>
+                                                {% endfor %}
+                                                </select>
+        										{% else %}        										
+        										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.sourceOrganization).name }}">
+        										{% endif %}
+        									</div><!-- /.form-group -->  
     									</div> <!-- /.col -->  
     								</div><!-- /.row --> 
     								<div class="row">

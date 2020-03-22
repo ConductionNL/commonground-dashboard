@@ -169,7 +169,7 @@ class UserController extends AbstractController
      */
     public function dashboardAction(Request $request)
     {
-    	return $this->redirect($this->generateUrl('app_babs_babshuwelijken'));
+    	return $this->redirect($this->generateUrl('app_wrc_templates'));
     }
     
     /**

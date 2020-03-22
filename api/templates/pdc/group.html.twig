@@ -21,18 +21,46 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-    									<div class="col-md-6 col-sm-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="icon" name ="icon" placeholder="Large Input" value="{% if resource.icon is defined %}{{ resource.icon }}{% endif %}">
-        									</div>
-        								</div> <!-- /.col -->  
-        								<div class="col-md-6 col-sm-12">
+        								<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="name" name ="name" placeholder="Large Input" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->  
+    									<div class="col-md-3 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="icon" name ="icon" value="{% if resource.icon is defined %}{{ resource.icon }}{% endif %}">
+        									</div>
+        								</div> <!-- /.col -->  
+    									<div class="col-md-3 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
+        										{% if resource.catalogue is not defined %}
+        										<select id="catalogue" name="catalogue" class="form-control form-control-lg">
+        										 {% for catalogue in catalogues %}
+                                               		<option value="{{ catalogue['@id'] }}">{{ catalogue.name }}</option>
+                                                {% endfor %}
+                                                </select>
+        										{% else %}        										
+        										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.catalogue).name }}">
+        										{% endif %}
+        									</div><!-- /.form-group -->  
+        								</div> <!-- /.col -->  
+    									<div class="col-md-3 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+        										{% if resource.sourceOrganization is not defined %}
+        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										 {% for organization in organizations %}
+                                               		<option value="{{ organization['@id'] }}">{{ organization.name }}</option>
+                                                {% endfor %}
+                                                </select>
+        										{% else %}        										
+        										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.sourceOrganization).name }}">
+        										{% endif %}
+        									</div><!-- /.form-group -->  
+        								</div> <!-- /.col -->  
     								</div><!-- /.row --> 
     								<div class="row">
         								<div class="col-md-12">    

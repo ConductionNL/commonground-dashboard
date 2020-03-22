@@ -65,10 +65,12 @@ class PdcController extends AbstractController
     	$variables['title'] = $translator->trans('catalogue');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('catalogue');
     	$variables['groups'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
+    	$variables['catalogues'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
     	
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/product/'.$id);
@@ -97,6 +99,7 @@ class PdcController extends AbstractController
     		}
     		
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
@@ -132,10 +135,12 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('group');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
+    	$variables['catalogues'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
     	
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/groups/'.$id);
@@ -147,6 +152,7 @@ class PdcController extends AbstractController
     		// Passing the variables to the resource
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
@@ -185,6 +191,7 @@ class PdcController extends AbstractController
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/offers/'.$id);
@@ -196,6 +203,7 @@ class PdcController extends AbstractController
     		// Passing the variables to the resource
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
@@ -234,6 +242,7 @@ class PdcController extends AbstractController
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/catalogues/'.$id);
@@ -245,6 +254,7 @@ class PdcController extends AbstractController
     		// Passing the variables to the resource
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
@@ -283,6 +293,7 @@ class PdcController extends AbstractController
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/taxes/'.$id);
@@ -294,6 +305,7 @@ class PdcController extends AbstractController
     		// Passing the variables to the resource
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
@@ -332,6 +344,7 @@ class PdcController extends AbstractController
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/suppliers/'.$id);
@@ -343,6 +356,7 @@ class PdcController extends AbstractController
     		// Passing the variables to the resource
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
@@ -380,6 +394,7 @@ class PdcController extends AbstractController
     	// Lets see if we need to create 
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+    		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/customer_types/'.$id);
@@ -391,6 +406,7 @@ class PdcController extends AbstractController
     		// Passing the variables to the resource
     		$resource = $request->request->all();    		
     		$resource['@id'] = $variables['resource']['@id'];
+    		$resource['id'] = $variables['resource']['id'];
     		
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
