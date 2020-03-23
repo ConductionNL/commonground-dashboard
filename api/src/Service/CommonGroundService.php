@@ -135,8 +135,8 @@ class CommonGroundService
 	 * Get a single resource from a common ground componant
 	 */
 	public function getResource($url, $query = [], $force = false, $async = false)
-	{
-		$url = $this->cleanUrl($url, $resource);
+	{		
+		$url = $this->cleanUrl($url, false);
 		
 		$item = $this->cash->getItem('commonground_'.md5($url));
 		
@@ -341,9 +341,9 @@ class CommonGroundService
 			}
 		}
 		else{
-			if($this->createResource($resource, $endpoint)){
+			if($createdResource = $this->createResource($resource, $endpoint)){
 				// Lets renew the resource
-				$resource= $this->getResource($resource['@id']);
+				$resource= $this->getResource($createdResource['@id']);
 				$this->flash->add('success', $resource['name'].' '.$this->translator->trans('created'));
 			}
 			else{
