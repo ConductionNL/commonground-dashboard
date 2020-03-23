@@ -11,7 +11,7 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_pdc_catalogue', {id: resource.id}) }}" method="post">
+                        	<form action="{{ path('app_zgw_case', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -21,26 +21,44 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-4 col-sm-12">
+        								<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->  
-    									<div class="col-md-4 col-sm-12">
+    									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'logo'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="logo" name ="logo" value="{% if resource.logo is defined %}{{ resource.logo }}{% endif %}">
+        										<label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="icon" name ="icon" value="{% if resource.icon is defined %}{{ resource.icon }}{% endif %}">
         									</div>
         								</div> <!-- /.col -->  
-    									<div class="col-md-4 col-sm-12">
+    									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
-        										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
+        										<label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
+        										{% if resource.catalogue is not defined %}
+        										<select id="catalogue" name="catalogue" class="form-control form-control-lg">
+        										 {% for catalogue in catalogues %}
+                                               		<option value="{{ catalogue['@id'] }}">{{ catalogue.name }}</option>
                                                 {% endfor %}
                                                 </select>
+        										{% else %}        										
+        										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.catalogue).name }}">
+        										{% endif %}
+        									</div><!-- /.form-group -->  
+        								</div> <!-- /.col -->  
+    									<div class="col-md-3 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+        										{% if resource.sourceOrganization is not defined %}
+        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										 {% for organization in organizations %}
+                                               		<option value="{{ organization['@id'] }}">{{ organization.name }}</option>
+                                                {% endfor %}
+                                                </select>
+        										{% else %}        										
+        										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.sourceOrganization).name }}">
+        										{% endif %}
         									</div><!-- /.form-group -->  
         								</div> <!-- /.col -->  
     								</div><!-- /.row --> 
@@ -52,11 +70,11 @@
         									</div>       
         								</div>  <!-- /.col -->  
     								</div> <!-- /.row -->       
-								</div> <!-- /.card-body -->   
+								</div> <!-- /.card-body -->        
 
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->   s                    
+								</div><!-- /.card-action -->   
                             </form>
                         </div><!-- /.card -->
                     </div><!-- /.col -->
