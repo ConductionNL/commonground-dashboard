@@ -170,8 +170,6 @@ class CommonGroundService
 			return false;
 		}
 
-		$response = json_decode($response->getBody(), true);
-
         $parsedUrl = parse_url($url);
 		if(array_key_exists('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];

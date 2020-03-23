@@ -112,56 +112,51 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkViewAction(Request $request, CommonGroundService $commonGroundService, $id)
     {
-        $babsschets = "";
+        $variables = [];
 
-        $h1 = "Huwelijk";
-        $functie = "Medewerker";
+        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
+        $variables['products'] = $commonGroundService->getResourceList('https://pdc.dev.huwelijksplanner.online/products');
 
-        $huwelijk = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
-
-
-        $products = $commonGroundService->getResourceList('https://pdc.dev.huwelijksplanner.online/products');
-
-        $ceremonies = [];
-        foreach ($products as $product) {
+        $variables['ceremonies'] = [];
+        foreach ($variables['products'] as $product) {
             if (!empty($product['groups'])) {
                 foreach ($product['groups'] as $group) {
                     if ($group['name'] == "Ceremonies") {
-                        $ceremonies[] = $product;
+                        $variables['ceremonies'][] = $product;
                     }
                 }
             }
         }
 
-        $totalChecks = 8;
-        $confirmedChecks = 0;
+        $variables['totalChecks'] = 8;
+        $variables['confirmedChecks'] = 0;
 
-        if (isset($huwelijk['properties']['partners'][0]) && !empty($huwelijk['properties']['partners'][0]) && isset($huwelijk['properties']['partners'][1]) && !empty($huwelijk['properties']['partners'][1])) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['partners'][0]) && !empty($variables['huwelijk']['properties']['partners'][0]) && isset($variables['huwelijk']['properties']['partners'][1]) && !empty($variables['huwelijk']['properties']['partners'][1])) {
+            $variables['confirmedChecks']++;
         }
-        if (isset($huwelijk['properties']['type']) && !empty($huwelijk['properties']['type'])) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['type']) && !empty($variables['huwelijk']['properties']['type'])) {
+            $variables['confirmedChecks']++;
         }
-        if (isset($huwelijk['properties']['plechtigheid']) && !empty($huwelijk['properties']['plechtigheid'])) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['plechtigheid']) && !empty($variables['huwelijk']['properties']['plechtigheid'])) {
+            $variables['confirmedChecks']++;
         }
-        if (isset($huwelijk['properties']['locatie']) && !empty($huwelijk['properties']['locatie'])) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['locatie']) && !empty($variables['huwelijk']['properties']['locatie'])) {
+            $variables['confirmedChecks']++;
         }
-        if (isset($huwelijk['properties']['datum']) && !empty($huwelijk['properties']['datum'])) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['datum']) && !empty($variables['huwelijk']['properties']['datum'])) {
+            $variables['confirmedChecks']++;
         }
-        if (isset($huwelijk['properties']['ambtenaar']) && !empty($huwelijk['properties']['ambtenaar'])) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['ambtenaar']) && !empty($variables['huwelijk']['properties']['ambtenaar'])) {
+            $variables['confirmedChecks']++;
         }
-        if (isset($huwelijk['properties']['getuigen']) && !empty($huwelijk['properties']['getuigen']) && count($huwelijk['properties']['getuigen']) > 1) {
-            $confirmedChecks++;
+        if (isset($variables['huwelijk']['properties']['getuigen']) && !empty($variables['huwelijk']['properties']['getuigen']) && count($variables['huwelijk']['properties']['getuigen']) > 1) {
+            $variables['confirmedChecks']++;
         }
-        if ($huwelijk['status'] == "completed") {
-            $confirmedChecks++;
+        if ($variables['huwelijk']['status'] == "completed") {
+            $variables['confirmedChecks']++;
         }
 
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "huwelijk" => $huwelijk, "totalChecks" => $totalChecks, "confirmedChecks" => $confirmedChecks, "ceremonies" => $ceremonies];
+        return ["variables"=>$variables];
     }
 
     /**

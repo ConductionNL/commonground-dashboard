@@ -18,8 +18,8 @@
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2 class="d-inline-block">{{ confirmedChecks }}/{{ totalChecks }}
-                                    {% if confirmedChecks == totalChecks %}
+                                <h2 class="d-inline-block">{{ variables.confirmedChecks }}/{{ variables.totalChecks }}
+                                    {% if variables.confirmedChecks == variables.totalChecks %}
                                         <i style="color: limegreen;" class="fas fa-check"></i>
                                     {% else %}
                                         <i style="color:red">X</i>
@@ -37,7 +37,7 @@
                             <table class="table table-hover">
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.type is not defined or huwelijk.properties.type is empty %}
+                                        {% if variables.huwelijk.properties.type is not defined or variables.huwelijk.properties.type is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -45,9 +45,9 @@
                                     </td>
                                     <th>Ceremonie</th>
                                     <td>
-                                        {% if huwelijk.properties.type is not defined or huwelijk.properties.type is empty %}
+                                        {% if variables.huwelijk.properties.type is not defined or variables.huwelijk.properties.type is empty %}
                                         {% else %}
-                                            {{ huwelijk.properties.type|capitalize }}
+                                            {{ variables.huwelijk.properties.type|capitalize }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -60,7 +60,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.plechtigheid is not defined or huwelijk.properties.plechtigheid is empty %}
+                                        {% if variables.huwelijk.properties.plechtigheid is not defined or variables.huwelijk.properties.plechtigheid is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -68,9 +68,9 @@
                                     </td>
                                     <th>Plechtigheid</th>
                                     <td>
-                                        {% if huwelijk.properties.plechtigheid is not defined or huwelijk.properties.plechtigheid is empty %}
+                                        {% if variables.huwelijk.properties.plechtigheid is not defined or variables.huwelijk.properties.plechtigheid is empty %}
                                         {% else %}
-                                            {{ commonground_resource(huwelijk.properties.plechtigheid).name }}
+                                            {{ commonground_resource(variables.huwelijk.properties.plechtigheid).name }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.locatie is not defined or huwelijk.properties.locatie is empty %}
+                                        {% if variables.huwelijk.properties.locatie is not defined or variables.huwelijk.properties.locatie is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -91,9 +91,9 @@
                                     </td>
                                     <th>Locatie</th>
                                     <td>
-                                        {% if huwelijk.properties.locatie is not defined or huwelijk.properties.locatie is empty %}
+                                        {% if variables.huwelijk.properties.locatie is not defined or variables.huwelijk.properties.locatie is empty %}
                                         {% else %}
-                                            {{ commonground_resource(huwelijk.properties.locatie).name }}
+                                            {{ commonground_resource(variables.huwelijk.properties.locatie).name }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -106,7 +106,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.datum is not defined or huwelijk.properties.datum is empty %}
+                                        {% if variables.huwelijk.properties.datum is not defined or variables.huwelijk.properties.datum is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -114,9 +114,9 @@
                                     </td>
                                     <th>Datum</th>
                                     <td>
-                                        {% if huwelijk.properties.datum is not defined or huwelijk.properties.datum is empty %}
+                                        {% if variables.huwelijk.properties.datum is not defined or variables.huwelijk.properties.datum is empty %}
                                         {% else %}
-                                            {{ huwelijk.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
+                                            {{ variables.huwelijk.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -129,7 +129,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.ambtenaar is not defined or huwelijk.properties.ambtenaar is empty %}
+                                        {% if variables.huwelijk.properties.ambtenaar is not defined or variables.huwelijk.properties.ambtenaar is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -137,9 +137,9 @@
                                     </td>
                                     <th>Ambtenaar</th>
                                     <td>
-                                        {% if huwelijk.properties.ambtenaar is not defined or huwelijk.properties.ambtenaar is empty %}
+                                        {% if variables.huwelijk.properties.ambtenaar is not defined or variables.huwelijk.properties.ambtenaar is empty %}
                                         {% else %}
-                                            {{ commonground_resource(huwelijk.properties.ambtenaar).name }}
+                                            {{ commonground_resource(variables.huwelijk.properties.ambtenaar).name }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -152,7 +152,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.getuigen is not defined or huwelijk.properties.getuigen is empty or huwelijk.properties.getuigen|length <= 2 %}
+                                        {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen is empty or variables.huwelijk.properties.getuigen|length <= 2 %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -160,9 +160,9 @@
                                     </td>
                                     <th>Getuigen</th>
                                     <td>
-                                        {% if huwelijk.properties.getuigen is not defined or huwelijk.properties.getuigen is empty %}
+                                        {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen is empty %}
                                         {% else %}
-                                            {% for getuige in huwelijk.properties.getuigen %}
+                                            {% for getuige in variables.huwelijk.properties.getuigen %}
                                                 {% set assent = commonground_resource(getuige) %}
                                                 {% set contact = commonground_resource(assent.contact) %}
                                                 {% if assent.status == "granted" %}
@@ -194,16 +194,16 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.extras is not defined or huwelijk.properties.extras is empty %}
+                                        {% if variables.huwelijk.properties.extras is not defined or variables.huwelijk.properties.extras is empty %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
                                         {% endif %}</td>
                                     <th>Extra's</th>
                                     <td>
-                                        {% if huwelijk.properties.extras is not defined or huwelijk.properties.extras is empty %}
+                                        {% if variables.huwelijk.properties.extras is not defined or variables.huwelijk.properties.extras is empty %}
                                         {% else %}
-                                            {% for extra in huwelijk.properties.extras %}
+                                            {% for extra in variables.huwelijk.properties.extras %}
                                                 {{ commonground_resource(extra).name }}<br>
                                             {% endfor %}
                                         {% endif %}
@@ -226,14 +226,14 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.status == "incomplete" %}
+                                        {% if variables.huwelijk.status == "incomplete" %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
                                         {% endif %}
                                     </td>
                                     <th>Status</th>
-                                    <td>{{ huwelijk.status|capitalize }}</td>
+                                    <td>{{ variables.huwelijk.status|capitalize }}</td>
                                     <td></td>
                                 </tr>
                             </table>
@@ -243,7 +243,7 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th>Aangemaakt op</th>
-                                    <td>{{ huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    <td>{{ variables.huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -261,8 +261,8 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th>Naam</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
-                                        {% set assent1 = commonground_resource(huwelijk.properties.partners.0) %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
+                                        {% set assent1 = commonground_resource(variables.huwelijk.properties.partners.0) %}
                                         {% set contact1 = commonground_resource(assent1.contact) %}
                                         <th>
                                             <p class="mb-0 pt-1 d-inline-block">{{ contact1.name }}</p>
@@ -275,8 +275,8 @@
                                     {% else %}
                                         <th></th>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
-                                        {% set assent2 = commonground_resource(huwelijk.properties.partners.1) %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
+                                        {% set assent2 = commonground_resource(variables.huwelijk.properties.partners.1) %}
                                         {% set contact2 = commonground_resource(assent2.contact) %}
                                         <th><p class="mb-0 pt-1 d-inline-block">{{ contact2.name }}</p>
                                             <button style="padding: 4px; float: right" type="button"
@@ -291,10 +291,10 @@
                                 </tr>
                                 <tr>
                                     <th>E-mail</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
                                             {% if contact1.emails[0] is defined and contact1.emails[0] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[0] }}</p>
+                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[0].email }}</p>
                                             {% else %}
                                                 <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
                                                     emailadres</p>
@@ -308,10 +308,10 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
                                             {% if contact1.emails[1] is defined and contact1.emails[1] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[1] }}</p>
+                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[1].email }}</p>
                                             {% else %}
                                                 <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
                                                     emailadres</p>
@@ -328,7 +328,7 @@
                                 </tr>
                                 <tr>
                                     <th>Telefoonnummer</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
                                             {% if contact1.phone[0] is defined and contact1.phones[0] is not empty %}
                                                 <p class="mb-0 pt-1 d-inline-block">{{ contact1.phones[0] }}</p>
@@ -345,7 +345,7 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
                                             {% if contact1.phone[1] is defined and contact1.phones[1] is not empty %}
                                                 <p class="mb-0 pt-1 d-inline-block">{{ contact1.phones[1] }}</p>
@@ -365,10 +365,10 @@
                                 </tr>
                                 <tr>
                                     <th>Naamgebruik</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
-                                            {% if huwelijk.properties.overig.naamgebruik[0] is defined and huwelijk.properties.overig.naamgebruik[0] is not empty %}
-                                                {% set assent1 = commonground_resource(huwelijk.properties.overig.naamgebruik.0) %}
+                                            {% if variables.huwelijk.properties.overig.naamgebruik[0] is defined and variables.huwelijk.properties.overig.naamgebruik[0] is not empty %}
+                                                {% set assent1 = commonground_resource(variables.huwelijk.properties.overig.naamgebruik.0) %}
                                                 <p class="mb-0 pt-1 d-inline-block">{{ assent1.name }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
@@ -388,10 +388,10 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
-                                            {% if huwelijk.properties.overig.naamgebruik[1] is defined and huwelijk.properties.overig.naamgebruik[1] is not empty %}
-                                                {% set assent2 = commonground_resource(huwelijk.properties.overig.naamgebruik.1) %}
+                                            {% if variables.huwelijk.properties.overig.naamgebruik[1] is defined and variables.huwelijk.properties.overig.naamgebruik[1] is not empty %}
+                                                {% set assent2 = commonground_resource(variables.huwelijk.properties.overig.naamgebruik.1) %}
                                                 <p class="mb-0 pt-1 d-inline-block">{{ assent2.name }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
@@ -414,8 +414,8 @@
                                 </tr>
                                 <tr>
                                     <th>Nederlandstalig</th>
-                                    {% if huwelijk.properties.overig.nederlands is defined and huwelijk.properties.overig.nederlands is not empty %}
-                                        <td colspan="2">{{ huwelijk.properties.overig.nederlands|capitalize }}</td>
+                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty %}
+                                        <td colspan="2">{{ variables.huwelijk.properties.overig.nederlands|capitalize }}</td>
                                     {% else %}
                                         <td style="color: lightgray" colspan="2">Onbekend</td>
                                     {% endif %}
@@ -442,8 +442,8 @@
                                 </tr>
                                 <tr>
                                     <th>Opmerkingen</th>
-                                    {% if huwelijk.properties.overig.opmerkingen is defined and huwelijk.properties.overig.opmerkingen is not empty %}
-                                        <td colspan="2">{{ huwelijk.properties.overig.opmerkingen }}</td>
+                                    {% if variables.huwelijk.properties.overig.opmerkingen is defined and variables.huwelijk.properties.overig.opmerkingen is not empty %}
+                                        <td colspan="2">{{ variables.huwelijk.properties.overig.opmerkingen }}</td>
                                     {% else %}
                                         <td style="color: lightgray" colspan="2">Niet van toepassing</td>
                                     {% endif %}
@@ -499,7 +499,7 @@
                     <form>
                         <div class="d-block">
 {#                            <select style="width: 250px;" class="form-control d-inline-block">#}
-                                {% for ceremonie in ceremonies %}
+                                {% for ceremonie in variables.ceremonies %}
                                     {{ ceremonie.name }}
                                 {% endfor %}
 {#                            </select>#}
