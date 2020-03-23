@@ -189,6 +189,7 @@ class CommonGroundService
 	 */
 	public function updateResource($resource, $url = null, $async = false)
 	{
+
 		$url = $this->cleanUrl($url, $resource);
 
 		// To work with NLX we need a couple of default headers
@@ -448,7 +449,7 @@ class CommonGroundService
 	 */
 	public function cleanUrl($url= false , $resource = false)
 	{
-		if (!$url && $url && array_key_exists('@id', $resource)) {
+		if (!$url && $resource && array_key_exists('@id', $resource)) {
 			$url = $resource['@id'];
 		}
 
