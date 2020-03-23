@@ -67,11 +67,13 @@ class PdcController extends AbstractController
     	$variables['groups'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
     	$variables['catalogues'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
+
+
+
     	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
+    	if($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
+        }
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/products/'.$id);
     	}
@@ -137,7 +139,7 @@ class PdcController extends AbstractController
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
     	$variables['catalogues'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
+
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
@@ -188,7 +190,7 @@ class PdcController extends AbstractController
     	$variables['title'] = $translator->trans('offer');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('offer');
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
+
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
@@ -239,7 +241,7 @@ class PdcController extends AbstractController
     	$variables['title'] = $translator->trans('catalogue');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('catalogue');
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
+
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
@@ -290,7 +292,7 @@ class PdcController extends AbstractController
     	$variables['title'] = $translator->trans('tax');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('tax');
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
+
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
@@ -341,7 +343,7 @@ class PdcController extends AbstractController
     	$variables['title'] = $translator->trans('supplier');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('supplier');
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
+
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
@@ -391,8 +393,8 @@ class PdcController extends AbstractController
     	$variables['title'] = $translator->trans('customer type');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('customer type');
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	
-    	// Lets see if we need to create 
+
+    	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
