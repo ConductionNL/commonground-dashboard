@@ -41,11 +41,11 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
                                                 <ul>
-                                                    {% if resource.groups is defined %}
-                                                    {% for group in resource.groups %}
-                                                        <li>{{ group.name }}</li>
-                                                    {% endfor %}
-                                                    {% endif %}
+{#                                                    {% if resource.groups is defined %}#}
+{#                                                    {% for group in resource.groups %}#}
+{#                                                        <li>{{ group.name }}</li>#}
+{#                                                    {% endfor %}#}
+{#                                                    {% endif %}#}
                                                 </ul>
                                             </div>
                                         </div>
@@ -58,10 +58,10 @@
                                                     <select class="form-control form-control-lg" id="addgroup"
                                                             name="addgroup">
                                                         <option value="">-</option>
-                                                        {% for group in groups %}
-                                                            <option
-                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                        {% endfor %}
+{#                                                        {% for group in groups %}#}
+{#                                                            <option#}
+{#                                                                value="groups/{{ group.id }}">{{ group.name }}</option>#}
+{#                                                        {% endfor %}#}
                                                     </select>
                                                 </div>
                                             </div> <!-- /.col -->
@@ -72,12 +72,12 @@
                                                     <select class="form-control form-control-lg" id="removegroup"
                                                             name="removegroup">
                                                         <option value="">-</option>
-                                                        {% if resource.groups is defined %}
-                                                        {% for group in resource.groups %}
-                                                            <option
-                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                        {% endfor %}
-                                                        {% endif %}
+{#                                                        {% if resource.groups is defined %}#}
+{#                                                        {% for group in resource.groups %}#}
+{#                                                            <option#}
+{#                                                                value="groups/{{ group.id }}">{{ group.name }}</option>#}
+{#                                                        {% endfor %}#}
+{#                                                        {% endif %}#}
                                                     </select>
                                                 </div>
                                             </div> <!-- /.col -->
@@ -97,7 +97,7 @@
 
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->   
+								</div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
                     </div>
@@ -112,14 +112,14 @@
                             <div class="card-body">
                                 <table class="table table-hover">
                                     <tbody>
-                                    {% if resource.groups is defined %}
-                                    {% for group in resource.groups %}
-                                        <tr>
-                                            <td>{{ group.name }}</td>
-                                            <td></td>
-                                        </tr>
-                                    {% endfor %}
-                                    {% endif %}
+{#                                    {% if resource.groups is defined %}#}
+{#                                    {% for group in resource.groups %}#}
+{#                                        <tr>#}
+{#                                            <td>{{ group.name }}</td>#}
+{#                                            <td></td>#}
+{#                                        </tr>#}
+{#                                    {% endfor %}#}
+{#                                    {% endif %}#}
                                     </tbody>
                                 </table>
                             </div>
