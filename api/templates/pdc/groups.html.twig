@@ -1,5 +1,7 @@
 {% extends "body.html.twig" %}
 
+{% set view = 'app_pdc_group' %}
+
 {% block content %}
 
     <div class="main-panel">
@@ -12,28 +14,26 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Partners</th>
-                            <th scope="col">Locatie</th>
-                            <th scope="col">Datum</th>
-                            <th scope="col">Tijdstip</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'catalogue'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
-{#                        {% set items = templates %}#}
-{#                        {% set view = 'app_wrc_template' %}#}
-                        {% for item in items %}
+                        {% set view = 'app_wrc_template' %}
+                        {% for resource in resources %}
                         <tr>
-                            <td>{{ item.name }}</td>
-                            <td>Utrecht, Stadhuis grote zaal</td>
-                            <td>10-2-2020</td>
-                            <td>10:50 - 11:50</td>
-                            <td style="">Aangevraagd</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: item.id}) }}"><b>MEER INFO</b></a></td>
+                            <td>{{ resource.name }}</td>
+                            <td><a href="{{ path('app_pdc_catalogue', {id: resource.catalogue.id}) }}">{{resource.catalogue['name']}}</a></td>
+                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                         </tr>
+                        {% endfor %}
                         </tbody>
-           				{% endfor %}
                     </table>
                 </div>
             </div>

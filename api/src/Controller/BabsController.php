@@ -25,7 +25,7 @@ class BabsController extends AbstractController
      */
     public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
-        return $this->redirect("/mock/login");
+    	return $this->redirect($this->generateUrl('app_wrc_templates'));
     }
 
     /**

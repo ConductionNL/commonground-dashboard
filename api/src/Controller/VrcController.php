@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 use App\Service\CommonGroundService;
 
@@ -26,74 +27,65 @@ class VrcController extends AbstractController
     {
         return [];
     }
-
-//    /**
-//     * @Route("/templates")
-//     * @Template
-//     */
-//    public function templatesAction(Request $request, CommonGroundService $commonGroundService)
-//    {
-//        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
-//
-//        $babsschets = "";
-//
-//        return ["babsschets"=>$babsschets, "templates"=>$templates];
-//    }
-//
-//    /**
-//     * @Route("/templates/{id}")
-//     * @Template
-//     */
-//    public function templateAction(Request $request, CommonGroundService $commonGroundService, $id)
-//    {
-//        $template = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/templates/'.$id);
-//
-//        $babsschets = "";
-//
-//        // Kijken of het formulier is getriggerd
-//        if ($request->isMethod('POST')) {
-//
-//            // Passing the variables to the resource
-//            $variables = $request->request->all();
-//
-//            $variables['@id'] = $template['@id'];
-//
-//            /*@todo use try catch here */
-//            if($commonGroundService->updateResource($variables)){
-//                $this->addFlash('success', 'Template saved');
-//                $template = $commonGroundService->getResource($variables['@id']);
-//            }
-//            else{
-//                $this->addFlash('error', 'Template could not be saved');
-//            }
-//        }
-//
-//        return ["babsschets"=>$babsschets,"template"=>$template];
-//    }
-
+    
     /**
-     * @Route("/vormgeving")
+     * @Route("/requests")
      * @Template
      */
-    public function vormgevingAction(Request $request, CommonGroundService $commonGroundService)
+    public function requestsAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
-
-        $babsschets = "";
-
-        return ["babsschets"=>$babsschets, "templates"=>$templates];
+    	
+    	$variables = [];
+    	$variables['title'] = 'Requests';
+    	$variables['subtitle'] = 'Overzicht van de door de organisatie aangeboden producten en diensten';
+    	$variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
+    	
+    	return $variables;
     }
-
+    
     /**
-     * @Route("/applicatie")
+     * @Route("/requests/{id}")
      * @Template
      */
-    public function applicatieAction(Request $request, CommonGroundService $commonGroundService)
+    public function requestAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $templates = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
-
-        $babsschets = "";
-
-        return ["babsschets"=>$babsschets, "templates"=>$templates];
+    	
+    	$variables = [];
+    	$variables['title'] = 'Requests';
+    	$variables['subtitle'] = 'Overzicht van de door de organisatie aangeboden producten en diensten';
+    	$variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests/'.$id);
+    	
+    	return $variables;
     }
+    
+    /**
+     * @Route("/submitters")
+     * @Template
+     */
+    public function submittersAction(Request $request, CommonGroundService $commonGroundService)
+    {
+    	
+    	$variables = [];
+    	$variables['title'] = 'Submitters';
+    	$variables['subtitle'] = 'Overzicht van de door de organisatie aangeboden producten en diensten';
+    	$variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters')["hydra:member"];
+    	
+    	return $variables;
+    }
+    
+    /**
+     * @Route("/submitters/{id}")
+     * @Template
+     */
+    public function submitterAction(Request $request, CommonGroundService $commonGroundService)
+    {
+    	
+    	$variables = [];
+    	$variables['title'] = 'Submitters';
+    	$variables['subtitle'] = 'Overzicht van de door de organisatie aangeboden producten en diensten';
+    	$variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
+    	
+    	return $variables;
+    }
+
 }
