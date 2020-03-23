@@ -135,7 +135,7 @@
       </trans-unit>
       <trans-unit id="rzobsxK" resname="organization">
         <source>organization</source>
-        <target>_organisaties</target>
+        <target>organisaties</target>
       </trans-unit>
       <trans-unit id="NSuEd32" resname="cases">
         <source>cases</source>

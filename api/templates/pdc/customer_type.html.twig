@@ -30,15 +30,11 @@
         								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										{% if resource.sourceOrganization is not defined %}
         										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}">{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
                                                 {% endfor %}
                                                 </select>
-        										{% else %}        										
-        										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.sourceOrganization).name }}">
-        										{% endif %}
         									</div><!-- /.form-group -->  
     									</div> <!-- /.col -->  
     								</div><!-- /.row --> 
