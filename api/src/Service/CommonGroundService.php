@@ -115,7 +115,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url, 'GET')){
 			return false;
 		}
 
@@ -166,7 +166,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url, 'GET')){
 			return false;
 		}
 		
@@ -221,7 +221,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+		if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'PUT')){
 			return false;
 		}
 
@@ -269,7 +269,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+		if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'POST')){
 			return false;
 		}
 
@@ -314,7 +314,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+		if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'DELETE')){
 			return false;
 		}
 
@@ -399,7 +399,7 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null )
+	public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null, $proces )
 	{
 		//Should be cases
 		if($response['@type'] == 'ConstraintViolationList'){
@@ -410,7 +410,7 @@ class CommonGroundService
 			return false;
 		}
 		else{
-			var_dump('POST returned:'.$statusCode);
+			var_dump($proces.' returned:'.$statusCode);
 			var_dump($headers);
 			var_dump(json_encode($resource));
 			var_dump(json_encode($url));
