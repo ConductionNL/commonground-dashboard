@@ -118,6 +118,7 @@ class BabsController extends AbstractController
         $variables['products'] = $commonGroundService->getResourceList('https://pdc.dev.huwelijksplanner.online/products');
 
         $variables['ceremonies'] = [];
+
         foreach ($variables['products'] as $product) {
             if (!empty($product['groups'])) {
                 foreach ($product['groups'] as $group) {
