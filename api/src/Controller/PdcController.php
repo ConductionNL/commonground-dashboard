@@ -31,7 +31,7 @@ class PdcController extends AbstractController
 	 * @Route("/")
 	 * @Template
 	 */
-	public function indexAction()
+	public function indexAction(TranslatorInterface $translator)
 	{
 		$variables = [];
 		$variables['title'] = $translator->trans('product and service catalouge');

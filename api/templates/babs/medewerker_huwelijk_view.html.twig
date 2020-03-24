@@ -367,9 +367,8 @@
                                     <th>Naamgebruik</th>
                                     {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
-                                            {% if variables.huwelijk.properties.overig.naamgebruik[0] is defined and variables.huwelijk.properties.overig.naamgebruik[0] is not empty %}
-                                                {% set assent1 = commonground_resource(variables.huwelijk.properties.overig.naamgebruik.0) %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ assent1.name }}</p>
+                                            {% if variables.huwelijk.properties.overig.naamgebruik is defined and variables.huwelijk.properties.overig.naamgebruik is not empty %}
+{#                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik }}</p>#}
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner1NaamModal"><i style=""
@@ -496,16 +495,17 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Ceremonies:</b></p>
-                    <form>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
-{#                            <select style="width: 250px;" class="form-control d-inline-block">#}
-                                {% for ceremonie in variables.ceremonies %}
-                                    {{ ceremonie.name }}
-                                {% endfor %}
-{#                            </select>#}
+                            <select style="width: 250px;" class="form-control d-inline-block" name="type">
+                                <option value="Huwelijk">Huwelijk</option>
+                                <option value="Partnerschap">Partnerschap</option>
+                                <option value="Omzetten">Omzetten</option>
+                            </select>
                         </div>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -529,16 +529,17 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Plechtigheden:</b></p>
-                    <form>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block">
-                                <option>Eenvoudig trouwen</option>
-                                <option>Gratis trouwen</option>
-                                <option>Trouwen / Partnerschap</option>
+                                {% for plechtigheid in variables.plechtigheden %}
+                                    <option value="{{ plechtigheid.id }}">{{ plechtigheid.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -562,16 +563,17 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Locaties Utrecht <i class="fas fa-building"></i></b></p>
-                    <form>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
-                            <select style="width: 250px;" class="form-control d-inline-block">
-                                <option>Utrecht, stadhuis grote zaal</option>
-                                <option>Utrecht, stadhuis kleine zaal</option>
-                                <option>Utrecht, stadskantoor</option>
+                            <select style="width: 250px;" class="form-control d-inline-block" name="locatie">
+                                {% for locatie in variables.locaties %}
+                                    <option value="{{ locatie.id }}">{{ locatie.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -705,89 +707,7 @@
         </div>
     </div>
 
-    <div class="modal fade" style="text-align: center" id="tijdstipModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tijdstip wijzigen</b>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="padding-bottom: 0 !important;" class="modal-body">
-                    <p><b>Vanaf</b></p>
-                    <form>
-                        <select style="width: 75px;" class="form-control d-inline-block">
-                            <option>08</option>
-                            <option>09</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option>
-                            <option>16</option>
-                        </select>
-                        -
-                        <select style="width: 75px;" class="form-control d-inline-block">
-                            <option>00</option>
-                            <option>05</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
-                            <option>25</option>
-                            <option>30</option>
-                            <option>35</option>
-                            <option>40</option>
-                            <option>45</option>
-                            <option>50</option>
-                            <option>55</option>
-                        </select>
-                        <br><br>
-                        <div class="d-block">
-                            <p><b>Tot</b></p>
-                            <select style="width: 75px;" class="form-control d-inline-block">
-                                <option>08</option>
-                                <option>09</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                                <option>13</option>
-                                <option>14</option>
-                                <option>15</option>
-                                <option>16</option>
-                            </select>
-                            -
-                            <select style="width: 75px;" class="form-control d-inline-block">
-                                <option>00</option>
-                                <option>05</option>
-                                <option>10</option>
-                                <option>15</option>
-                                <option>20</option>
-                                <option>25</option>
-                                <option>30</option>
-                                <option>35</option>
-                                <option>40</option>
-                                <option>45</option>
-                                <option>50</option>
-                                <option>55</option>
-                            </select>
-                        </div>
-
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Opslaan
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" style="text-align: center" id="babsModal" tabindex="-1"
+    <div class="modal fade" style="text-align: center" id="ambtenaarModal" tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog model-dialog-centered" role="document">
@@ -802,14 +722,15 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
                     <p><b>Babsen van Utrecht:</b></p>
-                    <form>
-                        <select class="form-control">
-                            <option>Dhr. Erik Hendrik</option>
-                            <option>Mvr. Ike van den Pol</option>
-                            <option>Dhr. Rene Gulje</option>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <select class="form-control" name="babs">
+                            {% for babs in variables.ambtenaren %}
+                                <option value="{{ babs.id }}">{{ babs.name }}</option>
+                            {% endfor %}
                         </select>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -882,26 +803,40 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Extra's verwijderen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
-                            te selecteren.</p>
-                        <select multiple="" class="form-control">
-                            <option>Trouwboek</option>
+{#                    <form>#}
+{#                        <p><b>Extra's verwijderen <i style="color: #F25961" class="fas fa-trash"></i></b></p>#}
+{#                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk#}
+{#                            te selecteren.</p>#}
+{#                        <select multiple="" class="form-control">#}
+{#                            <option>Trouwboek</option>#}
+{#                        </select>#}
+
+{#                        <button type="button" class="btn btn-danger  m-3  mx-auto">#}
+{#                            Verwijderen#}
+{#                        </button>#}
+{#                    </form>#}
+{#                    <form>#}
+{#                        <p style="margin-top: 80px;"><b>Extra's toevoegen <i style="color: limegreen"#}
+{#                                                                             class="fas fa-plus"></i></b></p>#}
+{#                        <select multiple="" class="form-control">#}
+{#                            <option>Ringen</option>#}
+{#                        </select>#}
+
+{#                        <button type="button" class="btn btn-success m-3  mx-auto">#}
+{#                            Opslaan#}
+{#                        </button>#}
+{#                    </form>#}
+
+                    <p><b>Extra's:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <select class="form-control" name="extra">
+                            {% for extra in variables.extras %}
+                                <option value="{{ extra.id }}">{{ extra.name }}</option>
+                            {% endfor %}
                         </select>
 
-                        <button type="button" class="btn btn-danger  m-3  mx-auto">
-                            Verwijderen
-                        </button>
-                    </form>
-                    <form>
-                        <p style="margin-top: 80px;"><b>Extra's toevoegen <i style="color: limegreen"
-                                                                             class="fas fa-plus"></i></b></p>
-                        <select multiple="" class="form-control">
-                            <option>Ringen</option>
-                        </select>
-
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>

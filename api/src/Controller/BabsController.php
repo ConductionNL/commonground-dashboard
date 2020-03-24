@@ -25,7 +25,7 @@ class BabsController extends AbstractController
      */
     public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
-    	return $this->redirect($this->generateUrl('app_wrc_templates'));
+        return $this->redirect($this->generateUrl('app_wrc_templates'));
     }
 
     /**
@@ -115,19 +115,10 @@ class BabsController extends AbstractController
         $variables = [];
 
         $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
-        $variables['products'] = $commonGroundService->getResourceList('https://pdc.dev.huwelijksplanner.online/products');
-
-        $variables['ceremonies'] = [];
-
-        foreach ($variables['products'] as $product) {
-            if (!empty($product['groups'])) {
-                foreach ($product['groups'] as $group) {
-                    if ($group['name'] == "Ceremonies") {
-                        $variables['ceremonies'][] = $product;
-                    }
-                }
-            }
-        }
+        $variables['plechtigheden'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])["hydra:member"];
+        $variables['locaties'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])["hydra:member"];
+        $variables['ambtenaren'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])["hydra:member"];
+        $variables['extras'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])["hydra:member"];
 
         $variables['totalChecks'] = 8;
         $variables['confirmedChecks'] = 0;
@@ -157,14 +148,26 @@ class BabsController extends AbstractController
             $variables['confirmedChecks']++;
         }
 
-        return ["variables"=>$variables];
+        if ($request->isMethod('POST')) {
+
+            $resource = $request->request->all();
+
+            $resource['@id'] = $variables['huwelijk']['@id'];
+            $resource['id'] = $variables['huwelijk']['id'];
+
+
+            $variables['huwelijk'] = $commonGroundService->saveResource($resource, 'https://vrc.huwelijksplanner.online/requests/');
+        }
+        return ["variables" => $variables];
     }
+
 
     /**
      * @Route("/medewerker/huwelijk")
      * @Template
      */
-    public function medewerkerHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function medewerkerHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -179,7 +182,8 @@ class BabsController extends AbstractController
      * @Route("/melding/tijdstip-wijzigen")
      * @Template
      */
-    public function tijdstipAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function tijdstipAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -194,7 +198,8 @@ class BabsController extends AbstractController
      * @Route("/melding/babs-wijzigen")
      * @Template
      */
-    public function babsAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function babsAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -209,7 +214,8 @@ class BabsController extends AbstractController
      * @Route("/medewerker/locatieagenda")
      * @Template
      */
-    public function locatieagendaAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function locatieagendaAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -224,7 +230,8 @@ class BabsController extends AbstractController
      * @Route("/medewerker/babsagenda")
      * @Template
      */
-    public function babsagendaAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function babsagendaAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -239,7 +246,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/gebruikersbeheer")
      * @Template
      */
-    public function gebruikersbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function gebruikersbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -254,7 +262,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/configuratie")
      * @Template
      */
-    public function configuratieAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function configuratieAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -269,7 +278,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/ceremonies")
      * @Template
      */
-    public function ceremoniebeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function ceremoniebeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -284,7 +294,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/plechtigheden")
      * @Template
      */
-    public function plechtigheidbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function plechtigheidbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -299,7 +310,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/trouwambtenaren")
      * @Template
      */
-    public function babsbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function babsbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
@@ -315,7 +327,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/locatiebeheer")
      * @Template
      */
-    public function locatiebeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function locatiebeheerAction(Request $request, CommonGroundService $commonGroundService)
 
     {
 
@@ -331,7 +344,8 @@ class BabsController extends AbstractController
      * @Route("/beheerder/extras")
      * @Template
      */
-    public function extrabeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public
+    function extrabeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
 
         $babsschets = "";
