@@ -184,7 +184,7 @@ class UcController extends AbstractController
 	 * @Route("/scopes/{id}")
 	 * @Template
 	 */
-	public function scopeTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+	public function scopeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
 		$variables = [];
 		
