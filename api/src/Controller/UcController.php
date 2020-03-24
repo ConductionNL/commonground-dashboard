@@ -62,7 +62,7 @@ class UcController extends AbstractController
 	 * @Route("/users/{id}")
 	 * @Template
 	 */
-	public function usersAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+	public function userAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
 		$variables = [];
 		
@@ -107,7 +107,7 @@ class UcController extends AbstractController
 	 * @Route("/groups")
 	 * @Template
 	 */
-	public function requestTypesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function groupsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
 	{
 		
 		$variables = [];
@@ -123,7 +123,7 @@ class UcController extends AbstractController
 	 * @Route("/groups/{id}")
 	 * @Template
 	 */
-	public function groupsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+	public function groupAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
 		$variables = [];
 		
@@ -184,7 +184,7 @@ class UcController extends AbstractController
 	 * @Route("/scopes/{id}")
 	 * @Template
 	 */
-	public function requestTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+	public function scopeTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
 		$variables = [];
 		
