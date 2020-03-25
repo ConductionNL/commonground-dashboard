@@ -90,20 +90,10 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $babsschets = "";
+        $variables = [];
+        $variables['huwelijken'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['properties.type'=>'Huwelijk'])["hydra:member"];
 
-        $h1 = "Uw overzicht van binnengekomen huwelijken";
-        $functie = "Medewerker";
-
-        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
-
-        $huwelijken = [];
-        foreach ($requests as $request) {
-            $request['requestType'] == "http://vtc.huwelijksplanner.online/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1";
-            $huwelijken[] = $request;
-        }
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie, "huwelijken" => $huwelijken];
+        return $variables;
     }
 
     /**
@@ -114,7 +104,7 @@ class BabsController extends AbstractController
     {
         $variables = [];
 
-        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
+        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id, [], true);
         $variables['plechtigheden'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])["hydra:member"];
         $variables['locaties'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])["hydra:member"];
         $variables['ambtenaren'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])["hydra:member"];
@@ -150,15 +140,34 @@ class BabsController extends AbstractController
 
         if ($request->isMethod('POST')) {
 
-            $resource = $request->request->all();
+            $resource['properties'] = $request->request->all();
+            $resource['properties'] = $variables['huwelijk']['properties'];
+            foreach ($request->request->all() as $key=>$value){
+                $resource['properties'][$key] = $value;
+            }
 
             $resource['@id'] = $variables['huwelijk']['@id'];
             $resource['id'] = $variables['huwelijk']['id'];
 
-
             $variables['huwelijk'] = $commonGroundService->saveResource($resource, 'https://vrc.huwelijksplanner.online/requests/');
         }
+
+//        var_dump($variables['huwelijk']);
+//        die;
+
         return ["variables" => $variables];
+    }
+
+    /**
+     * @Route("/medewerker/partnerschappen")
+     * @Template
+     */
+    public function medewerkerPartnerschappenAction(Request $request, CommonGroundService $commonGroundService)
+    {
+        $variables = [];
+        $variables['partnerschappen'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ["properties.type"=>"Partnerschap"])["hydra:member"];
+
+        return $variables;
     }
 
 
