@@ -654,55 +654,69 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
-                            te selecteren.</p>
-                        <select multiple="" class="form-control">
-                            <option style="">John Doe</option>
-                            <option>Jane Doe</option>
-                        </select>
+                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen is not empty %}
 
-                        <button type="button" class="btn btn-danger m-3  mx-auto">
-                            Verwijderen
-                        </button>
+                        <form>
+                            <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
+                            <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen
+                                tegelijk
+                                te selecteren.</p>
+                            <select class="form-control" name="getuigen">
+                                {% for getuige in variables.huwelijk.properties.getuigen %}
+                                    {% set assent = commonground_resource(getuige) %}
+                                    {% set contact = commonground_resource(assent.contact) %}
+                                    {% if assent.status == "granted" %}
+                                        <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
 
-                    </form>
+                            <button type="button" class="btn btn-danger m-3  mx-auto">
+                                Verwijderen
+                            </button>
 
+                        </form>
 
-                    <form>
-                        <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
-                                                                               class="fas fa-user-edit"></i></b></p>
-                        <label>Voor partner:</label>
-                        <select class="form-control">
-                            <option>Martin Timmers</option>
-                            <option>Anita Henrika de Kieft</option>
-                        </select>
+                    {% endif %}
 
-                        <br>
-                        <label>Voornaam(en):</label>
-                        <input class="form-control" type="text" placeholder="John">
+                    {% if variables.huwelijk.properties.getuigen|length < 4 %}
 
-                        <br>
-                        <label>Achternaam:</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                        <form>
+                            <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
+                                                                                   class="fas fa-user-edit"></i></b></p>
+                            <label>Voor partner:</label>
+                            <select class="form-control" name="partner">
+                                {% for partner in variables.huwelijk.properties.partners %}
+                                    <option value="{{ partner['@id'] }}">{{ contact1.name }}</option>
+                                {% endfor %}
+                            </select>
 
-                        <br>
-                        <label>E-mail:</label>
-                        <input class="form-control" type="email" placeholder="john@doe.com">
+                            <br>
+                            <label>Voornaam(en):</label>
+                            <input class="form-control" type="text" placeholder="John">
 
-                        <br>
-                        <label>Telefoonnummer:</label>
-                        <input class="form-control" type="text" placeholder="06 12345678">
+                            <br>
+                            <label>Achternaam:</label>
+                            <input class="form-control" type="text" placeholder="Doe">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen met instemming
-                        </button>
+                            <br>
+                            <label>E-mail:</label>
+                            <input class="form-control" type="email" placeholder="john@doe.com">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen zonder instemming
-                        </button>
-                    </form>
+                            <br>
+                            <label>Telefoonnummer:</label>
+                            <input class="form-control" type="text" placeholder="06 12345678">
+
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen met instemming
+                            </button>
+
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen zonder instemming
+                            </button>
+                        </form>
+
+                    {% endif %}
 
                     <form>
                         <p style="margin-top:40px;"><b>Uitgenodige getuigen accepteren <i style="color:limegreen"
@@ -1141,44 +1155,44 @@
 
                     {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
 
-                    <form>
-                        <p><b>Partner verwijderen <i style="color: red"
-                                                     class="fas fa-trash"></i></b></p>
-                        <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
-                    </form>
+                        <form>
+                            <p><b>Partner verwijderen <i style="color: red"
+                                                         class="fas fa-trash"></i></b></p>
+                            <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
+                        </form>
 
                     {% else %}
 
-                    <form>
-                        <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
-                                                                              class="fas fa-user-edit"></i></b></p>
-                        <label>BSN:</label>
-                        <input class="form-control" type="text" placeholder="">
+                        <form>
+                            <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
+                                                                                  class="fas fa-user-edit"></i></b></p>
+                            <label>BSN:</label>
+                            <input class="form-control" type="text" placeholder="">
 
-                        <br>
-                        <label>Voornaam(en):*</label>
-                        <input class="form-control" type="text" placeholder="John">
+                            <br>
+                            <label>Voornaam(en):*</label>
+                            <input class="form-control" type="text" placeholder="John">
 
-                        <br>
-                        <label>Achternaam:*</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                            <br>
+                            <label>Achternaam:*</label>
+                            <input class="form-control" type="text" placeholder="Doe">
 
-                        <br>
-                        <label>E-mail:*</label>
-                        <input class="form-control" type="email" placeholder="john@doe.com">
+                            <br>
+                            <label>E-mail:*</label>
+                            <input class="form-control" type="email" placeholder="john@doe.com">
 
-                        <br>
-                        <label>Telefoonnummer:</label>
-                        <input class="form-control" type="text" placeholder="06 12345678">
+                            <br>
+                            <label>Telefoonnummer:</label>
+                            <input class="form-control" type="text" placeholder="06 12345678">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen met instemming
-                        </button>
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen met instemming
+                            </button>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen zonder instemming
-                        </button>
-                    </form>
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen zonder instemming
+                            </button>
+                        </form>
 
                     {% endif %}
                 </div>
@@ -1202,43 +1216,44 @@
 
                     {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
 
-                    <form>
-                        <p><b>Partner verwijderen <i style="color: red"
-                                                     class="fas fa-trash"></i></b></p>
-                        <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
-                    </form>
+                        <form>
+                            <p><b>Partner verwijderen <i style="color: red"
+                                                         class="fas fa-trash"></i></b></p>
+                            <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
+                        </form>
 
                     {% else %}
 
-                    <form>
-                        <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen" class="fas fa-user-edit"></i></b></p>
-                        <label>BSN:</label>
-                        <input class="form-control" type="text" placeholder="">
+                        <form>
+                            <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
+                                                                                  class="fas fa-user-edit"></i></b></p>
+                            <label>BSN:</label>
+                            <input class="form-control" type="text" placeholder="">
 
-                        <br>
-                        <label>Voornaam(en):*</label>
-                        <input class="form-control" type="text" placeholder="John">
+                            <br>
+                            <label>Voornaam(en):*</label>
+                            <input class="form-control" type="text" placeholder="John">
 
-                        <br>
-                        <label>Achternaam:*</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                            <br>
+                            <label>Achternaam:*</label>
+                            <input class="form-control" type="text" placeholder="Doe">
 
-                        <br>
-                        <label>E-mail:*</label>
-                        <input class="form-control" type="email" placeholder="john@doe.com">
+                            <br>
+                            <label>E-mail:*</label>
+                            <input class="form-control" type="email" placeholder="john@doe.com">
 
-                        <br>
-                        <label>Telefoonnummer:</label>
-                        <input class="form-control" type="text" placeholder="06 12345678">
+                            <br>
+                            <label>Telefoonnummer:</label>
+                            <input class="form-control" type="text" placeholder="06 12345678">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen met instemming
-                        </button>
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen met instemming
+                            </button>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen zonder instemming
-                        </button>
-                    </form>
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen zonder instemming
+                            </button>
+                        </form>
 
                     {% endif %}
 

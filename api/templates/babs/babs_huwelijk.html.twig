@@ -18,7 +18,8 @@
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2 class="d-inline-block">9/11  <i style="color: limegreen;" class="fas fa-check"></i> Huwelijksgegevens </h2>
+                                <h2 class="d-inline-block">9/11 <i style="color: limegreen;" class="fas fa-check"></i>
+                                    Huwelijksgegevens </h2>
                                 <div class="float-right">
                                     <button class="btn btn-danger" style="margin-right: 25px">Afwijzen</button>
                                     <button class="btn btn-success">Accepteren</button>
@@ -26,54 +27,84 @@
                             </div>
                             <table class="table table-hover">
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
                                     <th>Ceremonie</th>
-                                    <td>Huwelijk</td>
+                                    {% if request.properties.type is defined and request.properties.type is not empty %}
+                                        <td>{{ request.properties.type|capitalize }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen ceremonie</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Plechtigheid </th>
-                                    <td>Partnerschap</td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
+                                    <th>Plechtigheid</th>
+                                    {% if request.properties.plechtigheid is defined and request.properties.plechtigheid is not empty %}
+                                        <td>{{ commonground_resource(request.properties.plechtigheid).name }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen plechtigheid</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
                                     <th>Locatie</th>
-                                    <td>Utrecht, stadhuis grote zaal</td>
+                                    {% if request.properties.locatie is defined and request.properties.locatie is not empty %}
+                                        <td>{{ commonground_resource(request.properties.locatie).name }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen locatie</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
                                     <th>Datum</th>
-                                    <td>10-2-2020</td>
+                                    {% if request.properties.datum is defined and request.properties.datum is not empty %}
+                                        <td>{{ commonground_resource(request.properties.datum).name }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen datum</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
-                                    <th>Tijdstip</th>
-                                    <td>10:50 - 11:50</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: red;">X</i> </td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: red;">X</i></td>
                                     <th>Getuigen</th>
-                                    <td>John Doe<br>
-                                        Jane Doe
-                                    </td>
+                                    {% if huwelijk.properties.getuigen is defined and huwelijk.properties.getuigen is not empty %}
+                                        <td>
+                                            {% for getuige in huwelijk.properties.getuigen %}
+                                                {% set assent = commonground_resource(getuige) %}
+                                                {% set contact = commonground_resource(assent.contact) %}
+                                                {{ contact.formalName }}<br>
+                                            {% endfor %}
+                                        </td>
+                                    {% else %}
+                                        <td style="color:lightgray">Geen getuigen</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i></td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
                                     <th>Tolk</th>
-                                    <td style="color: lightgray">Niet van toepassing</td>
+                                    {#                                    {% if huwelijk.properties.tolk is defined and huwelijk.properties.tolk is not empty %}#}
+                                    <td style="color: lightgray">Geen tolk</td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i></td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
                                     <th>Extra's</th>
+                                    {% if huwelijk.properties.extras is defined and huwelijk.properties.extras is not empty %}
                                     <td>Trouwboek</td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: red;">X</i> </td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: red;">X</i></td>
                                     <th>Status</th>
                                     <td>In afwachting</td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center"><i style="color: limegreen;" class="fas fa-check"></i> </td>
+                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
                                     <th>Betaald</th>
                                     <td>Ja</td>
                                 </tr>
