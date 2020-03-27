@@ -9,6 +9,7 @@
 
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
+                    {% if omzetten is defined and omzetten|length > 0 %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -58,6 +59,9 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                    <p class="p-4">Geen resultaten gevonden.</p>
+                    {% endif %}
                 </div>
             </div>
 

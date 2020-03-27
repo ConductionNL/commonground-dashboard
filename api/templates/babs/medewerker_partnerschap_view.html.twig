@@ -31,14 +31,20 @@
                                     <div class="row">
                                         <a class="btn btn-danger" style="margin-right: 25px" href="#deleteHuwelijkModal"
                                            data-toggle="modal" data-target="#deleteHuwelijkModal">Annuleren</a>
+
                                         <a class="btn btn-danger" style="margin-right: 25px"
                                            href="#deleteHuwelijkModal2"
                                            data-toggle="modal" data-target="#deleteHuwelijkModal2">Afkeuren</a>
-                                        <form method="post"
-                                              action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
-                                            <input type="hidden" name="status" value="processed">
-                                            <button type="submit" class="btn btn-success">Goedkeuren</button>
-                                        </form>
+
+                                        {% if variables.confirmedChecks == variables.totalChecks %}
+
+                                            <form method="post"
+                                                  action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                                                <input type="hidden" name="status" value="processed">
+                                                <button type="submit" class="btn btn-success">Goedkeuren</button>
+                                            </form>
+
+                                        {% endif %}
                                     </div>
                                 </div>
 
@@ -190,7 +196,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
+                                        <i style="color: red;">X</i></td>
                                     <th>Tolk</th>
                                     <td style="color: lightgray">Niet van toepassing</td>
                                     <td>
@@ -235,7 +241,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if variables.huwelijk.status != "submitted" or variables.huwelijk.status != "accepted" or variables.huwelijk.status != "processed" %}
+                                        {% if variables.huwelijk.status != "completed" and variables.huwelijk.status != "processed" %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -252,8 +258,11 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th>Aangemaakt op</th>
-                                    <td>{{ variables.huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
-                                    <td></td>
+                                    {% if variables.huwelijk.dateCreated is defined and variables.huwelijk.dateCreated is not empty %}
+                                        <td>{{ variables.huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen datum</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
                             </table>
@@ -504,7 +513,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Ceremonies:</b></p>
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="type">
                                 <option value="Huwelijk"
@@ -547,7 +556,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Plechtigheden:</b></p>
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="plechtigheid">
                                 {% for plechtigheid in variables.plechtigheden %}
@@ -583,7 +592,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Locaties Utrecht <i class="fas fa-building"></i></b></p>
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="locatie">
                                 {% for locatie in variables.locaties %}
@@ -658,13 +667,16 @@
 
                     {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen is not empty %}
 
-                        <form method="post" action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
+                        <form>
                             <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
+                            <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen
+                                tegelijk
+                                te selecteren.</p>
                             <select class="form-control" name="getuigen">
                                 {% for getuige in variables.huwelijk.properties.getuigen %}
                                     {% set assent = commonground_resource(getuige) %}
                                     {% set contact = commonground_resource(assent.contact) %}
-                                        <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
+                                    <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
                                 {% endfor %}
                             </select>
 
@@ -678,7 +690,7 @@
 
                     {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen|length < 4 %}
 
-                        <form method="post" action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
+                        <form>
                             <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
                                                                                    class="fas fa-user-edit"></i></b></p>
                             <label>Voor partner:</label>
@@ -833,34 +845,10 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    {#                    <form>#}
-                    {#                        <p><b>Extra's verwijderen <i style="color: #F25961" class="fas fa-trash"></i></b></p>#}
-                    {#                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk#}
-                    {#                            te selecteren.</p>#}
-                    {#                        <select multiple="" class="form-control">#}
-                    {#                            <option>Trouwboek</option>#}
-                    {#                        </select>#}
-
-                    {#                        <button type="button" class="btn btn-danger  m-3  mx-auto">#}
-                    {#                            Verwijderen#}
-                    {#                        </button>#}
-                    {#                    </form>#}
-                    {#                    <form>#}
-                    {#                        <p style="margin-top: 80px;"><b>Extra's toevoegen <i style="color: limegreen"#}
-                    {#                                                                             class="fas fa-plus"></i></b></p>#}
-                    {#                        <select multiple="" class="form-control">#}
-                    {#                            <option>Ringen</option>#}
-                    {#                        </select>#}
-
-                    {#                        <button type="button" class="btn btn-success m-3  mx-auto">#}
-                    {#                            Opslaan#}
-                    {#                        </button>#}
-                    {#                    </form>#}
-
                     <p><b>Extra's:</b></p>
                     <form method="post"
                           action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
-                        <select class="form-control" name="extra">
+                        <select class="form-control" name="extras[]">
                             {% for extra in variables.extras %}
                                 {% set offer = extra.offers[0] %}
                                 <option value="{{ offer['@id'] }}">{{ extra.name }}</option>

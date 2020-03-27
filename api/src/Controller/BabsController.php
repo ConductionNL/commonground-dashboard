@@ -112,7 +112,7 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkViewAction(Request $request, CommonGroundService $commonGroundService, $id)
     {
-        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
+        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id, [], true);
 
         $variables['plechtigheden'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])["hydra:member"];
         $variables['locaties'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])["hydra:member"];
@@ -143,7 +143,7 @@ class BabsController extends AbstractController
         if (isset($variables['huwelijk']['properties']['getuigen']) && !empty($variables['huwelijk']['properties']['getuigen']) && count($variables['huwelijk']['properties']['getuigen']) > 1) {
             $variables['confirmedChecks']++;
         }
-        if ($variables['huwelijk']['status'] == "completed") {
+        if ($variables['huwelijk']['status'] == "processed" or $variables['huwelijk']['status'] == "completed") {
             $variables['confirmedChecks']++;
         }
 
@@ -151,6 +151,11 @@ class BabsController extends AbstractController
 
             $resource['properties'] = $request->request->all();
             $resource['properties'] = $variables['huwelijk']['properties'];
+
+            if($request->request->has('status')) {
+                $resource['status'] = $request->request->get('status');
+            }
+
             foreach ($request->request->all() as $key => $value) {
                 $resource['properties'][$key] = $value;
             }
@@ -158,10 +163,11 @@ class BabsController extends AbstractController
             $resource['@id'] = $variables['huwelijk']['@id'];
             $resource['id'] = $variables['huwelijk']['id'];
 
-
             $variables['huwelijk'] = $commonGroundService->saveResource($resource, 'https://vrc.huwelijksplanner.online/requests/');
         }
 
+//        var_dump($variables['huwelijk']['properties']);
+//die;
         return ["variables" => $variables];
     }
 
@@ -171,7 +177,7 @@ class BabsController extends AbstractController
      */
     public function medewerkerPartnerschappenAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['properties.type' => 'partnerschap'])["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
 
         $variables['partnerschappen'] = [];
         foreach ($variables['requests'] as $request) {
@@ -179,6 +185,7 @@ class BabsController extends AbstractController
                 $variables['partnerschappen'][] = $request;
             }
         }
+
         return $variables;
     }
 
@@ -219,7 +226,7 @@ class BabsController extends AbstractController
         if (isset($variables['request']['properties']['getuigen']) && !empty($variables['request']['properties']['getuigen']) && count($variables['huwelijk']['properties']['getuigen']) > 1) {
             $variables['confirmedChecks']++;
         }
-        if ($variables['request']['status'] == "completed") {
+        if ($variables['request']['status'] == "completed" or $variables['request']['status'] == "processed") {
             $variables['confirmedChecks']++;
         }
 
