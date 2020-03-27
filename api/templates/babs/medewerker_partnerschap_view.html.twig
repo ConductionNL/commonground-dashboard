@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% set huwelijk = request %}
+    {% set variables = variables|merge({'huwelijk': variables.request}) %}
 
     <style>
         th {
@@ -553,7 +553,7 @@
                                 {% for plechtigheid in variables.plechtigheden %}
                                     {% set offer = plechtigheid.offers[0] %}
                                     <option value="{{ offer['@id'] }}"
-                                            {% if commonground_resource(variables.huwelijk.properties.plechtigheid).id == offer.id %}selected{% endif %}>{{ plechtigheid.name }}</option>
+                                            {% if variables.huwelijk.properties.plechtigheid is defined and variables.huwelijk.properties.plechtigheid is not empty and commonground_resource(variables.huwelijk.properties.plechtigheid).id == offer.id %}selected{% endif %}>{{ plechtigheid.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -665,7 +665,6 @@
                                     {% set assent = commonground_resource(getuige) %}
                                     {% set contact = commonground_resource(assent.contact) %}
                                         <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
-                                    {% endif %}
                                 {% endfor %}
                             </select>
 
@@ -677,7 +676,7 @@
 
                     {% endif %}
 
-                    {% if variables.huwelijk.properties.getuigen|length < 4 %}
+                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen|length < 4 %}
 
                         <form method="post" action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                             <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"

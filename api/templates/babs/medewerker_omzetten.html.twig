@@ -21,7 +21,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for omzet in requests %}
+                        {% for omzet in omzetten %}
                             <tr>
                                 {% if omzet.properties.partners[0] is defined and omzet.properties.partners[0] is not empty %}
                                     {% set assent1 = commonground_resource(omzet.properties.partners.0) %}

@@ -21,7 +21,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for huwelijk in requests %}
+                        {% for huwelijk in huwelijken %}
                             <tr>
                                 {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
                                     {% set assent1 = commonground_resource(huwelijk.properties.partners.0) %}

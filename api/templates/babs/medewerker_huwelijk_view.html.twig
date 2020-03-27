@@ -551,7 +551,7 @@
                                 {% for plechtigheid in variables.plechtigheden %}
                                     {% set offer = plechtigheid.offers[0] %}
                                     <option value="{{ offer['@id'] }}"
-                                            {% if commonground_resource(variables.huwelijk.properties.plechtigheid).id == offer.id %}selected{% endif %}>{{ plechtigheid.name }}</option>
+                                            {% if variables.huwelijk.properties.plechtigheid is defined and variables.huwelijk.properties.plechtigheid is not empty and commonground_resource(variables.huwelijk.properties.plechtigheid).id == offer.id %}selected{% endif %}>{{ plechtigheid.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -665,9 +665,7 @@
                                 {% for getuige in variables.huwelijk.properties.getuigen %}
                                     {% set assent = commonground_resource(getuige) %}
                                     {% set contact = commonground_resource(assent.contact) %}
-                                    {% if assent.status == "granted" %}
                                         <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
-                                    {% endif %}
                                 {% endfor %}
                             </select>
 
@@ -679,7 +677,7 @@
 
                     {% endif %}
 
-                    {% if variables.huwelijk.properties.getuigen|length < 4 %}
+                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen|length < 4 %}
 
                         <form>
                             <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"

@@ -335,10 +335,10 @@ class CommonGroundService
 			if($this->updateResource($resource)){
 				// Lets renew the resource
 				$resource= $this->getResource($resource['@id']);
-				$this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
+				$this->flash->add('success', $this->translator->trans('saved'));
 			}
 			else{
-				$this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be saved'));
+				$this->flash->add('error', $this->translator->trans('could not be saved'));
 			}
 		}
 		else{
