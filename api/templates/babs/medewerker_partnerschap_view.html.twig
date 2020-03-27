@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    {% set huwelijk = request %}
+
     <style>
         th {
             width: 33.33%;
@@ -33,7 +35,7 @@
                                            href="#deleteHuwelijkModal2"
                                            data-toggle="modal" data-target="#deleteHuwelijkModal2">Afkeuren</a>
                                         <form method="post"
-                                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                                              action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                                             <input type="hidden" name="status" value="processed">
                                             <button type="submit" class="btn btn-success">Goedkeuren</button>
                                         </form>
@@ -502,7 +504,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Ceremonies:</b></p>
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="type">
                                 <option value="Huwelijk"
@@ -545,7 +547,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Plechtigheden:</b></p>
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="plechtigheid">
                                 {% for plechtigheid in variables.plechtigheden %}
@@ -581,7 +583,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Locaties Utrecht <i class="fas fa-building"></i></b></p>
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="locatie">
                                 {% for locatie in variables.locaties %}
@@ -656,16 +658,12 @@
 
                     {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen is not empty %}
 
-                        <form>
+                        <form method="post" action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                             <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                            <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen
-                                tegelijk
-                                te selecteren.</p>
                             <select class="form-control" name="getuigen">
                                 {% for getuige in variables.huwelijk.properties.getuigen %}
                                     {% set assent = commonground_resource(getuige) %}
                                     {% set contact = commonground_resource(assent.contact) %}
-                                    {% if assent.status == "granted" %}
                                         <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
                                     {% endif %}
                                 {% endfor %}
@@ -681,7 +679,7 @@
 
                     {% if variables.huwelijk.properties.getuigen|length < 4 %}
 
-                        <form>
+                        <form method="post" action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
                             <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
                                                                                    class="fas fa-user-edit"></i></b></p>
                             <label>Voor partner:</label>

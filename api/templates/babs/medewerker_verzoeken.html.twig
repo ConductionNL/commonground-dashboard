@@ -21,47 +21,49 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for partnerschap in requests %}
+                        {% for request in requests %}
                             <tr>
-                                {% if partnerschap.properties.partners[0] is defined and partnerschap.properties.partners[0] is not empty %}
-                                    {% set assent1 = commonground_resource(partnerschap.properties.partners.0) %}
+                                {% if request.properties.partners[0] is defined and request.properties.partners[0] is not empty %}
+                                    {% set assent1 = commonground_resource(request.properties.partners.0) %}
                                     {% set contact1 = commonground_resource(assent1.contact) %}
                                     <td>{{ contact1.name }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen partner</td>
                                 {% endif %}
-                                {% if partnerschap.properties.partners[1] is defined and partnerschap.properties.partners[1] is not empty %}
-                                    {% set assent2 = commonground_resource(partnerschap.properties.partners.1) %}
+                                {% if request.properties.partners[1] is defined and request.properties.partners[1] is not empty %}
+                                    {% set assent2 = commonground_resource(request.properties.partners.1) %}
                                     {% set contact2 = commonground_resource(assent2.contact) %}
                                     <td>{{ contact2.name }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen partner</td>
                                 {% endif %}
-                                {% if huwelijk.properties.type is defined and huwelijk.properties.type is not empty %}
-                                    <td>{{ huwelijk.properties.type|capitalize }}</td>
+                                {% if request.properties.type is defined and request.properties.type is not empty %}
+                                    <td>{{ request.properties.type|capitalize }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen type</td>
                                 {% endif %}
-                                {% if partnerschap.dateCreated is defined and partnerschap.dateCreated is not empty %}
-                                    <td>{{ partnerschap.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                {% if request.dateCreated is defined and request.dateCreated is not empty %}
+                                    <td>{{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                 {% else %}
                                     <td style="color: lightgray;"></td>
                                 {% endif %}
-                                {% if partnerschap.status is defined and partnerschap.status is not empty %}
-                                    <td>{{ partnerschap.status|capitalize }}</td>
+                                {% if request.status is defined and request.status is not empty %}
+                                    <td>{{ request.status|capitalize }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen status</td>
                                 {% endif %}
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                                       href="{{ path('app_babs_medewerkerpartnerschapview', {id: partnerschap.id}) }}"><b>MEER INFO</b></a></td>
+                                       href="{% if request.properties.type is not defined or request.properties.type is not defined or request.properties.type == "huwelijk" %}
+                                       {{ path('app_babs_medewerkerhuwelijkview', {id: request.id}) }}
+                                       {% elseif request.properties.type == "partnerschap" %}
+                                       {{ path('app_babs_medewerkerpartnerschapview', {id: request.id}) }}
+                                       {% else %}#{% endif %}"><b>MEER INFO</b></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-
-
         </div>
 
         {% include 'footer.html.twig' %}
