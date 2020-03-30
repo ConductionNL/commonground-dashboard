@@ -28,6 +28,10 @@ parameters:
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
     auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'        
     
+    app_commonground_zgw_clientId: 'huwelijksplanner-Wex83XXe'
+    app_commonground_zgw_secret: '4_]}Khfxa;~"78Qm'
+    
+    
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
     common_ground.oas.type: service
