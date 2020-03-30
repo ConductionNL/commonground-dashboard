@@ -11,11 +11,11 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_vrc_requesttype', {'id': resource.id}) }}" method="post">
+                        	<form action="{{ path('app_wrc_page', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_vrc_requesttype', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="{{ path('app_wrc_page', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -23,8 +23,8 @@
 									<div class="row">
         								<div class="col-md-9 col-sm-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'title'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.title is defined %}{{ resource.title }}{% endif %}">
+        										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->  
     									<div class="col-md-3 col-sm-12">

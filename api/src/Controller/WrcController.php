@@ -573,7 +573,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
     		
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/configurations/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/configurations/');
     	}
     	return $variables;
     }

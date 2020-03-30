@@ -83,7 +83,7 @@ class VtcController extends AbstractController
 		
 		$variables['title'] = $translator->trans('request type');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request type');
-		$variables['organizations'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/organizations')["hydra:member"];
+		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
 		
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {

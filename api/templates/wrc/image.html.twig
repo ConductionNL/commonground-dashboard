@@ -11,11 +11,11 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_vrc_requesttype', {'id': resource.id}) }}" method="post">
+                        	<form action="{{ path('app_wrc_image', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_vrc_requesttype', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="{{ path('app_wrc_image', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
