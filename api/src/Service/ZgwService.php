@@ -23,9 +23,14 @@ class ZgwService
 	 */
 	public function getResourceList($url, $query = [], $force = false, $async = false, $autowire = false)
 	{
+		// Adjust for zgw specific stuff
 		$this->commonGroundService->setHeader('Authorization','Bearer '.$this->getJwtToken());
 		$this->commonGroundService->setHeader('Accept','application/json');	
-		return $this->commonGroundService->getResourceList($url, $query, $force, $async, $autowire );
+		$result = $this->commonGroundService->getResourceList($url, $query, $force, $async, $autowire );
+		// Let set back the default values
+		$this->commonGroundService->setHeader('Authorization',$this->params->get('app_commonground_key'));
+		$this->commonGroundService->setHeader('Accept','application/ld+json');
+		return $result;
 	}
 	
 	/*
@@ -33,9 +38,14 @@ class ZgwService
 	 */
 	public function getResource($url, $query = [], $force = false, $async = false, $autowire = false)
 	{
+		// Adjust for zgw specific stuff
 		$this->commonGroundService->setHeader('Authorization','Bearer '.$this->getJwtToken());
-		$this->commonGroundService->setHeader('Accept','application/json');	
-		return $this->commonGroundService->getResource($url, $query , $force, $async, $autowire );
+		$this->commonGroundService->setHeader('Accept','application/json');
+		$result = $this->commonGroundService->getResource($url, $query , $force, $async, $autowire );
+		// Let set back the default values
+		$this->commonGroundService->setHeader('Authorization',$this->params->get('app_commonground_key'));
+		$this->commonGroundService->setHeader('Accept','application/ld+json');
+		return $result;
 	}
 	
 	/*
@@ -43,19 +53,29 @@ class ZgwService
 	 */
 	public function updateResource($resource, $url = null, $async = false, $autowire = false)
 	{
+		// Adjust for zgw specific stuff
 		$this->commonGroundService->setHeader('Authorization','Bearer '.$this->getJwtToken());
 		$this->commonGroundService->setHeader('Accept','application/json');	
-		return $this->commonGroundService->updateResource($resource, $url, $async, $autowire );
+		$result = $this->commonGroundService->updateResource($resource, $url, $async, $autowire );
+		// Let set back the default values
+		$this->commonGroundService->setHeader('Authorization',$this->params->get('app_commonground_key'));
+		$this->commonGroundService->setHeader('Accept','application/ld+json');
+		return $result;
 	}
 	
 	/*
 	 * Create a sresource on a common ground component
 	 */
 	public function createResource($resource, $url = null, $async = false, $autowire = false)
-	{		
+	{
+		// Adjust for zgw specific stuff
 		$this->commonGroundService->setHeader('Authorization','Bearer '.$this->getJwtToken());
 		$this->commonGroundService->setHeader('Accept','application/json');	
-		return $this->commonGroundService->createResource($resource, $url, $async, $autowire );
+		$result = $this->commonGroundService->createResource($resource, $url, $async, $autowire );
+		// Let set back the default values
+		$this->commonGroundService->setHeader('Authorization',$this->params->get('app_commonground_key'));
+		$this->commonGroundService->setHeader('Accept','application/ld+json');
+		return $result;
 	}
 	
 	
@@ -64,9 +84,14 @@ class ZgwService
 	 */
 	public function deleteResource($resource, $url = null, $async = false, $autowire = false)
 	{
+		// Adjust for zgw specific stuff
 		$this->commonGroundService->setHeader('Authorization','Bearer '.$this->getJwtToken());
 		$this->commonGroundService->setHeader('Accept','application/json');	
-		return $this->commonGroundService->deleteResource($resource, $url, $async, $autowire );
+		$result = $this->commonGroundService->deleteResource($resource, $url, $async, $autowire );
+		// Let set back the default values
+		$this->commonGroundService->setHeader('Authorization',$this->params->get('app_commonground_key'));
+		$this->commonGroundService->setHeader('Accept','application/ld+json');
+		return $result;
 	}
 	
 	/*
@@ -74,9 +99,14 @@ class ZgwService
 	 */
 	public function saveResource($resource, $endpoint = false, $autowire = false)
 	{
+		// Adjust for zgw specific stuff
 		$this->commonGroundService->setHeader('Authorization','Bearer '.$this->getJwtToken());
 		$this->commonGroundService->setHeader('Accept','application/json');	
-		return $this->commonGroundService->saveResource($resource, $endpoint, $autowire );
+		$result = $this->commonGroundService->saveResource($resource, $endpoint, $autowire );
+		// Let set back the default values
+		$this->commonGroundService->setHeader('Authorization',$this->params->get('app_commonground_key'));
+		$this->commonGroundService->setHeader('Accept','application/ld+json');	
+		return $result;
 	}
 	
 	

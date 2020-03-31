@@ -71,7 +71,12 @@ class VrcController extends AbstractController
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request');
     	$variables['requestTypes'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/request_types')["hydra:member"];
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-    	$variables['casetypes'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/zaaktypen')["results"];
+    	$variables['casetypes'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/zaaktypen')["results"]; 
+    	
+    	// Case statuses can only be loaded if the case type is known
+    	if(array_key_exists ('zaaktype', $variables['resource'])){
+    		$variables['casestatuses'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/statustypen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
+    	}
     	
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {

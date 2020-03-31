@@ -57,7 +57,7 @@ class ZgwController extends AbstractController
 		
 		// Lets see if we need to create
 		if($id == 'new'){
-			$variables['resource'] = ['@id' => null,'omschrijving'=>'nieuwe zaak','id'=>'new'];
+			$variables['resource'] = ['@id' => null, 'omschrijving'=>'nieuwe zaak','id'=>'new'];
 		}
 		else{
 			$variables['resource'] = $zgwService->getResource('https://openzaak.utrechtproeftuin.nl/zaken/api/v1/zaken/'.$id);
@@ -77,22 +77,86 @@ class ZgwController extends AbstractController
 		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
 		$variables['casetypes'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/zaaktypen')["results"];
 		
+		if(array_key_exists('@id',$variables['resource'])){
+			$variables['statuses'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/zaken/api/v1/statussen',['zaak'=>$variables['resource']['@id']])["results"];
+			$variables['results'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/zaken/api/v1/resultaten',['zaak'=>$variables['resource']['@id']])["results"];
+			$variables['roles'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/zaken/api/v1/rollen',['zaak'=>$variables['resource']['@id']])["results"];
+			//$variables['verdics'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/besluiten/api/v1/besluiten',['zaak'=>$variables['resource']['@id']])["results"];
+			
+		}
+		
+		if(array_key_exists('zaaktype', $variables['resource'])){			
+			$variables['casestatuses'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/statustypen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
+			$variables['caseresults'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/resultaattypen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
+			$variables['caseroles'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/roltypen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
+			$variables['caseverdics'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/besluittypen',['zaaktypen'=>$variables['resource']['zaaktype']])["results"];
+			
+			$variables['caseproperties'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/eigenschappen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
+		}
+		
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
 			
 			// Passing the variables to the resource
 			$resource = $request->request->all();
 			$resource['@id'] = $variables['resource']['@id'];
-			
+						
 			// Zaak specifieke shizle
 			if(!key_exists('startdatum', $resource)){
 				$resource['startdatum'] = date('Y-m-d');
 			}
-			
 			// If there are any sub data sources the need to be removed below in order to save the resource
 			// unset($resource['somedatasource'])
 			
-			$variables['resource'] = $zgwService->saveResource($resource,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/zaken', false);
+			// @todo This wouldn't be necessary on an update request, then we could just run it
+			if(!key_exists('zaakobject', $resource) && !key_exists('status', $resource) && !key_exists('result', $resource)){
+				$variables['resource'] = $zgwService->saveResource($resource,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/zaken', false);
+			}
+			
+			// We might also want to create a zaakObject resource			
+			if(key_exists('zaakobject', $resource)){
+				$zaakobject = $resource['zaakobject'];
+				$zaakobject['zaak'] = $resource['@id'];
+				
+				$zaakobject = $zgwService->saveResource($zaakobject,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/zaakobject', false);
+			}
+			
+			// We might also want to create a zaakObject resource
+			if(key_exists('status', $resource)){
+				$status = $resource['status'];
+				$status['zaak'] = $resource['@id'];
+				$status['datumStatusGezet'] = date('Y-m-d H:i:s');
+				
+				$status = $zgwService->saveResource($status,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/statussen', false);
+				
+			}
+			
+			// We might also want to create a zaakObject resource
+			if(key_exists('result', $resource)){
+				$result= $resource['result'];
+				$result['zaak'] = $resource['@id'];
+				
+				$result= $zgwService->saveResource($result,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/resultaten', false);
+				
+			}			
+			
+			// We might also want to create a zaakObject resource
+			if(key_exists('role', $resource)){
+				$role= $resource['result'];
+				$role['zaak'] = $resource['@id'];
+				
+				$role= $zgwService->saveResource($role,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/rollen', false);
+				
+			}			
+			
+			// We might also want to create a zaakObject resource
+			if(key_exists('verdict', $resource)){
+				$verdict= $resource['result'];
+				$verdict['zaak'] = $resource['@id'];
+				
+				$verdict= $zgwService->saveResource($verdict,'https://openzaak.utrechtproeftuin.nl/besluiten/api/v1/besluiten', false);
+				
+			}
 		}
 		
 		return $variables;
