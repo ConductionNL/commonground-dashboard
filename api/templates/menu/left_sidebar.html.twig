@@ -106,7 +106,34 @@
                                 Planning Locaties</a>
                         </li>
                     {% endif %}
-
+                    
+                    {% if 'group.beheerder' in app.user.roles  %}
+                    <li class="nav-section">
+                        <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
+                    </li>	
+					
+					<li class="nav-item">
+						<a data-toggle="collapse" href="#requests" class="" aria-expanded="false">
+							<p style="color: #575962">{{ 'requests'|trans|capitalize }}</p>
+                         	<span style="color: #575962" class="caret"></span>
+						</a>
+                        <div class="collapse" id="requests">
+							<ul class="nav nav-collapse">
+								<li>
+									<a href="{{ path("app_vrc_requests") }}">
+										<span style="color: #575962" class="sub-item">{{ 'requests'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_vrc_submitters") }}">
+										<span style="color: #575962" class="sub-item">{{ 'submitters'|trans|capitalize }}</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+                    {% endif %}
+                    
                     {% if 'group.beheerder' in app.user.roles or 'group.balie-medewerkers' in app.user.roles %}
                     <li class="nav-section">
                         <h4 style="color: black" class="text-section">{{ 'cases'|trans|capitalize }}</h4>
@@ -124,6 +151,21 @@
 										<span style="color: #575962" class="sub-item">{{ 'cases'|trans|capitalize }}</span>
 									</a>
 								</li>
+								<li>
+									<a href="{{ path("app_zgw_casetypes") }}">
+										<span style="color: #575962" class="sub-item">{{ 'types'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_zgw_documents") }}">
+										<span style="color: #575962" class="sub-item">{{ 'documents'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_zgw_verdicts") }}">
+										<span style="color: #575962" class="sub-item">{{ 'verdicts'|trans|capitalize }}</span>
+									</a>
+								</li>
 							</ul>
 						</div>
 					</li>
@@ -135,11 +177,11 @@
                     </li>
 
 					<li class="nav-item">
-						<a data-toggle="collapse" href="#users" class="" aria-expanded="false">
+						<a data-toggle="collapse" href="#configuration_uc" class="" aria-expanded="false">
 							<p style="color: #575962">{{ 'users'|trans|capitalize }}</p>
                          	<span style="color: #575962" class="caret"></span>
 						</a>
-                        <div class="collapse" id="users">
+                        <div class="collapse" id="configuration_uc">
 							<ul class="nav nav-collapse">
 								<li>
 									<a href="{{ path("app_uc_users") }}">
@@ -158,18 +200,74 @@
 								</li>
 							</ul>
 						</div>
-					</li>
-
+					</li>				
+					
 					<li class="nav-item">
-						<a data-toggle="collapse" href="#configuration" class="" aria-expanded="false">
+						<a data-toggle="collapse" href="#configuration_vtc" class="" aria-expanded="false">
+							<p style="color: #575962">{{ 'requests'|trans|capitalize }}</p>
+                         	<span style="color: #575962" class="caret"></span>
+						</a>
+                        <div class="collapse" id="configuration_vtc">
+							<ul class="nav nav-collapse">
+								<li>
+									<a href="{{ path("app_vtc_requesttypes") }}">
+										<span style="color: #575962" class="sub-item">{{ 'request types'|trans|capitalize }}</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>	
+					
+					<li class="nav-item">
+						<a data-toggle="collapse" href="#configuration_wrc" class="" aria-expanded="false">
 							<p style="color: #575962">{{ 'configuration'|trans|capitalize }}</p>
                          	<span style="color: #575962" class="caret"></span>
 						</a>
-                        <div class="collapse" id="configuration">
+                        <div class="collapse" id="configuration_wrc">
 							<ul class="nav nav-collapse">
 								<li>
 									<a href="{{ path("app_wrc_templates") }}">
 										<span style="color: #575962" class="sub-item">{{ 'templates'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_pages") }}">
+										<span style="color: #575962" class="sub-item">{{ 'pages'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_slugs") }}">
+										<span style="color: #575962" class="sub-item">{{ 'slugs'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_styles") }}">
+										<span style="color: #575962" class="sub-item">{{ 'styles'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_images") }}">
+										<span style="color: #575962" class="sub-item">{{ 'images'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_menus") }}">
+										<span style="color: #575962" class="sub-item">{{ 'menus'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_organizations") }}">
+										<span style="color: #575962" class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_applications") }}">
+										<span style="color: #575962" class="sub-item">{{ 'applications'|trans|capitalize }}</span>
+									</a>
+								</li>
+								<li>
+									<a href="{{ path("app_wrc_configurations") }}">
+										<span style="color: #575962" class="sub-item">{{ 'configurations'|trans|capitalize }}</span>
 									</a>
 								</li>
 							</ul>

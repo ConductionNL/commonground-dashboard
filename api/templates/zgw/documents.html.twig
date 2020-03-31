@@ -14,20 +14,22 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'caseType'|trans|capitalize }}</th> 
-                            <th scope="col">{{ 'startDate'|trans|capitalize }}</th> 
-                            <th scope="col">{{ 'registrationDate'|trans|capitalize }}</th> 
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'type'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
+                        {% set view = 'app_wrc_template' %}
                         {% for resource in resources %}
                         <tr>
-                            <td>{{ resource.omschrijving }}</td> 
-                            <td>{{ openzaak_resource(resource.zaaktype).omschrijving }}</td>
-                            <td>{{ resource.startdatum|date("d-m-Y", "Europe/Paris") }}</td>
-                            <td>{{ resource.registratiedatum|date("d-m-Y", "Europe/Paris") }}</td>
+                            <td>{{ resource.name }}</td>
+                            <td><a href="{{ path('app_pdc_catalogue', {id: resource.catalogue.id}) }}">{{resource.catalogue['name']}}</a></td>
+                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                         </tr>
                         {% endfor %}

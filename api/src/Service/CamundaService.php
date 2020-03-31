@@ -36,7 +36,7 @@ class CamundaService
 		$this->headers = [
 				'Accept'        => 'application/ld+json',
 				'Content-Type'  => 'application/json',
-				'Authorization'  => $this->params->get('app_commonground_key'),
+				//'Authorization'  => $this->params->get('app_commonground_key'),
 				'X-NLX-Request-Application-Id' => $this->params->get('app_commonground_id')// the id of the application performing the request
 		];
 		
@@ -48,6 +48,10 @@ class CamundaService
 			$headers[] = $session->get('process')['@id'];
 		}
 		
+		$client->request('GET', '/get', ['auth' => ['username', 'password']]);
+		
+		$username = 'conduction';
+		$password= 'pMs8GhKePCg8aARV';
 		
 		// We might want to overwrite the guzle config, so we declare it as a separate array that we can then later adjust, merge or otherwise influence
 		$this->guzzleConfig = [
@@ -58,6 +62,8 @@ class CamundaService
 				'timeout'  => 4000.0,
 				// To work with NLX we need a couple of default headers
 				'headers' => $this->headers,
+				// Authenticatoin
+				'auth' => [$username, $password],
 		];
 		
 		// Lets start up a default client
@@ -115,7 +121,7 @@ class CamundaService
 		$response = json_decode($response->getBody(), true);
 		
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url, 'GET')){
 			return false;
 		}
 		
@@ -166,7 +172,7 @@ class CamundaService
 		$response = json_decode($response->getBody(), true);
 		
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+		if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url, 'GET')){
 			return false;
 		}
 		
@@ -221,7 +227,7 @@ class CamundaService
 		$response = json_decode($response->getBody(), true);
 		
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+		if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'PUT')){
 			return false;
 		}
 		
@@ -243,7 +249,34 @@ class CamundaService
 	 */
 	public function createResource($resource, $url = null, $async = false)
 	{
-		$url = $this->cleanUrl($url, $resource);
+		
+		$processKey ='Aanvraag_eigen_locatie_behandelen';
+		$projectId ='camunda-2';
+		$toetswijze ='';
+		$bronorganisatie=002220647;
+		$camundaRoot='https://camunda.utrechtproeftuin.nl/engine-rest';
+		
+		//$zaakBodyJSON= '"{\"bronorganisatie\":\"002220647\",\"identificatie\":\"BING-camunda-2\",\"zaaktype\":\"http://gemma-ztc.k8s.dc1.proeftuin.utrecht.nl/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/7af2d4dd-511b-4b27-89a8-77ac7c8e7a82\",\"verantwoordelijkeOrganisatie\":\"002220647\",\"startdatum\":\"2019-08-06\",\"omschrijving\":\"BInG aanvraag voor Camunda-test\"}"';
+		
+		$zaak=[];
+		$zaak['bronorganisatie'] = $bronorganisatie;
+		$zaak['identificatie'] = 'BING-camunda-2';
+		$zaak['zaaktype'] = 'http://gemma-ztc.k8s.dc1.proeftuin.utrecht.nl/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/7af2d4dd-511b-4b27-89a8-77ac7c8e7a82';
+		$zaak['verantwoordelijkeOrganisatie'] = $bronorganisatie;
+		$zaak['startdatum'] = '2019-08-06';
+		$zaak['omschrijving'] = 'BInG aanvraag voor Camunda-test';
+		
+		$camundaPost = [];
+		$camundaPost['businessKey']='';
+		$camundaPost['withVariablesInReturn'] = false;
+		$camundaPost['variables'] = [];
+		$camundaPost['variables']['zaak']=['value'=>$zaak,'type'=>"Json"];
+		$camundaPost['variables']['zaak']['valueInfo']=['serializationDataFormat'=>"application/json",'objectTypeName'=>"com.gemeenteutrecht.processplatform.domain.impl.ZaakImpl"];
+		$camundaPost['variables']['projectId']  =['value'=>$projectId,'type'=>"String"];
+		///$camundaPost['variables']['toetswijze']=['value'=>$toetswijze,'type'=>"String"];
+		$camundaPost['variables']['documenten'] = ['value'=>[],'type'=>"Json"];
+		
+		
 		
 		// Set headers
 		$headers = $this->headers;
@@ -251,7 +284,7 @@ class CamundaService
 		$resource = $this->cleanResource($resource);
 		
 		if(!$async){
-			$response = $this->client->request('POST', $url, [
+			$response = $this->client->request('POST', $camundaRoot.'/process-definition/key/'.$processKey.'/start', [
 					'body' => json_encode($resource),
 					'headers' => $headers,
 			]);
@@ -268,7 +301,7 @@ class CamundaService
 		$response = json_decode($response->getBody(), true);
 		
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+		if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'POST')){
 			return false;
 		}
 		
@@ -313,7 +346,7 @@ class CamundaService
 		$response = json_decode($response->getBody(), true);
 		
 		// The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-		if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+		if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'DELETE')){
 			return false;
 		}
 		
@@ -398,7 +431,7 @@ class CamundaService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null )
+	public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null, $protocol)
 	{
 		//Should be cases
 		if($response['@type'] == 'ConstraintViolationList'){
@@ -409,7 +442,7 @@ class CamundaService
 			return false;
 		}
 		else{
-			var_dump('POST returned:'.$statusCode);
+			var_dump($protocol.' returned:'.$statusCode);
 			var_dump($headers);
 			var_dump(json_encode($resource));
 			var_dump(json_encode($url));
