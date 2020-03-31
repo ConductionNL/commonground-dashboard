@@ -45,7 +45,15 @@ class BabsController extends AbstractController
     {
         $variables = [];
 
-        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['status' => 'processed'])['hydra:member'];
+        $variables['verzoeken'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')['hydra:member'];
+
+        $variables['requests'] = [];
+
+        foreach ($variables['verzoeken'] as $verzoek) {
+            if ($verzoek['status'] == 'processed') {
+                $variables['requests'][] = $verzoek;
+            }
+        }
 
         return $variables;
     }
@@ -99,7 +107,7 @@ class BabsController extends AbstractController
 
         $variables['huwelijken'] = [];
         foreach ($variables['requests'] as $request) {
-            if(isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk"){
+            if (isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk") {
                 $variables['huwelijken'][] = $request;
             }
         }
@@ -152,7 +160,15 @@ class BabsController extends AbstractController
             $resource['properties'] = $request->request->all();
             $resource['properties'] = $variables['huwelijk']['properties'];
 
-            if($request->request->has('status')) {
+            if ($request->request->has('email1')) {
+                $resource['partners'][0] = $request->request->get('email1');
+            }
+
+            if ($request->request->has('nederlands')) {
+                $resource['overig']['nederlands'] = $request->request->get('nederlands');
+            }
+
+            if ($request->request->has('status')) {
                 $resource['status'] = $request->request->get('status');
             }
 
@@ -181,7 +197,7 @@ class BabsController extends AbstractController
 
         $variables['partnerschappen'] = [];
         foreach ($variables['requests'] as $request) {
-            if(isset($request['properties']['type']) and $request['properties']['type'] == "Partnerschap"){
+            if (isset($request['properties']['type']) and $request['properties']['type'] == "Partnerschap") {
                 $variables['partnerschappen'][] = $request;
             }
         }
@@ -234,11 +250,19 @@ class BabsController extends AbstractController
 
             $resource['properties'] = $request->request->all();
             $resource['properties'] = $variables['request']['properties'];
+
+            if ($request->request->has('nederlands')) {
+                $resource['overig']['nederlands'] = $request->request->get('nederlands');
+            }
+
+            if ($request->request->has('status')) {
+                $resource['status'] = $request->request->get('status');
+            }
+
             foreach ($request->request->all() as $key => $value) {
                 $resource['properties'][$key] = $value;
             }
         }
-
         return ["variables" => $variables];
     }
 
@@ -254,7 +278,7 @@ class BabsController extends AbstractController
 
         $variables['omzetten'] = [];
         foreach ($variables['requests'] as $request) {
-            if(isset($request['properties']['type']) and $request['properties']['type'] == "omzetten"){
+            if (isset($request['properties']['type']) and $request['properties']['type'] == "omzetten") {
                 $variables['omzetten'][] = $request;
             }
         }

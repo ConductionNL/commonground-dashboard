@@ -17,7 +17,6 @@
                             <th scope="col">Ceremonie</th>
                             <th scope="col">Locatie</th>
                             <th scope="col">Datum</th>
-                            <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -56,12 +55,6 @@
                                     <td>{{ request.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                 {% else %}
                                     <td style="color: lightgray">Geen datum</td>
-                                {% endif %}
-
-                                {% if request.status is defined and request.status is not empty %}
-                                    <td>{{ request.status|capitalize }}</td>
-                                {% else %}
-                                    <td style="color: lightgray">Geen status</td>
                                 {% endif %}
 
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"

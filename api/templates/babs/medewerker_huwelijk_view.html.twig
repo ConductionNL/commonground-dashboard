@@ -36,11 +36,11 @@
 
                                         {% if variables.confirmedChecks == variables.totalChecks %}
 
-                                        <form method="post"
-                                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
-                                            <input type="hidden" name="status" value="processed">
-                                            <button type="submit" class="btn btn-success">Goedkeuren</button>
-                                        </form>
+                                            <form method="post"
+                                                  action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                                                <input type="hidden" name="status" value="processed">
+                                                <button type="submit" class="btn btn-success">Goedkeuren</button>
+                                            </form>
 
                                         {% endif %}
                                     </div>
@@ -196,10 +196,10 @@
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                                         <i style="color: red;">X</i></td>
                                     <th>Tolk</th>
-                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "Nee" %}
-                                    <td style="color: lightgray">Tolk nodig</td>
+                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "nee" %}
+                                        <td style="color: lightgray">Tolk nodig</td>
                                     {% else %}
-                                    <td style="color: lightgray">Geen tolk</td>
+                                        <td style="color: lightgray">Geen tolk</td>
                                     {% endif %}
                                     <td>
                                         <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
@@ -261,9 +261,9 @@
                                 <tr>
                                     <th>Aangemaakt op</th>
                                     {% if variables.huwelijk.dateCreated is defined and variables.huwelijk.dateCreated is not empty %}
-                                    <td>{{ variables.huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                        <td>{{ variables.huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                     {% else %}
-                                    <td style="color: lightgray">Geen datum</td>
+                                        <td style="color: lightgray">Geen datum</td>
                                     {% endif %}
                                 </tr>
                                 <tr>
@@ -678,7 +678,7 @@
                                 {% for getuige in variables.huwelijk.properties.getuigen %}
                                     {% set assent = commonground_resource(getuige) %}
                                     {% set contact = commonground_resource(assent.contact) %}
-                                        <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
+                                    <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
                                 {% endfor %}
                             </select>
 
@@ -690,7 +690,7 @@
 
                     {% endif %}
 
-                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen|length < 4 %}
+                    {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen|length < 4 %}
 
                         <form>
                             <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
@@ -698,7 +698,7 @@
                             <label>Voor partner:</label>
                             <select class="form-control" name="partner">
                                 {% for partner in variables.huwelijk.properties.partners %}
-                                    <option value="{{ partner['@id'] }}">{{ contact1.name }}</option>
+                                    <option value="{{ partner }}">{{ contact1.name }}</option>
                                 {% endfor %}
                             </select>
 
@@ -735,7 +735,7 @@
                         </p>
                         <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
                             te selecteren.</p>
-                        <select multiple="" class="form-control">
+                        <select class="form-control">
                             <option>Mickey Mouse</option>
                             <option>Minnie Mouse</option>
                         </select>
@@ -805,26 +805,29 @@
         <div class="modal-dialog model-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tolk uitnodigen</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Tolk nodig?</b></h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
-                    <form>
-                        <p><b>Nodig een tolk uit:</b></p>
-                        <label>BSN</label>
-                        <input type="text" class="form-control" placeholder="169960274">
-                        <br>
-                        <label>E-mail</label>
-                        <input type="text" class="form-control" placeholder="john@doe.com">
-                        <br>
-                        <label>Telefoonnummer</label>
-                        <input type="text" class="form-control" placeholder="06 1234678">
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <p><b>Spreekt dit koppel Nederlands?</b></p>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen
+                        <select class="form-control" name="nederlands">
+                            <option value="ja"
+                                    {% if variables.huwelijk.properties.nederlands is defined and variables.huwelijk.properties.nederlands == "ja" %}selected{% endif %}>
+                                Ja
+                            </option>
+                            <option value="nee"
+                                    {% if variables.huwelijk.properties.nederlands is defined and variables.huwelijk.properties.nederlands == "nee" %}selected{% endif %}>
+                                Nee
+                            </option>
+                        </select>
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            Opslaan
                         </button>
                     </form>
 
@@ -1028,15 +1031,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Email:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="martin@timmers.com">
+                        <p><b>Email:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact1.emails is defined and contact1.emails is not empty %}placeholder="{{ contact1.emails[0].email }}"{% endif %} name="email1">
 
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -1056,14 +1063,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Email:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="anita@henrika.com">
+                        <p><b>Email:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact2mails is defined and contact2.emails is not empty %}placeholder="{{ contact2.emails[0].email }}"{% endif %} name="email2">
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
 
                 </div>
             </div>

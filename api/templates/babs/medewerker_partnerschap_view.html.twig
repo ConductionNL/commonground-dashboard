@@ -198,7 +198,11 @@
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                                         <i style="color: red;">X</i></td>
                                     <th>Tolk</th>
-                                    <td style="color: lightgray">Niet van toepassing</td>
+                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "Nee" %}
+                                        <td style="color: lightgray">Tolk nodig</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen tolk</td>
+                                    {% endif %}
                                     <td>
                                         <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
                                                 class="btn btn-primary"
@@ -517,15 +521,15 @@
                         <div class="d-block">
                             <select style="width: 250px;" class="form-control d-inline-block" name="type">
                                 <option value="Huwelijk"
-                                        {% if variables.huwelijk.properties.type == "Huwelijk" %}selected{% endif %}>
+                                        {% if variables.huwelijk.properties.type is defined and variables.huwelijk.properties.type == "Huwelijk" %}selected{% endif %}>
                                     Huwelijk
                                 </option>
                                 <option value="Partnerschap"
-                                        {% if variables.huwelijk.properties.type == "Partnerschap" %}selected{% endif %}>
+                                        {% if variables.huwelijk.properties.type is defined and variables.huwelijk.properties.type == "Partnerschap" %}selected{% endif %}>
                                     Partnerschap
                                 </option>
                                 <option value="Omzetten"
-                                        {% if variables.huwelijk.properties.type == "Omzetten" %}selected{% endif %}>
+                                        {% if variables.huwelijk.properties.type is defined and variables.huwelijk.properties.type == "Omzetten" %}selected{% endif %}>
                                     Omzetten
                                 </option>
                             </select>
@@ -803,26 +807,22 @@
         <div class="modal-dialog model-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tolk uitnodigen</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Tolk nodig?</b></h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
-                    <form>
-                        <p><b>Nodig een tolk uit:</b></p>
-                        <label>BSN</label>
-                        <input type="text" class="form-control" placeholder="169960274">
-                        <br>
-                        <label>E-mail</label>
-                        <input type="text" class="form-control" placeholder="john@doe.com">
-                        <br>
-                        <label>Telefoonnummer</label>
-                        <input type="text" class="form-control" placeholder="06 1234678">
+                    <form method="post" action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <p><b>Spreekt dit koppel Nederlands?</b></p>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen
+                        <select class="form-control" name="nederlands">
+                            <option value="ja" {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands == "ja" %}selected{% endif %}>Ja</option>
+                            <option value="nee" {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands == "nee" %}selected{% endif %}>Nee</option>
+                        </select>
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            Opslaan
                         </button>
                     </form>
 
@@ -1026,14 +1026,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Email:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="martin@timmers.com">
+                        <p><b>Email:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact1.emails is defined and contact1.emails is not empty %}placeholder="{{ contact1.emails[0].email }}"{% endif %} name="email1">
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
 
                 </div>
             </div>
@@ -1054,14 +1059,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Email:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="anita@henrika.com">
+                        <p><b>Email:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact2.emails is defined and contact2.emails is not empty %}placeholder="{{ contact2.emails[0].email }}"{% endif %} name="email2">
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
 
                 </div>
             </div>
