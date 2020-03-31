@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    {% set variables = variables|merge({'huwelijk': variables.request}) %}
+
     <style>
         th {
             width: 33.33%;
@@ -196,7 +198,7 @@
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                                         <i style="color: red;">X</i></td>
                                     <th>Tolk</th>
-                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "nee" %}
+                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "Nee" %}
                                         <td style="color: lightgray">Tolk nodig</td>
                                     {% else %}
                                         <td style="color: lightgray">Geen tolk</td>
@@ -690,7 +692,7 @@
 
                     {% endif %}
 
-                    {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen|length < 4 %}
+                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen|length < 4 %}
 
                         <form>
                             <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
@@ -698,7 +700,7 @@
                             <label>Voor partner:</label>
                             <select class="form-control" name="partner">
                                 {% for partner in variables.huwelijk.properties.partners %}
-                                    <option value="{{ partner }}">{{ contact1.name }}</option>
+                                    <option value="{{ partner['@id'] }}">{{ contact1.name }}</option>
                                 {% endfor %}
                             </select>
 
@@ -735,7 +737,7 @@
                         </p>
                         <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
                             te selecteren.</p>
-                        <select class="form-control">
+                        <select multiple="" class="form-control">
                             <option>Mickey Mouse</option>
                             <option>Minnie Mouse</option>
                         </select>
@@ -812,19 +814,12 @@
                     </button>
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
-                    <form method="post"
-                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                    <form method="post" action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <p><b>Spreekt dit koppel Nederlands?</b></p>
 
                         <select class="form-control" name="nederlands">
-                            <option value="ja"
-                                    {% if variables.huwelijk.properties.nederlands is defined and variables.huwelijk.properties.nederlands == "ja" %}selected{% endif %}>
-                                Ja
-                            </option>
-                            <option value="nee"
-                                    {% if variables.huwelijk.properties.nederlands is defined and variables.huwelijk.properties.nederlands == "nee" %}selected{% endif %}>
-                                Nee
-                            </option>
+                            <option value="ja" {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands == "ja" %}selected{% endif %}>Ja</option>
+                            <option value="nee" {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands == "nee" %}selected{% endif %}>Nee</option>
                         </select>
                         <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
@@ -1032,7 +1027,7 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
 
                         <p><b>Email:</b></p>
 
@@ -1044,6 +1039,7 @@
                         </button>
 
                     </form>
+
                 </div>
             </div>
         </div>
@@ -1064,12 +1060,12 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
                     <form method="post"
-                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                          action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
 
                         <p><b>Email:</b></p>
 
                         <input style="width: 250px; margin: auto" type="text" class="form-control"
-                               {% if contact2mails is defined and contact2.emails is not empty %}placeholder="{{ contact2.emails[0].email }}"{% endif %} name="email2">
+                               {% if contact2.emails is defined and contact2.emails is not empty %}placeholder="{{ contact2.emails[0].email }}"{% endif %} name="email2">
 
                         <button type="submit" class="btn btn-success m-3 mx-auto d-block">
                             Opslaan

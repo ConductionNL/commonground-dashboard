@@ -9,7 +9,7 @@
 
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
-                    {% if huwelijken is defined and huwelijken|length > 0 %}
+                    {% if omzetten is defined and omzetten|length > 0 %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -22,45 +22,45 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for huwelijk in huwelijken %}
+                        {% for omzet in omzetten %}
                             <tr>
-                                {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
-                                    {% set assent1 = commonground_resource(huwelijk.properties.partners.0) %}
+                                {% if omzet.properties.partners[0] is defined and omzet.properties.partners[0] is not empty %}
+                                    {% set assent1 = commonground_resource(omzet.properties.partners.0) %}
                                     {% set contact1 = commonground_resource(assent1.contact) %}
                                     <td>{{ contact1.name }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen partner</td>
                                 {% endif %}
-                                {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
-                                    {% set assent2 = commonground_resource(huwelijk.properties.partners.1) %}
+                                {% if omzet.properties.partners[1] is defined and omzet.properties.partners[1] is not empty %}
+                                    {% set assent2 = commonground_resource(omzet.properties.partners.1) %}
                                     {% set contact2 = commonground_resource(assent2.contact) %}
                                     <td>{{ contact2.name }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen partner</td>
                                 {% endif %}
-                                {% if huwelijk.properties.type is defined and huwelijk.properties.type is not empty %}
-                                    <td>{{ huwelijk.properties.type|capitalize }}</td>
+                                {% if omzet.properties.type is defined and omzet.properties.type is not empty %}
+                                    <td>{{ omzet.properties.type|capitalize }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen type</td>
                                 {% endif %}
-                                {% if huwelijk.dateCreated is defined and huwelijk.dateCreated is not empty %}
-                                    <td>{{ huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                {% if omzet.dateCreated is defined and omzet.dateCreated is not empty %}
+                                    <td>{{ omzet.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                 {% else %}
                                     <td style="color: lightgray;"></td>
                                 {% endif %}
-                                {% if huwelijk.status is defined and huwelijk.status is not empty %}
-                                    <td>{{ huwelijk.status|capitalize }}</td>
+                                {% if omzet.status is defined and omzet.status is not empty %}
+                                    <td>{{ omzet.status|capitalize }}</td>
                                 {% else %}
                                     <td style="color: lightgray;">Geen status</td>
                                 {% endif %}
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                                       href="{{ path('app_babs_medewerkerhuwelijkview', {id: huwelijk.id} ) }}"><b>MEER INFO</b></a></td>
+                                       href="#"><b>MEER INFO</b></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                     {% else %}
-                        <p class="p-4">Geen resultaten gevonden.</p>
+                    <p class="p-4">Geen resultaten gevonden.</p>
                     {% endif %}
                 </div>
             </div>

@@ -22,7 +22,8 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <button class="btn btn-danger"
+                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -33,18 +34,20 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input" value="{{ resource.name }}">
+                                                       name="name" placeholder="Large Input"
+                                                       value="{{ resource.name }}">
                                             </div>
                                         </div> <!-- /.col -->
 
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
+                                                <label
+                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
                                                 <ul>
-                                                    {% if resource.groups is defined %}
-                                                    {% for group in resource.groups %}
-                                                        <li>{{ group.name }}</li>
-                                                    {% endfor %}
+                                                    {% if resource.groups is defined and resource.groups is not empty %}
+                                                        {% for group in resource.groups %}
+                                                            <li>{{ group.name }}</li>
+                                                        {% endfor %}
                                                     {% endif %}
                                                 </ul>
                                             </div>
@@ -54,14 +57,17 @@
 
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
+                                                    <label
+                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
                                                     <select class="form-control form-control-lg" id="addgroup"
                                                             name="addgroup">
                                                         <option value="">-</option>
-                                                        {% for group in groups %}
-                                                            <option
-                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                        {% endfor %}
+                                                        {% if groups is defined and groups is not empty %}
+                                                            {% for group in groups %}
+                                                                <option
+                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                            {% endfor %}
+                                                        {% endif %}
                                                     </select>
                                                 </div>
                                             </div> <!-- /.col -->
@@ -72,11 +78,11 @@
                                                     <select class="form-control form-control-lg" id="removegroup"
                                                             name="removegroup">
                                                         <option value="">-</option>
-                                                        {% if resource.groups is defined %}
-                                                        {% for group in resource.groups %}
-                                                            <option
-                                                                value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                        {% endfor %}
+                                                        {% if resource.groups is defined and resource.groups is not empty %}
+                                                            {% for group in resource.groups %}
+                                                                <option
+                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                            {% endfor %}
                                                         {% endif %}
                                                     </select>
                                                 </div>
@@ -89,15 +95,16 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description"name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <textarea class="form-control" rows="5" id="description"
+                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
                                 </div> <!-- /.card-body -->
 
-								<div class="card-action">
+                                <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->   
+                                </div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
                     </div>
@@ -112,14 +119,14 @@
                             <div class="card-body">
                                 <table class="table table-hover">
                                     <tbody>
-                                    {% if resource.groups is defined %}
-                                    {% for group in resource.groups %}
-                                        <tr>
-                                            <td>{{ group.name }}</td>
-                                            <td></td>
-                                        </tr>
-                                    {% endfor %}
-                                    {% endif %}
+                                    {#                                    {% if resource.groups is defined %}#}
+                                    {#                                    {% for group in resource.groups %}#}
+                                    {#                                        <tr>#}
+                                    {#                                            <td>{{ group.name }}</td>#}
+                                    {#                                            <td></td>#}
+                                    {#                                        </tr>#}
+                                    {#                                    {% endfor %}#}
+                                    {#                                    {% endif %}#}
                                     </tbody>
                                 </table>
                             </div>
