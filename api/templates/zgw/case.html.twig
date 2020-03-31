@@ -15,7 +15,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.omschrijving }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <a class="btn btn-danger" href="#setResultModal" data-toggle="modal" data-target="#setResultModal">{{ 'set result'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -60,12 +60,22 @@
         								</div> <!-- /.col -->  
     								</div><!-- /.row --> 
     								<div class="row">
-        								<div class="col-md-12">    
+        								<div class="col-md-6">    
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="description" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control" rows="5" id="description" name ="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>       
-        								</div>  <!-- /.col -->  
+        								</div><!-- /.col -->  
+        								<div class="col-md-6">  
+            								<div class="row">
+                								<div class="col-md-12">  
+        										 {% for property in caseproperties %} 
+        										 	{{ property.naam }} {{ property.definitie }}
+        										 	{{ property.specificatie.formaat }}
+        										 {% endfor %}
+                								</div><!-- /.col -->  
+            								</div> <!-- /.row -->  
+        								</div><!-- /.col -->  
     								</div> <!-- /.row -->       
 								</div> <!-- /.card-body -->        
 
@@ -76,11 +86,245 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                <div class="row">                
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+							<div class="card-header">
+                         		<h3 class="d-inline-block">{{ 'documents'|trans|capitalize }}</h3>
+                            </div>
+							<div class="card-body">
+							</div> <!-- /.card-body -->        
+
+							<div class="card-action">
+                           		<a class="btn btn-info" href="#addDocuments" data-toggle="modal" data-target="#addDocumentsModal">{{ 'add'|trans|capitalize }}</a>
+							</div><!-- /.card-action -->   
+                        </div><!-- /.card -->
+                    </div><!-- /.col --> 
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+							<div class="card-header">
+                         		<h3 class="d-inline-block">{{ 'statuses'|trans|capitalize }}</h3>
+                            </div>
+							<div class="card-body">
+							</div> <!-- /.card-body -->        
+
+							<div class="card-action">
+                           		<a class="btn btn-info" href="#addStatusModal" data-toggle="modal" data-target="#addStatusModal">{{ 'add'|trans|capitalize }}</a>
+							</div><!-- /.card-action -->   
+                        </div><!-- /.card -->
+                    </div><!-- /.col --> 
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+							<div class="card-header">
+                         		<h3 class="d-inline-block">{{ 'roles'|trans|capitalize }}</h3>
+                            </div>
+							<div class="card-body">
+							</div> <!-- /.card-body -->        
+
+							<div class="card-action">
+                           			<a class="btn btn-info" href="#addRoleModal" data-toggle="modal" data-target="#addRoleModal">{{ 'add'|trans|capitalize }}</a>
+							</div><!-- /.card-action -->   
+                        </div><!-- /.card -->
+                    </div><!-- /.col --> 
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+							<div class="card-header">
+                         		<h3 class="d-inline-block">{{ 'verdicts'|trans|capitalize }}</h3>
+                            </div>
+							<div class="card-body">
+							</div> <!-- /.card-body -->        
+
+							<div class="card-action">
+                           		<a class="btn btn-info" href="#addVerdictModal" data-toggle="modal" data-target="#addVerdictModal">{{ 'add'|trans|capitalize }}</a>
+							</div><!-- /.card-action -->   
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+                
             </div><!-- /.page-inner -->
 
             {% include 'footer.html.twig' %}
 
         </div>
     </div>
+    
+    {% if casestatuses is defined %}
+    <div class="modal fade" style="text-align: center" id="addStatusModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'set status'|trans|capitalize }}</b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body">
+                    <p><b>{{ 'set status'|trans|capitalize }}</b></p>
+                    <form action="{{ path('app_zgw_case', {id: resource.id}) }}" method="post">
+        				<div class="form-group">
+        					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
+        					<select id="status[statustype]" name="status[statustype]" class="form-control form-control-lg">
+        					{% for status in casestatuses %}
+                        		<option value="{{ status['@id'] }}">{{ status.omschrijving }}</option>                                               		
+                         	{% endfor %}
+                   			</select>
+        				</div><!-- /.form-group --> 
+						<div class="form-group">
+        					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
+        					<input type="text" class="form-control form-control-lg" id="status[statustoelichting]" name ="status[statustoelichting]">
+        				</div>
+
+
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            {{ 'add'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if caseresults is defined %}
+    <div class="modal fade" style="text-align: center" id="setResultModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'set results'|trans|capitalize }}</b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body">
+                    <p><b>{{ 'set status'|trans|capitalize }}</b></p>
+                    <form action="{{ path('app_zgw_case', {id: resource.id}) }}" method="post">
+        				<div class="form-group">
+        					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
+        					<select id="result[resultaattype]" name="result[resultaattype]" class="form-control form-control-lg">
+        					{% for result in caseresults  %}
+                        		<option value="{{ result['@id'] }}">{{ result.omschrijving }}</option>                                               		
+                         	{% endfor %}
+                   			</select>
+        				</div><!-- /.form-group --> 
+						<div class="form-group">
+        					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
+        					<input type="text" class="form-control form-control-lg" id="result[toelichting]" name ="result[toelichting]">
+        				</div>
+
+
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            {{ 'set'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}    
+    
+    {% if caseverdics is defined %}
+    <div class="modal fade" style="text-align: center" id="addVerdictModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'add verdict'|trans|capitalize }}</b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body">
+                    <p><b>{{ 'add verdict'|trans|capitalize }}</b></p>
+                    <form action="{{ path('app_zgw_case', {id: resource.id}) }}" method="post">
+        				<div class="form-group">
+        					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
+        					<select id="verdict[resultaattype]" name="verdict[resultaattype]" class="form-control form-control-lg">
+        					{% for verdict in caseverdics  %}
+                        		<option value="{{ result['@id'] }}">{{ result.omschrijving }}</option>                                               		
+                         	{% endfor %}
+                   			</select>
+        				</div><!-- /.form-group --> 
+						<div class="form-group">
+        					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
+        					<input type="text" class="form-control form-control-lg" id="verdict[toelichting]" name ="verdict[toelichting]">
+        				</div>
+
+
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            {{ 'add'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endif %}    
+    
+    {% if caseroles is defined %}
+    <div class="modal fade" style="text-align: center" id="addRoleModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'add role'|trans|capitalize }}</b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body">
+                    <p><b>{{ 'add role'|trans|capitalize }}</b></p>
+                    <form action="{{ path('app_zgw_case', {id: resource.id}) }}" method="post">
+						<div class="form-group">
+        					<label for="largeInput">Url naar betrokkene</label>
+        					<input type="text" class="form-control form-control-lg" id="role[betrokkene]" name ="role[betrokkene]">
+        				</div>
+        				<div class="form-group">
+        					<label for="largeInput">{{ 'betrokkeneType'|trans|capitalize }}</label>
+        					<select id="role[betrokkeneType]" name="role[betrokkeneType]" class="form-control form-control-lg">
+                        		<option value="natuurlijk_persoon">{{ 'natural person'|trans|capitalize }}</option>   
+                        		<option value="niet_natuurlijk_persoon">{{ 'non-natural person'|trans|capitalize }}</option>          
+                        		<option value="vestiging">{{ 'location'|trans|capitalize }}</option>          
+                        		<option value="organisatorische_eenheid">{{ 'unit'|trans|capitalize }}</option>          
+                        		<option value="medewerker">{{ 'employee'|trans|capitalize }}</option>                 
+                   			</select>
+        				</div><!-- /.form-group --> 
+        				<div class="form-group">
+        					<label for="largeInput">{{ 'role'|trans|capitalize }}</label>
+        					<select id="role[roltype]" name="role[roltype]" class="form-control form-control-lg">
+        					{% for role in caseroles  %}
+                        		<option value="{{ role['@id'] }}">{{ role.omschrijving }}</option>                                               		
+                         	{% endfor %}
+                   			</select>
+        				</div><!-- /.form-group --> 
+						<div class="form-group">
+        					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
+        					<input type="text" class="form-control form-control-lg" id="role[roltoelichting]" name ="role[roltoelichting]">
+        				</div>
+
+
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            {{ 'add'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
 {% endblock %}
