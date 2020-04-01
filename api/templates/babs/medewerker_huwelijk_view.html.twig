@@ -388,7 +388,7 @@
                                     {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
                                             {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] }}</p>
+                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']]|capitalize }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner1NaamModal"><i style=""
@@ -410,7 +410,7 @@
                                     {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
                                             {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] }}</p>
+                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']]|capitalize }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner2NaamModal"><i style=""
@@ -977,14 +977,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Telefoonnummer:</b></p>
+                    <form action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}"
+                          method="post">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="06 12345678">
+                        <p><b>Telefoonnummer:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input name="telephone1" style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact1.telephones is defined and contact1.telephones is not empty %}placeholder="{{ contact1.telephones[0].telephone }}"{% endif %}>
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -1006,12 +1011,19 @@
 
                     <p><b>Telefoonnummer:</b></p>
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="06 12345678">
+                    <form action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}"
+                          method="post">
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <p><b>Telefoonnummer:</b></p>
+
+                        <input name="telephone2" style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact2.telephones is defined and contact2.telephones is not empty %}placeholder="{{ contact2.telephones[0].telephone }}"{% endif %}>
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -1036,8 +1048,9 @@
 
                         <p><b>Email:</b></p>
 
-                        <input style="width: 250px; margin: auto" type="text" class="form-control"
-                               {% if contact1.emails is defined and contact1.emails is not empty %}placeholder="{{ contact1.emails[0].email }}"{% endif %} name="email1">
+                        <input style="width: 250px; margin: auto" type="email" class="form-control"
+                               {% if contact1.emails is defined and contact1.emails is not empty %}value="{{ contact1.emails[0].email }}"{% endif %}
+                               name="email1">
 
                         <button type="submit" class="btn btn-success m-3 mx-auto d-block">
                             Opslaan
@@ -1068,8 +1081,9 @@
 
                         <p><b>Email:</b></p>
 
-                        <input style="width: 250px; margin: auto" type="text" class="form-control"
-                               {% if contact2mails is defined and contact2.emails is not empty %}placeholder="{{ contact2.emails[0].email }}"{% endif %} name="email2">
+                        <input style="width: 250px; margin: auto" type="email" class="form-control"
+                               {% if contact2.emails is defined and contact2.emails is not empty %}value="{{ contact2.emails[0].email }}"{% endif %}
+                               name="email2">
 
                         <button type="submit" class="btn btn-success m-3 mx-auto d-block">
                             Opslaan
@@ -1082,61 +1096,109 @@
         </div>
     </div>
 
-    <div class="modal fade" style="text-align: center" id="partner1NaamModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Partner1 naamgebruik wijzigen</b></h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
 
-                    <p><b>Naamgebruik:</b></p>
+        <div class="modal fade" style="text-align: center" id="partner1NaamModal" tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b>Partner1 naamgebruik wijzigen</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control" placeholder="Timmers">
+                        <form method="post"
+                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                            <p><b>Naamgebruik:</b></p>
 
-                </div>
-            </div>
-        </div>
-    </div>
+                            <select name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
+                                    class="form-control">
+                                <option value="ongewijzigd">Ongewijzigd</option>
+                                <option value="eigennaam, partnernaam">Eerst uw achternaam, gevolgd door uw partners
+                                    achternaam.
+                                </option>
+                                <option value="partnernaam, eigennaam">Eerst uw partners achternaam, gevolgd door uw
+                                    achternaam.
+                                </option>
+                                <option value="partnernaam">Alleen uw partners achternaam</option>
+                            </select>
 
+                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
 
-    <div class="modal fade" style="text-align: center" id="partner2NaamModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Partner2 naamgebruik wijzigen</b></h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+                                <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
+                                       value="{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] }}">
 
-                    <p><b>Naamgebruik:</b></p>
+                            {% endif %}
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="Henrika Timmers">
+                            <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                                Opslaan
+                            </button>
+                        </form>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    {% endif %}
+
+    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
+
+        <div class="modal fade" style="text-align: center" id="partner2NaamModal" tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b>Partner2 naamgebruik wijzigen</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+
+                        <form method="post"
+                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+
+                            <p><b>Naamgebruik:</b></p>
+
+                            <select name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
+                                    class="form-control">
+                                <option value="ongewijzigd">Ongewijzigd</option>
+                                <option value="eigennaam, partnernaam">Eerst uw achternaam, gevolgd door uw partners
+                                    achternaam.
+                                </option>
+                                <option value="partnernaam, eigennaam">Eerst uw partners achternaam, gevolgd door uw
+                                    achternaam.
+                                </option>
+                                <option value="partnernaam">Alleen uw partners achternaam</option>
+                            </select>
+
+                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
+
+                                <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
+                                       value="{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] }}">
+
+                            {% endif %}
+                            <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                                Opslaan
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
 
     <div class="modal fade" style="text-align: center" id="partner1Modal" tabindex="-1"
          role="dialog"
