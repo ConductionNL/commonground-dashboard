@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="nl" target-language="nl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="2BxV9Jx" resname="saved">
+        <source>saved</source>
+        <target>opgeslagen</target>
+      </trans-unit>
+      <trans-unit id="FGw_5pd" resname="could not be saved">
+        <source>could not be saved</source>
+        <target>kon niet worden opgeslagen</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created">
+        <source>created</source>
+        <target>aangemaakt</target>
+      </trans-unit>
+      <trans-unit id="jHE8PIT" resname="could not be created">
+        <source>could not be created</source>
+        <target>kon niet worden aangemaakt</target>
+      </trans-unit>
+      <trans-unit id="DhzHgEL" resname="product and service catalouge">
+        <source>product and service catalouge</source>
+        <target>producten en diensten catalogus</target>
+      </trans-unit>
+      <trans-unit id="rHxEJUO" resname="the product and service catalouge holds al data concerning product, groups and offers">
+        <source>the product and service catalouge holds al data concerning product, groups and offers</source>
+        <target>de producten en diensten catalogus bevat alle gegevens over producten, groepen en aanbiedingen</target>
+      </trans-unit>
+      <trans-unit id="Cj4nuMq" resname="products">
+        <source>products</source>
+        <target>producten</target>
+      </trans-unit>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
+        <target>alle</target>
+      </trans-unit>
+      <trans-unit id="0lBOUri" resname="catalogue">
+        <source>catalogue</source>
+        <target>catalogus</target>
+      </trans-unit>
+      <trans-unit id="wXPQ_At" resname="save or create a">
+        <source>save or create a</source>
+        <target>bewerk of creer een</target>
+      </trans-unit>
+      <trans-unit id="TtN51Bi" resname="groups">
+        <source>groups</source>
+        <target>groepen</target>
+      </trans-unit>
+      <trans-unit id="rZNvy_1" resname="group">
+        <source>group</source>
+        <target>groep</target>
+      </trans-unit>
+      <trans-unit id="kqs2To9" resname="offers">
+        <source>offers</source>
+        <target>aanbiedingen</target>
+      </trans-unit>
+      <trans-unit id="mIGAvwy" resname="offer">
+        <source>offer</source>
+        <target>aanbod</target>
+      </trans-unit>
+      <trans-unit id="7MNm73z" resname="catalogues">
+        <source>catalogues</source>
+        <target>catalogusen</target>
+      </trans-unit>
+      <trans-unit id="wG3IzBc" resname="taxes">
+        <source>taxes</source>
+        <target>belastingen</target>
+      </trans-unit>
+      <trans-unit id="H.wEBrm" resname="tax">
+        <source>tax</source>
+        <target>belasting</target>
+      </trans-unit>
+      <trans-unit id="X_WVFRN" resname="suppliers">
+        <source>suppliers</source>
+        <target>leveranciers</target>
+      </trans-unit>
+      <trans-unit id="lV7RC3P" resname="supplier">
+        <source>supplier</source>
+        <target>leverancier</target>
+      </trans-unit>
+      <trans-unit id="Eq.gG4n" resname="customer types">
+        <source>customer types</source>
+        <target>klant types</target>
+      </trans-unit>
+      <trans-unit id="Tj2qtab" resname="customer type">
+        <source>customer type</source>
+        <target>klant type</target>
+      </trans-unit>
+      <trans-unit id=".PEor6M" resname="user configurtion">
+        <source>user configurtion</source>
+        <target>gebruikers instellingen</target>
+      </trans-unit>
+      <trans-unit id="4_5EQvS" resname="the user component holds all users, user groups and acces rights">
+        <source>the user component holds all users, user groups and acces rights</source>
+        <target>het gebruikers component bevat alle gebruikers, gebruikes groepen en toegangsrechten</target>
+      </trans-unit>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
+        <target>gebruikers</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target>gebruiker</target>
+      </trans-unit>
+      <trans-unit id="VrNmnDo" resname="scopes">
+        <source>scopes</source>
+        <target>rechten</target>
+      </trans-unit>
+      <trans-unit id="XxYckUm" resname="scope">
+        <source>scope</source>
+        <target>recht</target>
+      </trans-unit>
+      <trans-unit id="KrYau5y" resname="webresources">
+        <source>webresources</source>
+        <target>__webresources</target>
+      </trans-unit>
+      <trans-unit id="7ac7Hz0" resname="the webresources consist of all items that are needed to render the application web interface">
+        <source>the webresources consist of all items that are needed to render the application web interface</source>
+        <target>__the webresources consist of all items that are needed to render the application web interface</target>
+      </trans-unit>
+      <trans-unit id="nGZBwfn" resname="templates">
+        <source>templates</source>
+        <target>sjablonen</target>
+      </trans-unit>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
+        <target>sjabloon</target>
+      </trans-unit>
+      <trans-unit id="_KZlqXd" resname="organizations">
+        <source>organizations</source>
+        <target>organisatie</target>
+      </trans-unit>
+      <trans-unit id="rzobsxK" resname="organization">
+        <source>organization</source>
+        <target>organisaties</target>
+      </trans-unit>
+      <trans-unit id="NSuEd32" resname="cases">
+        <source>cases</source>
+        <target>zaken</target>
+      </trans-unit>
+      <trans-unit id="u.zUFgo" resname="case">
+        <source>case</source>
+        <target>zaak</target>
+      </trans-unit>
+      <trans-unit id="t9ZKkiE" resname="configuration">
+        <source>configuration</source>
+        <target>instellingen</target>
+      </trans-unit>
+      <trans-unit id="YZdZVQP" resname="delete">
+        <source>delete</source>
+        <target>verwijder</target>
+      </trans-unit>
+      <trans-unit id="FX3KkuQ" resname="save">
+        <source>save</source>
+        <target>opslaan</target>
+      </trans-unit>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
+        <target>naam</target>
+      </trans-unit>
+      <trans-unit id="NZjOb5Z" resname="logo">
+        <source>logo</source>
+        <target>logo</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
+        <target>beschrijving</target>
+      </trans-unit>
+      <trans-unit id="ko0vg2p" resname="created at">
+        <source>created at</source>
+        <target>aangemaakt op</target>
+      </trans-unit>
+      <trans-unit id="kxW44RI" resname="last updated add">
+        <source>last updated add</source>
+        <target>laats bewerkt op</target>
+      </trans-unit>
+      <trans-unit id="uAAShRz" resname="modified">
+        <source>modified</source>
+        <target>aangepast</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>bewerk</target>
+      </trans-unit>
+      <trans-unit id="wtS0RqR" resname="icon">
+        <source>icon</source>
+        <target>icoon</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>prijs</target>
+      </trans-unit>
+      <trans-unit id="6Ph65Qp" resname="priceCurrency">
+        <source>priceCurrency</source>
+        <target>valuta</target>
+      </trans-unit>
+      <trans-unit id="fp5aww8" resname="add">
+        <source>add</source>
+        <target>toevoegen</target>
+      </trans-unit>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
+        <target>titel</target>
+      </trans-unit>
+      <trans-unit id="7XACtDn" resname="content">
+        <source>content</source>
+        <target>inhoud</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
+        <target>__type</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
+        <target>status</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

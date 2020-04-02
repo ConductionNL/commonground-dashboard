@@ -23,7 +23,7 @@ class DefaultController extends AbstractController
      * @Route("/")
      */
 	public function indexAction()
-    {    	    	
-    	return $this->redirect($this->generateUrl('app_dashboard_index'));
+    {
+    	return $this->redirect($this->generateUrl('app_wrc_templates'));
     }
 }

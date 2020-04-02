@@ -9,33 +9,59 @@
 
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
+                    {% if huwelijken is defined and huwelijken|length > 0 %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Partners</th>
-                            <th scope="col">Locatie</th>
-                            <th scope="col">Datum</th>
-                            <th scope="col">Babs</th>
+                            <th scope="col">Partner 1</th>
+                            <th scope="col">Partner 2</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Aangemaakt op</th>
                             <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
-{#                        {% for index, request in resources %}#}
-                        <tr>
-{#                            <td>{{ request.submitters }}</td>#}
-                        </tr>
-{#                        {% endfor %}#}
-                        <tr>
-                            <td>Martin Timmers en Anita Henrika de Kieft</td>
-                            <td>Utrecht, Stadhuis grote zaal</td>
-                            <td>10-2-2020</td>
-                            <td>Dhr. Erik Hendrik</td>
-                            <td style="">In behandeling</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_babs_medewerkerhuwelijk') }}"><b>MEER INFO</b></a></td>
-                        </tr>
+                        {% for huwelijk in huwelijken %}
+                            <tr>
+                                {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% set assent1 = commonground_resource(huwelijk.properties.partners.0) %}
+                                    {% set contact1 = commonground_resource(assent1.contact) %}
+                                    <td>{{ contact1.name }}</td>
+                                {% else %}
+                                    <td style="color: lightgray;">Geen partner</td>
+                                {% endif %}
+                                {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% set assent2 = commonground_resource(huwelijk.properties.partners.1) %}
+                                    {% set contact2 = commonground_resource(assent2.contact) %}
+                                    <td>{{ contact2.name }}</td>
+                                {% else %}
+                                    <td style="color: lightgray;">Geen partner</td>
+                                {% endif %}
+                                {% if huwelijk.properties.type is defined and huwelijk.properties.type is not empty %}
+                                    <td>{{ huwelijk.properties.type|capitalize }}</td>
+                                {% else %}
+                                    <td style="color: lightgray;">Geen type</td>
+                                {% endif %}
+                                {% if huwelijk.dateCreated is defined and huwelijk.dateCreated is not empty %}
+                                    <td>{{ huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                {% else %}
+                                    <td style="color: lightgray;"></td>
+                                {% endif %}
+                                {% if huwelijk.status is defined and huwelijk.status is not empty %}
+                                    <td>{{ huwelijk.status|capitalize }}</td>
+                                {% else %}
+                                    <td style="color: lightgray;">Geen status</td>
+                                {% endif %}
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                       href="{{ path('app_babs_medewerkerhuwelijkview', {id: huwelijk.id} ) }}"><b>MEER INFO</b></a></td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                        <p class="p-4">Geen resultaten gevonden.</p>
+                    {% endif %}
                 </div>
             </div>
 

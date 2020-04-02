@@ -1,0 +1,65 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+			
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Template bewerken','functie': 'Dashboard -> WRC -> Templates -> '~resource.name }%}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                        	<form action="{{ path('app_pdc_supplier', {id: resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <div class="float-right">
+                                        <button class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+								<div class="card-body">
+									<div class="row">
+        								<div class="col-md-8 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
+        									</div>
+    									</div> <!-- /.col -->  
+    									<div class="col-md-4 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										 {% for organization in organizations %}
+                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
+                                                {% endfor %}
+                                                </select>
+        									</div><!-- /.form-group -->  
+        								</div> <!-- /.col -->  
+    								</div><!-- /.row --> 
+    								<div class="row">
+        								<div class="col-md-12">    
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+												<textarea class="form-control" rows="5" id="description" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+        									</div>       
+        								</div>  <!-- /.col -->  
+    								</div> <!-- /.row -->       
+								</div> <!-- /.card-body -->      
+
+								<div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+								</div><!-- /.card-action -->                           
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}
