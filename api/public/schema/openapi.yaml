@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
-  title: 'Dash Board'
+  title: 'CommonGround DashBoard'
   version: V.0.1
   description: |
     API Details
-    - Component: Dash Board
+    - Component: CommonGround DashBoard
     - Reference: db
     - Enviroment: dev
     - Version: V.0.1
@@ -999,31 +999,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail:jsonld-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
           application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/merge-patch+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          applications/x-yaml:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          text/html:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
         description: 'The updated AuditTrail resource'
@@ -1896,31 +1872,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog:jsonld-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
           application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/merge-patch+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          applications/x-yaml:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          text/html:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
         description: 'The updated ChangeLog resource'
@@ -2413,12 +2365,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-04 10:45:33'
+        example: '2020-04-04 11:55:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-04 10:45:33'
+        example: '2020-04-04 11:55:28'
     required: []
   AuditTrail-write:
     properties:
@@ -2466,12 +2418,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-04 10:45:33'
+        example: '2020-04-04 11:55:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-04 10:45:33'
+        example: '2020-04-04 11:55:28'
     required: []
   ChangeLog-write:
     properties:
