@@ -6,8 +6,6 @@ security:
                 providers: [CommongroundUserProvider, CommongroundApplicationProvider]
         commongroundUserProvider:
             id: App\Security\User\CommongroundUserProvider
-        commongroundApplicationProvider:
-            id: App\Security\User\CommongroundApplicationProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
