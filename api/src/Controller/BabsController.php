@@ -127,6 +127,12 @@ class BabsController extends AbstractController
         $variables['ambtenaren'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])["hydra:member"];
         $variables['extras'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])["hydra:member"];
 
+        $assent1 = $commonGroundService->getResource($variables['huwelijk']['properties']['partners'][0]);
+        $contact1 = $commonGroundService->getResource($assent1['contact']);
+
+        $assent2 = $commonGroundService->getResource($variables['huwelijk']['properties']['partners'][1]);
+        $contact2 = $commonGroundService->getResource($assent2['contact']);
+
         $variables['totalChecks'] = 8;
         $variables['confirmedChecks'] = 0;
 
@@ -161,11 +167,49 @@ class BabsController extends AbstractController
             $resource['properties'] = $variables['huwelijk']['properties'];
 
             if ($request->request->has('email1')) {
-                $resource['partners'][0] = $request->request->get('email1');
+
+                $contact1['emails'][0]['id'] = $contact1['emails'][0]['@id'];
+                $contact1['emails'][0]['email'] = $request->request->get('email1');
+
+                $contact1 = $commonGroundService->saveResource($contact1, $contact1['@id']);
+            }
+
+            if ($request->request->has('email2')) {
+
+                $contact2['emails'][0]['id'] = $contact2['emails'][0]['@id'];
+                $contact2['emails'][0]['email'] = $request->request->get('email2');
+
+                $contact2 = $commonGroundService->saveResource($contact2, $contact2['@id']);
+            }
+
+            if ($request->request->has('telephone1')) {
+
+//                if (isset($contact1['telephones'][0]['@id'])) {
+//                    $contact1['telephones'][0]['id'] = $contact1['telephones'][0]['@id'];
+//                } else {
+//                    $contact1 = $commonGroundService->createResource($contact1, )
+//                }
+
+                $contact1['telephones'][0]['telephone'] = $request->request->get('telephone1');
+
+                $contact1 = $commonGroundService->saveResource($contact1, $contact1['@id']);
+            }
+
+            if ($request->request->has('telephone2')) {
+
+                $contact2['telephones'][0]['id'] = $contact2['telephones'][0]['@id'];
+                $contact2['telephones'][0]['telephone'] = $request->request->get('telephone2');
+
+                $contact2 = $commonGroundService->saveResource($contact2, $contact2['@id']);
             }
 
             if ($request->request->has('nederlands')) {
-                $resource['overig']['nederlands'] = $request->request->get('nederlands');
+                $resource['properties']['overig']['nederlands'] = $request->request->get('nederlands');
+            }
+
+
+            if ($request->request->has('naamgebruik')) {
+                $resource['properties']['overig']['naamgebruik'] = $request->request->get('naamgebruik');
             }
 
             if ($request->request->has('status')) {
@@ -182,8 +226,8 @@ class BabsController extends AbstractController
             $variables['huwelijk'] = $commonGroundService->saveResource($resource, 'https://vrc.huwelijksplanner.online/requests/');
         }
 
-//        var_dump($variables['huwelijk']['properties']);
-//die;
+//        var_dump($contact1);
+//        die;
         return ["variables" => $variables];
     }
 
