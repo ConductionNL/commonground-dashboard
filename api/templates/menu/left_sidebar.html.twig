@@ -148,6 +148,23 @@
                         </div>
                     </li>
 
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#employees" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'employees'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="employees">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_mrc_employees") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'employees'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                 {% endif %}
 
                 {% if 'group.beheerder' in app.user.roles %}
