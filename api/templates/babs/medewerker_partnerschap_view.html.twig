@@ -1105,20 +1105,19 @@
                     <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
                         <form method="post"
-                              action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
+                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
                             <p><b>Naamgebruik:</b></p>
 
                             <select name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
                                     class="form-control">
-                                <option value="ongewijzigd">Ongewijzigd</option>
-                                <option value="eigennaam, partnernaam">Eerst uw achternaam, gevolgd door uw partners
-                                    achternaam.
-                                </option>
-                                <option value="partnernaam, eigennaam">Eerst uw partners achternaam, gevolgd door uw
-                                    achternaam.
-                                </option>
-                                <option value="partnernaam">Alleen uw partners achternaam</option>
+                                <option value="ongewijzigd" selected>Ongewijzigd</option>
+                                <option
+                                    value="{{ contact1.familyName }} {{ contact2.familyName }}">{{ contact1.familyName }} {{ contact2.familyName }}</option>
+                                <option
+                                    value="{{ contact2.familyName }} {{ contact1.familyName }}">{{ contact2.familyName }} {{ contact1.familyName }}</option>
+                                <option
+                                    value="{{ contact2.familyName }}">{{ contact2.familyName }}</option>
                             </select>
 
                             {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
