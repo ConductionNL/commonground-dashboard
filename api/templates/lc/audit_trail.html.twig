@@ -1,5 +1,7 @@
 {% extends "body.html.twig" %}
 
+{% set view = 'app_lc_audittrail' %}
+
 {% block content %}
 
     <style>
@@ -11,14 +13,14 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Audit trail bewerken','functie': 'Dashboard -> LC -> Audit trails -> '~resource.name } %}
 
             <div class="page-inner">
                 <div class="row">
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
