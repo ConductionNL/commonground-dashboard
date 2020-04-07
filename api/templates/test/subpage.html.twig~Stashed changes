@@ -1,0 +1,18 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <a href="{{ path('app_test_index') }}">Index</a>
+
+        {% include 'footer.html.twig' %}
+
+        </div>
+
+    </div><!-- /.main-panel -->
+
+{% endblock %}
