@@ -34,7 +34,7 @@ class BcController extends AbstractController
     public function indexAction(TranslatorInterface $translator)
     {
         $variables = [];
-        $variables['title'] = $translator->trans('Berichten Component');
+        $variables['title'] = $translator->trans('Betaal Component');
         $variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
 
         return $variables;

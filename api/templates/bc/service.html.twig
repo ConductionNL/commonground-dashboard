@@ -1,8 +1,8 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_lc_audittrail' %}
-
 {% block content %}
+
+    {% set view = 'app_lc_accommodation' %}
 
     <style>
         th {
@@ -13,7 +13,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Audit trail bewerken','functie': 'Dashboard -> LC -> Audit trails -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Service bewerken','functie': 'Dashboard -> BS -> Services -> '~resource.name } %}
 
             <div class="page-inner">
                 <div class="row">
