@@ -33,7 +33,7 @@ class BsController extends AbstractController
 	public function indexAction(TranslatorInterface $translator)
 	{
 		$variables = [];
-		$variables['title'] = $translator->trans('Betaal Service');
+		$variables['title'] = $translator->trans('Berichten Service');
 		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
 
 		return $variables;
@@ -61,9 +61,38 @@ class BsController extends AbstractController
     {
 
         $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource('https://bs.huwelijksplanner.online/services/' . $id);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_bs_services'));
+        }
+
         $variables['title'] = $translator->trans('service');
         $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('services');
-        $variables['resource'] = $commonGroundService->getResource('https://bs.huwelijksplanner.online/services/' . $id);
+        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://bs.huwelijksplanner.online/services/');
+        }
 
         return $variables;
     }
@@ -90,9 +119,38 @@ class BsController extends AbstractController
     public function messageAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
         $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource('https://bs.huwelijksplanner.online/messages/' . $id);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_bs_messages'));
+        }
+
         $variables['title'] = $translator->trans('message');
         $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('messages');
-        $variables['resource'] = $commonGroundService->getResource('https://bs.huwelijksplanner.online/messages/' . $id);
+        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://bs.huwelijksplanner.online/messages/');
+        }
 
         return $variables;
     }

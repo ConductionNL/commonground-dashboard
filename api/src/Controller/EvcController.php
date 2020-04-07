@@ -74,9 +74,7 @@ class EvcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            var_dump($request->query->get('action'));
-            die;
-            return $this->redirect($this->generateUrl('app_pdc_groups'));
+            return $this->redirect($this->generateUrl('app_evc_clusters'));
         }
 
         $variables['title'] = $translator->trans('cluster');
@@ -133,8 +131,6 @@ class EvcController extends AbstractController
     	// If it is a delete action we can stop right here
     	if($request->query->get('action') == 'delete'){
     		$commonGroundService->deleteResource($variables['resource']);
-    		var_dump($request->query->get('action'));
-    		die;
     		return $this->redirect($this->generateUrl('app_evc_healthlogs'));
     	}
 
