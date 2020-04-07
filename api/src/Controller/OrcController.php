@@ -24,7 +24,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * @package App\Controller
  * @Route("/orc")
  */
-class orcController extends AbstractController
+class OrcController extends AbstractController
 {
 
 	/**

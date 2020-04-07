@@ -49,7 +49,7 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('persons');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('persons');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://cc.huwelijksplanner.online/persons')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList('https://cc.huwelijksplanner.online/people')["hydra:member"];
 
         return $variables;
     }
@@ -68,7 +68,7 @@ class CcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://cc.huwelijksplanner.online/persons/'.$id);
+            $variables['resource'] = $commonGroundService->getResource('https://cc.huwelijksplanner.online/people/'.$id);
         }
 
         // If it is a delete action we can stop right here
@@ -92,7 +92,7 @@ class CcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://cc.huwelijksplanner.online/persons/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://cc.huwelijksplanner.online/people/');
         }
 
         return $variables;

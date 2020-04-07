@@ -49,7 +49,7 @@ class IrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('assents');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('assents');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://irc.conduction.nl/assents')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList('https://irc.huwelijksplanner.online/assents')["hydra:member"];
 
         return $variables;
     }
@@ -68,7 +68,7 @@ class IrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://irc.conduction.nl/assents/'.$id);
+            $variables['resource'] = $commonGroundService->getResource('https://irc.huwelijksplanner.online/assents/'.$id);
         }
 
         // If it is a delete action we can stop right here
@@ -92,7 +92,7 @@ class IrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://irc.conduction.nl/assents/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://irc.huwelijksplanner.online/assents/');
         }
         return $variables;
     }
