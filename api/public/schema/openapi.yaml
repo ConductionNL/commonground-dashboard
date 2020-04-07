@@ -2418,12 +2418,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-07 07:48:08'
+        example: '2020-04-07 12:59:16'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
-        format: date-time
-        example: '2020-04-07 07:48:08'
+        format: date-time]
+        example: '2020-04-07 12:59:16'
     required: []
   ChangeLog-write:
     properties:
