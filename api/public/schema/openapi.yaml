@@ -2370,7 +2370,7 @@ definitions:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-07 12:59:16'
+        example: '2020-04-07 07:23:25'
     required: []
   AuditTrail-write:
     properties:
@@ -2422,8 +2422,8 @@ definitions:
       dateModified:
         description: 'The moment this request last Modified'
         type: string
-        format: date-time
-        example: '2020-04-07 12:59:16'
+        format: date-time]
+        example: '2020-04-07 12:59:16'\
     required: []
   ChangeLog-write:
     properties:
