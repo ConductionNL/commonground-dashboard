@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_lc_changelog' %}
+{% set view = 'app_bc_payment' %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Change log bewerken','functie': 'Dashboard -> LC -> Change logs -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Audit trail bewerken','functie': 'Dashboard -> BS -> payments -> '~resource.name } %}
 
             <div class="page-inner">
                 <div class="row">
@@ -32,63 +32,43 @@
                                 <div class="card-body">
                                     <div class="row">
 
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
-                                            </div>
-                                        </div> <!-- /.col -->
+                                       <!-- /.col -->
 
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-6 row offset-md-6">
+
+                                        <div class="col-md-12 row offset-md-12">
+
+
 
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
+                                                            for="largeInput">{{ 'status'|trans|capitalize }} {{ 'payment'|trans }}</label>
+                                                    <select class="form-control form-control-lg" id="statuspayment"
+                                                            name="statuspayment">
+                                                        <option value="">open</option>
+                                                        <option value="">pending</option>
+                                                        <option value="">authorized</option>
+                                                        <option value="">expired</option>
+                                                        <option value="">failed</option>
+                                                        <option value="">paid</option>
+
                                                         {% if groups is defined and groups is not empty %}
                                                             {% for group in groups %}
                                                                 <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                                        value="groups/{{ group.id }}">{{ group.name }}</option>
                                                             {% endfor %}
                                                         {% endif %}
                                                     </select>
                                                 </div>
-                                            </div> <!-- /.col -->
 
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
+
+                                            </div>
+
+
+                                            <!-- /.col -->
+
+                                            <!-- /.col -->
 
                                         </div><!-- /.col /.row -->
 

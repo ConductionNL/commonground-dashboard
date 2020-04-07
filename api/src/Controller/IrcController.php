@@ -20,11 +20,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class MrcController
+ * Class PdcController
  * @package App\Controller
- * @Route("/mrc")
+ * @Route("/irc")
  */
-class MrcController extends AbstractController
+class IrcController extends AbstractController
 {
 
 	/**
@@ -34,51 +34,51 @@ class MrcController extends AbstractController
 	public function indexAction(TranslatorInterface $translator)
 	{
 		$variables = [];
-		$variables['title'] = $translator->trans('location catalogue');
-		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
+		$variables['title'] = $translator->trans('Deployments and Enviroments');
+		$variables['subtitle'] = $translator->trans('this dashboards alows the administations of kubernetes clusters, enviroment and components');
 
 		return $variables;
 	}
 
     /**
-     * @Route("/employees")
+     * @Route("/assents")
      * @Template
      */
-	public function employeesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function assentsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
-    	$variables['title'] = $translator->trans('employees');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('employees');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://mrc.huwelijksplanner.online/employees')["hydra:member"];
+    	$variables['title'] = $translator->trans('assents');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('assents');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://irc.huwelijksplanner.online/assents')["hydra:member"];
 
         return $variables;
     }
 
     /**
-     * @Route("/employees/{id}")
+     * @Route("/assents/{id}")
      * @Template
      */
-    public function employeeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function assentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
-    	$variables = [];
+        $variables = [];
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://mrc.huwelijksplanner.online/employees/'.$id);
+            $variables['resource'] = $commonGroundService->getResource('https://irc.huwelijksplanner.online/assents/'.$id);
         }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_mrc_employees'));
+            return $this->redirect($this->generateUrl('app_irc_assents'));
         }
 
-        $variables['title'] = $translator->trans('employee');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('employee');
+        $variables['title'] = $translator->trans('assent');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('assent');
         $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
 
         // Lets see if there is a post to procces
@@ -92,9 +92,8 @@ class MrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://mrc.huwelijksplanner.online/employees/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://irc.huwelijksplanner.online/assents/');
         }
-
         return $variables;
     }
 }

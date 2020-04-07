@@ -1,7 +1,5 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_lc_audittrail' %}
-
 {% block content %}
 
     <style>
@@ -13,72 +11,40 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Audit trail bewerken','functie': 'Dashboard -> BS -> payments -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~resource.name } %}
 
             <div class="page-inner">
                 <div class="row">
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_ac_alarm', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger"
-                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <button class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
 
-                                       <!-- /.col -->
-
-
-
-                                        <div class="col-md-12 row offset-md-12">
-
-
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                            for="largeInput">{{ 'status'|trans|capitalize }} {{ 'payment'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="statuspayment"
-                                                            name="statuspayment">
-                                                        <option value="">open</option>
-                                                        <option value="">pending</option>
-                                                        <option value="">authorized</option>
-                                                        <option value="">expired</option>
-                                                        <option value="">failed</option>
-                                                        <option value="">paid</option>
-
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                        value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-
-
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="name" placeholder="Large Input"
+                                                       value="{{ resource.name }}">
                                             </div>
+                                        </div> <!-- /.col -->
 
-
-                                            <!-- /.col -->
-
-                                            <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
 
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <textarea class="form-control" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->

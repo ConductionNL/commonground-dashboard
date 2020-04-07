@@ -134,18 +134,6 @@
                                               class="sub-item">{{ 'places'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="{{ path("app_lc_changelogs") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'change logs'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_lc_audittrails") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'audit trails'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </li>
@@ -168,6 +156,218 @@
                     </li>
 
                     <li class="nav-item">
+                        <a data-toggle="collapse" href="#assents" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'assents'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="assents">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_irc_assents") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'assents'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#evc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'Deployments'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="evc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_evc_clusters") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'clusters'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_evc_components") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'components'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_evc_domains") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'domains'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_evc_environments") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'environments'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_evc_healthlogs") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'healt logs'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_evc_installations") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'installations'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#ac" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'calendar'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="ac">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_ac_calendars") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'calendars'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_events") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'events'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_alarms") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'alarms'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_freebusies") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'apointments'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_journals") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'journals'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_resources") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'resources'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_schedules") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'schedules'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_ac_todos") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'tasks'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="bc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_bc_invoices") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'invoices'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bc_payments") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'payments'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bc_taxes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bc_services") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'services'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#orc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'orders'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="orc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_orc_orders") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'orders'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_orc_taxes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <!-- deze worden niet meer gebruikt
+                                <li>
+                                    <a href="{{ path("app_orc_organizations") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#bs" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'messages'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="bs">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_bs_messages") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'messages'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bs_services") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'servicesf'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
                         <a data-toggle="collapse" href="#contacts" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'contacts'|trans|capitalize }}</p>
                             <span style="color: #575962" class="caret"></span>
@@ -178,6 +378,18 @@
                                     <a href="{{ path("app_cc_persons") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'persons'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_organizations") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_contactlists") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'contact lists'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
@@ -196,18 +408,6 @@
                                     <a href="{{ path("app_cc_telephones") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'telephones'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_cc_organizations") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_cc_contactlists") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'contact lists'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                             </ul>
