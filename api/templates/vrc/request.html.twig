@@ -1,0 +1,101 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+			
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                        	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.reference }} </h2>
+                                    <div class="float-right">
+                                        <a href="{{ path('app_vrc_request', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger">{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        {% if resource.organization is defined and resource.requestType is defined %}
+                                    <a class="btn btn-info" style="margin-right: 25px" href="#addCase"
+                                       data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+                                    </div>
+                                </div>
+								<div class="card-body">
+									<div class="row">
+        								<div class="col-md-9 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}" disabled="">
+        									</div>
+    									</div> <!-- /.col -->  
+    									<div class="col-md-3 col-sm-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										 {% for organization in organizations %}
+                                               		<option value="{{ organization['@id'] }}" {% if c is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
+                                                {% endfor %}
+                                                </select>
+        									</div><!-- /.form-group -->  
+        								</div> <!-- /.col -->  
+    								</div><!-- /.row --> 
+ 
+								</div> <!-- /.card-body -->        
+
+								<div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+								</div><!-- /.card-action -->   
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+            {% include 'footer.html.twig' %}
+        </div>
+    </div>
+    
+    {% if resource.organization is defined and resource.requestType is defined %}
+    <div class="modal fade" style="text-align: center" id="addCase" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'add case'|trans|capitalize }}</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
+        				<div class="form-group">
+        					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
+        					<select id="zaaktype" name="zaaktype" class="form-control form-control-lg">
+        					{% for casetype in casetypes %}
+                        		<option value="{{ casetype['@id'] }}">{{ casetype.omschrijving }}</option>                                               		
+                         	{% endfor %}
+                   			</select>
+        				</div><!-- /.form-group --> 
+        				<input type="hidden" id="bronorganisatie" name ="bronorganisatie" value="{{ commonground_resource(resource.organization).rsin }}">
+        				<input type="hidden" id="verantwoordelijkeOrganisatie" name ="verantwoordelijkeOrganisatie" value="{{ commonground_resource(resource.organization).rsin  }}">
+        				<input type="hidden" id="omschrijving" name ="omschrijving" value="{{ commonground_resource(resource.requestType).name }}"> 
+        				<input type="hidden" id="description" name ="description" value="{{ commonground_resource(resource.requestType).description }}">
+        				<input type="hidden" id="zaakobject[object]" name ="zaakobject[object]" value="{{ resource.requestType }}">
+        				<input type="hidden" id="zaakobject[objectType]" name ="zaakobject[objectType]" value="overige">
+        				<input type="hidden" id="zaakobject[objectTypeOverige]" name ="zaakobject[objectTypeOverige]" value="{{ commonground_resource(resource.requestType).name }}">
+        				<input type="hidden" id="zaakobject[relatieomschrijving]" name ="zaakobject[relatieomschrijving]" value="{{ 'The source request'|trans|capitalize }}">
+      
+                        <button type="submit" class="btn btn-success m-3  mx-auto"> 
+                            {{ 'add'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

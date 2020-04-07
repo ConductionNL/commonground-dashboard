@@ -18,26 +18,39 @@
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2 class="d-inline-block">{{ confirmedChecks }}/{{ totalChecks }}
-                                    {% if confirmedChecks == totalChecks %}
+                                <h2 class="d-inline-block">{{ variables.confirmedChecks }}/{{ variables.totalChecks }}
+                                    {% if variables.confirmedChecks == variables.totalChecks %}
                                         <i style="color: limegreen;" class="fas fa-check"></i>
                                     {% else %}
                                         <i style="color:red">X</i>
                                     {% endif %}
                                     Huwelijksgegevens </h2>
                                 <div class="float-right">
-                                    <a class="btn btn-danger" style="margin-right: 25px" href="#deleteHuwelijkModal"
-                                       data-toggle="modal" data-target="#deleteHuwelijkModal">Annuleren</a>
-                                    <a class="btn btn-danger" style="margin-right: 25px" href="#deleteHuwelijkModal2"
-                                       data-toggle="modal" data-target="#deleteHuwelijkModal2">Afkeuren</a>
-                                    <button class="btn btn-success">Goedkeuren</button>
+                                    <div class="row">
+                                        <a class="btn btn-danger" style="margin-right: 25px" href="#deleteHuwelijkModal"
+                                           data-toggle="modal" data-target="#deleteHuwelijkModal">Annuleren</a>
+
+                                        <a class="btn btn-danger" style="margin-right: 25px"
+                                           href="#deleteHuwelijkModal2"
+                                           data-toggle="modal" data-target="#deleteHuwelijkModal2">Afkeuren</a>
+
+                                        {% if variables.confirmedChecks == variables.totalChecks %}
+
+                                            <form method="post"
+                                                  action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                                                <input type="hidden" name="status" value="processed">
+                                                <button type="submit" class="btn btn-success">Goedkeuren</button>
+                                            </form>
+
+                                        {% endif %}
+                                    </div>
                                 </div>
 
                             </div>
                             <table class="table table-hover">
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.type is not defined or huwelijk.properties.type is empty %}
+                                        {% if variables.huwelijk.properties.type is not defined or variables.huwelijk.properties.type is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -45,9 +58,9 @@
                                     </td>
                                     <th>Ceremonie</th>
                                     <td>
-                                        {% if huwelijk.properties.type is not defined or huwelijk.properties.type is empty %}
+                                        {% if variables.huwelijk.properties.type is not defined or variables.huwelijk.properties.type is empty %}
                                         {% else %}
-                                            {{ huwelijk.properties.type|capitalize }}
+                                            {{ variables.huwelijk.properties.type|capitalize }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -60,7 +73,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.plechtigheid is not defined or huwelijk.properties.plechtigheid is empty %}
+                                        {% if variables.huwelijk.properties.plechtigheid is not defined or variables.huwelijk.properties.plechtigheid is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -68,9 +81,9 @@
                                     </td>
                                     <th>Plechtigheid</th>
                                     <td>
-                                        {% if huwelijk.properties.plechtigheid is not defined or huwelijk.properties.plechtigheid is empty %}
+                                        {% if variables.huwelijk.properties.plechtigheid is not defined or variables.huwelijk.properties.plechtigheid is empty %}
                                         {% else %}
-                                            {{ commonground_resource(huwelijk.properties.plechtigheid).name }}
+                                            {{ commonground_resource(variables.huwelijk.properties.plechtigheid).name }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -83,7 +96,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.locatie is not defined or huwelijk.properties.locatie is empty %}
+                                        {% if variables.huwelijk.properties.locatie is not defined or variables.huwelijk.properties.locatie is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -91,9 +104,9 @@
                                     </td>
                                     <th>Locatie</th>
                                     <td>
-                                        {% if huwelijk.properties.locatie is not defined or huwelijk.properties.locatie is empty %}
+                                        {% if variables.huwelijk.properties.locatie is not defined or variables.huwelijk.properties.locatie is empty %}
                                         {% else %}
-                                            {{ commonground_resource(huwelijk.properties.locatie).name }}
+                                            {{ commonground_resource(variables.huwelijk.properties.locatie).name }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -106,7 +119,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.datum is not defined or huwelijk.properties.datum is empty %}
+                                        {% if variables.huwelijk.properties.datum is not defined or variables.huwelijk.properties.datum is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -114,9 +127,9 @@
                                     </td>
                                     <th>Datum</th>
                                     <td>
-                                        {% if huwelijk.properties.datum is not defined or huwelijk.properties.datum is empty %}
+                                        {% if variables.huwelijk.properties.datum is not defined or variables.huwelijk.properties.datum is empty %}
                                         {% else %}
-                                            {{ huwelijk.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
+                                            {{ variables.huwelijk.properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -129,7 +142,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.ambtenaar is not defined or huwelijk.properties.ambtenaar is empty %}
+                                        {% if variables.huwelijk.properties.ambtenaar is not defined or variables.huwelijk.properties.ambtenaar is empty %}
                                             <i style="color:red">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -137,9 +150,9 @@
                                     </td>
                                     <th>Ambtenaar</th>
                                     <td>
-                                        {% if huwelijk.properties.ambtenaar is not defined or huwelijk.properties.ambtenaar is empty %}
+                                        {% if variables.huwelijk.properties.ambtenaar is not defined or variables.huwelijk.properties.ambtenaar is empty %}
                                         {% else %}
-                                            {{ commonground_resource(huwelijk.properties.ambtenaar).name }}
+                                            {{ commonground_resource(variables.huwelijk.properties.ambtenaar).name }}
                                         {% endif %}
                                     </td>
                                     <td>
@@ -152,7 +165,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.getuigen is not defined or huwelijk.properties.getuigen is empty or huwelijk.properties.getuigen|length <= 2 %}
+                                        {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen is empty or variables.huwelijk.properties.getuigen|length <= 2 %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
@@ -160,9 +173,9 @@
                                     </td>
                                     <th>Getuigen</th>
                                     <td>
-                                        {% if huwelijk.properties.getuigen is not defined or huwelijk.properties.getuigen is empty %}
+                                        {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen is empty %}
                                         {% else %}
-                                            {% for getuige in huwelijk.properties.getuigen %}
+                                            {% for getuige in variables.huwelijk.properties.getuigen %}
                                                 {% set assent = commonground_resource(getuige) %}
                                                 {% set contact = commonground_resource(assent.contact) %}
                                                 {% if assent.status == "granted" %}
@@ -181,9 +194,13 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        <i style="color: limegreen;" class="fas fa-check"></i></td>
+                                        <i style="color: red;">X</i></td>
                                     <th>Tolk</th>
-                                    <td style="color: lightgray">Niet van toepassing</td>
+                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "nee" %}
+                                        <td style="color: lightgray">Tolk nodig</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen tolk</td>
+                                    {% endif %}
                                     <td>
                                         <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
                                                 class="btn btn-primary"
@@ -194,16 +211,16 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.properties.extras is not defined or huwelijk.properties.extras is empty %}
+                                        {% if variables.huwelijk.properties.extras is not defined or variables.huwelijk.properties.extras is empty %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
                                         {% endif %}</td>
                                     <th>Extra's</th>
                                     <td>
-                                        {% if huwelijk.properties.extras is not defined or huwelijk.properties.extras is empty %}
+                                        {% if variables.huwelijk.properties.extras is not defined or variables.huwelijk.properties.extras is empty %}
                                         {% else %}
-                                            {% for extra in huwelijk.properties.extras %}
+                                            {% for extra in variables.huwelijk.properties.extras %}
                                                 {{ commonground_resource(extra).name }}<br>
                                             {% endfor %}
                                         {% endif %}
@@ -226,14 +243,14 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        {% if huwelijk.status == "incomplete" %}
+                                        {% if variables.huwelijk.status != "completed" and variables.huwelijk.status != "processed" %}
                                             <i style="color: red;">X</i>
                                         {% else %}
                                             <i style="color: limegreen;" class="fas fa-check"></i>
                                         {% endif %}
                                     </td>
                                     <th>Status</th>
-                                    <td>{{ huwelijk.status|capitalize }}</td>
+                                    <td>{{ variables.huwelijk.status|capitalize }}</td>
                                     <td></td>
                                 </tr>
                             </table>
@@ -243,8 +260,11 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th>Aangemaakt op</th>
-                                    <td>{{ huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
-                                    <td></td>
+                                    {% if variables.huwelijk.dateCreated is defined and variables.huwelijk.dateCreated is not empty %}
+                                        <td>{{ variables.huwelijk.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray">Geen datum</td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
                             </table>
@@ -261,8 +281,8 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th>Naam</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
-                                        {% set assent1 = commonground_resource(huwelijk.properties.partners.0) %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
+                                        {% set assent1 = commonground_resource(variables.huwelijk.properties.partners.0) %}
                                         {% set contact1 = commonground_resource(assent1.contact) %}
                                         <th>
                                             <p class="mb-0 pt-1 d-inline-block">{{ contact1.name }}</p>
@@ -275,8 +295,8 @@
                                     {% else %}
                                         <th></th>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
-                                        {% set assent2 = commonground_resource(huwelijk.properties.partners.1) %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
+                                        {% set assent2 = commonground_resource(variables.huwelijk.properties.partners.1) %}
                                         {% set contact2 = commonground_resource(assent2.contact) %}
                                         <th><p class="mb-0 pt-1 d-inline-block">{{ contact2.name }}</p>
                                             <button style="padding: 4px; float: right" type="button"
@@ -291,10 +311,10 @@
                                 </tr>
                                 <tr>
                                     <th>E-mail</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
-                                            {% if contact1.emails[0] is defined and contact1.emails[0] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[0] }}</p>
+                                            {% if contact1.emails is defined and contact1.emails is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[0].email }}</p>
                                             {% else %}
                                                 <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
                                                     emailadres</p>
@@ -308,10 +328,10 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
-                                            {% if contact1.emails[1] is defined and contact1.emails[1] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.emails[1] }}</p>
+                                            {% if contact2.emails is defined and contact2.emails is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ contact2.emails[0].email }}</p>
                                             {% else %}
                                                 <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
                                                     emailadres</p>
@@ -328,10 +348,10 @@
                                 </tr>
                                 <tr>
                                     <th>Telefoonnummer</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
-                                            {% if contact1.phone[0] is defined and contact1.phones[0] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.phones[0] }}</p>
+                                            {% if contact1.telephones is defined and contact1.telephones is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.telephones[0].telephone }}</p>
                                             {% else %}
                                                 <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
                                                     telefoonnummer</p>
@@ -345,10 +365,10 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
-                                            {% if contact1.phone[1] is defined and contact1.phones[1] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ contact1.phones[1] }}</p>
+                                            {% if contact2.telephones is defined and contact2.telephones is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ contact2.telephones[0].telephone }}</p>
                                             {% else %}
                                                 <p style="color: lightgray" class="mb-0 pt-1 d-inline-block">Geen
                                                     telefoonnummer</p>
@@ -365,11 +385,10 @@
                                 </tr>
                                 <tr>
                                     <th>Naamgebruik</th>
-                                    {% if huwelijk.properties.partners[0] is defined and huwelijk.properties.partners[0] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
-                                            {% if huwelijk.properties.overig.naamgebruik[0] is defined and huwelijk.properties.overig.naamgebruik[0] is not empty %}
-                                                {% set assent1 = commonground_resource(huwelijk.properties.overig.naamgebruik.0) %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ assent1.name }}</p>
+                                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']]|capitalize }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner1NaamModal"><i style=""
@@ -388,11 +407,10 @@
                                     {% else %}
                                         <td></td>
                                     {% endif %}
-                                    {% if huwelijk.properties.partners[1] is defined and huwelijk.properties.partners[1] is not empty %}
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
-                                            {% if huwelijk.properties.overig.naamgebruik[1] is defined and huwelijk.properties.overig.naamgebruik[1] is not empty %}
-                                                {% set assent2 = commonground_resource(huwelijk.properties.overig.naamgebruik.1) %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ assent2.name }}</p>
+                                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']]|capitalize }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner2NaamModal"><i style=""
@@ -414,8 +432,8 @@
                                 </tr>
                                 <tr>
                                     <th>Nederlandstalig</th>
-                                    {% if huwelijk.properties.overig.nederlands is defined and huwelijk.properties.overig.nederlands is not empty %}
-                                        <td colspan="2">{{ huwelijk.properties.overig.nederlands|capitalize }}</td>
+                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty %}
+                                        <td colspan="2">{{ variables.huwelijk.properties.overig.nederlands|capitalize }}</td>
                                     {% else %}
                                         <td style="color: lightgray" colspan="2">Onbekend</td>
                                     {% endif %}
@@ -442,8 +460,8 @@
                                 </tr>
                                 <tr>
                                     <th>Opmerkingen</th>
-                                    {% if huwelijk.properties.overig.opmerkingen is defined and huwelijk.properties.overig.opmerkingen is not empty %}
-                                        <td colspan="2">{{ huwelijk.properties.overig.opmerkingen }}</td>
+                                    {% if variables.huwelijk.properties.overig.opmerkingen is defined and variables.huwelijk.properties.overig.opmerkingen is not empty %}
+                                        <td colspan="2">{{ variables.huwelijk.properties.overig.opmerkingen }}</td>
                                     {% else %}
                                         <td style="color: lightgray" colspan="2">Niet van toepassing</td>
                                     {% endif %}
@@ -496,16 +514,26 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Ceremonies:</b></p>
-                    <form>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
-{#                            <select style="width: 250px;" class="form-control d-inline-block">#}
-                                {% for ceremonie in ceremonies %}
-                                    {{ ceremonie.name }}
-                                {% endfor %}
-{#                            </select>#}
+                            <select style="width: 250px;" class="form-control d-inline-block" name="type">
+                                <option value="Huwelijk"
+                                        {% if variables.huwelijk.properties.type is defined and variables.huwelijk.properties.type == "Huwelijk" %}selected{% endif %}>
+                                    Huwelijk
+                                </option>
+                                <option value="Partnerschap"
+                                        {% if variables.huwelijk.properties.type is defined and variables.huwelijk.properties.type == "Partnerschap" %}selected{% endif %}>
+                                    Partnerschap
+                                </option>
+                                <option value="Omzetten"
+                                        {% if variables.huwelijk.properties.type is defined and variables.huwelijk.properties.type == "Omzetten" %}selected{% endif %}>
+                                    Omzetten
+                                </option>
+                            </select>
                         </div>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -529,16 +557,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Plechtigheden:</b></p>
-                    <form>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
-                            <select style="width: 250px;" class="form-control d-inline-block">
-                                <option>Eenvoudig trouwen</option>
-                                <option>Gratis trouwen</option>
-                                <option>Trouwen / Partnerschap</option>
+                            <select style="width: 250px;" class="form-control d-inline-block" name="plechtigheid">
+                                {% for plechtigheid in variables.plechtigheden %}
+                                    {% set offer = plechtigheid.offers[0] %}
+                                    <option value="{{ offer['@id'] }}"
+                                            {% if variables.huwelijk.properties.plechtigheid is defined and variables.huwelijk.properties.plechtigheid is not empty and commonground_resource(variables.huwelijk.properties.plechtigheid).id == offer.id %}selected{% endif %}>{{ plechtigheid.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -562,16 +593,18 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body">
                     <p><b>Locaties Utrecht <i class="fas fa-building"></i></b></p>
-                    <form>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
                         <div class="d-block">
-                            <select style="width: 250px;" class="form-control d-inline-block">
-                                <option>Utrecht, stadhuis grote zaal</option>
-                                <option>Utrecht, stadhuis kleine zaal</option>
-                                <option>Utrecht, stadskantoor</option>
+                            <select style="width: 250px;" class="form-control d-inline-block" name="locatie">
+                                {% for locatie in variables.locaties %}
+                                    <option value="{{ locatie['@id'] }}"
+                                            {% if variables.huwelijk.properties.locatie is defined and commonground_resource(variables.huwelijk.properties.locatie).id == locatie.id %}selected{% endif %}>{{ locatie.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -634,55 +667,67 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
-                            te selecteren.</p>
-                        <select multiple="" class="form-control">
-                            <option style="">John Doe</option>
-                            <option>Jane Doe</option>
-                        </select>
+                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen is not empty %}
 
-                        <button type="button" class="btn btn-danger m-3  mx-auto">
-                            Verwijderen
-                        </button>
+                        <form>
+                            <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
+                            <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen
+                                tegelijk
+                                te selecteren.</p>
+                            <select class="form-control" name="getuigen">
+                                {% for getuige in variables.huwelijk.properties.getuigen %}
+                                    {% set assent = commonground_resource(getuige) %}
+                                    {% set contact = commonground_resource(assent.contact) %}
+                                    <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
+                                {% endfor %}
+                            </select>
 
-                    </form>
+                            <button type="button" class="btn btn-danger m-3  mx-auto">
+                                Verwijderen
+                            </button>
 
+                        </form>
 
-                    <form>
-                        <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
-                                                                               class="fas fa-user-edit"></i></b></p>
-                        <label>Voor partner:</label>
-                        <select class="form-control">
-                            <option>Martin Timmers</option>
-                            <option>Anita Henrika de Kieft</option>
-                        </select>
+                    {% endif %}
 
-                        <br>
-                        <label>Voornaam(en):</label>
-                        <input class="form-control" type="text" placeholder="John">
+                    {% if variables.huwelijk.properties.getuigen is not defined or variables.huwelijk.properties.getuigen|length < 4 %}
 
-                        <br>
-                        <label>Achternaam:</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                        <form>
+                            <p style="margin-top: 40px;"><b>Getuigen uitnodigen <i style="color: limegreen"
+                                                                                   class="fas fa-user-edit"></i></b></p>
+                            <label>Voor partner:</label>
+                            <select class="form-control" name="partner">
+                                {% for partner in variables.huwelijk.properties.partners %}
+                                    <option value="{{ partner }}">{{ contact1.name }}</option>
+                                {% endfor %}
+                            </select>
 
-                        <br>
-                        <label>E-mail:</label>
-                        <input class="form-control" type="email" placeholder="john@doe.com">
+                            <br>
+                            <label>Voornaam(en):</label>
+                            <input class="form-control" type="text" placeholder="John">
 
-                        <br>
-                        <label>Telefoonnummer:</label>
-                        <input class="form-control" type="text" placeholder="06 12345678">
+                            <br>
+                            <label>Achternaam:</label>
+                            <input class="form-control" type="text" placeholder="Doe">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen met instemming
-                        </button>
+                            <br>
+                            <label>E-mail:</label>
+                            <input class="form-control" type="email" placeholder="john@doe.com">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen zonder instemming
-                        </button>
-                    </form>
+                            <br>
+                            <label>Telefoonnummer:</label>
+                            <input class="form-control" type="text" placeholder="06 12345678">
+
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen met instemming
+                            </button>
+
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen zonder instemming
+                            </button>
+                        </form>
+
+                    {% endif %}
 
                     <form>
                         <p style="margin-top:40px;"><b>Uitgenodige getuigen accepteren <i style="color:limegreen"
@@ -690,7 +735,7 @@
                         </p>
                         <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
                             te selecteren.</p>
-                        <select multiple="" class="form-control">
+                        <select class="form-control">
                             <option>Mickey Mouse</option>
                             <option>Minnie Mouse</option>
                         </select>
@@ -705,89 +750,7 @@
         </div>
     </div>
 
-    <div class="modal fade" style="text-align: center" id="tijdstipModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tijdstip wijzigen</b>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="padding-bottom: 0 !important;" class="modal-body">
-                    <p><b>Vanaf</b></p>
-                    <form>
-                        <select style="width: 75px;" class="form-control d-inline-block">
-                            <option>08</option>
-                            <option>09</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option>
-                            <option>16</option>
-                        </select>
-                        -
-                        <select style="width: 75px;" class="form-control d-inline-block">
-                            <option>00</option>
-                            <option>05</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
-                            <option>25</option>
-                            <option>30</option>
-                            <option>35</option>
-                            <option>40</option>
-                            <option>45</option>
-                            <option>50</option>
-                            <option>55</option>
-                        </select>
-                        <br><br>
-                        <div class="d-block">
-                            <p><b>Tot</b></p>
-                            <select style="width: 75px;" class="form-control d-inline-block">
-                                <option>08</option>
-                                <option>09</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                                <option>13</option>
-                                <option>14</option>
-                                <option>15</option>
-                                <option>16</option>
-                            </select>
-                            -
-                            <select style="width: 75px;" class="form-control d-inline-block">
-                                <option>00</option>
-                                <option>05</option>
-                                <option>10</option>
-                                <option>15</option>
-                                <option>20</option>
-                                <option>25</option>
-                                <option>30</option>
-                                <option>35</option>
-                                <option>40</option>
-                                <option>45</option>
-                                <option>50</option>
-                                <option>55</option>
-                            </select>
-                        </div>
-
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Opslaan
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" style="text-align: center" id="babsModal" tabindex="-1"
+    <div class="modal fade" style="text-align: center" id="ambtenaarModal" tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog model-dialog-centered" role="document">
@@ -802,14 +765,16 @@
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
                     <p><b>Babsen van Utrecht:</b></p>
-                    <form>
-                        <select class="form-control">
-                            <option>Dhr. Erik Hendrik</option>
-                            <option>Mvr. Ike van den Pol</option>
-                            <option>Dhr. Rene Gulje</option>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <select class="form-control" name="ambtenaar">
+                            {% for babs in variables.ambtenaren %}
+                                <option value="{{ babs['@id'] }}"
+                                        {% if variables.huwelijk.properties.ambtenaar is defined and commonground_resource(variables.huwelijk.properties.ambtenaar).id == babs.id %}selected{% endif %}>{{ babs.name }}</option>
+                            {% endfor %}
                         </select>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -840,26 +805,29 @@
         <div class="modal-dialog model-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tolk uitnodigen</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Tolk nodig?</b></h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
-                    <form>
-                        <p><b>Nodig een tolk uit:</b></p>
-                        <label>BSN</label>
-                        <input type="text" class="form-control" placeholder="169960274">
-                        <br>
-                        <label>E-mail</label>
-                        <input type="text" class="form-control" placeholder="john@doe.com">
-                        <br>
-                        <label>Telefoonnummer</label>
-                        <input type="text" class="form-control" placeholder="06 1234678">
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <p><b>Spreekt dit koppel Nederlands?</b></p>
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen
+                        <select class="form-control" name="nederlands">
+                            <option value="ja"
+                                    {% if variables.huwelijk.properties.nederlands is defined and variables.huwelijk.properties.nederlands == "ja" %}selected{% endif %}>
+                                Ja
+                            </option>
+                            <option value="nee"
+                                    {% if variables.huwelijk.properties.nederlands is defined and variables.huwelijk.properties.nederlands == "nee" %}selected{% endif %}>
+                                Nee
+                            </option>
+                        </select>
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            Opslaan
                         </button>
                     </form>
 
@@ -868,7 +836,7 @@
         </div>
     </div>
 
-    <div class="modal fade" style="text-align: center" id="extraModal" tabindex="-1"
+    <div class="modal fade" style="text-align: center" id="extrasModal" tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog model-dialog-centered" role="document">
@@ -882,26 +850,17 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Extra's verwijderen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                        <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen tegelijk
-                            te selecteren.</p>
-                        <select multiple="" class="form-control">
-                            <option>Trouwboek</option>
+                    <p><b>Extra's:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                        <select class="form-control" name="extras[]">
+                            {% for extra in variables.extras %}
+                                {% set offer = extra.offers[0] %}
+                                <option value="{{ offer['@id'] }}">{{ extra.name }}</option>
+                            {% endfor %}
                         </select>
 
-                        <button type="button" class="btn btn-danger  m-3  mx-auto">
-                            Verwijderen
-                        </button>
-                    </form>
-                    <form>
-                        <p style="margin-top: 80px;"><b>Extra's toevoegen <i style="color: limegreen"
-                                                                             class="fas fa-plus"></i></b></p>
-                        <select multiple="" class="form-control">
-                            <option>Ringen</option>
-                        </select>
-
-                        <button type="button" class="btn btn-success m-3  mx-auto">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
                             Opslaan
                         </button>
                     </form>
@@ -950,14 +909,20 @@
                     </button>
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <p><b>Reden voor annulering:</b></p>
+                        <p><b>Reden voor annulering:</b></p>
 
-                    <textarea class="form-control" rows="4"></textarea>
+                        <textarea class="form-control" rows="4"></textarea>
 
-                    <button type="button" class="btn btn-danger m-3 mx-auto">
-                        Annuleren
-                    </button>
+                        <input type="hidden" name="status" value="canceled">
+
+                        <button type="submit" class="btn btn-danger m-3 mx-auto">
+                            Annuleren
+                        </button>
+
+                    </form>
 
                 </div>
             </div>
@@ -978,13 +943,20 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Reden voor afkeuring:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <textarea class="form-control" rows="4"></textarea>
+                        <p><b>Reden voor afkeuring:</b></p>
 
-                    <button type="button" class="btn btn-danger m-3 mx-auto">
-                        Afkeuren
-                    </button>
+                        <textarea class="form-control" rows="4"></textarea>
+
+                        <input type="hidden" name="status" value="canceled">
+
+                        <button type="submit" class="btn btn-danger m-3 mx-auto">
+                            Afkeuren
+                        </button>
+
+                    </form>
 
                 </div>
             </div>
@@ -1005,14 +977,19 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Telefoonnummer:</b></p>
+                    <form action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}"
+                          method="post">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="06 12345678">
+                        <p><b>Telefoonnummer:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input name="telephone1" style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact1.telephones is defined and contact1.telephones is not empty %}placeholder="{{ contact1.telephones[0].telephone }}"{% endif %}>
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -1034,12 +1011,19 @@
 
                     <p><b>Telefoonnummer:</b></p>
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="06 12345678">
+                    <form action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}"
+                          method="post">
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <p><b>Telefoonnummer:</b></p>
+
+                        <input name="telephone2" style="width: 250px; margin: auto" type="text" class="form-control"
+                               {% if contact2.telephones is defined and contact2.telephones is not empty %}placeholder="{{ contact2.telephones[0].telephone }}"{% endif %}>
+
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -1059,15 +1043,20 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Email:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="martin@timmers.com">
+                        <p><b>Email:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input style="width: 250px; margin: auto" type="email" class="form-control"
+                               {% if contact1.emails is defined and contact1.emails is not empty %}value="{{ contact1.emails[0].email }}"{% endif %}
+                               name="email1">
 
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -1087,75 +1076,127 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Email:</b></p>
+                    <form method="post"
+                          action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="anita@henrika.com">
+                        <p><b>Email:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                        <input style="width: 250px; margin: auto" type="email" class="form-control"
+                               {% if contact2.emails is defined and contact2.emails is not empty %}value="{{ contact2.emails[0].email }}"{% endif %}
+                               name="email2">
 
-                </div>
-            </div>
-        </div>
-    </div>
+                        <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                            Opslaan
+                        </button>
 
-    <div class="modal fade" style="text-align: center" id="partner1NaamModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Partner1 naamgebruik wijzigen</b></h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
-
-                    <p><b>Naamgebruik:</b></p>
-
-                    <input style="width: 250px; margin: auto" type="text" class="form-control" placeholder="Timmers">
-
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                    </form>
 
                 </div>
             </div>
         </div>
     </div>
 
+    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
 
-    <div class="modal fade" style="text-align: center" id="partner2NaamModal" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Partner2 naamgebruik wijzigen</b></h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+        <div class="modal fade" style="text-align: center" id="partner1NaamModal" tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b>Partner1 naamgebruik wijzigen</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <p><b>Naamgebruik:</b></p>
+                        <form method="post"
+                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
 
-                    <input style="width: 250px; margin: auto" type="text" class="form-control"
-                           placeholder="Henrika Timmers">
+                            <p><b>Naamgebruik:</b></p>
 
-                    <button type="button" class="btn btn-success m-3 mx-auto d-block">
-                        Opslaan
-                    </button>
+                            <select name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
+                                    class="form-control">
+                                <option value="ongewijzigd" selected>Ongewijzigd</option>
+                                <option
+                                    value="{{ contact1.familyName }} {{ contact2.familyName }}">{{ contact1.familyName }} {{ contact2.familyName }}</option>
+                                <option
+                                    value="{{ contact2.familyName }} {{ contact1.familyName }}">{{ contact2.familyName }} {{ contact1.familyName }}</option>
+                                <option
+                                    value="{{ contact2.familyName }}">{{ contact2.familyName }}</option>
+                            </select>
 
+                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
+
+                                <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
+                                       value="{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] }}">
+
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                                Opslaan
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    {% endif %}
+
+    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
+
+        <div class="modal fade" style="text-align: center" id="partner2NaamModal" tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b>Partner2 naamgebruik wijzigen</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+
+                        <form method="post"
+                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+
+                            <p><b>Naamgebruik:</b></p>
+
+                            <select name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
+                                    class="form-control">
+                                <option value="ongewijzigd" selected>Ongewijzigd</option>
+                                <option
+                                    value="{{ contact2.familyName }} {{ contact1.familyName }}">{{ contact2.familyName }} {{ contact1.familyName }}</option>
+                                <option
+                                    value="{{ contact1.familyName }} {{ contact2.familyName }}">{{ contact1.familyName }} {{ contact2.familyName }}</option>
+                                <option
+                                    value="{{ contact1.familyName }}">{{ contact1.familyName }}</option>
+                            </select>
+
+                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
+
+                                <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
+                                       value="{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] }}">
+
+                            {% endif %}
+                            <button type="submit" class="btn btn-success m-3 mx-auto d-block">
+                                Opslaan
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
 
     <div class="modal fade" style="text-align: center" id="partner1Modal" tabindex="-1"
          role="dialog"
@@ -1171,42 +1212,48 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Partner verwijderen <i style="color: red"
-                                                     class="fas fa-trash"></i></b></p>
-                        <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
-                    </form>
+                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
 
-                    <form>
-                        <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
-                                                                              class="fas fa-user-edit"></i></b></p>
-                        <label>BSN:</label>
-                        <input class="form-control" type="text" placeholder="">
+                        <form>
+                            <p><b>Partner verwijderen <i style="color: red"
+                                                         class="fas fa-trash"></i></b></p>
+                            <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
+                        </form>
 
-                        <br>
-                        <label>Voornaam(en):*</label>
-                        <input class="form-control" type="text" placeholder="John">
+                    {% else %}
 
-                        <br>
-                        <label>Achternaam:*</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                        <form>
+                            <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
+                                                                                  class="fas fa-user-edit"></i></b></p>
+                            <label>BSN:</label>
+                            <input class="form-control" type="text" placeholder="">
 
-                        <br>
-                        <label>E-mail:*</label>
-                        <input class="form-control" type="email" placeholder="john@doe.com">
+                            <br>
+                            <label>Voornaam(en):*</label>
+                            <input class="form-control" type="text" placeholder="John">
 
-                        <br>
-                        <label>Telefoonnummer:</label>
-                        <input class="form-control" type="text" placeholder="06 12345678">
+                            <br>
+                            <label>Achternaam:*</label>
+                            <input class="form-control" type="text" placeholder="Doe">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen met instemming
-                        </button>
+                            <br>
+                            <label>E-mail:*</label>
+                            <input class="form-control" type="email" placeholder="john@doe.com">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen zonder instemming
-                        </button>
-                    </form>
+                            <br>
+                            <label>Telefoonnummer:</label>
+                            <input class="form-control" type="text" placeholder="06 12345678">
+
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen met instemming
+                            </button>
+
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen zonder instemming
+                            </button>
+                        </form>
+
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -1226,42 +1273,49 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    <form>
-                        <p><b>Partner verwijderen <i style="color: red"
-                                                     class="fas fa-trash"></i></b></p>
-                        <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
-                    </form>
+                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
 
-                    <form>
-                        <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
-                                                                              class="fas fa-user-edit"></i></b></p>
-                        <label>BSN:</label>
-                        <input class="form-control" type="text" placeholder="">
+                        <form>
+                            <p><b>Partner verwijderen <i style="color: red"
+                                                         class="fas fa-trash"></i></b></p>
+                            <button class="btn btn-danger m-3 mx-auto">Verwijderen</button>
+                        </form>
 
-                        <br>
-                        <label>Voornaam(en):*</label>
-                        <input class="form-control" type="text" placeholder="John">
+                    {% else %}
 
-                        <br>
-                        <label>Achternaam:*</label>
-                        <input class="form-control" type="text" placeholder="Doe">
+                        <form>
+                            <p style="margin-top: 40px;"><b>Partner uitnodigen <i style="color: limegreen"
+                                                                                  class="fas fa-user-edit"></i></b></p>
+                            <label>BSN:</label>
+                            <input class="form-control" type="text" placeholder="">
 
-                        <br>
-                        <label>E-mail:*</label>
-                        <input class="form-control" type="email" placeholder="john@doe.com">
+                            <br>
+                            <label>Voornaam(en):*</label>
+                            <input class="form-control" type="text" placeholder="John">
 
-                        <br>
-                        <label>Telefoonnummer:</label>
-                        <input class="form-control" type="text" placeholder="06 12345678">
+                            <br>
+                            <label>Achternaam:*</label>
+                            <input class="form-control" type="text" placeholder="Doe">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen met instemming
-                        </button>
+                            <br>
+                            <label>E-mail:*</label>
+                            <input class="form-control" type="email" placeholder="john@doe.com">
 
-                        <button type="button" class="btn btn-success m-3  mx-auto">
-                            Uitnodigen zonder instemming
-                        </button>
-                    </form>
+                            <br>
+                            <label>Telefoonnummer:</label>
+                            <input class="form-control" type="text" placeholder="06 12345678">
+
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen met instemming
+                            </button>
+
+                            <button type="button" class="btn btn-success m-3  mx-auto">
+                                Uitnodigen zonder instemming
+                            </button>
+                        </form>
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>

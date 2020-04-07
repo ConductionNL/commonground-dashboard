@@ -4,53 +4,61 @@
 
     <div class="main-panel">
         <div class="container">
-			
+
             {% include 'widgets/babs/title_h1.html.twig' %}
 
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_vrc_requesttype', {'id': resource.id}) }}" method="post">
+                        	<form action="{{ path('app_wrc_template', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_vrc_requesttype', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="{{ path('app_wrc_template', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-12 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
-    									</div> <!-- /.col -->  
-    									<div class="col-md-3 col-sm-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
-        										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
-                                                {% endfor %}
-                                                </select>
-        									</div><!-- /.form-group -->  
-        								</div> <!-- /.col -->  
-    								</div><!-- /.row --> 
+    									</div> <!-- /.col -->
+{#    									<div class="col-md-3 col-sm-12">#}
+{#        									<div class="form-group">#}
+{#        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>#}
+{#        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">#}
+{#        										 {% for organization in organizations %}#}
+{#                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>#}
+{#                                                {% endfor %}#}
+{#                                                </select>#}
+{#        									</div><!-- /.form-group -->#}
+{#        								</div> <!-- /.col -->#}
+    								</div><!-- /.row -->
     								<div class="row">
-        								<div class="col-md-12">    
+        								<div class="col-md-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="description" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-        									</div>       
-        								</div>  <!-- /.col -->  
-    								</div> <!-- /.row -->       
-								</div> <!-- /.card-body -->        
+												<textarea class="form-control" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+        									</div>
+        								</div>  <!-- /.col -->
+    								</div> <!-- /.row -->
+    								<div class="row">
+        								<div class="col-md-12">
+        									<div class="form-group">
+        										<label for="largeInput">{{ 'content'|trans|capitalize }}</label>
+												<textarea class="form-control" rows="40" id="content" name="content">{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
+        									</div>
+        								</div>  <!-- /.col -->
+    								</div> <!-- /.row -->
+								</div> <!-- /.card-body -->
 
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->   
+								</div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
                     </div><!-- /.col -->
