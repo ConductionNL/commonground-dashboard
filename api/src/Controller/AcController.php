@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class PdcController
  * @package App\Controller
- * @Route("/evc")
+ * @Route("/ac")
  */
 class AcController extends AbstractController
 {
@@ -41,352 +41,234 @@ class AcController extends AbstractController
 	}
 
     /**
-     * @Route("/clusters")
+     * @Route("/resources")
      * @Template
      */
-	public function clustersAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function resourcesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
-    	$variables['title'] = $translator->trans('clusters');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('clusters');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/clusters')["hydra:member"];
+    	$variables['title'] = $translator->trans('resources');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('resources');
+    	$variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/resources')["hydra:member"];
 
         return $variables;
     }
 
     /**
-     * @Route("/clusters/{id}")
+     * @Route("/resources/{id}")
      * @Template
      */
-    public function clusterAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function resourceAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
         $variables = [];
+        $variables['title'] = $translator->trans('resource');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('resource');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/resources/' . $id);
 
-        // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-        }
-        else{
-            $variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/clusters/'.$id);
-        }
-
-        // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource($variables['resource']);
-            var_dump($request->query->get('action'));
-            die;
-            return $this->redirect($this->generateUrl('app_pdc_groups'));
-        }
-
-        $variables['title'] = $translator->trans('cluster');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('cluster');
-
-        // Lets see if there is a post to procces
-        if ($request->isMethod('POST')) {
-
-            // Passing the variables to the resource
-            $resource = $request->request->all();
-            $resource['@id'] = $variables['resource']['@id'];
-            $resource['id'] = $variables['resource']['id'];
-
-            // If there are any sub data sources the need to be removed below in order to save the resource
-            // unset($resource['somedatasource'])
-
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/clusters/');
-        }
         return $variables;
     }
 
     /**
-     * @Route("/health-logs")
+     * @Route("/events")
      * @Template
      */
-    public function healthLogsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function eventsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('events');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('events');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/events')["hydra:member"];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('health logs');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('health logs');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/health_logs')["hydra:member"];
-
-    	return $variables;
-
+        return $variables;
     }
 
     /**
-     * @Route("/health-logs/{id}")
+     * @Route("/events/{id}")
      * @Template
      */
-    public function healthLogAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function eventAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/health_logs/'.$id);
-    	}
+        $variables = [];
+        $variables['title'] = $translator->trans('event');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('event');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/events/' . $id);
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		var_dump($request->query->get('action'));
-    		die;
-    		return $this->redirect($this->generateUrl('app_evc_healthlogs'));
-    	}
-
-    	$variables['title'] = $translator->trans('health log');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('health log');
-
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
-
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/health_logs/');
-    	}
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/environments")
+     * @Route("/schedules")
      * @Template
      */
-    public function environmentsAction( CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function schedulesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('schedules');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('schedules');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/schedules')["hydra:member"];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('environments');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('environments');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/environments')["hydra:member"];
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/environments/{id}")
+     * @Route("/schedules/{id}")
      * @Template
      */
-    public function environmentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function scheduleAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/environments/'.$id);
-    	}
+        $variables = [];
+        $variables['title'] = $translator->trans('schedule');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('schedule');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/schedules/' . $id);
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_environments'));
-    	}
-
-    	$variables['title'] = $translator->trans('environment');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
-
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
-
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/environments/');
-    	}
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/components")
+     * @Route("/calendars")
      * @Template
      */
-    public function componentsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function calendarsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('calendars');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('calendars');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/calendars')["hydra:member"];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('components');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('components');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components')["hydra:member"];
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/components/{id}")
+     * @Route("/calendars/{id}")
      * @Template
      */
-    public function componentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function calendarAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/components/'.$id);
-    	}
+        $variables = [];
+        $variables['title'] = $translator->trans('calendar');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/calendars/' . $id);
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_components'));
-    	}
-
-    	$variables['title'] = $translator->trans('component');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('component');
-
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
-
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/components/');
-    	}
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/domains")
+     * @Route("/freebusies")
      * @Template
      */
-    public function domainsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function freebusiesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('freebusies');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('freebusies');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/freebusies')["hydra:member"];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('domains');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('domains');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/domains')["hydra:member"];
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/domains/{id}")
+     * @Route("/freebusies/{id}")
      * @Template
      */
-    public function domainAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function freebusyAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/domains/'.$id);
-    	}
+        $variables = [];
+        $variables['title'] = $translator->trans('freebusy');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('freebusy');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/freebusies/' . $id);
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_domains'));
-    	}
-
-
-    	$variables['title'] = $translator->trans('domain');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('domain');
-
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
-
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/domains/');
-    	}
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/installations")
+     * @Route("/journals")
      * @Template
      */
-    public function installationsAction( CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function journalsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('journals');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('journals');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/journals')["hydra:member"];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('installation');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('installation');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/installations')["hydra:member"];
-
-    	return $variables;
+        return $variables;
     }
 
     /**
-     * @Route("/installations/{id}")
+     * @Route("/journals/{id}")
      * @Template
      */
-    public function installationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function journalAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/installations/'.$id);
-    	}
+        $variables = [];
+        $variables['title'] = $translator->trans('journal');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('journal');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/journals/' . $id);
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_installations'));
-    	}
-
-    	$variables['title'] = $translator->trans('installation');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('installation');
-
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
-
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/installations/');
-    	}
-
-    	return $variables;
+        return $variables;
     }
 
+    /**
+     * @Route("/todos")
+     * @Template
+     */
+    public function todosAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('todos');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('todos');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/todos')["hydra:member"];
 
+        return $variables;
+    }
 
+    /**
+     * @Route("/todos/{id}")
+     * @Template
+     */
+    public function todoAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+
+        $variables = [];
+        $variables['title'] = $translator->trans('todo');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('todo');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/todos/' . $id);
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/alarms")
+     * @Template
+     */
+    public function alarmsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('alarms');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('alarms');
+        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/alarms')["hydra:member"];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/alarms/{id}")
+     * @Template
+     */
+    public function alarmAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('alarm');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('alarm');
+        $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/alarms/' . $id);
+
+        return $variables;
+    }
 
 }

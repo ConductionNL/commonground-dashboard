@@ -27,18 +27,18 @@ use Symfony\Component\Translation\TranslatorInterface;
 class MrcController extends AbstractController
 {
 
-//	/**
-//	 * @Route("/")
-//	 * @Template
-//	 */
-//	public function indexAction(TranslatorInterface $translator)
-//	{
-//		$variables = [];
-//		$variables['title'] = $translator->trans('location catalogue');
-//		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
-//
-//		return $variables;
-//	}
+	/**
+	 * @Route("/")
+	 * @Template
+	 */
+	public function indexAction(TranslatorInterface $translator)
+	{
+		$variables = [];
+		$variables['title'] = $translator->trans('location catalogue');
+		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
+
+		return $variables;
+	}
 
     /**
      * @Route("/employees")
