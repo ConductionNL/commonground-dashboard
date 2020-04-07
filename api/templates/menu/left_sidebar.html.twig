@@ -165,23 +165,58 @@
                         </div>
                     </li>
 
-
                     <li class="nav-item">
-                        <a data-toggle="collapse" href="#betaalservices" class="" aria-expanded="false">
+                        <a data-toggle="collapse" href="#services" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'services'|trans|capitalize }}</p>
                             <span style="color: #575962" class="caret"></span>
                         </a>
-                        <div class="collapse" id="locations">
-                            <ul class="nav nav-collapse">
+
+                        <ul class="nav nav-collapse">
                                 <li>
-                                    <a href="{{ path("app_lc_accommodations") }}">
+                                    <a href="{{ path("app_bs_services") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'services'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ path("app_bs_payments") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'payments'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bs_organizations") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bs_invoices") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'invoices'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bs_invoiceitems") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'invoiceitems'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bs_taxes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
                             </ul>
-                        </div>
                     </li>
+
+
+
+
+
+
+
 
                 {% endif %}
 

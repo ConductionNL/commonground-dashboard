@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class BsController
  * @package App\Controller
- * @Route("/Bs")
+ * @Route("/bs")
  */
 class BsController extends AbstractController
 {
@@ -41,10 +41,10 @@ class BsController extends AbstractController
 //	}
 
     /**
- * @Route("/payment")
+ * @Route("/payments")
  * @Template
  */
-    public function paymentAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function paymentsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
         $variables = [];
         $variables['title'] = $translator->trans('payments');
@@ -58,7 +58,7 @@ class BsController extends AbstractController
      * @Route("/payments/{id}")
      * @Template
      */
-    public function paymentsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function paymentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
         $variables = [];
@@ -113,7 +113,7 @@ class BsController extends AbstractController
      * @Route("/services")
      * @Template
      */
-    public function serviceAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function servicesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
 
         $variables = [];
@@ -129,7 +129,7 @@ class BsController extends AbstractController
      * @Route("/services/{id}")
      * @Template
      */
-    public function servicesAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function serviceAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
         $variables = [];
 
@@ -138,24 +138,24 @@ class BsController extends AbstractController
     }
 
     /**
-     * @Route("/organization")
+     * @Route("/organizations")
      * @Template
      */
-    public function organizationAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function organizationsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
 
         $variables = [];
-        $variables['title'] = $translator->trans('offers');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('offers');
-        $variables['resources'] = $commonGroundService->getResourceList('https://bc.huwelijksplanner.online/organization')["hydra:member"];
+        $variables['title'] = $translator->trans('organizations');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('organizations');
+        $variables['resources'] = $commonGroundService->getResourceList('https://bc.huwelijksplanner.online/organizations')["hydra:member"];
 
         return $variables;
     }
     /**
-     * @Route("/organizations/{id}")
+     * @Route("/organization/{id}")
      * @Template
      */
-    public function organizationsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function organizationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
         $variables = [];
@@ -167,10 +167,10 @@ class BsController extends AbstractController
 
 
     /**
-     * @Route("/invoice")
+     * @Route("/invoices")
      * @Template
      */
-    public function invoiceAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function invoicesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
 
         $variables = [];
@@ -184,7 +184,7 @@ class BsController extends AbstractController
      * @Route("/invoices/{id}")
      * @Template
      */
-    public function invoicesAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function invoiceAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
         $variables = [];
@@ -195,10 +195,10 @@ class BsController extends AbstractController
 
 
 /**
-* @Route("/invoiceitem")
+* @Route("/invoice-items")
 * @Template
 */
-    public function invoiceitemAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function invoiceitemsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
 
         $variables = [];
@@ -209,10 +209,10 @@ class BsController extends AbstractController
         return $variables;
     }
     /**
-     * @Route("/invoiceitems/{id}")
+     * @Route("/invoice-item/{id}")
      * @Template
      */
-    public function invoiceitemsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function invoiceitemAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
         $variables = [];
@@ -225,10 +225,10 @@ class BsController extends AbstractController
 
 
 /**
-* @Route("/tax")
+* @Route("/taxes")
 * @Template
 */
-    public function taxAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function taxesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
 
         $variables = [];
@@ -242,7 +242,7 @@ class BsController extends AbstractController
      * @Route("/taxes/{id}")
      * @Template
      */
-    public function invoicessAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function taxAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
         $variables = [];
