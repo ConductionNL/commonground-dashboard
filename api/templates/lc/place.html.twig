@@ -1,8 +1,8 @@
 {% extends "body.html.twig" %}
 
-{% block content %}
+{% set view = 'app_lc_place' %}
 
-    {% set view = 'app_lc_accommodation' %}
+{% block content %}
 
     <style>
         th {
@@ -13,7 +13,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Accommodation bewerken','functie': 'Dashboard -> LC -> Accommodations -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Place bewerken','functie': 'Dashboard -> LC -> Places -> '~resource.name } %}
 
             <div class="page-inner">
                 <div class="row">
