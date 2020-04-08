@@ -27,18 +27,18 @@ use Symfony\Component\Translation\TranslatorInterface;
 class LcController extends AbstractController
 {
 
-//	/**
-//	 * @Route("/")
-//	 * @Template
-//	 */
-//	public function indexAction(TranslatorInterface $translator)
-//	{
-//		$variables = [];
-//		$variables['title'] = $translator->trans('location catalogue');
-//		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
-//
-//		return $variables;
-//	}
+	/**
+	 * @Route("/")
+	 * @Template
+	 */
+	public function indexAction(TranslatorInterface $translator)
+	{
+		$variables = [];
+		$variables['title'] = $translator->trans('location catalogue');
+		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
+
+		return $variables;
+	}
 
     /**
      * @Route("/accommodations")
@@ -62,50 +62,39 @@ class LcController extends AbstractController
     {
 
     	$variables = [];
-    	$variables['title'] = $translator->trans('accommodation');
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/accommodations/'.$id);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_lc_accommodations'));
+        }
+
+        $variables['title'] = $translator->trans('accommodation');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('accommodation');
-    	$variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/accommodations/'.$id);
+        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
 
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
 
-//    	// Lets see if we need to create
-//    	if($id == 'new') {
-//            $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
-//        }
-//    	else{
-//    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/products/'.$id);
-//    	}
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
 
-//    	// Lets see if there is a post to procces
-//    	if ($request->isMethod('POST')) {
-//
-//    		// Passing the variables to the resource
-//    		$resource = $request->request->all();
-//
-//    		foreach ($variables['resource']['groups'] as $group){
-//    			$resource['groups'][] = 'groups/'.$group['id'];
-//    		}
-//
-//    		if($resource['addgroup'] != ""){
-//    			$resource['groups'][] = $resource['addgroup'];
-//    		}
-//
-//    		if($resource['removegroup'] != ""){
-//    			foreach($resource['groups'] as $key=>$group){
-//    				if($group == $resource['removegroup']){
-//    					unset($resource['groups'][$key]);
-//    				}
-//    			}
-//    		}
-//
-//    		$resource['@id'] = $variables['resource']['@id'];
-//    		$resource['id'] = $variables['resource']['id'];
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://lc.huwelijksplanner.online/accommodations/');
+        }
 
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-//
-//    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/products/');
-//    	}
 
         return $variables;
     }
@@ -132,71 +121,40 @@ class LcController extends AbstractController
     public function placeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
         $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/places/'.$id);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_lc_places'));
+        }
+
         $variables['title'] = $translator->trans('place');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('place');
-        $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/places/'.$id);
+        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://lc.huwelijksplanner.online/places/');
+        }
 
     	return $variables;
     }
-
-    /**
-     * @Route("/change-logs")
-     * @Template
-     */
-    public function changeLogsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
-    {
-
-    	$variables = [];
-    	$variables['title'] = $translator->trans('change log');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('change logs');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://lc.huwelijksplanner.online/changeLogs')["hydra:member"];
-
-    	return $variables;
-    }
-
-    /**
-     * @Route("/change-logs/{id}")
-     * @Template
-     */
-    public function changeLogAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-    {
-        $variables = [];
-        $variables['title'] = $translator->trans('change log');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('change log');
-        $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/changeLogs/'.$id);
-
-    	return $variables;
-    }
-
-    /**
-     * @Route("/audit-trails")
-     * @Template
-     */
-    public function auditTrailsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
-    {
-
-    	$variables = [];
-    	$variables['title'] = $translator->trans('audit trails');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('audit trails');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://lc.huwelijksplanner.online/auditTrails')["hydra:member"];
-
-    	return $variables;
-    }
-
-    /**
-     * @Route("/audit-trails/{id}")
-     * @Template
-     */
-    public function auditTrailAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-    {
-        $variables = [];
-        $variables['title'] = $translator->trans('audit trail');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('audit trail');
-        $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/auditTrails/'.$id);
-
-    	return $variables;
-    }
-
-
 
 }
