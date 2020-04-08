@@ -27,18 +27,18 @@ use Symfony\Component\Translation\TranslatorInterface;
 class MrcController extends AbstractController
 {
 
-//	/**
-//	 * @Route("/")
-//	 * @Template
-//	 */
-//	public function indexAction(TranslatorInterface $translator)
-//	{
-//		$variables = [];
-//		$variables['title'] = $translator->trans('location catalogue');
-//		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
-//
-//		return $variables;
-//	}
+	/**
+	 * @Route("/")
+	 * @Template
+	 */
+	public function indexAction(TranslatorInterface $translator)
+	{
+		$variables = [];
+		$variables['title'] = $translator->trans('location catalogue');
+		$variables['subtitle'] = $translator->trans('the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.');
+
+		return $variables;
+	}
 
     /**
      * @Route("/employees")
@@ -62,9 +62,38 @@ class MrcController extends AbstractController
     {
 
     	$variables = [];
-    	$variables['title'] = $translator->trans('employee');
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource('https://mrc.huwelijksplanner.online/employees/'.$id);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_mrc_employees'));
+        }
+
+        $variables['title'] = $translator->trans('employee');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('employee');
-    	$variables['resource'] = $commonGroundService->getResource('https://mrc.huwelijksplanner.online/employees/'.$id);
+        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://mrc.huwelijksplanner.online/employees/');
+        }
 
         return $variables;
     }

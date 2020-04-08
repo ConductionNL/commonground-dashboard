@@ -389,8 +389,8 @@
                                     <th>Naamgebruik</th>
                                     {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <td>
-                                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']]|capitalize }}</p>
+                                            {% if variables.huwelijk.properties.overig.naamgebruik[assent1['@id']] is defined and variables.huwelijk.properties.overig.naamgebruik[assent1['@id']] is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik[assent1['@id']]|title }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner1NaamModal"><i style=""
@@ -411,8 +411,8 @@
                                     {% endif %}
                                     {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
                                         <td>
-                                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
-                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']]|capitalize }}</p>
+                                            {% if variables.huwelijk.properties.overig.naamgebruik[assent2['@id']] is defined and variables.huwelijk.properties.overig.naamgebruik[assent2['@id']] is not empty %}
+                                                <p class="mb-0 pt-1 d-inline-block">{{ variables.huwelijk.properties.overig.naamgebruik[assent2['@id']]|title }}</p>
                                                 <button style="padding: 4px; float: right" type="button"
                                                         class="btn btn-primary"
                                                         data-toggle="modal" data-target="#partner2NaamModal"><i style=""
@@ -669,28 +669,28 @@
                 </div>
                 <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
-                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen is not empty %}
+{#                    {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen is not empty %}#}
 
-                        <form>
-                            <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>
-                            <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen
-                                tegelijk
-                                te selecteren.</p>
-                            <select class="form-control" name="getuigen">
-                                {% for getuige in variables.huwelijk.properties.getuigen %}
-                                    {% set assent = commonground_resource(getuige) %}
-                                    {% set contact = commonground_resource(assent.contact) %}
-                                    <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>
-                                {% endfor %}
-                            </select>
+{#                        <form>#}
+{#                            <p><b>Getuigen weghalen <i style="color: #F25961" class="fas fa-trash"></i></b></p>#}
+{#                            <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere personen#}
+{#                                tegelijk#}
+{#                                te selecteren.</p>#}
+{#                            <select class="form-control" name="getuigen">#}
+{#                                {% for getuige in variables.huwelijk.properties.getuigen %}#}
+{#                                    {% set assent = commonground_resource(getuige) %}#}
+{#                                    {% set contact = commonground_resource(assent.contact) %}#}
+{#                                    <option value="{{ getuige['@id'] }}">{{ contact.name }}</option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
 
-                            <button type="button" class="btn btn-danger m-3  mx-auto">
-                                Verwijderen
-                            </button>
+{#                            <button type="button" class="btn btn-danger m-3  mx-auto">#}
+{#                                Verwijderen#}
+{#                            </button>#}
 
-                        </form>
+{#                        </form>#}
 
-                    {% endif %}
+{#                    {% endif %}#}
 
                     {% if variables.huwelijk.properties.getuigen is defined and variables.huwelijk.properties.getuigen|length < 4 %}
 
@@ -700,7 +700,7 @@
                             <label>Voor partner:</label>
                             <select class="form-control" name="partner">
                                 {% for partner in variables.huwelijk.properties.partners %}
-                                    <option value="{{ partner['@id'] }}">{{ contact1.name }}</option>
+                                    <option value="{{ partner }}">{{ contact1.name }}</option>
                                 {% endfor %}
                             </select>
 
@@ -1105,7 +1105,7 @@
                     <div style="padding-bottom: 0 !important;" class="modal-body p-4">
 
                         <form method="post"
-                              action="{{ path('app_babs_medewerkerhuwelijkview', {id: variables.huwelijk.id}) }}">
+                              action="{{ path('app_babs_medewerkerpartnerschapview', {id: variables.huwelijk.id}) }}">
 
                             <p><b>Naamgebruik:</b></p>
 
@@ -1120,12 +1120,18 @@
                                     value="{{ contact2.familyName }}">{{ contact2.familyName }}</option>
                             </select>
 
-                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
+                            {% if variables.huwelijk.properties.overig.naamgebruik[assent2['@id']] is defined and variables.huwelijk.properties.overig.naamgebruik[assent2['@id']] is not empty %}
 
                                 <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
-                                       value="{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] }}">
+                                       value="{{ variables.huwelijk.properties.overig.naamgebruik[assent2['@id']] }}">
+
+                            {% else %}
+
+                                <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
+                                       value="ongewijzigd">
 
                             {% endif %}
+
 
                             <button type="submit" class="btn btn-success m-3 mx-auto d-block">
                                 Opslaan
@@ -1143,7 +1149,7 @@
 
         <div class="modal fade" style="text-align: center" id="partner2NaamModal" tabindex="-1"
              role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+             aria-labelledby="exampleModalCenterTitle" aria-higdden="true">
             <div class="modal-dialog model-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1162,20 +1168,24 @@
 
                             <select name="naamgebruik[{{ variables.huwelijk.properties.partners[1] }}]"
                                     class="form-control">
-                                <option value="ongewijzigd">Ongewijzigd</option>
-                                <option value="eigennaam, partnernaam">Eerst uw achternaam, gevolgd door uw partners
-                                    achternaam.
-                                </option>
-                                <option value="partnernaam, eigennaam">Eerst uw partners achternaam, gevolgd door uw
-                                    achternaam.
-                                </option>
-                                <option value="partnernaam">Alleen uw partners achternaam</option>
+                                <option value="ongewijzigd" selected>Ongewijzigd</option>
+                                <option
+                                    value="{{ contact2.familyName }} {{ contact1.familyName }}">{{ contact2.familyName }} {{ contact1.familyName }}</option>
+                                <option
+                                    value="{{ contact1.familyName }} {{ contact2.familyName }}">{{ contact1.familyName }} {{ contact2.familyName }}</option>
+                                <option
+                                    value="{{ contact1.familyName }}">{{ contact1.familyName }}</option>
                             </select>
 
-                            {% if variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
+                            {% if variables.huwelijk.properties.overig.naamgebruik[assent1['@id']] is defined and variables.huwelijk.properties.overig.naamgebruik[assent1['@id']] is not empty %}
 
                                 <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
-                                       value="{{ variables.huwelijk.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] }}">
+                                       value="{{ variables.huwelijk.properties.overig.naamgebruik[assent1['@id']] }}">
+
+                            {% else %}
+
+                                <input type="hidden" name="naamgebruik[{{ variables.huwelijk.properties.partners[0] }}]"
+                                       value="ongewijzigd">
 
                             {% endif %}
                             <button type="submit" class="btn btn-success m-3 mx-auto d-block">
