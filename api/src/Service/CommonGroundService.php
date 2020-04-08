@@ -116,7 +116,7 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if ($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null, $url, 'GET')) {
+        if ($statusCode != 200 && $statusCode != 201 && !$this->proccesErrors($response, $statusCode, $headers, null, $url, 'GET')) {
             return false;
         }
 

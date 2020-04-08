@@ -57,6 +57,8 @@ class VrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests/'.$id.'/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests/'.$id.'/audit_trail');
     	}
 
     	// If it is a delete action we can stop right here
@@ -71,6 +73,7 @@ class VrcController extends AbstractController
     	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
     	$variables['casetypes'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/zaaktypen')["results"];
 
+    	//var_dump($variables['casetypes']);
     	// Case statuses can only be loaded if the case type is known
     	if(array_key_exists ('zaaktype', $variables['resource'])){
     		$variables['casestatuses'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/statustypen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
@@ -86,6 +89,24 @@ class VrcController extends AbstractController
 
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
+
+
+            // We might also want to create a zaakObject resource
+            if(key_exists('zaak', $resource)){
+                $zaak = $resource['zaak'];
+
+                if(!key_exists('startdatum', $zaak)){
+                    $zaak['startdatum'] = date('Y-m-d');
+                }
+
+                $zaak = $zgwService->saveResource($zaak,'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/zaken', false);
+
+                if(!key_exists('cases', $resource)){
+                    $resource['cases'] = $variables['resource']['cases'];
+                }
+
+                $resource['cases'][] = $zaak['url'];
+            }
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,'https://vrc.huwelijksplanner.online/requests/');
     	}
@@ -121,6 +142,8 @@ class VrcController extends AbstractController
         }
         else{
             $variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/audit_trail')["hydra:member"];
         }
 
         // If it is a delete action we can stop right here

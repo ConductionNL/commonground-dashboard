@@ -29,6 +29,8 @@ parameters:
     app_name: '%env(APP_NAME)%'       
     app_domain: '%env(APP_DOMAIN)%'
     app_type: '%env(APP_TYPE)%'
+    app_commonground_zgw_clientId: 'huwelijksplanner-Wex83XXe'
+    app_commonground_zgw_secret: '4_]}Khfxa;~"78Qm'
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
     auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'    
     
