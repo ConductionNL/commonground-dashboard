@@ -17,7 +17,6 @@
                                     <div class="float-right">
                                         {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
                                         {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
-                                        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
                                         <a href="{{ path('app_vrc_request', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
@@ -51,8 +50,68 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-            </div><!-- /.page-inner -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'properties'|trans|capitalize }}</h3>
+                            </div>
+                            <div class="card-body">
+                                {% if resource.properties is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'property'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'value'|trans|capitalize }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for key,value in resource.properties %}
+                                            <tr>
+                                                <td>{{ key }}</td>
+                                                <td>{{ dump(value) }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
 
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'cases'|trans|capitalize }}</h3>
+                            </div>
+                            <div class="card-body">
+                                {% if resource.cases is defined %}
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'case'|trans|capitalize }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for case in resource.cases %}
+                                        <tr>
+                                            <td><a href="{{ path('app_zgw_case', {'id': openzaak_resource(case).id}) }}">{{ openzaak_resource(case).omschrijving }}</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+
+                            <div class="card-action">
+                                {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
             {% include 'footer.html.twig' %}
         </div>
     </div>
@@ -73,20 +132,18 @@
                     <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
         				<div class="form-group">
         					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
-        					<select id="zaaktype" name="zaaktype" class="form-control form-control-lg">
+        					<select id="zaak[zaaktype]" name="zaak[zaaktype]" class="form-control form-control-lg">
         					{% for casetype in casetypes %}
+                                {% if casetype.eindeGeldigheid is empty %}
                         		<option value="{{ casetype['@id'] }}">{{ casetype.omschrijving }}</option>
+                                {% endif %}
                          	{% endfor %}
                    			</select>
         				</div><!-- /.form-group -->
-        				<input type="hidden" id="bronorganisatie" name ="bronorganisatie" value="{{ commonground_resource(resource.organization).rsin }}">
-        				<input type="hidden" id="verantwoordelijkeOrganisatie" name ="verantwoordelijkeOrganisatie" value="{{ commonground_resource(resource.organization).rsin  }}">
-        				<input type="hidden" id="omschrijving" name ="omschrijving" value="{{ commonground_resource(resource.requestType).name }}">
-        				<input type="hidden" id="description" name ="description" value="{{ commonground_resource(resource.requestType).description }}">
-        				<input type="hidden" id="zaakobject[object]" name ="zaakobject[object]" value="{{ resource.requestType }}">
-        				<input type="hidden" id="zaakobject[objectType]" name ="zaakobject[objectType]" value="overige">
-        				<input type="hidden" id="zaakobject[objectTypeOverige]" name ="zaakobject[objectTypeOverige]" value="{{ commonground_resource(resource.requestType).name }}">
-        				<input type="hidden" id="zaakobject[relatieomschrijving]" name ="zaakobject[relatieomschrijving]" value="{{ 'The source request'|trans|capitalize }}">
+
+        				<input type="hidden" id="zaak[bronorganisatie]" name ="zaak[bronorganisatie]" value="{{ commonground_resource(resource.organization).rsin }}">
+        				<input type="hidden" id="zaak[verantwoordelijkeOrganisatie]" name ="zaak[verantwoordelijkeOrganisatie]" value="{{ commonground_resource(resource.organization).rsin  }}">
+        				<input type="hidden" id="zaak[omschrijving]" name ="zaak[omschrijving]" value="{{ commonground_resource(resource.requestType).name }}">
 
                         <button type="submit" class="btn btn-success m-3  mx-auto">
                             {{ 'add'|trans|capitalize }}
