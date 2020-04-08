@@ -16,7 +16,7 @@ use App\Service\ZgwService;
 /**
  * Class DashboardController
  * @package App\Controller
- * @Route("/configuratie")
+ * @Route("/vrc")
  */
 class VrcController extends AbstractController
 {
@@ -170,6 +170,44 @@ class VrcController extends AbstractController
         }
 
     	return $variables;
+    }
+
+    /**
+     * @Route("/aanvragen-babs")
+     * @Template
+     */
+    public function aanvragenBabsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+
+        $variables['title'] = $translator->trans('aanvragen babs');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request');
+
+        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')['hydra:member'];
+
+        $variables['req'] = [];
+        foreach ($variables['requests'] as $request) {
+            if (isset($request['requestType']) and $request['requestType'] == "https://vtc.dev.huwelijksplanner.online/request_types/cdd7e88b-1890-425d-a158-7f9ec92c9508" or $request['requestType'] == "https://vtc.huwelijksplanner.online/request_types/cdd7e88b-1890-425d-a158-7f9ec92c9508") {
+                $variables['req'][] = $request;
+            }
+        }
+
+        $variables['requests'] = $variables['req'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/aanvragen-babs/{id}")
+     * @Template
+     */
+    public function aanvraagBabsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        $variables = [];
+
+        $variables['request'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/'.$id);
+
+        return $variables;
     }
 
 }

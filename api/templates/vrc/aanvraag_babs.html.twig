@@ -1,0 +1,126 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    {% set view = 'app_vrc_aanvraagbabs'  %}
+    {% set resource = request %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {'title': 'Aanvraag bewerken','subtitle': 'Dashboard -> VRC -> Aanvragen babs -> '~resource.name } %}
+
+            <div class="page-inner">
+                <div class="row">
+
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    {% if resource.requestType is defined and resource.requestType is not empty %}
+                                    {% set requestType = commonground_resource(resource.requestType) %}
+                                    <h2 class="d-inline-block">{{ requestType.name }} </h2>
+                                    {% else %}
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    {% endif %}
+                                    <div class="float-right">
+                                        <button class="btn btn-danger"
+                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                {% if resource.id == resource.name %}
+                                                <h4><b>ID:</b> {{ resource.id }}</h4>
+                                                {% else %}
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="name" placeholder="Large Input"
+                                                       value="{{ resource.name }}">
+                                                {% endif %}
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        {% if resource.parent.requestType is defined and resource.parent.requestType is not empty %}
+                                        {% set parentRequestType = commonground_resource(resource.parent.requestType) %}
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+
+                                                <h4><b>Parent type:</b> {{ parentRequestType.name }}</h4>
+                                                <h4><b>Parent ID:</b> {{ resource.parent.id }}</h4>
+
+                                                <a href="{{ path('app_babs_medewerkerhuwelijkview', {id: resource.parent.id}) }}">Ga naar</a>
+
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                    </div><!-- /.row -->
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                                                <select class="form-control" id="status" name="status">
+                                                    <option value="processed">Processed</option>
+                                                    <option value="requested">Requested</option>
+                                                    <option value="submitted">Submitted</option>
+                                                </select>
+
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2>Groups</h2>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    {#                                    {% if resource.groups is defined %}#}
+                                    {#                                    {% for group in resource.groups %}#}
+                                    {#                                        <tr>#}
+                                    {#                                            <td>{{ group.name }}</td>#}
+                                    {#                                            <td></td>#}
+                                    {#                                        </tr>#}
+                                    {#                                    {% endfor %}#}
+                                    {#                                    {% endif %}#}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.row -->
+        </div><!-- /.page-inner -->
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+    </div>
+
+{% endblock %}

@@ -291,9 +291,19 @@
 
                                             <h4>{{ request.name }}</h4><br>
 
-                                            Status: <b {% if subreq.status is defined and subreq.status is not empty and subreq.status != "completed" %} style="color: red" {% else %} style="color: limegreen"{% endif %}>{{ subreq.status|capitalize }}</b><br>
+                                            Status:
+                                            <b {% if subreq.status is defined and subreq.status is not empty and subreq.status != "completed" %} style="color: red" {% else %} style="color: limegreen"{% endif %}>{{ subreq.status|capitalize }}</b>
+                                            <br>
 
-                                            <a style="padding: 4px; margin: 30px 10px 10px 10px    " href="#" class="btn btn-primary">Ga naar verzoek</a>
+                                            {% if request.name == "Aanvraag babs voor een dag" %}
+                                                <a style="padding: 4px; margin: 30px 10px 10px 10px"
+                                                   href="{{ path('app_vrc_aanvraagbabs', {id: subreq.id}) }}" class="btn btn-primary">Ga
+                                                    naar
+                                                    verzoek</a>
+                                            {% else %}
+                                                <a style="padding: 4px; margin: 30px 10px 10px 10px" href="#"
+                                                   class="btn btn-primary">Ga naar verzoek</a>
+                                            {% endif %}
 
                                         </div>
 
