@@ -71,6 +71,8 @@ class VtcController extends AbstractController
 		}
 		else{
 			$variables['resource'] = $commonGroundService->getResource('https://vtc.huwelijksplanner.online/request_types/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/request_types/'.$id.'/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/request_types/'.$id.'/audit_trail');
 		}
 
 		// If it is a delete action we can stop right here

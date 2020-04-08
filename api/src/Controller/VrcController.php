@@ -57,6 +57,8 @@ class VrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests/'.$id.'/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests/'.$id.'/audit_trail');
     	}
 
     	// If it is a delete action we can stop right here
@@ -121,6 +123,8 @@ class VrcController extends AbstractController
         }
         else{
             $variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/audit_trail')["hydra:member"];
         }
 
         // If it is a delete action we can stop right here
