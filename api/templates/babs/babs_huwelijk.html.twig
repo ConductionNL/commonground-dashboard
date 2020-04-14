@@ -106,17 +106,17 @@
                                 <tr>
                                     <th>Naamgebruik</th>
                                     <td>
-                                    {% if request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is defined and request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not empty %}
+                                    {% if request.properties.overig.naamgebruik[assent1['@id']] is defined and request.properties.overig.naamgebruik[assent1['@id']] is not empty %}
 
-                                        Partner1: {{ request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] }}
+                                        Partner1: {{ request.properties.overig.naamgebruik[assent1['@id']] }}
                                         <br>
                                     {% endif %}
-                                    {% if request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is defined and request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not empty %}
-                                        Partner2: {{ request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] }}
+                                    {% if request.properties.overig.naamgebruik[assent2['@id']] is defined and request.properties.overig.naamgebruik[assent2['@id']] is not empty %}
+                                        Partner2: {{ request.properties.overig.naamgebruik[assent2['@id']] }}
 
                                     {% endif %}
                                     </td>
-                                    {% if request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is not defined or request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is empty and request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent2['id']] is not defined or request.properties.overig.naamgebruik['https://irc.huwelijksplanner.online/assents/'~assent1['id']] is empty %}
+                                    {% if request.properties.overig.naamgebruik[assent1['@id']] is not defined or request.properties.overig.naamgebruik[assent1['@id']] is empty and request.properties.overig.naamgebruik[assent2['@id']] is not defined or request.properties.overig.naamgebruik[assent2['@id']] is empty %}
                                         <td style="color: lightgray">Geen naamgebruik</td>
                                     {% endif %}
                                 </tr>

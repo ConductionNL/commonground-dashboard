@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CommonGroundService
 {
@@ -115,7 +116,7 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if ($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null, $url, 'GET')) {
+        if ($statusCode != 200 && $statusCode != 201 && !$this->proccesErrors($response, $statusCode, $headers, null, $url, 'GET')) {
             return false;
         }
 
@@ -328,9 +329,12 @@ class CommonGroundService
      */
     public function saveResource($resource, $endpoint = false, $autowire = true)
     {
+        $endpoint = $this->cleanUrl($endpoint, $resource, $autowire);
+
+        // @tododit zijn echt te veel ifjes
 
         // If the resource exists we are going to update it, if not we are going to create it
-        if (array_key_exists('@id', $resource)) {
+        if (array_key_exists('@id', $resource) && $resource['@id']) {
             if ($this->updateResource($resource, null, false, $autowire)) {
                 // Lets renew the resource
                 $resource = $this->getResource($resource['@id'], [], false, false, $autowire);
@@ -338,16 +342,20 @@ class CommonGroundService
                     $this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
                 } elseif (array_key_exists('reference', $resource)) {
                     $this->flash->add('success', $resource['reference'].' '.$this->translator->trans('saved'));
-                } else {
+                } elseif (array_key_exists('id', $resource))  {
                     $this->flash->add('success', $resource['id'].' '.$this->translator->trans('saved'));
+                } else{
+                    $this->flash->add('success', $this->translator->trans('saved'));
                 }
             } else {
                 if (array_key_exists('name', $resource)) {
                     $this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be saved'));
                 } elseif (array_key_exists('reference', $resource)) {
                     $this->flash->add('error', $resource['reference'].' '.$this->translator->trans('could not be saved'));
-                } else {
+                } elseif (array_key_exists('id', $resource)) {
                     $this->flash->add('error', $resource['id'].' '.$this->translator->trans('could not be saved'));
+                } else{
+                    $this->flash->add('error', $this->translator->trans('could not be saved'));
                 }
             }
         } else {
@@ -356,7 +364,15 @@ class CommonGroundService
                 $resource = $this->getResource($createdResource['@id'], [], false, false, $autowire);
                 $this->flash->add('success', $resource['name'].' '.$this->translator->trans('created'));
             } else {
-                $this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be created'));
+                if (array_key_exists('name', $resource)) {
+                    $this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be created'));
+                } elseif (array_key_exists('reference', $resource)) {
+                    $this->flash->add('error', $resource['reference'].' '.$this->translator->trans('could not be created'));
+                } elseif (array_key_exists('id', $resource)) {
+                    $this->flash->add('error', $resource['id'].' '.$this->translator->trans('could not be created'));
+                } else{
+                    $this->flash->add('error', $this->translator->trans('could not be created'));
+                }
             }
         }
 
@@ -424,7 +440,7 @@ class CommonGroundService
 
             return false;
         } else {
-            throw new Symfony\Component\HttpKernel\Exception\HttpException($statusCode, $url.' returned: '.json_encode($response));
+            throw new HttpException($statusCode, $url.' returned: '.json_encode($response));
         }
 
         return $response;
@@ -548,6 +564,18 @@ class CommonGroundService
      */
     public function cleanUrl($url = false, $resource = false, $autowire = true)
     {
+        // The Url might be an array of component information
+        if( is_array ($url) && array_key_exists ('component' , $url ) &&  $component = $this->getComponent($url['component']) ){
+            $route = '';
+            if( array_key_exists ('type' , $url )){
+                $route = $route.'/'.$url['type'];
+            }
+            if( array_key_exists ('id' , $url )){
+                $route = $route.'/'.$url['id'];
+            }
+            $url = $component['location'].$route;
+        }
+
         if (!$url && $resource && array_key_exists('@id', $resource)) {
             $url = $resource['@id'];
         }
@@ -602,6 +630,23 @@ class CommonGroundService
         $host = $host_names[count($host_names) - 2].'.'.$host_names[count($host_names) - 1];
 
         return $host;
+    }
+
+    /*
+     * Get a list of available commonground components
+     */
+    public function getComponent(string $code)
+    {
+        // Create the list
+        $components = $this->params->get('common_ground.components');
+
+        // Get the component
+        if(array_key_exists ($code , $components)){
+            return $components[$code];
+        }
+
+        // Lets default to a negative
+        return false;
     }
 
     /*
