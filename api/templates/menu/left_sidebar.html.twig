@@ -484,8 +484,8 @@
                         </div>
                     </li>
                 {% endif %}
-
-                {% if 'group.beheerder' in app.user.roles %}
+                {# temp fix #}
+                {% if 'group.beheerder' in app.user.roles or 'group.users' in app.user.roles %}
                     <li class="nav-section">
                         <h4 style="color: black" class="text-section">{{ 'configuration'|trans|capitalize }}</h4>
                     </li>
@@ -547,18 +547,6 @@
                                     <a href="{{ path("app_wrc_templates") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'templates'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_wrc_pages") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'pages'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_wrc_slugs") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'slugs'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>

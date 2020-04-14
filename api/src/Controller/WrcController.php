@@ -42,7 +42,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('templates');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('templates');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/templates')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'])["hydra:member"];
 
     	return $variables;
 
@@ -61,7 +61,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/templates/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'templates','id'=> $id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -72,7 +72,9 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('template');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -82,73 +84,19 @@ class WrcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
 
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/templates/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc','type'=>'templates']);
+
+            // Lets see if we also need to add an slug
+            if(array_key_exists('slug', $resource)){
+                $slug = $resource['slug'];
+                $slug['template'] = $variables['resource']['@id'];
+                $slug['name'] = $variables['resource']['name'];
+                $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+            }
     	}
     	return $variables;
     }
-
-
-    /**
-     * @Route("/pages")
-     * @Template
-     */
-    public function pagesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
-    {
-
-    	$variables = [];
-    	$variables['title'] = $translator->trans('pages');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('pages');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/pages')["hydra:member"];
-
-    	return $variables;
-
-    }
-
-    /**
-     * @Route("/pages/{id}")
-     * @Template
-     */
-    public function pageAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-    {
-    	$variables = [];
-
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/pages/'.$id);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_pages'));
-    	}
-
-    	$variables['title'] = $translator->trans('page');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('page');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
-
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/pages/');
-    	}
-    	return $variables;
-    }
-
 
     /**
      * @Route("/slugs")
@@ -160,7 +108,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('slugs');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('slugs');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/slugs')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'])["hydra:member"];
 
     	return $variables;
 
@@ -179,7 +127,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/slugs/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'slugs','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -190,7 +138,7 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('slug');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('slug');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -203,7 +151,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/slugs/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'slugs']);
     	}
     	return $variables;
     }
@@ -218,7 +166,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('organizations');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('organizations');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	return $variables;
 
@@ -237,7 +185,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/organizations/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'organizations','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -248,7 +196,7 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('organization');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organization');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -261,7 +209,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/organizations/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'organizations']);
     	}
     	return $variables;
     }
@@ -276,7 +224,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('images');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('images');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/images')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'images'])["hydra:member"];
 
     	return $variables;
 
@@ -295,7 +243,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/images/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'imgaes','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -306,7 +254,7 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('image');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('image');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -319,7 +267,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/images/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'images']);
     	}
     	return $variables;
     }
@@ -335,7 +283,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('styles');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('styles');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/styles')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'])["hydra:member"];
 
     	return $variables;
 
@@ -354,7 +302,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/styles/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'styles','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -365,7 +313,7 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('style');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('style');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -378,7 +326,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/styles/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc','type'=>'styles']);
     	}
     	return $variables;
     }
@@ -393,7 +341,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('applications');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('applications');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/applications')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
 
     	return $variables;
 
@@ -412,7 +360,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/applications/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'applications','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -423,7 +371,7 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('application');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -436,7 +384,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/applications/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
     	}
     	return $variables;
     }
@@ -453,7 +401,7 @@ class WrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('menus');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('menus');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/menus')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'])["hydra:member"];
 
     	return $variables;
 
@@ -472,7 +420,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/menus/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'menus','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -483,7 +431,9 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('menu');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('menu');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -496,7 +446,22 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/menus/');
+            // Lets see if we also need to add an slug
+            if(array_key_exists('menuItem', $resource)){
+                // Schecker de check
+
+                if(array_key_exists('menuItems', $resource)){
+                    $resource['menuItems'] = [];
+                }
+
+                $menuItem = $resource['menuItem'];
+                $menuItem['menu'] = $variables['resource']['@id'];
+                $resource['menuItems'][] = $menuItem;
+                //$menuItem = $commonGroundService->saveResource($menuItem, ['component'=>'wrc','type'=>'menu_items']);
+
+            }
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'menus']);
     	}
     	return $variables;
     }
@@ -508,14 +473,12 @@ class WrcController extends AbstractController
      */
     public function configurationsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
     	$variables = [];
     	$variables['title'] = $translator->trans('configurations');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('configurations');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/configurations')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'])["hydra:member"];
 
     	return $variables;
-
     }
 
     /**
@@ -531,7 +494,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://wrc.huwelijksplanner.online/configurations/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'configurations','id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -542,7 +505,7 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('configuration');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('configuration');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -555,7 +518,7 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://wrc.huwelijksplanner.online/configurations/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'configurations']);
     	}
     	return $variables;
     }
