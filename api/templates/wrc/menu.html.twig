@@ -32,7 +32,7 @@
                                                 <label for="application">{{ 'application'|trans|capitalize }}</label>
                                                 <select id="application" name="application" class="form-control form-control-lg">
                                                     {% for application in applications %}
-                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['id'] == resource.application.id  %}selected=""{% endif %}>{{ application.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -80,7 +80,7 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">{{ 'slug'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'application'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'url'|trans|capitalize }}</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -89,6 +89,7 @@
                                             <tr>
                                                 <td>{{ item.name }}</td>
                                                 <td>{{ item.href }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editItem{{ item.id }}"  data-toggle="modal" data-target="#editItem{{ item.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -129,6 +130,11 @@
                             <input type="text" class="form-control form-control-lg" id="menuItem[icon]" name="menuItem[icon]" value="" required>
                         </div><!-- /.form-group -->
                         <div class="form-group">
+                            <label for="menuItem[href]">{{ 'url'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="menuItem[href]" name="menuItem[href]" value="" required>
+                        </div><!-- /.form-group -->
+                        {#
+                        <div class="form-group">
                             <label for="menuItem[href]">{{ 'slug'|trans|capitalize }}</label>
                             <select id="menuItem[href]" name="menuItem[href]" class="form-control form-control-lg" required>
                                 {% for slug in slugs %}
@@ -136,6 +142,7 @@
                                 {% endfor %}
                             </select>
                         </div><!-- /.form-group -->
+                        #}
 
 
                         <button type="submit" class="btn btn-success m-3  mx-auto">
@@ -146,6 +153,49 @@
             </div>
         </div>
     </div>
+
+    {% if resource.menuItems is defined %}
+        {% for item in resource.menuItems %}
+                <div class="modal fade" style="text-align: center" id="editItem{{ item.id }}" tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="editItemTitle" aria-hidden="true">
+                    <div class="modal-dialog model-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editItemTitle"><b>{{ 'edit menu item'|trans|capitalize }} {{ item.name }}</b></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ path('app_wrc_menus', {id: resource.id}) }}" method="post">
+                                <div class="form-group">
+                                    <label for="menuItem[name]">{{ 'name'|trans|capitalize }}</label>
+                                    <input type="text" class="form-control form-control-lg" id="menuItem[name]" name="menuItem[name]" value="{{ item.name }}" required>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="menuItem[description]">{{ 'description'|trans|capitalize }}</label>
+                                    <input type="text" class="form-control form-control-lg" id="menuItem[description]" name="menuItem[description]" value="{{ item.description }}" required>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="menuItem[icon]">{{ 'icon'|trans|capitalize }}</label>
+                                    <input type="text" class="form-control form-control-lg" id="menuItem[icon]" name="menuItem[icon]" value="{{ item.icon }}" required>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="menuItem[href]">{{ 'url'|trans|capitalize }}</label>
+                                    <input type="text" class="form-control form-control-lg" id="menuItem[href]" name="menuItem[href]" value="{{ item.href }}" required>
+                                </div><!-- /.form-group -->
+
+                                <input type="hidden" id="menuItem[@id]" name ="menuItem[@id]" value="{{ item['@id'] }}">
+                                <button type="submit" class="btn btn-success m-3  mx-auto">
+                                    {{ 'save'|trans|capitalize }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        {% endfor %}
+    {% endif %}
 
             {% include 'footer.html.twig' %}
 

@@ -16,6 +16,7 @@
                         <tr>
                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
                             <th scope="col">{{ 'application'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'items'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
@@ -26,6 +27,7 @@
                         <tr>
                             <td>{{ resource.name }}</td>
                             <td><a href="{{ path('app_wrc_application', {id: resource.application.id}) }}">{{ resource.application.name }}</a></td>
+                            <td>{{ resource.menuItems|length }}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
