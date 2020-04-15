@@ -450,14 +450,13 @@ class WrcController extends AbstractController
             if(array_key_exists('menuItem', $resource)){
                 // Schecker de check
 
-                if(array_key_exists('menuItems', $resource)){
-                    $resource['menuItems'] = [];
-                }
+                //if(array_key_exists('menuItems', $resource)){
+                //    $resource['menuItems'] = [];
+                //}
 
                 $menuItem = $resource['menuItem'];
-                $menuItem['menu'] = $variables['resource']['@id'];
-                $resource['menuItems'][] = $menuItem;
-                //$menuItem = $commonGroundService->saveResource($menuItem, ['component'=>'wrc','type'=>'menu_items']);
+                $menuItem['menu'] = $resource['@id'];
+                $menuItem = $commonGroundService->saveResource($menuItem, ['component'=>'wrc','type'=>'menu_items']);
 
             }
 
