@@ -74,7 +74,7 @@ class WrcController extends AbstractController
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -197,6 +197,7 @@ class WrcController extends AbstractController
     	$variables['title'] = $translator->trans('organization');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organization');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'],['organization.id'=>$id])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -373,6 +374,16 @@ class WrcController extends AbstractController
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
+    	$variables['configurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'],['application.id'=>$id])["hydra:member"];
+        $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['application.id'=>$id])["hydra:member"];
+        $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
+
+        // Als we een organisatie hebben kunnen we ook de style ophalen
+        if(array_key_exists('organization', $variables['resource'])){
+            $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'],['organization.id'=>$variables['resource']['organization']])["hydra:member"];
+        }
+
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
 
@@ -383,6 +394,34 @@ class WrcController extends AbstractController
 
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
+
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('configuration', $resource)){
+                $configuration = $resource['configuration'];
+                $configuration['application'] = $resource['@id'];
+                if(in_array('id',$configuration)){
+                    $configuration['@id'] = $configuration['id'];
+                }
+                $configuration = $commonGroundService->saveResource($configuration, ['component'=>'wrc','type'=>'configurations']);
+            }
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('template', $resource)){
+                $template = $resource['template'];
+                $template['application'] = $resource['@id'];
+                if(in_array('id',$template)){
+                    $template['@id'] = $template['id'];
+                }
+                $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+            }
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('slug', $resource)){
+                $slug = $resource['slug'];
+                $slug['application'] = $resource['@id'];
+                if(in_array('id',$slug)){
+                    $slug['@id'] = $slug['id'];
+                }
+                $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+            }
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
     	}
