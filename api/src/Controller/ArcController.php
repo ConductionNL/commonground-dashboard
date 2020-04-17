@@ -50,7 +50,7 @@ class ArcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('resources');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('resources');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://arc.huwelijksplanner.online/resources')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'arc', 'type'=>'resources'])["hydra:member"];
 
         return $variables;
     }
@@ -66,10 +66,10 @@ class ArcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://arc.huwelijksplanner.online/resources/' . $id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'arc', 'type'=>'resources','id'=>$id]);
         }
 
         // If it is a delete action we can stop right here
@@ -92,7 +92,7 @@ class ArcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://arc.huwelijksplanner.online/resources/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'arc', 'type'=>'resources']);
         }
 
         return $variables;
