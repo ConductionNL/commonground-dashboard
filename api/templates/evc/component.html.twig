@@ -22,7 +22,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="{{ path('app_evc_component', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                         <a href="{{ path('app_evc_component', {'id': resource.id, 'action':'load'}) }}" class="btn btn-success">{{ 'load excel'|trans|capitalize }}</a>
 
@@ -35,8 +35,8 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'code'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="code" placeholder="Large Input"
-                                                       value="{{ resource.code }}">
+                                                       name="code" placeholder="Large Input" {% if resource.code is defined and resource.code is not empty %}
+                                                       value="{{ resource.code }}" {% endif %}>
                                             </div>
                                         </div> <!-- /.col -->
                                         <div class="col-md-8 col-sm-12">
@@ -64,16 +64,16 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'github repository'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="githubRepository" placeholder="Large Input"
-                                                       value="{{ resource.githubRepository }}">
+                                                       name="githubRepository" placeholder="Large Input" {% if resource.githubRepository is defined and resource.githubRepository is not empty %}
+                                                       value="{{ resource.githubRepository }}" {% endif %}>
                                             </div>
                                         </div> <!-- /.col -->
                                         <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'helm repository'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="helmRepository" placeholder="Large Input"
-                                                       value="{{ resource.helmRepository }}">
+                                                       name="helmRepository" placeholder="Large Input" {% if resource.helmRepository is defined and resource.helmRepository is not empty %}
+                                                       value="{{ resource.helmRepository }}" {% endif %}>
                                             </div>
                                         </div> <!-- /.col -->
                                         <div class="col-md-3 col-sm-12">
@@ -103,9 +103,6 @@
                     <div class="card p-4 full-height">
                         <div class="card-header">
                             <h3 class="d-inline-block">{{ 'installations'|trans|capitalize }}</h3>
-                            <div class="float-right">
-                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addInstallation"  data-toggle="modal" data-target="#addInstallation">{{ 'add installation'|trans|capitalize }}</a>
-                            </div>
                         </div>
                         <div class="card-body">
                             {% if domains is defined %}
