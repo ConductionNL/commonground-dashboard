@@ -115,7 +115,7 @@ parameters:
     env(APP_COMMONGROUND_EVC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     common_ground.evc.apikey: '%env(APP_COMMONGROUND_EVC_APIKEY)%'
     # AgendaRegistratieComponent
-    env(APP_COMMONGROUND_ARC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_ARC_LOCATION): 'https://arc.%env(APP_DOMAIN)%'
     common_ground.arc.location: '%env(APP_COMMONGROUND_ARC_LOCATION)%'
     env(APP_COMMONGROUND_ARC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     common_ground.arc.apikey: '%env(APP_COMMONGROUND_ARC_APIKEY)%'
@@ -228,6 +228,9 @@ parameters:
         uc:
             location: '%env(APP_COMMONGROUND_UC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_UC_APIKEY)%'
+        arc:
+            location: '%env(APP_COMMONGROUND_ARC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_ARC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
