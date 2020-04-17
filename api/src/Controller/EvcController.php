@@ -63,28 +63,28 @@ class EvcController extends AbstractController
 
         $variables = [];
 
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'evc','type'=>'clusters','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_evc_clusters'));
+        }
+
         // Lets see if we need to create
         if($id == 'new'){
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'clusters','id'=>$id]);
-        }
-
-        // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_evc_clusters'));
-        }
-
-        $variables['title'] = $translator->trans('cluster');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('cluster');
-
-        if($id != 'new'){
             $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'domains'],['cluster.id'=>$id])['hydra:member'];
             $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'events'],['cluster.id'=>$id])['hydra:member'];
             $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'events'],['environment.cluster.id'=>$id])['hydra:member'];
         }
+
+
+
+        $variables['title'] = $translator->trans('cluster');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('cluster');
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -248,26 +248,23 @@ class EvcController extends AbstractController
     {
     	$variables = [];
 
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'evc','type'=>'components','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_evc_components'));
+        }
+
     	// Lets see if we need to create
     	if($id == 'new'){
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'components']);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_components'));
-    	}
-
-    	$variables['title'] = $translator->trans('component');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('component');
-
-        if($id != 'new') {
             $variables['installations'] = $commonGroundService->getResourceList(['component' => 'evc', 'type' => 'installations'], ['component.id' => $id])['hydra:member'];
         }
+
+        $variables['title'] = $translator->trans('component');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('component');
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -276,15 +273,7 @@ class EvcController extends AbstractController
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
-
-            if(key_exists('installation', $resource)){
-                $installation = $resource['installation'];
-                $installation['calendar'] = $resource['@id'];
-                if(in_array('id',$installation)){
-                    $installation['@id'] = $installation['id'];
-                }
-                $installation = $commonGroundService->saveResource($installation, ['component'=>'evc','type'=>'installations']);
-            }
+    		
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'evc', 'type'=>'components']);
     	}
 
