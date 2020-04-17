@@ -253,6 +253,9 @@ parameters:
         arc:
             location: '%env(APP_COMMONGROUND_ARC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_ARC_APIKEY)%'
+        evc:
+            location: '%env(APP_COMMONGROUND_EVC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_EVC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl

@@ -22,14 +22,24 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <a href="{{ path('app_evc_component', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        <a href="{{ path('app_evc_component', {'id': resource.id, 'action':'load'}) }}" class="btn btn-success">{{ 'load excel'|trans|capitalize }}</a>
+
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'code'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="code" placeholder="Large Input" {% if resource.code is defined and resource.code is not empty %}
+                                                       value="{{ resource.code }}" {% endif %}>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-8 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -48,6 +58,36 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'github repository'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="githubRepository" placeholder="Large Input" {% if resource.githubRepository is defined and resource.githubRepository is not empty %}
+                                                       value="{{ resource.githubRepository }}" {% endif %}>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'helm repository'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="helmRepository" placeholder="Large Input" {% if resource.helmRepository is defined and resource.helmRepository is not empty %}
+                                                       value="{{ resource.helmRepository }}" {% endif %}>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'core'|trans|capitalize }}</label>
+                                                <input type="radio" class="form-control form-control-lg" id="core false"
+                                                       name="core"
+                                                       value=false checked><label for="core false">{{ 'no'|trans|capitalize }}</label>
+                                                <input type="radio" class="form-control form-control-lg" id="core true"
+                                                       name="core"
+                                                       value=true><label for="core true">{{ 'yes'|trans|capitalize }}</label>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
@@ -57,37 +97,50 @@
                         </div><!-- /.card -->
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card p-4 full-height">
+                        <div class="card-header">
+                            <h3 class="d-inline-block">{{ 'installations'|trans|capitalize }}</h3>
+                        </div>
+                        <div class="card-body">
+                            {% if domains is defined %}
                                 <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
                                     <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
+                                    {% for installation in installations %}
+                                        <tr>
+                                            <td>{{ installation.name }}</td>
+                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editDomain{{ installation.id }}"  data-toggle="modal" data-target="#editDomain{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td><
+                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}"  data-toggle="modal" data-target="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
+                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'update'}) }}"  data-toggle="modal" data-target="{{ path('app_evc_installation', {'id': installation.id, 'action':'update'}) }}">{{ 'update'|trans|capitalize }}</a></td>
+                                            <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}"  data-toggle="modal" data-target="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                            {% endif %}
+                        </div> <!-- /.card-body -->
+                        <div class="card-action">
+                        </div><!-- /.card-action -->
+                    </div><!-- /.card -->
+                </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
+
+
         {% include 'footer.html.twig' %}
 
-    </div>
     </div>
 
 {% endblock %}
