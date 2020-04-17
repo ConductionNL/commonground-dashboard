@@ -23,7 +23,7 @@ class WrcController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(Request $request, CommonGroundService $commonGroundService)
+    public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
     	$variables['title'] = $translator->trans('webresources');
@@ -372,14 +372,14 @@ class WrcController extends AbstractController
 
     	$variables['title'] = $translator->trans('application');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
-    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
     	$variables['configurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'],['application.id'=>$id])["hydra:member"];
         $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
         $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['application.id'=>$id])["hydra:member"];
         $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
 
-        // Als we een organisatie hebben kunnen we ook de style ophalen
+        // Als we een organisatie hebben kunnen we ook de style ophalen @to engels!
         if(array_key_exists('organization', $variables['resource'])){
             $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'],['organization.id'=>$variables['resource']['organization']])["hydra:member"];
         }
@@ -404,6 +404,7 @@ class WrcController extends AbstractController
                 }
                 $configuration = $commonGroundService->saveResource($configuration, ['component'=>'wrc','type'=>'configurations']);
             }
+
             // Lets see if we also need to add an configuration
             if(array_key_exists('template', $resource)){
                 $template = $resource['template'];
@@ -413,6 +414,7 @@ class WrcController extends AbstractController
                 }
                 $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
             }
+
             // Lets see if we also need to add an configuration
             if(array_key_exists('slug', $resource)){
                 $slug = $resource['slug'];
@@ -421,6 +423,16 @@ class WrcController extends AbstractController
                     $slug['@id'] = $slug['id'];
                 }
                 $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+            }
+
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('menu', $resource)){
+                $menu = $resource['menu'];
+                $menu['application'] = $resource['@id'];
+                if(in_array('id',$menu)){
+                    $menu['@id'] = $menu['id'];
+                }
+                $menu = $commonGroundService->saveResource($menu, ['component'=>'wrc','type'=>'menus']);
             }
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
