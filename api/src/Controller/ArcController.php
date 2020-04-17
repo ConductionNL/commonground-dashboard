@@ -246,7 +246,7 @@ class ArcController extends AbstractController
         if($id == 'new'){
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
-    else{
+        else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'arc', 'type'=>'calendars','id'=>$id]);
         }
 
@@ -259,14 +259,15 @@ class ArcController extends AbstractController
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
-
-        $variables['schedules'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];
-        $variables['events'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'events'],['calendar.id'=>$id])['hydra:member'];
-        $variables['todos'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'todos'],['calendar.id'=>$id])['hydra:member'];
-        $variables['journals'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'journals'],['calendar.id'=>$id])['hydra:member'];
-        $variables['freebusies'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'freebusies'],['calendar.id'=>$id])['hydra:member'];
-        $variables['alarms'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['event.calendar.id'=>$id])['hydra:member'];
-        $variables['alarms'] = array_merge($variables['alarms'],$commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['todo.calendar.id'=>$id])['hydra:member']);
+        if($id != 'new'){
+            $variables['schedules'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];
+            $variables['events'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'events'],['calendar.id'=>$id])['hydra:member'];
+            $variables['todos'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'todos'],['calendar.id'=>$id])['hydra:member'];
+            $variables['journals'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'journals'],['calendar.id'=>$id])['hydra:member'];
+            $variables['freebusies'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'freebusies'],['calendar.id'=>$id])['hydra:member'];
+            $variables['alarms'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['event.calendar.id'=>$id])['hydra:member'];
+            $variables['alarms'] = array_merge($variables['alarms'],$commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['todo.calendar.id'=>$id])['hydra:member']);
+        }
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {

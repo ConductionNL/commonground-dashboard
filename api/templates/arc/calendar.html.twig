@@ -478,18 +478,22 @@
                                 <label for="largeInput">{{ 'related event'|trans|capitalize }}</label>
                                 <select id="alarm[event]" name="alarm[event]" class="form-control form-control-lg">
                                     <option value=""></option>
+                                    {% if events is defined %}
                                     {% for event in events %}
                                         <option value="{{ event['@id'] }}" {% if alarm.event  is defined and event['@id'] == alarm.event   %}selected=""{% endif %}>{{ event.name }}</option>
                                     {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'related todo'|trans|capitalize }}</label>
                                 <select id="alarm[todo]" name="alarm[todo]" class="form-control form-control-lg">
                                     <option value=""></option>
+                                    {% if todos is defined %}
                                     {% for todo in todos %}
                                         <option value="{{ todo['@id'] }}" {% if alarm.todo  is defined and todo['@id'] == alarm.todo   %}selected=""{% endif %}>{{ todo.name }}</option>
                                     {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <button type="submit" class="btn btn-success m-3  mx-auto">
