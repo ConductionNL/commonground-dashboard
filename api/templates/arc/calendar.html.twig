@@ -1,0 +1,507 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div class="page-inner">
+                <div class="row">
+
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_arc_calendar', {'id': resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <div class="float-right">
+                                        <a href="{{ path('app_arc_calendar', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <div class="col-md-8 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'timeZone'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="domain" name ="domain" value="{% if resource.timeZone is defined %}{{ resource.timeZone }}{% endif %}" required>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'schedules'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSchedule"  data-toggle="modal" data-target="#addSchedule">{{ 'add schedule'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if schedules is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for schedule in schedules %}
+                                            <tr>
+                                                <td>{{ schedule.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editSchedule{{ schedule.id }}"  data-toggle="modal" data-target="#editSchedule{{ schedule.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'events'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addEvent"  data-toggle="modal" data-target="#addEvent">{{ 'add event'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if events is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for event in events %}
+                                            <tr>
+                                                <td>{{ event.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px"  href="#editEvent{{ event.id }}"  data-toggle="modal" data-target="#editEvent{{ event.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'todos'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTodo"  data-toggle="modal" data-target="#addTodo">{{ 'add todo'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if todos is todo %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for todo in todos %}
+                                            <tr>
+                                                <td>{{ todo.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editTodo{{ todo.id }}"  data-toggle="modal" data-target="#editTodo{{ todo.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'journals'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addJournal"  data-toggle="modal" data-target="#addJournal">{{ 'add journal'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if journals is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for journal in journals %}
+                                            <tr>
+                                                <td>{{ journal.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editJournal{{ journal.id }}"  data-toggle="modal" data-target="#editJournal{{ journal.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'freebusies'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addFreeBusy"  data-toggle="modal" data-target="#addFreeBusy">{{ 'add freebusy'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if freebusies is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for freebusy in freebusies %}
+                                            <tr>
+                                                <td>{{ freebusy.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editFreeBusy{{ freebusy.id }}"  data-toggle="modal" data-target="#editFreeBusy{{ freebusy.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'alarms'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addAlarm"  data-toggle="modal" data-target="#addAlarm">{{ 'add event'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if alarms is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for alarm in alarms %}
+                                            <tr>
+                                                <td>{{ alarm.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px"  href="#editEvent{{ alarm.id }}"  data-toggle="modal" data-target="#editEvent{{ alarm.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+
+            <div class="modal fade" style="text-align: center" id="addSchedule" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addScheduleTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add schedule'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="schedule[name]" name="schedule[name]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="schedule[description]" name="schedule[description]" value="">
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="text-align: center" id="addEvent" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addEventTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addEventTitle"><b>{{ 'add event'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="event[name]" name="event[name]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="event[description]" name="event[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'from'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="event[startDate]" name="event[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="event[startDate]" name="event[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="text-align: center" id="addTodo" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addTodoTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addJournalTitle"><b>{{ 'add todo'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="todo[name]" name="todo[name]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="todo[description]" name="todo[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'from'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="todo[startDate]" name="todo[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="todo[startDate]" name="todo[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="text-align: center" id="addJournal" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addJournalTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addJournalTitle"><b>{{ 'add journal'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="journal[name]" name="journal[name]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="journal[description]" name="journal[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'from'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="text-align: center" id="addFreeBusy" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addFreeBusyTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addFreeBusyTitle"><b>{{ 'add freebusy'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'from'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
+                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'free or busy?'|trans|capitalize }}</label>
+                                <select id="freebusy[freebusy]" name="freebusy[freebusy]" class="form-control form-control-lg">
+                                    <option value="FREE">{{ 'free'|trans|capitalize }}</option>
+                                    <option value="BUSY">{{ 'busy'|trans|capitalize }}</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" style="text-align: center" id="addAlarm" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addAlarmTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addAlarmTitle"><b>{{ 'add alarm'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="alarm[name]" name="alarm[name]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="alarm[description]" name="alarm[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'action'|trans|capitalize }}</label>
+                                <select id="alarm[action]" name="alarm[action]" class="form-control form-control-lg">
+                                    <option value="AUDIO">{{ 'audio'|trans|capitalize }}</option>
+                                    <option value="DISPLAY">{{ 'display'|trans|capitalize }}</option>
+                                    <option value="EMAIL">{{ 'email'|trans|capitalize }}</option>
+                                    <option value="PROCEDURE">{{ 'procedure'|trans|capitalize }}</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'trigger in minutes'|trans|capitalize }}</label>
+                                <input type="number" class="form-control form-control-lg" id="alarm[trigger]" name="alarm[trigger]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'duration in minutes'|trans|capitalize }}</label>
+                                <input type="number" class="form-control form-control-lg" id="alarm[duration]" name="alarm[duration]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'number of repeats'|trans|capitalize }}</label>
+                                <input type="number" class="form-control form-control-lg" id="alarm[repeat]" name="alarm[repeat]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'related event'|trans|capitalize }}</label>
+                                <select id="alarm[event]" name="alarm[event]" class="form-control form-control-lg">
+                                    <option value=""></option>
+                                    {% for event in events %}
+                                        <option value="{{ event['@id'] }}" {% if alarm.event  is defined and event['@id'] == alarm.event   %}selected=""{% endif %}>{{ event.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'related todo'|trans|capitalize }}</label>
+                                <select id="alarm[todo]" name="alarm[todo]" class="form-control form-control-lg">
+                                    <option value=""></option>
+                                    {% for todo in todos %}
+                                        <option value="{{ todo['@id'] }}" {% if alarm.event  is defined and todo['@id'] == alarm.event   %}selected=""{% endif %}>{{ event.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}

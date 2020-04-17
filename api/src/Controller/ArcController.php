@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class PdcController
  * @package App\Controller
- * @Route("/ac")
+ * @Route("/arc")
  */
 class ArcController extends AbstractController
 {
@@ -68,7 +68,7 @@ class ArcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/resources/' . $id);
+            $variables['resource'] = $commonGroundService->getResource('https://arc.huwelijksplanner.online/resources/' . $id);
         }
 
         // If it is a delete action we can stop right here
@@ -91,7 +91,7 @@ class ArcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://ac.huwelijksplanner.online/resources/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,'https://arc.huwelijksplanner.online/resources/');
         }
 
         return $variables;
@@ -222,7 +222,7 @@ class ArcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('calendars');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('calendars');
-        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/calendars')["hydra:member"];
+        $variables['resources'] =  $commonGroundService->getResource(['component'=>'arc', 'type'=>'calendars'])["hydra:member"];
 
         return $variables;
     }
@@ -241,7 +241,7 @@ class ArcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/calendars/' . $id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'arc', 'type'=>'calendars','id'=>$id]);
         }
 
         // If it is a delete action we can stop right here
@@ -251,7 +251,15 @@ class ArcController extends AbstractController
 
         $variables['title'] = $translator->trans('calendar');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        $variables['schedules'] = $commonGroundService->getResource(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];
+        $variables['events'] = $commonGroundService->getResource(['component'=>'arc','type'=>'events'],['calendar.id'=>$id])['hydra:member'];
+        $variables['todos'] = $commonGroundService->getResource(['component'=>'arc','type'=>'todos'],['calendar.id'=>$id])['hydra:member'];
+        $variables['journals'] = $commonGroundService->getResource(['component'=>'arc','type'=>'journals'],['calendar.id'=>$id])['hydra:member'];
+        $variables['freebusies'] = $commonGroundService->getResource(['component'=>'arc','type'=>'freebusies'],['calendar.id'=>$id])['hydra:member'];
+        $variables['alarms'] = $commonGroundService->getResource(['component'=>'arc','type'=>'alarms'],['event.calendar.id'=>$id])['hydra:member'];
+        $variables['alarms'] .= $commonGroundService->getResource(['component'=>'arc','type'=>'alarms'],['todo.calendar.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -261,10 +269,55 @@ class ArcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            // If there are any sub data sources the need to be removed below in order to save the resource
-            // unset($resource['somedatasource'])
-
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://ac.huwelijksplanner.online/calendars/');
+            if(key_exists('schedule', $resource)){
+                $schedule = $resource['schedule'];
+                $schedule['calendar'] = $resource['@id'];
+                if(in_array('id',$schedule)){
+                    $schedule['@id'] = $schedule['id'];
+                }
+                $schedule = $commonGroundService->saveResource($schedule, ['component'=>'arc','type'=>'schedules']);
+            }
+            if(key_exists('event', $resource)){
+                $event = $resource['event'];
+                $event['calendar'] = $resource['@id'];
+                if(in_array('id',$event)){
+                    $event['@id'] = $event['id'];
+                }
+                $event = $commonGroundService->saveResource($event, ['component'=>'arc','type'=>'events']);
+            }
+            if(key_exists('todo', $resource)){
+                $todo = $resource['todo'];
+                $todo['calendar'] = $resource['@id'];
+                if(in_array('id',$todo)){
+                    $todo['@id'] = $todo['id'];
+                }
+                $todo = $commonGroundService->saveResource($todo, ['component'=>'arc','type'=>'todos']);
+            }
+            if(key_exists('journal', $resource)){
+                $journal = $resource['event'];
+                $journal['calendar'] = $resource['@id'];
+                if(in_array('id',$journal)){
+                    $alarm['@id'] = $journal['id'];
+                }
+                $journal = $commonGroundService->saveResource($journal, ['component'=>'arc','type'=>'journals']);
+            }
+            if(key_exists('freeBusy', $resource)){
+                $freeBusy = $resource['freeBusy'];
+                $freeBusy['calendar'] = $resource['@id'];
+                if(in_array('id',$freeBusy)){
+                    $alarm['@id'] = $freeBusy['id'];
+                }
+                $freeBusy = $commonGroundService->saveResource($freeBusy, ['component'=>'arc','type'=>'freebusies']);
+            }
+            if(key_exists('alarm', $resource)){
+                $alarm = $resource['alarm'];
+                $alarm['calendar'] = $resource['@id'];
+                if(in_array('id',$alarm)){
+                    $alarm['@id'] = $alarm['id'];
+                }
+                $alarm = $commonGroundService->saveResource($alarm, ['component'=>'arc','type'=>'alarms']);
+            }
+            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'arc','type'=>'calendars']);
         }
 
         return $variables;
