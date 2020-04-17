@@ -83,6 +83,7 @@ class EvcController extends AbstractController
         if($id != 'new'){
             $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'domains'],['cluster.id'=>$id])['hydra:member'];
             $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'events'],['cluster.id'=>$id])['hydra:member'];
+            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'events'],['environment.cluster.id'=>$id])['hydra:member'];
         }
 
         // Lets see if there is a post to procces
@@ -384,25 +385,19 @@ class EvcController extends AbstractController
 //    		$commonGroundService->deleteResource($variables['resource']);
 //    		return $this->redirect($this->generateUrl('app_evc_installations'));
 //    	}
-//
-//    	$variables['title'] = $translator->trans('installation');
-//    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('installation');
-//
-//    	// Lets see if there is a post to procces
-//    	if ($request->isMethod('POST')) {
-//
-//    		// Passing the variables to the resource
-//    		$resource = $request->request->all();
-//    		$resource['@id'] = $variables['resource']['@id'];
-//    		$resource['id'] = $variables['resource']['id'];
-//
-//    		// If there are any sub data sources the need to be removed below in order to save the resource
-//    		// unset($resource['somedatasource'])
-//
-//    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/installations/');
+//    	if($request->query->get('action') == 'install'){
+//    		$commonGroundService->getResource($variables['resource'].'/install');
+//    		return $this->redirect($this->generateUrl('app_evc_installations'));
+//    	}
+//    	if($request->query->get('action') == 'update'){
+//    		$commonGroundService->getResource($variables['resource'].'/update');
+//    		return $this->redirect($this->generateUrl('app_evc_installations'));
+//    	}
+//    	if($request->query->get('action') == 'update'){
+//    		$commonGroundService->getResource($variables['resource'].'/delete');
+//    		return $this->redirect($this->generateUrl('app_evc_installations'));
 //    	}
 //
-//    	return $variables;
 //    }
 
 
