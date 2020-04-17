@@ -257,7 +257,6 @@ class ArcController extends AbstractController
 
         $variables['title'] = $translator->trans('calendar');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         if($id != 'new'){
             $variables['schedules'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];

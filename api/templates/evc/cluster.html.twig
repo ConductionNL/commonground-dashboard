@@ -11,7 +11,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' %}
 
             <div class="page-inner">
                 <div class="row">
@@ -22,8 +22,9 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'load'}) }}" class="btn btn-success">{{ 'load excel'|trans|capitalize }}</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -59,35 +60,147 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2>Groups</h2>
+                                <h3 class="d-inline-block">{{ 'domains'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addDomain"  data-toggle="modal" data-target="#addDomain">{{ 'add schedule'|trans|capitalize }}</a>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
+                                {% if domains is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for domain in domains %}
+                                            <tr>
+                                                <td>{{ domain.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editDomain{{ domain.id }}"  data-toggle="modal" data-target="#editDomain{{ domain.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'environments'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addEnvironment"  data-toggle="modal" data-target="#addEnvironment">{{ 'add schedule'|trans|capitalize }}</a>
+                                </div>
                             </div>
+                            <div class="card-body">
+                                {% if environments is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for environment in environments %}
+                                            <tr>
+                                                <td>{{ environment.name }}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editEnvironment{{ environment.id }}"  data-toggle="modal" data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+            <div class="modal fade" style="text-align: center" id="addDomain" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addDomainTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addDomainTitle"><b>{{ 'add domain'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
+                        <form action="{{ path('app_evc_cluster', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="domain[name]" name="domain[name]" value="" required>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="domain[location]" name="domain[location]" value="" required>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="domain[description]" name="domain[description]" value="">
+                            </div><!-- /.form-group -->
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
                     </div>
                 </div>
+            </div>
 
-            </div><!-- /.row -->
-        </div><!-- /.page-inner -->
+            <div class="modal fade" style="text-align: center" id="addEnvironment" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addEnvironmentTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addEnvironmentTitle"><b>{{ 'add domain'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_evc_cluster', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="environment[name]" name="environment[name]" value="" required>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="environment[description]" name="environment[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'debug'|trans|capitalize }}</label>
+                                <input type="radio" class="form-control form-control-lg" id="environment[debug] off" name="environment[debug]" value=0 checked><label for="environment[debug] off">No</label>
+                                <input type="radio" class="form-control form-control-lg" id="environment[debug] on" name="environment[debug]" value=1 ><label for="environment[debug] on">Yes</label>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'authorization key'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="environment[authorization]" name="environment[authorization]" value="" required>
+                            </div><!-- /.form-group -->
 
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         {% include 'footer.html.twig' %}
 
-    </div>
+       </div>
     </div>
 
 {% endblock %}
