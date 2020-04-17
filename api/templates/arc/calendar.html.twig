@@ -37,8 +37,8 @@
                                         </div> <!-- /.col -->
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'timeZone'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="domain" name ="domain" value="{% if resource.timeZone is defined %}{{ resource.timeZone }}{% endif %}" required>
+                                                <label for="largeInput">{{ 'timezone'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="domain" name ="timeZone" value="{% if resource.timeZone is defined %}{{ resource.timeZone }}{% endif %}" required>
                                             </div>
                                         </div> <!-- /.col -->
 
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {% if todos is todo %}
+                                {% if todos is defined %}
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
@@ -206,14 +206,14 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'id'|trans|capitalize }}</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for freebusy in freebusies %}
                                             <tr>
-                                                <td>{{ freebusy.name }}</td>
+                                                <td>{{ freebusy.id }}</td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editFreeBusy{{ freebusy.id }}"  data-toggle="modal" data-target="#editFreeBusy{{ freebusy.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
@@ -276,7 +276,7 @@
                         <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
                             <div class="form-group">
                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="schedule[name]" name="schedule[name]" value="">
+                                <input type="text" class="form-control form-control-lg" id="schedule[name]" name="schedule[name]" value="" required>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
@@ -304,19 +304,19 @@
                         <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
                             <div class="form-group">
                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="event[name]" name="event[name]" value="">
+                                <input type="text" class="form-control form-control-lg" id="event[name]" name="event[name]" value="" required>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="event[description]" name="event[description]" value="">
+                                <input type="text" class="form-control form-control-lg" id="event[description]" name="event[description]" value="" >
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'from'|trans|capitalize }}</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="event[startDate]" name="event[startDate]" value="">
+                                <input type="datetime-local" class="form-control form-control-lg" id="event[startDate]" name="event[startDate]" value="" required>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="event[startDate]" name="event[startDate]" value="">
+                                <input type="datetime-local" class="form-control form-control-lg" id="event[endDate]" name="event[endDate]" value="" required>
                             </div><!-- /.form-group -->
                             <button type="submit" class="btn btn-success m-3  mx-auto">
                                 {{ 'add'|trans|capitalize }}
@@ -352,7 +352,7 @@
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="todo[startDate]" name="todo[startDate]" value="">
+                                <input type="datetime-local" class="form-control form-control-lg" id="todo[endDate]" name="todo[endDate]" value="">
                             </div><!-- /.form-group -->
                             <button type="submit" class="btn btn-success m-3  mx-auto">
                                 {{ 'add'|trans|capitalize }}
@@ -388,7 +388,7 @@
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                                <input type="datetime-local" class="form-control form-control-lg" id="journal[endDate]" name="journal[endDate]" value="">
                             </div><!-- /.form-group -->
                             <button type="submit" class="btn btn-success m-3  mx-auto">
                                 {{ 'add'|trans|capitalize }}
@@ -412,15 +412,15 @@
                         <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
                             <div class="form-group">
                                 <label for="largeInput">{{ 'from'|trans|capitalize }}</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                                <input type="datetime-local" class="form-control form-control-lg" id="freeBusy[startDate]" name="freeBusy[startDate]" value="">
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'until'|trans|capitalize }}</label>
-                                <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="">
+                                <input type="datetime-local" class="form-control form-control-lg" id="freeBusy[endDate]" name="freeBusy[endDate]" value="">
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'free or busy?'|trans|capitalize }}</label>
-                                <select id="freebusy[freebusy]" name="freebusy[freebusy]" class="form-control form-control-lg">
+                                <select id="freeBusy[freebusy]" name="freeBusy[freebusy]" class="form-control form-control-lg">
                                     <option value="FREE">{{ 'free'|trans|capitalize }}</option>
                                     <option value="BUSY">{{ 'busy'|trans|capitalize }}</option>
                                 </select>
@@ -488,7 +488,7 @@
                                 <select id="alarm[todo]" name="alarm[todo]" class="form-control form-control-lg">
                                     <option value=""></option>
                                     {% for todo in todos %}
-                                        <option value="{{ todo['@id'] }}" {% if alarm.event  is defined and todo['@id'] == alarm.event   %}selected=""{% endif %}>{{ event.name }}</option>
+                                        <option value="{{ todo['@id'] }}" {% if alarm.todo  is defined and todo['@id'] == alarm.todo   %}selected=""{% endif %}>{{ todo.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div><!-- /.form-group -->

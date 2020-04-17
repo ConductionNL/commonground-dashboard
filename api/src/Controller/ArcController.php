@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -219,12 +220,17 @@ class ArcController extends AbstractController
      */
     public function calendarsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+
         $variables = [];
         $variables['title'] = $translator->trans('calendars');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('calendars');
-        $variables['resources'] =  $commonGroundService->getResource(['component'=>'arc', 'type'=>'calendars'])["hydra:member"];
+        $variables['resources'] =  $commonGroundService->getResourceList(['component'=>'arc', 'type'=>'calendars'])["hydra:member"];
 
         return $variables;
+    }
+    private function durationConverter($minutes){
+        $diff = \DateInterval::createFromDateString($minutes." minutes");
+        return $diff->format('P%yY%mM%dDT%hH%IM%sS');
     }
 
     /**
@@ -233,14 +239,14 @@ class ArcController extends AbstractController
      */
     public function calendarAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
+
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
-        else{
+    else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'arc', 'type'=>'calendars','id'=>$id]);
         }
 
@@ -253,13 +259,14 @@ class ArcController extends AbstractController
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
-        $variables['schedules'] = $commonGroundService->getResource(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];
-        $variables['events'] = $commonGroundService->getResource(['component'=>'arc','type'=>'events'],['calendar.id'=>$id])['hydra:member'];
-        $variables['todos'] = $commonGroundService->getResource(['component'=>'arc','type'=>'todos'],['calendar.id'=>$id])['hydra:member'];
-        $variables['journals'] = $commonGroundService->getResource(['component'=>'arc','type'=>'journals'],['calendar.id'=>$id])['hydra:member'];
-        $variables['freebusies'] = $commonGroundService->getResource(['component'=>'arc','type'=>'freebusies'],['calendar.id'=>$id])['hydra:member'];
-        $variables['alarms'] = $commonGroundService->getResource(['component'=>'arc','type'=>'alarms'],['event.calendar.id'=>$id])['hydra:member'];
-        $variables['alarms'] .= $commonGroundService->getResource(['component'=>'arc','type'=>'alarms'],['todo.calendar.id'=>$id])['hydra:member'];
+
+        $variables['schedules'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];
+        $variables['events'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'events'],['calendar.id'=>$id])['hydra:member'];
+        $variables['todos'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'todos'],['calendar.id'=>$id])['hydra:member'];
+        $variables['journals'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'journals'],['calendar.id'=>$id])['hydra:member'];
+        $variables['freebusies'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'freebusies'],['calendar.id'=>$id])['hydra:member'];
+        $variables['alarms'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['event.calendar.id'=>$id])['hydra:member'];
+        $variables['alarms'] = array_merge($variables['alarms'],$commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['todo.calendar.id'=>$id])['hydra:member']);
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -294,7 +301,7 @@ class ArcController extends AbstractController
                 $todo = $commonGroundService->saveResource($todo, ['component'=>'arc','type'=>'todos']);
             }
             if(key_exists('journal', $resource)){
-                $journal = $resource['event'];
+                $journal = $resource['journal'];
                 $journal['calendar'] = $resource['@id'];
                 if(in_array('id',$journal)){
                     $alarm['@id'] = $journal['id'];
@@ -314,6 +321,17 @@ class ArcController extends AbstractController
                 $alarm['calendar'] = $resource['@id'];
                 if(in_array('id',$alarm)){
                     $alarm['@id'] = $alarm['id'];
+                }
+                $alarm['duration'] = $this->durationConverter($alarm['duration']);
+                $alarm['trigger'] = $this->durationConverter($alarm['trigger']);
+                $alarm['repeat'] = (int)$alarm['repeat'];
+//                var_dump($alarm['trigger']);
+//                die;
+                if($alarm['event'] == ""){
+                    unset($alarm['event']);
+                }
+                if($alarm['todo'] == ""){
+                    unset($alarm['todo']);
                 }
                 $alarm = $commonGroundService->saveResource($alarm, ['component'=>'arc','type'=>'alarms']);
             }
