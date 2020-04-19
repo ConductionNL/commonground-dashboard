@@ -421,6 +421,11 @@ class WrcController extends AbstractController
                 $template = $resource['template'];
                 $template['application'] = $resource['@id'];
 
+                // This needs to be al boolean for posting
+                if(key_exists("slug",$template)){
+                    $template['slug']= $template['slug'] === 'true'? true: false;;
+                }
+
                 // The resource action section
                 if(key_exists("@id",$template) && key_exists("action",$template)){
                     // The delete action
@@ -531,16 +536,34 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
+            /* @todo dit vervangen door https://twig.symfony.com/doc/2.x/filters/u.html */
+            // Hacky
+            if(array_key_exists('menuitem', $resource)){
+                $resource['menuItem'] = $resource['menuitem'];
+            }
+
             // Lets see if we also need to add an slug
             if(array_key_exists('menuItem', $resource)){
-                // Schecker de check
-
-                //if(array_key_exists('menuItems', $resource)){
-                //    $resource['menuItems'] = [];
-                //}
 
                 $menuItem = $resource['menuItem'];
                 $menuItem['menu'] = $resource['@id'];
+
+                if(array_key_exists('order', $menuItem)) {
+                    $menuItem['order'] = intval($menuItem['order']);
+                }
+
+
+
+                // The resource action section
+                if(key_exists("@id",$menuItem) && key_exists("action",$menuItem)){
+                    // The delete action
+                    if($menuItem['action'] == 'delete'){
+
+                        $commonGroundService->deleteResource($menuItem);
+                        return $this->redirect($this->generateUrl('app_wrc_menu',['id'=>$id]));
+                    }
+                }
+
                 $menuItem = $commonGroundService->saveResource($menuItem, ['component'=>'wrc','type'=>'menu_items']);
 
             }
