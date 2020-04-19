@@ -15,7 +15,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_wrc_menu', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="#deleteMenu" class="btn btn-danger" style="margin-right: 25px" data-toggle="modal" data-target="#deleteMenu">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -82,6 +82,7 @@
                                             <th scope="col">{{ 'slug'|trans|capitalize }}</th>
                                             <th scope="col">{{ 'url'|trans|capitalize }}</th>
                                             <th scope="col"></th>
+                                            <th scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -90,6 +91,7 @@
                                                 <td>{{ item.name }}</td>
                                                 <td>{{ item.href }}</td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editItem{{ item.id }}"  data-toggle="modal" data-target="#editItem{{ item.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-danger btn-block" style="margin-right: 25px" href="#deleteItem{{ item.id }}"  data-toggle="modal" data-target="#deleteItem{{ item.id }}">{{ 'delete'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -104,102 +106,47 @@
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
 
-        <div class="modal fade" style="text-align: center" id="addItem" tabindex="-1"
-             role="dialog"
-             aria-labelledby="addItemTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addItemTitle"><b>{{ 'add menu item'|trans|capitalize }}</b></h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ path('app_wrc_menu', {id: resource.id}) }}" method="post">
-                        <div class="form-group">
-                            <label for="menuItem[name]">{{ 'name'|trans|capitalize }}</label>
-                            <input type="text" class="form-control form-control-lg" id="menuItem[name]" name="menuItem[name]" value="" required>
-                        </div><!-- /.form-group -->
-                        <div class="form-group">
-                            <label for="menuItem[description]">{{ 'description'|trans|capitalize }}</label>
-                            <input type="text" class="form-control form-control-lg" id="menuItem[description]" name="menuItem[description]" value="" required>
-                        </div><!-- /.form-group -->
-                        <div class="form-group">
-                            <label for="menuItem[icon]">{{ 'icon'|trans|capitalize }}</label>
-                            <input type="text" class="form-control form-control-lg" id="menuItem[icon]" name="menuItem[icon]" value="" >
-                        </div><!-- /.form-group -->
-                        <div class="form-group">
-                            <label for="menuItem[href]">{{ 'url'|trans|capitalize }}</label>
-                            <input type="text" class="form-control form-control-lg" id="menuItem[href]" name="menuItem[href]" value="" >
-                        </div><!-- /.form-group -->
-                        {#
-                        <div class="form-group">
-                            <label for="menuItem[href]">{{ 'slug'|trans|capitalize }}</label>
-                            <select id="menuItem[href]" name="menuItem[href]" class="form-control form-control-lg" required>
-                                {% for slug in slugs %}
-                                    <option value="{{ slug.slug }}">{{ slug.name }} | {{ slug.slug }}</option>
-                                {% endfor %}
-                            </select>
-                        </div><!-- /.form-group -->
-                        #}
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                    'route': 'app_wrc_menu',
+                    'resource':resource,
+                    'id':'deleteMenu' }
+            %}
 
 
-                        <button type="submit" class="btn btn-success m-3  mx-auto">
-                            {{ 'add'|trans|capitalize }}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+            {% include 'wrc/modals/menuItem.html.twig'
+                with {
+                    'route': 'app_wrc_menu',
+                    'resource':resource,
+                    'id':'addItem' }
+            %}
 
-    {% if resource.menuItems is defined %}
-        {% for item in resource.menuItems %}
-                <div class="modal fade" style="text-align: center" id="editItem{{ item.id }}" tabindex="-1"
-                     role="dialog"
-                     aria-labelledby="editItemTitle" aria-hidden="true">
-                    <div class="modal-dialog model-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editItemTitle"><b>{{ 'edit menu item'|trans|capitalize }} {{ item.name }}</b></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form action="{{ path('app_wrc_menus', {id: resource.id}) }}" method="post">
-                                <div class="form-group">
-                                    <label for="menuItem[name]">{{ 'name'|trans|capitalize }}</label>
-                                    <input type="text" class="form-control form-control-lg" id="menuItem[name]" name="menuItem[name]" value="{{ item.name }}" required>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <label for="menuItem[description]">{{ 'description'|trans|capitalize }}</label>
-                                    <input type="text" class="form-control form-control-lg" id="menuItem[description]" name="menuItem[description]" value="{{ item.description }}" required>
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <label for="menuItem[icon]">{{ 'icon'|trans|capitalize }}</label>
-                                    <input type="text" class="form-control form-control-lg" id="menuItem[icon]" name="menuItem[icon]" value="{{ item.icon }}" >
-                                </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <label for="menuItem[href]">{{ 'url'|trans|capitalize }}</label>
-                                    <input type="text" class="form-control form-control-lg" id="menuItem[href]" name="menuItem[href]" value="{{ item.href }}" >
-                                </div><!-- /.form-group -->
+            {% if resource.menuItems is defined %}
+                {% for item in resource.menuItems %}
 
-                                <input type="hidden" id="menuItem[@id]" name ="menuItem[@id]" value="{{ item['@id'] }}">
-                                <button type="submit" class="btn btn-success m-3  mx-auto">
-                                    {{ 'save'|trans|capitalize }}
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        {% endfor %}
-    {% endif %}
+                    {% include 'widgets/delete_modal.html.twig'
+                with {
+                    'route': 'app_wrc_menu',
+                    'resource':resource,
+                    'item':item,
+                    'id':'deleteItem' }
+            %}
+
+                    {% include 'wrc/modals/menuItem.html.twig'
+                with {
+                    'route': 'app_wrc_menu',
+                    'resource':resource,
+                    'item':item,
+                    'id':'editItem' }
+            %}
+
+                {% endfor %}
+            {% endif %}
+
 
             {% include 'footer.html.twig' %}
 
-        </div>
-    </div>
+         </div><!-- /.container -->
+    </div><!-- /.main-panel -->
 
 {% endblock %}
