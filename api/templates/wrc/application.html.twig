@@ -15,18 +15,24 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px" data-toggle="modal" data-target="#deleteApplication">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-8 col-sm-12">
+        								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
         									</div>
     									</div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" value="{% if resource.id is defined %}{{ resource.id }}{% endif %}" disabled>
+                                            </div>
+                                        </div> <!-- /.col -->
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'domain'|trans|capitalize }}</label>
@@ -38,7 +44,7 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="style">{{ 'style'|trans|capitalize }}</label>
-                                                <select id="style" name="style" class="form-control form-control-lg" {% if styles is not defined %}disabled{% endif %}   >
+                                                <select id="style" name="style" class="form-control form-control-lg" {% if styles is not defined %}disabled{% endif %} >
                                                 {% if styles is defined %}
                                                     {% for style in styles %}
                                                         <option value="{{ style['@id'] }}" {% if resource.style is defined and resource.style is not empty and style['@id'] == resource.style['@id']  %}selected=""{% endif %}>{{ style.name }}</option>
@@ -50,10 +56,12 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="defaultConfiguration">{{ 'default configuration'|trans|capitalize }}</label>
-                                                <select id="defaultConfiguration" name="defaultConfiguration" class="form-control form-control-lg">
+                                                <select id="defaultConfiguration" name="defaultConfiguration" class="form-control form-control-lg" {% if configurations is not defined %}disabled{% endif %}>
+                                                {% if configurations is defined %}
                                                     {% for configuration in configurations %}
                                                         <option value="{{ configuration['@id'] }}" {% if resource.defaultConfiguration is defined and  resource.defaultConfiguration is not empty and  configuration['@id'] == resource.defaultConfiguration['@id']  %}selected=""{% endif %}>{{ configuration.name }}</option>
                                                     {% endfor %}
+                                                {% endif %}
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
@@ -87,143 +95,145 @@
                 </div><!-- /.row -->
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="card p-4 full-height">
+                        <div class="card full-height p-1">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'configurations'|trans|capitalize }}</h3>
-                                <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration">{{ 'add configuration'|trans|capitalize }}</a>
-                                </div>
                             </div>
+                            {% if configurations is defined %}
+                                <div class="card-list">
+                                    {% for configuration in configurations %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ configuration.name }}</h4></div>
+                                                <div class="status">{{ configuration.description }}</div>
+                                            </div>
+                                            <button class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" data-toggle="modal" data-target="#editConfiguration{{ configuration.id }}">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteConfiguration{{ configuration.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
                             <div class="card-body">
-                                {% if configurations is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for configuration in configurations %}
-                                            <tr>
-                                                <td>{{ configuration.name }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editConfiguration{{ configuration.id }}"  data-toggle="modal" data-target="#editConfiguration{{ configuration.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
                             </div> <!-- /.card-body -->
-                            <div class="card-action">
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration">{{ 'add configuration'|trans|capitalize }}</a>
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                     <div class="col-md-3">
-                        <div class="card p-4 full-height">
+                        <div class="card p-1  full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'templates'|trans|capitalize }}</h3>
-                                <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTemplate"  data-toggle="modal" data-target="#addTemplate">{{ 'add template'|trans|capitalize }}</a>
-                                </div>
                             </div>
+
+                            {% if templates is defined %}
+                                <div class="card-list">
+                                    {% for template in templates %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ template.name }}</h4></div>
+                                                <div class="status">{{ template.description }}</div>
+                                            </div>
+                                            <a class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" href="{{ path('app_wrc_template', {id: template.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteTemplate{{ template.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
                             <div class="card-body">
-                                {% if templates is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for template in templates %}
-                                            <tr>
-                                                <td>{{ template.name }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px"  href="{{ path('app_wrc_template', {id: template.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
                             </div> <!-- /.card-body -->
-                            <div class="card-action">
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTemplate"  data-toggle="modal" data-target="#addTemplate">{{ 'add template'|trans|capitalize }}</a>
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                     <div class="col-md-3">
-                        <div class="card p-4 full-height">
+                        <div class="card p-0 full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
-                                <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"  data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
-                                </div>
                             </div>
-                            <div class="card-body">
-                                {% if slugs is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'slug'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'template'|trans|capitalize }}</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for slug in slugs %}
-                                            <tr>
-                                                <td>{{ slug.slug }}</td>
-                                                <td><a href="{{ path('app_wrc_template', {id: slug.template.id}) }}">{{  slug.template.name }}</a></td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editSlug{{ slug.id }}"  data-toggle="modal" data-target="#editSlug{{ slug.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
-                            </div> <!-- /.card-body -->
-                            <div class="card-action">
+                            {% if slugs is defined %}
+                            <div class="card-list">
+                                {% for slug in slugs %}
+                                <div class="item-list">
+                                    <div class="info-user ml-3">
+                                        <div class="username"><h4>{{ slug.slug|trans|capitalize }}</h4></div>
+                                        <div class="status">{{  slug.template.name }}</div>
+                                    </div>
+                                    <button class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" data-toggle="modal" data-target="#editSlug{{ slug.id }}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteSlug{{ slug.id }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div><!-- /.item-list -->
+                                {% endfor %}
+                            </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body ">
+                            </div><!-- /.card-body -->
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"  data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                     <div class="col-md-3">
-                        <div class="card p-4 full-height">
+                        <div class="card p-1 full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'menus'|trans|capitalize }}</h3>
-                                <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addMenu"  data-toggle="modal" data-target="#addMenu">{{ 'add menu'|trans|capitalize }}</a>
-                                </div>
                             </div>
+
+                            {% if menus is defined %}
+                                <div class="card-list">
+                                    {% for menu in menus %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ menu.name }}</h4></div>
+                                                <div class="status">{{ menu.description }}</div>
+                                            </div>
+                                            <a class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" href="{{ path('app_wrc_menu', {id: menu.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteMenu{{ menu.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
                             <div class="card-body">
-                                {% if menus is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'items'|trans|capitalize }}</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for menu in menus %}
-                                            <tr>
-                                                <td>{{ menu.name }}</td>
-                                                <td>{{ menu.menuItems|length }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_wrc_menu', {id: menu.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
                             </div> <!-- /.card-body -->
-                            <div class="card-action">
+                            <div class="card-action p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addMenu"  data-toggle="modal" data-target="#addMenu">{{ 'add menu'|trans|capitalize }}</a>
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
 
+
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'id':'deleteApplication' }
+            %}
+
             <div class="modal fade" style="text-align: center" id="addConfiguration" tabindex="-1"
                  role="dialog"
-                 aria-labelledby="addSlugTitle" aria-hidden="true">
+                 aria-labelledby="addConfigurationTitle" aria-hidden="true">
                 <div class="modal-dialog model-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -276,49 +286,61 @@
                                 <label for="largeInput">{{ 'mainMenu'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][mainMenu]" name="configuration[configuration][mainMenu]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
+                                    {% if menus is defined %}
                                     {% for menu in menus %}
                                         <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
                                     {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer1'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer1]" name="configuration[configuration][footer1]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer2'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer2]" name="configuration[configuration][footer2]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer3'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer3]" name="configuration[configuration][footer3]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer4'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer4]" name="configuration[configuration][footer4]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}">{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
 
+                            {% if resource['organization'] is defined %}
                             <input type="hidden" id="configuration[organization]" name ="configuration[organization]" value="{{ resource['organization']['@id'] }}">
+                            {% endif %}
                             <button type="submit" class="btn btn-success m-3  mx-auto">
                                 {{ 'add'|trans|capitalize }}
                             </button>
@@ -329,9 +351,17 @@
 
             {% if configurations is defined %}
                 {% for configuration in configurations %}
+                    {% include 'widgets/delete_modal.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':configuration,
+                        'id':'deleteConfiguration' }
+                    %}
+
             <div class="modal fade" style="text-align: center" id="editConfiguration{{ configuration.id }}" tabindex="-1"
                  role="dialog"
-                 aria-labelledby="addSlugTitle" aria-hidden="true">
+                 aria-labelledby="editConfigurationTitle" aria-hidden="true">
                 <div class="modal-dialog model-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -358,75 +388,88 @@
                                 <label for="largeInput">{{ 'color scheme'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][colorScheme]" name="configuration[configuration][colorScheme]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    <option value="background--violet" {% if configuration.configuration.colorScheme  is defined and ['background--violet'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'violet'|trans|capitalize }}</option>
-                                    <option value="background--roze"   {% if configuration.configuration.colorScheme  is defined and ['background--roze'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'roze'|trans|capitalize }}</option>
-                                    <option value="background--rood"   {% if configuration.configuration.colorScheme  is defined and ['background--rood'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'rood'|trans|capitalize }}</option>
-                                    <option value="background--robijnrood" {% if configuration.configuration.colorScheme  is defined and ['background--robijnrood'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'robijnrood'|trans|capitalize }}</option>
-                                    <option value="background--paars"  {% if configuration.configuration.colorScheme  is defined and ['ackground--paars'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'paars'|trans|capitalize }}</option>
-                                    <option value="background--oranje" {% if configuration.configuration.colorScheme  is defined and ['background--oranje'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'oranje'|trans|capitalize }}</option>
-                                    <option value="background--lichtblauw" {% if configuration.configuration.colorScheme  is defined and ['background--lichtblauw'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'lichtblauw'|trans|capitalize }}</option>
-                                    <option value="background--hemelblauw" {% if configuration.configuration.colorScheme  is defined and ['background--hemelblauw'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'hemelblauw'|trans|capitalize }}</option>
-                                    <option value="background--donkerblauw" {% if configuration.configuration.colorScheme  is defined and ['background--donkerblauw'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'donkerblauw'|trans|capitalize }}</option>
-                                    <option value="background--geel" {% if configuration.configuration.colorScheme  is defined and ['background--geel'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'geel'|trans|capitalize }}</option>
-                                    <option value="background--donkergeel" {% if configuration.configuration.colorScheme  is defined and ['background--donkergeel'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'donkergeel'|trans|capitalize }}</option>
-                                    <option value="background--mintgroen" {% if configuration.configuration.colorScheme  is defined and ['background--mintgroen'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'mintgroen'|trans|capitalize }}</option>
-                                    <option value="background--mosgroen" {% if configuration.configuration.colorScheme  is defined and ['background--mosgroen'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'mosgroen'|trans|capitalize }}</option>
-                                    <option value="background--groen" {% if configuration.configuration.colorScheme  is defined and ['background--groen'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'groen'|trans|capitalize }}</option>
-                                    <option value="background--donkergroen" {% if configuration.configuration.colorScheme  is defined and ['background--donkergroen'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'donkergroen'|trans|capitalize }}</option>
-                                    <option value="background--bruin" {% if configuration.configuration.colorScheme  is defined and ['background--bruin'] == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'bruin'|trans|capitalize }}</option>
-                                    <option value="background--donkerbruin" {% if configuration.configuration.colorScheme  is defined and ['background--donkerbruin'] == configuration.configuration.colorScheme %}selected=""{% endif %}> {{ 'donkerbruin'|trans|capitalize }}</option>
+                                    <option value="background--violet" {% if configuration.configuration.colorScheme  is defined and 'background--violet' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'violet'|trans|capitalize }}</option>
+                                    <option value="background--roze"   {% if configuration.configuration.colorScheme  is defined and 'background--roze' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'roze'|trans|capitalize }}</option>
+                                    <option value="background--rood"   {% if configuration.configuration.colorScheme  is defined and 'background--rood' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'rood'|trans|capitalize }}</option>
+                                    <option value="background--robijnrood" {% if configuration.configuration.colorScheme  is defined and 'background--robijnrood' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'robijnrood'|trans|capitalize }}</option>
+                                    <option value="background--paars"  {% if configuration.configuration.colorScheme  is defined and 'ackground--paars' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'paars'|trans|capitalize }}</option>
+                                    <option value="background--oranje" {% if configuration.configuration.colorScheme  is defined and 'background--oranje' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'oranje'|trans|capitalize }}</option>
+                                    <option value="background--lichtblauw" {% if configuration.configuration.colorScheme  is defined and 'background--lichtblauw' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'lichtblauw'|trans|capitalize }}</option>
+                                    <option value="background--hemelblauw" {% if configuration.configuration.colorScheme  is defined and 'background--hemelblauw' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'hemelblauw'|trans|capitalize }}</option>
+                                    <option value="background--donkerblauw" {% if configuration.configuration.colorScheme  is defined and 'background--donkerblauw' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'donkerblauw'|trans|capitalize }}</option>
+                                    <option value="background--geel" {% if configuration.configuration.colorScheme  is defined and 'background--geel' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'geel'|trans|capitalize }}</option>
+                                    <option value="background--donkergeel" {% if configuration.configuration.colorScheme  is defined and 'background--donkergeel' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'donkergeel'|trans|capitalize }}</option>
+                                    <option value="background--mintgroen" {% if configuration.configuration.colorScheme  is defined and 'background--mintgroen' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'mintgroen'|trans|capitalize }}</option>
+                                    <option value="background--mosgroen" {% if configuration.configuration.colorScheme  is defined and 'background--mosgroen' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'mosgroen'|trans|capitalize }}</option>
+                                    <option value="background--groen" {% if configuration.configuration.colorScheme  is defined and 'background--groen' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'groen'|trans|capitalize }}</option>
+                                    <option value="background--donkergroen" {% if configuration.configuration.colorScheme  is defined and 'background--donkergroen' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'donkergroen'|trans|capitalize }}</option>
+                                    <option value="background--bruin" {% if configuration.configuration.colorScheme  is defined and 'background--bruin' == configuration.configuration.colorScheme %}selected=""{% endif %}>{{ 'bruin'|trans|capitalize }}</option>
+                                    <option value="background--donkerbruin" {% if configuration.configuration.colorScheme  is defined and 'background--donkerbruin' == configuration.configuration.colorScheme %}selected=""{% endif %}> {{ 'donkerbruin'|trans|capitalize }}</option>
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'mainMenu'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][mainMenu]" name="configuration[configuration][mainMenu]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}" {% if resource.configuration.configuration.mainMenu  is defined and menu['@id'] == resource.configuration.configuration.mainMenu   %}selected=""{% endif %}>{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer4  is defined and menu['@id'] == configuration.configuration.footer4   %}selected=""{% endif %}>{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer1'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer1]" name="configuration[configuration][footer1]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer1  is defined and menu['@id'] == configuration.configuration.footer1  %}selected=""{% endif %}>{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer4  is defined and menu['@id'] == configuration.configuration.footer4   %}selected=""{% endif %}>{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer2'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer2]" name="configuration[configuration][footer2]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer2  is defined and menu['@id'] == configuration.configuration.footer2   %}selected=""{% endif %}>{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer4  is defined and menu['@id'] == configuration.configuration.footer4   %}selected=""{% endif %}>{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer3'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer3]" name="configuration[configuration][footer3]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% for menu in menus %}
-                                        <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer3  is defined and menu['@id'] == configuration.configuration.footer3   %}selected=""{% endif %}>{{ menu.name }}</option>
-                                    {% endfor %}
+                                    {% if menus is defined %}
+                                        {% for menu in menus %}
+                                            <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer4  is defined and menu['@id'] == configuration.configuration.footer4   %}selected=""{% endif %}>{{ menu.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'footer4'|trans|capitalize }}</label>
                                 <select id="configuration[configuration][footer4]" name="configuration[configuration][footer4]" class="form-control form-control-lg" >
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
+                                    {% if menus is defined %}
                                     {% for menu in menus %}
                                         <option value="{{ menu['@id'] }}" {% if configuration.configuration.footer4  is defined and menu['@id'] == configuration.configuration.footer4   %}selected=""{% endif %}>{{ menu.name }}</option>
                                     {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
 
-                            <input type="hidden" id="configuration[@id]" name ="configuration[id]" value="{{ configuration['@id'] }}">
+                            <input type="hidden" id="configuration[id]" name ="configuration[id]" value="{{ configuration['id'] }}">
+                            <input type="hidden" id="configuration[@id]" name ="configuration[@id]" value="{{ configuration['@id'] }}">
+                            {% if resource['organization'] is defined %}
                             <input type="hidden" id="configuration[organization]" name ="configuration[organization]" value="{{ resource['organization']['@id'] }}">
+                            {% endif %}
                             <button type="submit" class="btn btn-success m-3  mx-auto">
-                                {{ 'add'|trans|capitalize }}
+                                {{ 'save'|trans|capitalize }}
                             </button>
                         </form>
                     </div>
@@ -450,11 +493,21 @@
                         <form action="{{ path('app_wrc_application', {id: resource.id}) }}" method="post">
                             <div class="form-group">
                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="template[name]" name="template[name]" value="">
+                                <input type="text" class="form-control form-control-lg" id="template[name]" name="template[name]" value="" required>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
                                 <input type="text" class="form-control form-control-lg" id="template[description]" name="template[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'content'|trans|capitalize }}</label>
+                                <textarea class="form-control form-control-lg" id="template[content]" name="template[content]" value="" required></textarea>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'template engine'|trans|capitalize }}</label>
+                                <select id="template[templateEngine]" name="template[templateEngine]" class="form-control form-control-lg" required>
+                                    <option value="twig">{{ 'twig'|trans|capitalize }}</option>
+                                </select>
                             </div><!-- /.form-group -->
 
                             <button type="submit" class="btn btn-success m-3  mx-auto">
@@ -480,11 +533,11 @@
                         <form action="{{ path('app_wrc_application', {id: resource.id}) }}" method="post">
                             <div class="form-group">
                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="menu[name]" name="menu[name]" value="">
+                                <input type="text" class="form-control form-control-lg" id="menu[name]" name="menu[name]" value="" required>
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="menu[description]" name="menu[description]" value="">
+                                <input type="text" class="form-control form-control-lg" id="menu[description]" name="menu[description]" value="" required>
                             </div><!-- /.form-group -->
 
 
@@ -510,11 +563,21 @@
                         </div>
                         <form action="{{ path('app_wrc_application', {id: resource.id}) }}" method="post">
                             <div class="form-group">
-                                <label for="slug[template]">{{ 'application'|trans|capitalize }}</label>
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="slug[name]" name="slug[name]" value="" required>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="slug[description]" name="slug[description]" value="">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="slug[template]">{{ 'template'|trans|capitalize }}</label>
                                 <select id="slug[template]" name="slug[template]" class="form-control form-control-lg" required>
+                                    {% if templates is defined %}
                                     {% for template in templates %}
                                         <option value="{{ template['@id'] }}">{{ template.name }}</option>
                                     {% endfor %}
+                                    {% endif %}
                                 </select>
                             </div><!-- /.form-group -->
                             <div class="form-group">
@@ -531,8 +594,40 @@
                 </div>
             </div>
 
+    {% if tempalates is defined %}
+        {% for tempalate in tempalates %}
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'item':tempalates,
+                'id':'deleteTemplate' }
+            %}
+        {% endfor %}
+    {% endif %}
+
+    {% if menus is defined %}
+        {% for menu in menus %}
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'item':menu,
+                'id':'deleteSlug' }
+            %}
+        {% endfor %}
+    {% endif %}
+
     {% if slugs is defined %}
         {% for slug in slugs %}
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'item':slug,
+                'id':'deleteSlug' }
+            %}
+
             <div class="modal fade" style="text-align: center" id="editSlug{{ slug.id }}" tabindex="-1"
                  role="dialog"
                  aria-labelledby="addSlugTitle" aria-hidden="true">
@@ -546,6 +641,14 @@
                         </div>
                         <form action="{{ path('app_wrc_application', {id: resource.id}) }}" method="post">
                             <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="slug[name]" name="slug[name]" value="{{ slug.name }}" required>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="slug[description]" name="slug[description]" value="{% if slug.description is defined %}{{ slug.description }}{% endif %}">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
                                 <label for="slug[template]">{{ 'template'|trans|capitalize }}</label>
                                 <select id="slug[template]" name="slug[template]" class="form-control form-control-lg" required>
                                     {% for template in templates %}
@@ -558,6 +661,7 @@
                                 <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="{{ slug.slug }}">
                             </div><!-- /.form-group -->
 
+                            <input type="hidden" id="slug[id]" name ="slug[id]" value="{{ slug['id'] }}">
                             <input type="hidden" id="slug[@id]" name ="slug[@id]" value="{{ slug['@id'] }}">
                             <button type="submit" class="btn btn-success m-3  mx-auto">
                                 {{ 'save'|trans|capitalize }}

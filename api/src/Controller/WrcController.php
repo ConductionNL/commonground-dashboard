@@ -181,7 +181,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'organizations','id'=>$id);
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'organizations','id'=>$id]);
             return $this->redirect($this->generateUrl('app_wrc_organizations'));
         }
 
@@ -357,7 +357,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'applications','id'=>$id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc','type'=>'applications','id'=>$id]);
             return $this->redirect($this->generateUrl('app_wrc_applications'));
         }
 
@@ -393,6 +393,8 @@ class WrcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
 
+    		$reload = false;
+
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
@@ -400,42 +402,73 @@ class WrcController extends AbstractController
             if(array_key_exists('configuration', $resource)){
                 $configuration = $resource['configuration'];
                 $configuration['application'] = $resource['@id'];
-                if(in_array('id',$configuration)){
-                    $configuration['@id'] = $configuration['id'];
+
+                // The resource action section
+                if(key_exists("@id",$configuration) && key_exists("action",$configuration)){
+                    // The delete action
+                    if($configuration['action'] == 'delete'){
+                        $commonGroundService->deleteResource($configuration);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
                 }
+
                 $configuration = $commonGroundService->saveResource($configuration, ['component'=>'wrc','type'=>'configurations']);
+                $reload = true;
             }
 
             // Lets see if we also need to add an configuration
             if(array_key_exists('template', $resource)){
                 $template = $resource['template'];
                 $template['application'] = $resource['@id'];
-                if(in_array('id',$template)){
-                    $template['@id'] = $template['id'];
+
+                // The resource action section
+                if(key_exists("@id",$template) && key_exists("action",$template)){
+                    // The delete action
+                    if($template['action'] == 'delete'){
+                        $commonGroundService->deleteResource($template);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
                 }
+
                 $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+                $reload = true;
             }
 
             // Lets see if we also need to add an configuration
             if(array_key_exists('slug', $resource)){
                 $slug = $resource['slug'];
                 $slug['application'] = $resource['@id'];
-                if(in_array('id',$slug)){
-                    $slug['@id'] = $slug['id'];
+
+                // The resource action section
+                if(key_exists("@id",$slug) && key_exists("action",$slug)){
+                    // The delete action
+                    if($slug['action'] == 'delete'){
+                        $commonGroundService->deleteResource($slug);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
                 }
                 $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+                $reload = true;
             }
 
             // Lets see if we also need to add an configuration
             if(array_key_exists('menu', $resource)){
                 $menu = $resource['menu'];
                 $menu['application'] = $resource['@id'];
-                if(in_array('id',$menu)){
-                    $menu['@id'] = $menu['id'];
+
+                // The resource action section
+                if(key_exists("@id",$menu) && key_exists("action",v)){
+                    // The delete action
+                    if($menu['action'] == 'delete'){
+                        $commonGroundService->deleteResource($menu);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
                 }
                 $menu = $commonGroundService->saveResource($menu, ['component'=>'wrc','type'=>'menus']);
+                $reload = true;
             }
 
+            // If we do a reload here anyway? why dont we get the lates version of the resource
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
     	}
     	return $variables;

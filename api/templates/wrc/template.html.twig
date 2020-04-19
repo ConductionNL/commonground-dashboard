@@ -21,12 +21,25 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-6 col-sm-12">
         									<div class="form-group">
         										<label for="name">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
         									</div>
     									</div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                <select id="application" name="application" class="form-control form-control-lg" required>
+                                                    <option value="" {% if resource.application is defined and resource.application is empty %}selected=""{% endif %}>{{ 'none'|trans|capitalize }}</option>
+                                                    {% if applications is defined %}
+                                                    {% for application in applications %}
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and resource.application is not empty and application['@id'] == resource.application['@id']  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                    {% endfor %}
+                                                {% endif%}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="templateEngine">{{ 'template engine'|trans|capitalize }}</label>
