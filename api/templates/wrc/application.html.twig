@@ -104,7 +104,7 @@
                                     {% for configuration in configurations %}
                                         <div class="item-list">
                                             <div class="info-user ml-3">
-                                                <div class="username"><h4>{{ configuration.name }}</h4></div>
+                                                <div class="username"><h4>{{ configuration.name|capitalize }}</h4></div>
                                                 <div class="status">{{ configuration.description }}</div>
                                             </div>
                                             <button class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" data-toggle="modal" data-target="#editConfiguration{{ configuration.id }}">
@@ -136,7 +136,7 @@
                                     {% for template in templates %}
                                         <div class="item-list">
                                             <div class="info-user ml-3">
-                                                <div class="username"><h4>{{ template.name }}</h4></div>
+                                                <div class="username"><h4>{{ template.name|capitalize }}</h4></div>
                                                 <div class="status">{{ template.description }}</div>
                                             </div>
                                             <a class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" href="{{ path('app_wrc_template', {id: template.id}) }}">
@@ -162,13 +162,13 @@
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
                             </div>
-                            
+
                             {% if slugs is defined %}
                             <div class="card-list">
                                 {% for slug in slugs %}
                                 <div class="item-list">
                                     <div class="info-user ml-3">
-                                        <div class="username"><h4>{{ slug.slug|trans|capitalize }}</h4></div>
+                                        <div class="username"><h4>/{{ slug.slug|trans }}</h4></div>
                                         <div class="status">{{  slug.template.name }}</div>
                                     </div>
                                     <button class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" data-toggle="modal" data-target="#editSlug{{ slug.id }}">
@@ -201,7 +201,7 @@
                                     {% for menu in menus %}
                                         <div class="item-list">
                                             <div class="info-user ml-3">
-                                                <div class="username"><h4>{{ menu.name }}</h4></div>
+                                                <div class="username"><h4>{{ menu.name|capitalize }}</h4></div>
                                                 <div class="status">{{ menu.description }}</div>
                                             </div>
                                             <a class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" href="{{ path('app_wrc_menu', {id: menu.id}) }}">
@@ -270,13 +270,13 @@
                 'id':'addTemplate' }
             %}
 
-            {% if tempalates is defined %}
-                {% for tempalate in tempalates %}
+            {% if templates is defined %}
+                {% for template in templates %}
                     {% include 'widgets/delete_modal.html.twig'
                         with {
                         'route': 'app_wrc_application',
                         'resource':resource,
-                        'item':tempalates,
+                        'item':template,
                         'id':'deleteTemplate' }
                     %}
                 {% endfor %}
@@ -297,7 +297,7 @@
                         'route': 'app_wrc_application',
                         'resource':resource,
                         'item':menu,
-                        'id':'deleteSlug' }
+                        'id':'deleteMenu' }
                     %}
                 {% endfor %}
             {% endif %}
