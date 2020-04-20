@@ -86,7 +86,7 @@ class PdcController extends AbstractController
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('product');
         $variables['groups'] = $commonGroundService->getResourceList(['component'=>'pdc','type'=>'groups'])["hydra:member"];
         $variables['catalogues'] = $commonGroundService->getResourceList(['component'=>'pdc','type'=>'catalogues'])["hydra:member"];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pdc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -96,30 +96,29 @@ class PdcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'pdc','type'=>'products']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'pdc', 'type' => 'products']);
 
-    		foreach ($variables['resource']['groups'] as $group){
-    			$resource['groups'][] = 'groups/'.$group['id'];
-    		}
+            foreach ($variables['resource']['groups'] as $group) {
+                $resource['groups'][] = 'groups/' . $group['id'];
+            }
 
-    		if($resource['addgroup'] != ""){
-    			$resource['groups'][] = $resource['addgroup'];
-    		}
+            if ($resource['addgroup'] != "") {
+                $resource['groups'][] = $resource['addgroup'];
+            }
 
-    		if($resource['removegroup'] != ""){
-    			foreach($resource['groups'] as $key=>$group){
-    				if($group == $resource['removegroup']){
-    					unset($resource['groups'][$key]);
-    				}
-    			}
-    		}
+            if ($resource['removegroup'] != "") {
+                foreach ($resource['groups'] as $key => $group) {
+                    if ($group == $resource['removegroup']) {
+                        unset($resource['groups'][$key]);
+                    }
+                }
+            }
 
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/products/');
-    	}
-
+            $variables['resource'] = $commonGroundService->saveResource($resource, 'https://pdc.huwelijksplanner.online/products/');
+        }
         return $variables;
     }
 
