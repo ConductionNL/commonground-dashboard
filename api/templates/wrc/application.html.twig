@@ -162,6 +162,7 @@
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
                             </div>
+                            
                             {% if slugs is defined %}
                             <div class="card-list">
                                 {% for slug in slugs %}
@@ -188,6 +189,7 @@
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
+
                     <div class="col-md-3">
                         <div class="card p-1 full-height">
                             <div class="card-header">
@@ -220,6 +222,7 @@
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
+
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
 
@@ -231,6 +234,7 @@
                 'id':'deleteApplication' }
             %}
 
+            {# the configuration modals #}
             {% include 'wrc/modals/configuration.html.twig'
                 with {
                 'route': 'app_wrc_application',
@@ -258,7 +262,7 @@
                 {% endfor %}
             {% endif %}
 
-
+            {# the template modals #}
             {% include 'wrc/modals/template.html.twig'
                 with {
                 'route': 'app_wrc_application',
@@ -278,6 +282,7 @@
                 {% endfor %}
             {% endif %}
 
+            {# the template menus #}
             {% include 'wrc/modals/menu.html.twig'
                 with {
                 'route': 'app_wrc_application',
@@ -297,6 +302,7 @@
                 {% endfor %}
             {% endif %}
 
+            {# the slugs modals #}
             {% include 'wrc/modals/slug.html.twig'
                 with {
                 'route': 'app_wrc_application',
