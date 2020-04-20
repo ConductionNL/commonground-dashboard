@@ -107,7 +107,7 @@ class BabsController extends AbstractController
 
         $variables['huwelijken'] = [];
         foreach ($variables['requests'] as $request) {
-            if (isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk" or $request['properties']['type'] == "partnerschap") {
+            if (isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk" or isset($request['properties']['type']) and $request['properties']['type'] == "partnerschap") {
                 $variables['huwelijken'][] = $request;
             }
         }
