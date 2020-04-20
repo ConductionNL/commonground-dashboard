@@ -93,6 +93,9 @@ class WrcController extends AbstractController
                 $slug['template'] = $variables['resource']['@id'];
                 $slug['name'] = $variables['resource']['name'];
                 $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+
+                // reload the slugs
+                $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
             }
     	}
     	return $variables;
@@ -413,7 +416,8 @@ class WrcController extends AbstractController
                 }
 
                 $configuration = $commonGroundService->saveResource($configuration, ['component'=>'wrc','type'=>'configurations']);
-                $reload = true;
+
+                $variables['configurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'],['application.id'=>$id])["hydra:member"];
             }
 
             // Lets see if we also need to add an configuration
@@ -551,8 +555,6 @@ class WrcController extends AbstractController
                 if(array_key_exists('order', $menuItem)) {
                     $menuItem['order'] = intval($menuItem['order']);
                 }
-
-
 
                 // The resource action section
                 if(key_exists("@id",$menuItem) && key_exists("action",$menuItem)){
