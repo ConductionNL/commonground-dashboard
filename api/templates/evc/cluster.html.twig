@@ -22,9 +22,9 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="{{ path('app_evc_cluster', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
-                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'load'}) }}" class="btn btn-info">{{ 'load excel'|trans|capitalize }}</a>
+                                        <a href="{{ path('app_evc_cluster', {'id': resource.id, 'action':'load'}) }}" class="btn btn-info">{{ 'load excel'|trans|capitalize }}</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -223,7 +223,7 @@
                                     </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="domain[location]" name="domain[location]" value="{% if configuration.configuration.theme is defined %}{{ configuration.configuration.theme }}{% endif %}">
+                                        <input type="text" class="form-control form-control-lg" id="domain[location]" name="domain[location]" value="{{ domain.location }}">
                                     </div><!-- /.form-group -->
                                     <input type="hidden" id="domain[@id]" name ="domain[id]" value="{{ domain['@id'] }}">
                                     <input type="hidden" id="domain[cluster]" name ="domain[cluster]" value="{{ resource['@id'] }}">
@@ -293,11 +293,11 @@
                                 <form action="{{ path('app_evc_cluster', {id: resource.id}) }}" method="post">
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="environment[name]" name="environment[name]" value="{{ configuration.name }}">
+                                        <input type="text" class="form-control form-control-lg" id="environment[name]" name="environment[name]" value="{{ environment.name }}">
                                     </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="environment[description]" name="environment[description]" value="{{ configuration.description }}">
+                                        <input type="text" class="form-control form-control-lg" id="environment[description]" name="environment[description]" value="{{ environment.description }}">
                                     </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'debug'|trans|capitalize }}</label>
@@ -306,11 +306,11 @@
                                     </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'authorization key'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="environment[authorization]" name="environment[authorization]" value="" required>
+                                        <input type="text" class="form-control form-control-lg" id="environment[authorization]" name="environment[authorization]" value="">
                                     </div><!-- /.form-group -->
 
-                                    <input type="hidden" id="environment[@id]" name ="environment[id]" value="{{ configuration['@id'] }}">
-                                    <input type="hidden" id="configuration[cluster]" name ="environment[cluster]" value="{{ resource['@id'] }}">
+                                    <input type="hidden" id="environment[@id]" name ="environment[id]" value="{{ environment['@id'] }}">
+                                    <input type="hidden" id="environment[cluster]" name ="environment[cluster]" value="{{ resource['@id'] }}">
                                     <button type="submit" class="btn btn-success m-3  mx-auto">
                                         {{ 'edit'|trans|capitalize }}
                                     </button>
@@ -439,6 +439,8 @@
                                             {% endif %}
                                         </select>
                                     </div><!-- /.form-group -->
+                                    <input type="hidden" id="installation[@id]" name ="installation[id]" value="{{ installation['@id'] }}">
+                                    <input type="hidden" id="installation[cluster]" name ="installation[cluster]" value="{{ resource['@id'] }}">
                                     <button type="submit" class="btn btn-success m-3  mx-auto">
                                         {{ 'edit'|trans|capitalize }}
                                     </button>

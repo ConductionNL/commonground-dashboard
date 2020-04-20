@@ -66,7 +66,8 @@ class EvcController extends AbstractController
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'evc','type'=>'clusters','id'=>$id]);
+//            var_dump(['component'=>'evc','type'=>'clusters','id'=>$id]);
+            $commonGroundService->deleteResource('',['component'=>'evc','type'=>'clusters','id'=>$id]);
             return $this->redirect($this->generateUrl('app_evc_clusters'));
         }
 
@@ -77,8 +78,9 @@ class EvcController extends AbstractController
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'clusters','id'=>$id]);
             $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'domains'],['cluster.id'=>$id])['hydra:member'];
-            $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'events'],['cluster.id'=>$id])['hydra:member'];
-            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'events'],['environment.cluster.id'=>$id])['hydra:member'];
+            $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'environments'],['cluster.id'=>$id])['hydra:member'];
+            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'installations'],['environment.cluster.id'=>$id])['hydra:member'];
+            $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'components'])['hydra:member'];
         }
 
 
@@ -105,10 +107,20 @@ class EvcController extends AbstractController
             if(key_exists('environment', $resource)){
                 $environment = $resource['environment'];
                 $environment['cluster'] = $resource['@id'];
-                if(in_array('id',$environment)){
+                if(key_exists('id',$environment)){
                     $environment['@id'] = $environment['id'];
                 }
+                $environment['debug'] = (int)$environment['debug'];
                 $domain = $commonGroundService->saveResource($environment,['component'=>'evc','type'=>'environments']);
+            }
+            if(key_exists('installation', $resource)){
+                $installation = $resource['installation'];
+                $installation['cluster'] = $resource['@id'];
+                if(key_exists('id',$installation)){
+                    $installation['@id'] = $installation['id'];
+                }
+                $installation['debug'] = (int)$installation['debug'];
+                $domain = $commonGroundService->saveResource($installation,['component'=>'evc','type'=>'installation']);
             }
             $variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/clusters/');
         }
@@ -273,7 +285,8 @@ class EvcController extends AbstractController
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
-    		
+    		$resource['core'] = (bool)$resource['core'];
+
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'evc', 'type'=>'components']);
     	}
 
