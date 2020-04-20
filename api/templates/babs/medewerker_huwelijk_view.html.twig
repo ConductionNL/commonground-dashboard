@@ -192,23 +192,23 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                                        <i style="color: red;">X</i></td>
-                                    <th>Tolk</th>
-                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "nee" %}
-                                        <td style="color: lightgray">Tolk nodig</td>
-                                    {% else %}
-                                        <td style="color: lightgray">Geen tolk</td>
-                                    {% endif %}
-                                    <td>
-                                        <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                                                class="btn btn-primary"
-                                                data-toggle="modal" data-target="#tolkModal"><i style=""
-                                                                                                class="fas fa-edit"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                {#                                <tr>#}
+                                {#                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+                                {#                                        <i style="color: red;">X</i></td>#}
+                                {#                                    <th>Tolk</th>#}
+                                {#                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "nee" %}#}
+                                {#                                        <td style="color: lightgray">Tolk nodig</td>#}
+                                {#                                    {% else %}#}
+                                {#                                        <td style="color: lightgray">Geen tolk</td>#}
+                                {#                                    {% endif %}#}
+                                {#                                    <td>#}
+                                {#                                        <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+                                {#                                                class="btn btn-primary"#}
+                                {#                                                data-toggle="modal" data-target="#tolkModal"><i style=""#}
+                                {#                                                                                                class="fas fa-edit"></i>#}
+                                {#                                        </button>#}
+                                {#                                    </td>#}
+                                {#                                </tr>#}
                                 <tr>
                                     <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                                         {% if variables.huwelijk.properties.extras is not defined or variables.huwelijk.properties.extras is empty %}
@@ -266,8 +266,50 @@
                                         <td style="color: lightgray">Geen datum</td>
                                     {% endif %}
                                 </tr>
-                                <tr>
                             </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2>Sub verzoeken</h2>
+
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    {% for subreq in variables.huwelijk.children %}
+
+                                        {% set request = commonground_resource(subreq.requestType) %}
+
+                                        <div class="col-md-4 text-center">
+
+                                            <h4>{{ request.name }}</h4><br>
+
+                                            Status:
+                                            <b {% if subreq.status is defined and subreq.status is not empty and subreq.status != "completed" %} style="color: red" {% else %} style="color: limegreen"{% endif %}>{{ subreq.status|capitalize }}</b>
+                                            <br>
+
+                                            {% if request.name == "Aanvraag babs voor een dag" %}
+                                                <a style="padding: 4px; margin: 30px 10px 10px 10px"
+                                                   href="{{ path('app_vrc_aanvraagbabs', {id: subreq.id}) }}" class="btn btn-primary">Ga
+                                                    naar
+                                                    verzoek</a>
+                                            {% else %}
+                                                <a style="padding: 4px; margin: 30px 10px 10px 10px" href="#"
+                                                   class="btn btn-primary">Ga naar verzoek</a>
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -280,10 +322,42 @@
                             </div>
                             <table class="table table-hover">
                                 <tr>
-                                    <th>Naam</th>
+                                    <th>Status</th>
+
                                     {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         {% set assent1 = commonground_resource(variables.huwelijk.properties.partners.0) %}
                                         {% set contact1 = commonground_resource(assent1.contact) %}
+                                        <th>
+                                            <p class="mb-0 pt-1 d-inline-block">{{ assent1.status|capitalize }}</p>
+                                            <button style="padding: 4px; float: right" type="button"
+                                                    class="btn btn-primary"
+                                                    data-toggle="modal" data-target="#partner1StatusModal"><i style=""
+                                                                                                              class="fas fa-edit"></i>
+                                            </button>
+                                        </th>
+                                    {% else %}
+                                        <th style="color: lightgray">Geen partner</th>
+                                    {% endif %}
+
+                                    {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
+                                        {% set assent2 = commonground_resource(variables.huwelijk.properties.partners.1) %}
+                                        {% set contact2 = commonground_resource(assent2.contact) %}
+                                        <th>
+                                            <p class="mb-0 pt-1 d-inline-block">{{ assent2.status|capitalize }}</p>
+                                            <button style="padding: 4px; float: right" type="button"
+                                                    class="btn btn-primary"
+                                                    data-toggle="modal" data-target="#partner2StatusModal"><i style=""
+                                                                                                              class="fas fa-edit"></i>
+                                            </button>
+                                        </th>
+                                    {% else %}
+                                        <th style="color: lightgray">Geen partner</th>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <th>Naam</th>
+
+                                    {% if variables.huwelijk.properties.partners[0] is defined and variables.huwelijk.properties.partners[0] is not empty %}
                                         <th>
                                             <p class="mb-0 pt-1 d-inline-block">{{ contact1.name }}</p>
                                             <button style="padding: 4px; float: right" type="button"
@@ -293,11 +367,10 @@
                                             </button>
                                         </th>
                                     {% else %}
-                                        <th></th>
+                                        <th style="color: lightgray">Geen partner</th>
                                     {% endif %}
+
                                     {% if variables.huwelijk.properties.partners[1] is defined and variables.huwelijk.properties.partners[1] is not empty %}
-                                        {% set assent2 = commonground_resource(variables.huwelijk.properties.partners.1) %}
-                                        {% set contact2 = commonground_resource(assent2.contact) %}
                                         <th><p class="mb-0 pt-1 d-inline-block">{{ contact2.name }}</p>
                                             <button style="padding: 4px; float: right" type="button"
                                                     class="btn btn-primary"
@@ -306,7 +379,7 @@
                                             </button>
                                         </th>
                                     {% else %}
-                                        <th></th>
+                                        <th style="color: lightgray">Geen partner</th>
                                     {% endif %}
                                 </tr>
                                 <tr>

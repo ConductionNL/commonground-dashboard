@@ -55,12 +55,10 @@
                                 {% endif %}
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
                                        href="
-                                       {% if request.properties.type is not defined or request.properties.type is empty %}
+                                       {% if commonground_resource(request.requestType).name == "Huwelijk / Parterschap" %}
                                        {{ path('app_babs_medewerkerhuwelijkview', {id: request.id}) }}
-                                       {% elseif request.properties.type == "Huwelijk" %}
-                                       {{ path('app_babs_medewerkerhuwelijkview', {id: request.id}) }}
-                                       {% elseif request.properties.type == "partnerschap" %}
-                                       {{ path('app_babs_medewerkerpartnerschapview', {id: request.id}) }}
+                                       {% elseif commonground_resource(request.requestType).name == "Aanvraag babs voor een dag" %}
+                                       {{ path('app_vrc_aanvraagbabs', {id: request.id}) }}
                                        {% else %}#{% endif %}"><b>MEER INFO</b></a></td>
                             </tr>
                         {% endfor %}
