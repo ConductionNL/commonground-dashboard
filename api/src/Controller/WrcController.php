@@ -23,7 +23,7 @@ class WrcController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(Request $request, CommonGroundService $commonGroundService)
+    public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
     	$variables['title'] = $translator->trans('webresources');
@@ -54,6 +54,12 @@ class WrcController extends AbstractController
      */
     public function templateAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'templates','id'=> $id]);
+            return $this->redirect($this->generateUrl('app_wrc_groups'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -62,19 +68,13 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'templates','id'=> $id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_groups'));
+            $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
     	}
 
     	$variables['title'] = $translator->trans('template');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -93,6 +93,9 @@ class WrcController extends AbstractController
                 $slug['template'] = $variables['resource']['@id'];
                 $slug['name'] = $variables['resource']['name'];
                 $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+
+                // reload the slugs
+                $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
             }
     	}
     	return $variables;
@@ -120,6 +123,13 @@ class WrcController extends AbstractController
      */
     public function slugAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'slugs','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_slugs'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -128,12 +138,6 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'slugs','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_slugs'));
     	}
 
     	$variables['title'] = $translator->trans('slug');
@@ -178,6 +182,12 @@ class WrcController extends AbstractController
      */
     public function organizationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'organizations','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_organizations'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -186,18 +196,12 @@ class WrcController extends AbstractController
     	}
     	else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'organizations','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_organizations'));
+            $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'],['organization.id'=>$id])["hydra:member"];
     	}
 
     	$variables['title'] = $translator->trans('organization');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organization');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
-        $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'],['organization.id'=>$id])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -237,6 +241,12 @@ class WrcController extends AbstractController
      */
     public function imageAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'imgaes','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_groups'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -245,12 +255,6 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'imgaes','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_groups'));
     	}
 
     	$variables['title'] = $translator->trans('image');
@@ -296,6 +300,12 @@ class WrcController extends AbstractController
      */
     public function styleAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'styles','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_styles'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -304,12 +314,6 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'styles','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_styles'));
     	}
 
     	$variables['title'] = $translator->trans('style');
@@ -354,6 +358,12 @@ class WrcController extends AbstractController
      */
     public function applicationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'wrc','type'=>'applications','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_applications'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -362,24 +372,18 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'applications','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_applications'));
+            $variables['configurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'],['application.id'=>$id])["hydra:member"];
+            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
+            $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['application.id'=>$id])["hydra:member"];
+            $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
     	}
 
     	$variables['title'] = $translator->trans('application');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
+
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
-    	$variables['configurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'],['application.id'=>$id])["hydra:member"];
-        $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['application.id'=>$id])["hydra:member"];
-        $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
-
-        // Als we een organisatie hebben kunnen we ook de style ophalen
+        // Als we een organisatie hebben kunnen we ook de style ophalen @to engels!
         if(array_key_exists('organization', $variables['resource'])){
             $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'],['organization.id'=>$variables['resource']['organization']])["hydra:member"];
         }
@@ -392,6 +396,8 @@ class WrcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
 
+    		$reload = false;
+
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
@@ -399,30 +405,79 @@ class WrcController extends AbstractController
             if(array_key_exists('configuration', $resource)){
                 $configuration = $resource['configuration'];
                 $configuration['application'] = $resource['@id'];
-                if(in_array('id',$configuration)){
-                    $configuration['@id'] = $configuration['id'];
+
+                // The resource action section
+                if(key_exists("@id",$configuration) && key_exists("action",$configuration)){
+                    // The delete action
+                    if($configuration['action'] == 'delete'){
+                        $commonGroundService->deleteResource($configuration);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
                 }
+
                 $configuration = $commonGroundService->saveResource($configuration, ['component'=>'wrc','type'=>'configurations']);
+
+                $variables['configurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'],['application.id'=>$id])["hydra:member"];
             }
+
             // Lets see if we also need to add an configuration
             if(array_key_exists('template', $resource)){
                 $template = $resource['template'];
                 $template['application'] = $resource['@id'];
-                if(in_array('id',$template)){
-                    $template['@id'] = $template['id'];
+
+                // This needs to be al boolean for posting
+                if(key_exists("slug",$template)){
+                    $template['slug']= $template['slug'] === 'true'? true: false;;
                 }
+
+                // The resource action section
+                if(key_exists("@id",$template) && key_exists("action",$template)){
+                    // The delete action
+                    if($template['action'] == 'delete'){
+                        $commonGroundService->deleteResource($template);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
+                }
+
                 $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+                $reload = true;
             }
+
             // Lets see if we also need to add an configuration
             if(array_key_exists('slug', $resource)){
                 $slug = $resource['slug'];
                 $slug['application'] = $resource['@id'];
-                if(in_array('id',$slug)){
-                    $slug['@id'] = $slug['id'];
+
+                // The resource action section
+                if(key_exists("@id",$slug) && key_exists("action",$slug)){
+                    // The delete action
+                    if($slug['action'] == 'delete'){
+                        $commonGroundService->deleteResource($slug);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
                 }
                 $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
+                $reload = true;
             }
 
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('menu', $resource)){
+                $menu = $resource['menu'];
+                $menu['application'] = $resource['@id'];
+
+                // The resource action section
+                if(key_exists("@id",$menu) && key_exists("action",v)){
+                    // The delete action
+                    if($menu['action'] == 'delete'){
+                        $commonGroundService->deleteResource($menu);
+                        return $this->redirect($this->generateUrl('app_wrc_application',['id'=>$id]));
+                    }
+                }
+                $menu = $commonGroundService->saveResource($menu, ['component'=>'wrc','type'=>'menus']);
+                $reload = true;
+            }
+
+            // If we do a reload here anyway? why dont we get the lates version of the resource
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
     	}
     	return $variables;
@@ -452,6 +507,12 @@ class WrcController extends AbstractController
      */
     public function menuAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'menus','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_menus'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -460,12 +521,6 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'menus','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_menus'));
     	}
 
     	$variables['title'] = $translator->trans('menu');
@@ -485,16 +540,32 @@ class WrcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
+            /* @todo dit vervangen door https://twig.symfony.com/doc/2.x/filters/u.html */
+            // Hacky
+            if(array_key_exists('menuitem', $resource)){
+                $resource['menuItem'] = $resource['menuitem'];
+            }
+
             // Lets see if we also need to add an slug
             if(array_key_exists('menuItem', $resource)){
-                // Schecker de check
-
-                //if(array_key_exists('menuItems', $resource)){
-                //    $resource['menuItems'] = [];
-                //}
 
                 $menuItem = $resource['menuItem'];
                 $menuItem['menu'] = $resource['@id'];
+
+                if(array_key_exists('order', $menuItem)) {
+                    $menuItem['order'] = intval($menuItem['order']);
+                }
+
+                // The resource action section
+                if(key_exists("@id",$menuItem) && key_exists("action",$menuItem)){
+                    // The delete action
+                    if($menuItem['action'] == 'delete'){
+
+                        $commonGroundService->deleteResource($menuItem);
+                        return $this->redirect($this->generateUrl('app_wrc_menu',['id'=>$id]));
+                    }
+                }
+
                 $menuItem = $commonGroundService->saveResource($menuItem, ['component'=>'wrc','type'=>'menu_items']);
 
             }
@@ -525,6 +596,12 @@ class WrcController extends AbstractController
      */
     public function configurationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'configurations','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_configurations'));
+        }
+
     	$variables = [];
 
     	// Lets see if we need to create
@@ -533,12 +610,6 @@ class WrcController extends AbstractController
     	}
     	else{
     		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'configurations','id'=>$id]);
-    	}
-
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_wrc_configurations'));
     	}
 
     	$variables['title'] = $translator->trans('configuration');
