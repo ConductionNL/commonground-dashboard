@@ -4,7 +4,7 @@
 
     <div class="main-panel">
         <div class="container">
-			
+
             {% include 'widgets/babs/title_h1.html.twig' %}
 
             <div class="page-inner">
@@ -15,47 +15,316 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_wrc_application', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px" data-toggle="modal" data-target="#deleteApplication">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
         									</div>
-    									</div> <!-- /.col -->  
-    									<div class="col-md-3 col-sm-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
-        										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
-                                                {% endfor %}
+    									</div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" value="{% if resource.id is defined %}{{ resource.id }}{% endif %}" disabled>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'domain'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="domain" name ="domain" value="{% if resource.domain is defined %}{{ resource.domain }}{% endif %}" required>
+                                            </div>
+                                        </div> <!-- /.col -->
+    								</div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="style">{{ 'style'|trans|capitalize }}</label>
+                                                <select id="style" name="style" class="form-control form-control-lg" {% if styles is not defined %}disabled{% endif %} >
+                                                {% if styles is defined %}
+                                                    {% for style in styles %}
+                                                        <option value="{{ style['@id'] }}" {% if resource.style is defined and resource.style is not empty and style['@id'] == resource.style['@id']  %}selected=""{% endif %}>{{ style.name }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
                                                 </select>
-        									</div><!-- /.form-group -->  
-        								</div> <!-- /.col -->  
-    								</div><!-- /.row --> 
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="defaultConfiguration">{{ 'default configuration'|trans|capitalize }}</label>
+                                                <select id="defaultConfiguration" name="defaultConfiguration" class="form-control form-control-lg" {% if configurations is not defined %}disabled{% endif %}>
+                                                {% if configurations is defined %}
+                                                    {% for configuration in configurations %}
+                                                        <option value="{{ configuration['@id'] }}" {% if resource.defaultConfiguration is defined and  resource.defaultConfiguration is not empty and  configuration['@id'] == resource.defaultConfiguration['@id']  %}selected=""{% endif %}>{{ configuration.name }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="organization" name="organization" class="form-control form-control-lg" required>
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
     								<div class="row">
-        								<div class="col-md-12">    
+        								<div class="col-md-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="description" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-        									</div>       
-        								</div>  <!-- /.col -->  
-    								</div> <!-- /.row -->       
-								</div> <!-- /.card-body -->        
+												<textarea class="form-control" rows="5" id="description" name ="description" required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+        									</div>
+        								</div>  <!-- /.col -->
+    								</div> <!-- /.row -->
+								</div> <!-- /.card-body -->
 
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->   
+								</div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card full-height p-1">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'configurations'|trans|capitalize }}</h3>
+                            </div>
+                            {% if configurations is defined %}
+                                <div class="card-list">
+                                    {% for configuration in configurations %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ configuration.name }}</h4></div>
+                                                <div class="status">{{ configuration.description }}</div>
+                                            </div>
+                                            <button class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" data-toggle="modal" data-target="#editConfiguration{{ configuration.id }}">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteConfiguration{{ configuration.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body">
+                            </div> <!-- /.card-body -->
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration">{{ 'add configuration'|trans|capitalize }}</a>
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-1  full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'templates'|trans|capitalize }}</h3>
+                            </div>
+
+                            {% if templates is defined %}
+                                <div class="card-list">
+                                    {% for template in templates %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ template.name }}</h4></div>
+                                                <div class="status">{{ template.description }}</div>
+                                            </div>
+                                            <a class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" href="{{ path('app_wrc_template', {id: template.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteTemplate{{ template.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body">
+                            </div> <!-- /.card-body -->
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTemplate"  data-toggle="modal" data-target="#addTemplate">{{ 'add template'|trans|capitalize }}</a>
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-0 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
+                            </div>
+                            {% if slugs is defined %}
+                            <div class="card-list">
+                                {% for slug in slugs %}
+                                <div class="item-list">
+                                    <div class="info-user ml-3">
+                                        <div class="username"><h4>{{ slug.slug|trans|capitalize }}</h4></div>
+                                        <div class="status">{{  slug.template.name }}</div>
+                                    </div>
+                                    <button class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" data-toggle="modal" data-target="#editSlug{{ slug.id }}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteSlug{{ slug.id }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div><!-- /.item-list -->
+                                {% endfor %}
+                            </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body ">
+                            </div><!-- /.card-body -->
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"  data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-1 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'menus'|trans|capitalize }}</h3>
+                            </div>
+
+                            {% if menus is defined %}
+                                <div class="card-list">
+                                    {% for menu in menus %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ menu.name }}</h4></div>
+                                                <div class="status">{{ menu.description }}</div>
+                                            </div>
+                                            <a class="btn btn-icon btn-primary btn-round btn-s" style="margin-right: 5px" href="{{ path('app_wrc_menu', {id: menu.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s" style="margin-right: 15px" data-toggle="modal" data-target="#deleteMenu{{ menu.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body">
+                            </div> <!-- /.card-body -->
+                            <div class="card-action p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addMenu"  data-toggle="modal" data-target="#addMenu">{{ 'add menu'|trans|capitalize }}</a>
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.page-inner -->
+
+
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'id':'deleteApplication' }
+            %}
+
+            {% include 'wrc/modals/configuration.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'id':'addConfiguration' }
+            %}
+
+            {% if configurations is defined %}
+                {% for configuration in configurations %}
+                    {% include 'widgets/delete_modal.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':configuration,
+                        'id':'deleteConfiguration' }
+                    %}
+
+                    {% include 'wrc/modals/configuration.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':configuration,
+                        'id':'editConfiguration' }
+                    %}
+                {% endfor %}
+            {% endif %}
+
+
+            {% include 'wrc/modals/template.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'id':'addTemplate' }
+            %}
+
+            {% if tempalates is defined %}
+                {% for tempalate in tempalates %}
+                    {% include 'widgets/delete_modal.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':tempalates,
+                        'id':'deleteTemplate' }
+                    %}
+                {% endfor %}
+            {% endif %}
+
+            {% include 'wrc/modals/menu.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'id':'addMenu' }
+            %}
+
+            {% if menus is defined %}
+                {% for menu in menus %}
+                    {% include 'widgets/delete_modal.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':menu,
+                        'id':'deleteSlug' }
+                    %}
+                {% endfor %}
+            {% endif %}
+
+            {% include 'wrc/modals/slug.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'id':'addSlug' }
+            %}
+
+            {% if slugs is defined %}
+                {% for slug in slugs %}
+                    {% include 'widgets/delete_modal.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':slug,
+                        'id':'deleteSlug' }
+                    %}
+
+                    {% include 'wrc/modals/slug.html.twig'
+                        with {
+                        'route': 'app_wrc_application',
+                        'resource':resource,
+                        'item':slug,
+                        'templates':templates,
+                        'id':'editSlug' }
+                    %}
+                {% endfor %}
+            {% endif %}
+
 
             {% include 'footer.html.twig' %}
 

@@ -21,27 +21,40 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-12 col-sm-12">
+        								<div class="col-md-6 col-sm-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
+        										<label for="name">{{ 'name'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
         									</div>
     									</div> <!-- /.col -->
-{#    									<div class="col-md-3 col-sm-12">#}
-{#        									<div class="form-group">#}
-{#        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>#}
-{#        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">#}
-{#        										 {% for organization in organizations %}#}
-{#                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>#}
-{#                                                {% endfor %}#}
-{#                                                </select>#}
-{#        									</div><!-- /.form-group -->#}
-{#        								</div> <!-- /.col -->#}
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                <select id="application" name="application" class="form-control form-control-lg" required>
+                                                    <option value="" {% if resource.application is defined and resource.application is empty %}selected=""{% endif %}>{{ 'none'|trans|capitalize }}</option>
+                                                    {% if applications is defined %}
+                                                    {% for application in applications %}
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and resource.application is not empty and application['@id'] == resource.application['@id']  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                    {% endfor %}
+                                                {% endif%}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+    									<div class="col-md-3 col-sm-12">
+        									<div class="form-group">
+        										<label for="templateEngine">{{ 'template engine'|trans|capitalize }}</label>
+        										<select id="templateEngine" name="templateEngine" class="form-control form-control-lg" required>
+                                               		<option value="twig" {% if resource.templateEngine is defined and 'twig' == resource.templateEngine  %}selected=""{% endif %}>Twig</option>
+                                                    <option value="md" {% if resource.templateEngine is defined and 'md' == resource.templateEngine  %}selected=""{% endif %}>Markdown</option>
+                                                    <option value="rts" {% if resource.templateEngine is defined and 'rts' == resource.templateEngine  %}selected=""{% endif %}>reStructuredText</option>
+                                                </select>
+        									</div><!-- /.form-group -->
+        								</div> <!-- /.col -->
     								</div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+        										<label for="description">{{ 'description'|trans|capitalize }}</label>
 												<textarea class="form-control" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
@@ -49,8 +62,8 @@
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'content'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="40" id="content" name="content">{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
+        										<label for="content">{{ 'content'|trans|capitalize }}</label>
+												<textarea class="form-control" rows="40" id="content" name="content" required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -63,7 +76,124 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"  data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if slugs is defined %}
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'slug'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'application'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'template'|trans|capitalize }}</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for slug in slugs %}
+                                        {% if slug.template.id == resource.id %}
+                                            <tr>
+                                                <td>{{ slug.slug }}</td>
+                                                <td><a href="path(app_wrc_application, {id: slug.application.id}) }}">{{  slug.application.name }} </a></td>
+                                                <td><a href="path(app_wrc_template, {id: slug.template.id}) }}">{{  slug.template.name }}</a></td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editSlug{{ slug.id }}"  data-toggle="modal" data-target="#editSlug{{ slug.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                            </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div> <!-- /.card-body -->
+
+                            <div class="card-action">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.page-inner -->
+
+
+            <div class="modal fade" style="text-align: center" id="addSlug" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addSlugTitle" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addSlugTitle"><b>{{ 'add slug'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ path('app_wrc_template', {id: resource.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="slug[application]">{{ 'application'|trans|capitalize }}</label>
+                                <select id="slug[application]" name="slug[application]" class="form-control form-control-lg" required>
+                                    {% for application in applications %}
+                                    <option value="{{ application['@id'] }}">{{ application.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="">
+                            </div><!-- /.form-group -->
+
+
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {{ 'add'|trans|capitalize }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if slugs is defined %}
+            {% for slug in slugs %}
+        <div class="modal fade" style="text-align: center" id="editSlug{{ slug.id }}" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addSlugTitle" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSlugTitle"><b>{{ 'edit slug'|trans|capitalize }} {{ slug.slug }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ path('app_wrc_template', {id: resource.id}) }}" method="post">
+                        <div class="form-group">
+                            <label for="slug[application]">{{ 'application'|trans|capitalize }}</label>
+                            <select id="slug[application]" name="slug[application]" class="form-control form-control-lg" required>
+                                {% for application in applications %}
+                                    <option value="{{ application['@id'] }}" >{{ application.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="{{ slug.slug }}">
+                        </div><!-- /.form-group -->
+
+                        <input type="hidden" id="slug[@id]" name ="slug[@id]" value="{{ slug['@id'] }}">
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            {{ 'save'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+            {% endfor %}
+        {% endif %}
 
             {% include 'footer.html.twig' %}
 

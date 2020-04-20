@@ -11,9 +11,9 @@ settings:
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
   repro: https://github.com/ConductionNL/Proto-component-commonground
-  demo: zaakonline.nl
+  demo: conduction.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: zaakonline.nl
+  domain: conduction.nl
   subdomain: pc
   organisationName: Conduction
   email: info@conduction.nl
@@ -49,8 +49,8 @@ security:
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.huwelijksplanner.online
-  authorisationProviderApplication: https://uc.huwelijksplanner.online
+  authorisationProviderUser: https://uc.conduction.nl
+  authorisationProviderApplication: https://uc.conduction.nl
 
 
 php:

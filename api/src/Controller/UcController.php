@@ -52,7 +52,7 @@ class UcController extends AbstractController
 		$variables = [];
 		$variables['title'] = $translator->trans('users');
 		$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('users');
-		$variables['resources'] = $commonGroundService->getResourceList('https://uc.huwelijksplanner.online/users')["hydra:member"];
+		$variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'users'])["hydra:member"];
 
 		return $variables;
 
@@ -71,7 +71,7 @@ class UcController extends AbstractController
 			$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
 		}
 		else{
-			$variables['resource'] = $commonGroundService->getResource('https://uc.huwelijksplanner.online/users/'.$id);
+			$variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'users','id'=>$id]);
 		}
 
 		// If it is a delete action we can stop right here
@@ -82,7 +82,7 @@ class UcController extends AbstractController
 
 		$variables['title'] = $translator->trans('users');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('users');
-		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+		$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
@@ -95,7 +95,7 @@ class UcController extends AbstractController
 			// If there are any sub data sources the need to be removed below in order to save the resource
 			// unset($resource['somedatasource'])
 
-			$variables['resource'] = $commonGroundService->saveResource($resource,'https://uc.huwelijksplanner.online/users/');
+			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'users']);
 		}
 		return $variables;
 	}
@@ -111,7 +111,7 @@ class UcController extends AbstractController
 		$variables = [];
 		$variables['title'] = $translator->trans('groups');
 		$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
-		$variables['resources'] = $commonGroundService->getResourceList('https://uc.huwelijksplanner.online/groups')["hydra:member"];
+		$variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'groups'])["hydra:member"];
 
 		return $variables;
 
@@ -130,7 +130,7 @@ class UcController extends AbstractController
 			$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
 		}
 		else{
-			$variables['resource'] = $commonGroundService->getResource('https://uc.huwelijksplanner.online/groups/'.$id);
+			$variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'groups','id'=>$id]);
 		}
 
 		// If it is a delete action we can stop right here
@@ -141,7 +141,7 @@ class UcController extends AbstractController
 
 		$variables['title'] = $translator->trans('group');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
-		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+		$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
@@ -154,7 +154,7 @@ class UcController extends AbstractController
 			// If there are any sub data sources the need to be removed below in order to save the resource
 			// unset($resource['somedatasource'])
 
-			$variables['resource'] = $commonGroundService->saveResource($resource,'https://uc.huwelijksplanner.online/groups/');
+			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'groups']);
 		}
 		return $variables;
 	}
@@ -170,7 +170,7 @@ class UcController extends AbstractController
 		$variables = [];
 		$variables['title'] = $translator->trans('scopes');
 		$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('scopes');
-		$variables['resources'] = $commonGroundService->getResourceList('https://uc.huwelijksplanner.online/scopes')["hydra:member"];
+		$variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'scopes'])["hydra:member"];
 
 		return $variables;
 
@@ -189,7 +189,7 @@ class UcController extends AbstractController
 			$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
 		}
 		else{
-			$variables['resource'] = $commonGroundService->getResource('https://uc.huwelijksplanner.online/scopes/'.$id);
+			$variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'scopes','id'=>$id]);
 		}
 
 		// If it is a delete action we can stop right here
@@ -200,7 +200,7 @@ class UcController extends AbstractController
 
 		$variables['title'] = $translator->trans('scope');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('scope');
-		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+		$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
@@ -213,7 +213,7 @@ class UcController extends AbstractController
 			// If there are any sub data sources the need to be removed below in order to save the resource
 			// unset($resource['somedatasource'])
 
-			$variables['resource'] = $commonGroundService->saveResource($resource,'https://uc.huwelijksplanner.online/scopes/');
+			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'scopes']);
 		}
 		return $variables;
 	}
