@@ -149,9 +149,9 @@
                                             <tr>
                                                 <td>{{ installation.name }}</td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editDomain{{ installation.id }}"  data-toggle="modal" data-target="#editDomain{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td><
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}"  data-toggle="modal" data-target="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'update'}) }}"  data-toggle="modal" data-target="{{ path('app_evc_installation', {'id': installation.id, 'action':'update'}) }}">{{ 'update'|trans|capitalize }}</a></td>
-                                                <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}"  data-toggle="modal" data-target="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'update'}) }}">{{ 'update'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -366,13 +366,22 @@
                             </div><!-- /.form-group -->
                             <div class="form-group">
                                 <label for="">{{ 'component'|trans|capitalize }}</label>
-                                <select id="installation[environment]" name="installation[environment]" class="form-control form-control-lg">
+                                <select id="installation[component]" name="installation[component]" class="form-control form-control-lg">
                                     <option value="">{{ 'none'|trans|capitalize }}</option>
                                     {% if components is defined %}
                                         {% for component in components %}
                                             <option value="{{ component['@id'] }}">{{ component.name }}</option>
                                         {% endfor %}
                                     {% endif %}
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="">{{ 'helm version'|trans|capitalize }}</label>
+                                <select id="installation[helmVersion]" name="installation[helmVersion]" class="form-control form-control-lg">
+                                    <option value="">{{ 'none'|trans|capitalize }}</option>
+                                            <option value="2.12.3">2.12.3</option>
+                                            <option value="2.14.3">2.14.3</option>
+                                            <option value="2.16.6">2.16.6</option>
                                 </select>
                             </div><!-- /.form-group -->
                             <button type="submit" class="btn btn-success m-3  mx-auto">
