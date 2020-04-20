@@ -49,7 +49,7 @@
                 {% endif %}
 
                 <button type="submit" class="btn btn-success m-3  mx-auto">
-                    {{ 'add'|trans|capitalize }}
+                    {% if item['id'] is defined %}{{ 'save'|trans|capitalize }}{% else %}{{ 'add'|trans|capitalize }}{% endif %}
                 </button>
             </form>
         </div>
