@@ -31,7 +31,6 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/requests")
-     * @Template
      */
     public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
@@ -39,8 +38,18 @@ class VrcController extends AbstractController
     	$variables['title'] = $translator->trans('requests');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
+        
+        if($variables['requestType'] === $request->query->get('requestType')){
+            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType'])["results"];
+        }
 
-    	return $variables;
+        /* If we have specific view for this request type use that instead */
+        if(key_exists('requestType',  $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')){
+            return $this->render('vrc/requests_templates/'$variables['requestType']['id'].'.html.twig', $variables);
+        }
+        else{
+            return $this->render('vrc/requests.html.twig', $variables);
+        }
     }
 
     /**
@@ -79,6 +88,10 @@ class VrcController extends AbstractController
     	if(array_key_exists ('zaaktype', $variables['resource'])){
     		$variables['casestatuses'] = $commonGroundService->getResourceList(['component'=>'ztc','type'=>'statustypen'],['zaaktype'=>$variables['resource']['zaaktype']])["results"];
     	}
+
+        if(array_key_exists ('requestType', $variables['resource'])){
+            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType'])["results"];
+        }
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -131,14 +144,12 @@ class VrcController extends AbstractController
     		$variables['resource'] = $commonGroundService->saveResource($resource,'https://vrc.huwelijksplanner.online/requests/');
     	}
 
-    	/* If we have specif view for this request type use that instead */
-        if(key_exists('requestType',  $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'. $variables['resource']['requestType'].'.html.twig')){
-            return $this->render('vrc/request_templates/'.$resource['requestType'].'.html.twig', $variables);
+    	/* If we have specific view for this request type use that instead */
+        if(key_exists('requestType',  $variables) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')){
+            return $this->render('vrc/request_templates/'$variables['requestType']['id'].'.html.twig', $variables);
         }
         else{
            return $this->render('vrc/request.html.twig', $variables);
         }
     }
-
-
 }
