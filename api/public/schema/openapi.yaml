@@ -8,7 +8,7 @@ info:
     - Reference: db
     - Enviroment: dev
     - Version: V.0.1
-    - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
+    - Repository: [online]() / [zip](/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/db-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
@@ -2369,12 +2369,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-21 08:15:15'
+        example: '2020-04-21 10:05:05'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-21 08:15:15'
+        example: '2020-04-21 10:05:05'
     required: []
   AuditTrail-write:
     properties:
@@ -2422,12 +2422,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-21 08:15:15'
+        example: '2020-04-21 10:05:05'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-21 08:15:15'
+        example: '2020-04-21 10:05:05'
     required: []
   ChangeLog-write:
     properties:
@@ -2468,8 +2468,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: conduction.nl
-    url: pc.dev.conduction.nl
+    name: huwelijksplanner.online
+    url: db.dev.huwelijksplanner.online
 externalDocs:
   -
     description: 'OAS Documentatie'

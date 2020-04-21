@@ -63,8 +63,8 @@ class VrcController extends AbstractController
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
-            $variables['changeLog'] = $commonGroundService->getResource($variables['@id'].'/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResource($variables['@id'].'/audit_trail');
+            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
         }
 
     	$variables['title'] = $translator->trans('request');
@@ -73,12 +73,11 @@ class VrcController extends AbstractController
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component'=>'vtc','type'=>'request_types'])["hydra:member"];
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
-    	/*@todo dit is nog veel te maga concreet*/
-    	$variables['casetypes'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/zaaktypen')["results"];
+
+    	$variables['casetypes'] = $commonGroundService->getResourceList(['component'=>'ztc','type'=>'zaaktypen'])["results"];
 
     	if(array_key_exists ('zaaktype', $variables['resource'])){
-            /*@todo dit is nog veel te maga concreet*/
-    		$variables['casestatuses'] = $zgwService->getResourceList('https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/statustypen',['zaaktype'=>$variables['resource']['zaaktype']])["results"];
+    		$variables['casestatuses'] = $commonGroundService->getResourceList(['component'=>'ztc','type'=>'statustypen'],['zaaktype'=>$variables['resource']['zaaktype']])["results"];
     	}
 
     	// Lets see if there is a post to procces
@@ -133,11 +132,11 @@ class VrcController extends AbstractController
     	}
 
     	/* If we have specif view for this request type use that instead */
-        if(key_exists('requestType', $resource) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$resource['requestType'].'.html.twig')){
-            $this->render('vrc/request_templates/'.$resource['requestType'].'.html.twig', $variables);
+        if(key_exists('requestType',  $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'. $variables['resource']['requestType'].'.html.twig')){
+            return $this->render('vrc/request_templates/'.$resource['requestType'].'.html.twig', $variables);
         }
         else{
-            $this->render('vrc/request.html.twig', $variables);
+           return $this->render('vrc/request.html.twig', $variables);
         }
     }
 
