@@ -206,6 +206,7 @@
                                               class="sub-item">{{ 'components'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                {#
                                 <li>
                                     <a href="{{ path("app_evc_domains") }}">
                                         <span style="color: #575962"
@@ -218,18 +219,21 @@
                                               class="sub-item">{{ 'environments'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                #}
                                 <li>
                                     <a href="{{ path("app_evc_healthlogs") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'healt logs'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                {#
                                 <li>
                                     <a href="{{ path("app_evc_installations") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'installations'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                #}
                             </ul>
                         </div>
                     </li>
@@ -242,53 +246,55 @@
                         <div class="collapse" id="ac">
                             <ul class="nav nav-collapse">
                                 <li>
-                                    <a href="{{ path("app_ac_calendars") }}">
+                                    <a href="{{ path("app_arc_calendars") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'calendars'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                {#
                                 <li>
-                                    <a href="{{ path("app_ac_events") }}">
+                                    <a href="{{ path("app_arc_events") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'events'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path("app_ac_alarms") }}">
+                                    <a href="{{ path("app_arc_alarms") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'alarms'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path("app_ac_freebusies") }}">
+                                    <a href="{{ path("app_arc_freebusies") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'apointments'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path("app_ac_journals") }}">
+                                    <a href="{{ path("app_arc_journals") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'journals'|trans|capitalize }}</span>
                                     </a>
-                                </li>
+                                </li>#}
                                 <li>
-                                    <a href="{{ path("app_ac_resources") }}">
+                                    <a href="{{ path("app_arc_resources") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'resources'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                {#
                                 <li>
-                                    <a href="{{ path("app_ac_schedules") }}">
+                                    <a href="{{ path("app_arc_schedules") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'schedules'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path("app_ac_todos") }}">
+                                    <a href="{{ path("app_arc_todos") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'tasks'|trans|capitalize }}</span>
                                     </a>
-                                </li>
+                                </li>#}
                             </ul>
                         </div>
                     </li>
@@ -449,11 +455,19 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{ path("app_vtc_requesttypes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'requests types'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                {#
+                                <li>
                                     <a href="{{ path("app_vrc_submitters") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'submitters'|trans|capitalize }}</span>
                                     </a>
                                 </li>
+                                #}
                             </ul>
                         </div>
                     </li>
@@ -533,24 +547,6 @@
                             </ul>
                         </div>
                     </li>
-
-                    <li class="nav-item">
-                        <a data-toggle="collapse" href="#configuration_vtc" class="" aria-expanded="false">
-                            <p style="color: #575962">{{ 'requests'|trans|capitalize }}</p>
-                            <span style="color: #575962" class="caret"></span>
-                        </a>
-                        <div class="collapse" id="configuration_vtc">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ path("app_vtc_requesttypes") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'request types'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
                     <li class="nav-item">
                         <a data-toggle="collapse" href="#configuration_wrc" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'configuration'|trans|capitalize }}</p>
