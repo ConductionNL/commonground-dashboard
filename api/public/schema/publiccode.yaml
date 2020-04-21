@@ -2,16 +2,12 @@ publiccodeYmlVersion: "0.2"
 
 name: db
 applicationSuite: commonground
-url: "https://github.com/ConductionNL/Proto-component-commonground"
-landingURL: "zaakonline.nl" 
+url: ""
+landingURL: "" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-<<<<<<< HEAD
-releaseDate: "2020-13-04"
-=======
-releaseDate: "2020-08-04"
->>>>>>> parent of 25656a6... Merge branch 'dev-barry' into development
-logo: db.zaakonline.nl 
+releaseDate: "2020-21-04"
+logo: db.conduction.nl 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -41,7 +37,7 @@ usedBy:
   - Gemeente Hoorn
   
 
-roadmap: "https://github.com/ConductionNL/Proto-component-commonground/blob/master/ROADMAP.md"
+roadmap: "/blob/master/ROADMAP.md"
 
 developmentStatus: development
 
@@ -70,8 +66,8 @@ description:
 #          on multiple rows. You should note what the software
 #          is and why one should need it.
 
-    documentation: "https://github.com/ConductionNL/Proto-component-commonground/blob/master/README.md"
-    apiDocumentation: "zaakonline.nl"
+    documentation: "/blob/master/README.md"
+    apiDocumentation: ""
 #
 #    features:
 #       - Very important feature

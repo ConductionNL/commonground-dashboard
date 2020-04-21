@@ -97,7 +97,7 @@
                                     <tbody>
                                     {% for case in resource.cases %}
                                         <tr>
-                                            <td><a href="{{ path('app_zgw_case', {'id': openzaak_resource(case).id}) }}">{{ openzaak_resource(case).omschrijving }}</a></td>
+                                            <td>{# <a href="{{ path('app_zgw_case', {'id': commonground_resource(''case'').id}) }}">{{ commonground_resource(case).omschrijving }}</a> #}{{ case }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

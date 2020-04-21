@@ -107,7 +107,7 @@ class BabsController extends AbstractController
 
         $variables['huwelijken'] = [];
         foreach ($variables['requests'] as $request) {
-            if (isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk") {
+            if (isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk" or isset($request['properties']['type']) and $request['properties']['type'] == "partnerschap") {
                 $variables['huwelijken'][] = $request;
             }
         }
@@ -226,115 +226,6 @@ class BabsController extends AbstractController
 //        die;
         return ["variables" => $variables];
     }
-
-    /**
-     * @Route("/medewerker/partnerschappen")
-     * @Template
-     */
-    public function medewerkerPartnerschappenAction(Request $request, CommonGroundService $commonGroundService)
-    {
-        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
-
-        $variables['partnerschappen'] = [];
-        foreach ($variables['requests'] as $request) {
-            if (isset($request['properties']['type']) and $request['properties']['type'] == "Partnerschap") {
-                $variables['partnerschappen'][] = $request;
-            }
-        }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/medewerker/partnerschappen/{id}")
-     * @Template
-     */
-    public function medewerkerPartnerschapViewAction(Request $request, CommonGroundService $commonGroundService, $id)
-    {
-        $variables['request'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
-
-        $variables['plechtigheden'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])["hydra:member"];
-        $variables['locaties'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])["hydra:member"];
-        $variables['ambtenaren'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])["hydra:member"];
-        $variables['extras'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])["hydra:member"];
-
-
-        $assent1 = $commonGroundService->getResource($variables['request']['properties']['partners'][0]);
-        $contact1 = $commonGroundService->getResource($assent1['contact']);
-
-        if(isset($variables['request']['properties']['partners'][1])) {
-
-            $assent2 = $commonGroundService->getResource($variables['request']['properties']['partners'][1]);
-            $contact2 = $commonGroundService->getResource($assent2['contact']);
-        }
-
-        $variables['totalChecks'] = 8;
-        $variables['confirmedChecks'] = 0;
-
-        if (isset($variables['request']['properties']['partners'][0]) && !empty($variables['request']['properties']['partners'][0]) && isset($huwelijk['properties']['partners'][1]) && !empty($huwelijk['properties']['partners'][1])) {
-            $variables['confirmedChecks']++;
-        }
-        if (isset($variables['request']['properties']['type']) && !empty($variables['request']['properties']['type'])) {
-            $variables['confirmedChecks']++;
-        }
-        if (isset($variables['request']['properties']['plechtigheid']) && !empty($variables['request']['properties']['plechtigheid'])) {
-            $variables['confirmedChecks']++;
-        }
-        if (isset($variables['request']['properties']['locatie']) && !empty($variables['']['request']['locatie'])) {
-            $variables['confirmedChecks']++;
-        }
-        if (isset($variables['request']['properties']['datum']) && !empty($variables['request']['properties']['datum'])) {
-            $variables['confirmedChecks']++;
-        }
-        if (isset($variables['request']['properties']['ambtenaar']) && !empty($variables['request']['properties']['ambtenaar'])) {
-            $variables['confirmedChecks']++;
-        }
-        if (isset($variables['request']['properties']['getuigen']) && !empty($variables['request']['properties']['getuigen']) && count($variables['request']['properties']['getuigen']) > 1) {
-            $variables['confirmedChecks']++;
-        }
-        if ($variables['request']['status'] == "completed" or $variables['request']['status'] == "processed") {
-            $variables['confirmedChecks']++;
-        }
-
-        if ($request->isMethod('POST')) {
-
-            $resource['properties'] = $request->request->all();
-            $resource['properties'] = $variables['request']['properties'];
-
-            if ($request->request->has('email1')) {
-                $contact1['emails']['0']['email'] = $request->request->get('email1');
-                $contact1 = $commonGroundService->saveResource($contact1, $contact1['@id']);
-            }
-
-            if ($request->request->has('email2')) {
-                $contact2['emails']['0']['email'] = $request->request->get('email2');
-                $contact2 = $commonGroundService->saveResource($contact2, $contact2['@id']);
-            }
-
-            if ($request->request->has('nederlands')) {
-                $resource['overig']['nederlands'] = $request->request->get('nederlands');
-            }
-
-            if ($request->request->has('naamgebruik')) {
-                $resource['properties']['overig']['naamgebruik'] = $request->request->get('naamgebruik');
-            }
-
-            if ($request->request->has('status')) {
-                $resource['status'] = $request->request->get('status');
-            }
-
-            foreach ($request->request->all() as $key => $value) {
-                $resource['properties'][$key] = $value;
-            }
-
-            $resource['@id'] = $variables['request']['@id'];
-            $resource['id'] = $variables['request']['id'];
-
-            $variables['request'] = $commonGroundService->saveResource($resource, 'https://vrc.huwelijksplanner.online/requests/');
-        }
-        return ["variables" => $variables];
-    }
-
 
     /**
      * @Route("/medewerker/omzetten")

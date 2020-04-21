@@ -8,13 +8,14 @@ settings:
   name: db
   title: CommonGround DashBoard
   version: V.0.1
+  id: &#039;&#039;
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
-  repro: https://github.com/ConductionNL/Proto-component-commonground
-  demo: conduction.nl
+  repro: 
+  demo: 
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: conduction.nl
-  subdomain: pc
+  domain: huwelijksplanner.online
+  subdomain: db
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
@@ -26,7 +27,7 @@ settings:
   cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
@@ -49,8 +50,8 @@ security:
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.conduction.nl
-  authorisationProviderApplication: https://uc.conduction.nl
+  authorisationProviderUser: https://uc.huwelijksplanner.online
+  authorisationProviderApplication: https://uc.huwelijksplanner.online
 
 
 php:
