@@ -392,11 +392,11 @@ class EvcController extends AbstractController
     	}
     	if($request->query->get('action') == 'update'){
     		$commonGroundService->getResource($variables['resource']['@id'].'/update');
-    		return $this->redirect($this->generateUrl('app_evc_installations'));
+    		return $this->redirect($this->generateUrl($this->generateUrl('app_evc_cluster').'/'.$variables['resource']['cluster']['id']));
     	}
-    	if($request->query->get('action') == 'update'){
+    	if($request->query->get('action') == 'uninstall'){
     		$commonGroundService->getResource($variables['resource']['@id'].'/delete');
-    		return $this->redirect($this->generateUrl('app_evc_installations'));
+    		return $this->redirect($this->generateUrl($this->generateUrl('app_evc_cluster').'/'.$variables['resource']['cluster']['id']));
     	}
 
     }
