@@ -259,6 +259,9 @@ parameters:
         pdc:
             location: '%env(APP_COMMONGROUND_PDC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_PDC_APIKEY)%'
+        vrc:
+            location: '%env(APP_COMMONGROUND_VRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_VRC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
