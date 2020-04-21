@@ -64,18 +64,16 @@ class ArcController extends AbstractController
 
         $variables = [];
 
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'arc','type'=>'resources','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_arc_resources'));
+        }
         // Lets see if we need to create
         if($id == 'new'){
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'arc', 'type'=>'resources','id'=>$id]);
-        }
-
-        // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_ac_resources'));
         }
 
         $variables['title'] = $translator->trans('resource');
@@ -241,24 +239,16 @@ class ArcController extends AbstractController
     {
         $variables = [];
 
-
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'arc','type'=>'calendars','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_arc_calendars'));
+        }
         // Lets see if we need to create
         if($id == 'new'){
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'arc', 'type'=>'calendars','id'=>$id]);
-        }
-
-        // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            return $this->redirect($this->generateUrl('app_ac_calendars'));
-        }
-
-        $variables['title'] = $translator->trans('calendar');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
-
-        if($id != 'new'){
             $variables['schedules'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'schedules'],['calendar.id'=>$id])['hydra:member'];
             $variables['events'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'events'],['calendar.id'=>$id])['hydra:member'];
             $variables['todos'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'todos'],['calendar.id'=>$id])['hydra:member'];
@@ -266,6 +256,16 @@ class ArcController extends AbstractController
             $variables['freebusies'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'freebusies'],['calendar.id'=>$id])['hydra:member'];
             $variables['alarms'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['event.calendar.id'=>$id])['hydra:member'];
             $variables['alarms'] = array_merge($variables['alarms'],$commonGroundService->getResourceList(['component'=>'arc','type'=>'alarms'],['todo.calendar.id'=>$id])['hydra:member']);
+        }
+
+
+        // If it is a delete action we can stop right here
+
+        $variables['title'] = $translator->trans('calendar');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('calendar');
+
+        if($id != 'new'){
+
         }
 
         // Lets see if there is a post to procces

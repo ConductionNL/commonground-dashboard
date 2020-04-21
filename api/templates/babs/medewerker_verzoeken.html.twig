@@ -13,9 +13,11 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Partner 1</th>
-                            <th scope="col">Partner 2</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">ID</th>
+{#                            <th scope="col">Partner 1</th>#}
+{#                            <th scope="col">Partner 2</th>#}
+{#                            <th scope="col">Type</th>#}
+                            <th scope="col">Submitter</th>
                             <th scope="col">Aangemaakt op</th>
                             <th scope="col">Status</th>
                             <th scope="col"></th>
@@ -24,24 +26,31 @@
                         <tbody>
                         {% for request in requests %}
                             <tr>
-                                {% if request.properties.partners[0] is defined and request.properties.partners[0] is not empty %}
-                                    {% set assent1 = commonground_resource(request.properties.partners.0) %}
-                                    {% set contact1 = commonground_resource(assent1.contact) %}
-                                    <td>{{ contact1.name }}</td>
+                                <td>{{ request.id }}</td>
+{#                                {% if request.properties.partners[0] is defined and request.properties.partners[0] is not empty %}#}
+{#                                    {% set assent1 = commonground_resource(request.properties.partners.0) %}#}
+{#                                    {% set contact1 = commonground_resource(assent1.contact) %}#}
+{#                                    <td>{{ contact1.name }}</td>#}
+{#                                {% else %}#}
+{#                                    <td style="color: lightgray;">Geen partner</td>#}
+{#                                {% endif %}#}
+{#                                {% if request.properties.partners[1] is defined and request.properties.partners[1] is not empty %}#}
+{#                                    {% set assent2 = commonground_resource(request.properties.partners.1) %}#}
+{#                                    {% set contact2 = commonground_resource(assent2.contact) %}#}
+{#                                    <td>{{ contact2.name }}</td>#}
+{#                                {% else %}#}
+{#                                    <td style="color: lightgray;">Geen partner</td>#}
+{#                                {% endif %}#}
+{#                                {% if request.properties.type is defined and request.properties.type is not empty %}#}
+{#                                    <td>{{ request.properties.type|capitalize }}</td>#}
+{#                                {% else %}#}
+{#                                    <td style="color: lightgray;">Geen type</td>#}
+{#                                {% endif %}#}
+                                {% if request.submitters[0].person is defined and request.submitters[0].person is not empty %}
+                                    {% set submitter = commonground_resource(request.submitters[0].person) %}
+                                    <td>{{ submitter.name }}</td>
                                 {% else %}
-                                    <td style="color: lightgray;">Geen partner</td>
-                                {% endif %}
-                                {% if request.properties.partners[1] is defined and request.properties.partners[1] is not empty %}
-                                    {% set assent2 = commonground_resource(request.properties.partners.1) %}
-                                    {% set contact2 = commonground_resource(assent2.contact) %}
-                                    <td>{{ contact2.name }}</td>
-                                {% else %}
-                                    <td style="color: lightgray;">Geen partner</td>
-                                {% endif %}
-                                {% if request.properties.type is defined and request.properties.type is not empty %}
-                                    <td>{{ request.properties.type|capitalize }}</td>
-                                {% else %}
-                                    <td style="color: lightgray;">Geen type</td>
+                                    <td style="color: lightgray;"></td>
                                 {% endif %}
                                 {% if request.dateCreated is defined and request.dateCreated is not empty %}
                                     <td>{{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
@@ -55,12 +64,10 @@
                                 {% endif %}
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
                                        href="
-                                       {% if request.properties.type is not defined or request.properties.type is empty %}
+                                       {% if commonground_resource(request.requestType).name == "Huwelijk / Parterschap" %}
                                        {{ path('app_babs_medewerkerhuwelijkview', {id: request.id}) }}
-                                       {% elseif request.properties.type == "Huwelijk" %}
-                                       {{ path('app_babs_medewerkerhuwelijkview', {id: request.id}) }}
-                                       {% elseif request.properties.type == "partnerschap" %}
-                                       {{ path('app_babs_medewerkerpartnerschapview', {id: request.id}) }}
+                                       {% elseif commonground_resource(request.requestType).name == "Aanvraag babs voor een dag" %}
+                                       {{ path('app_vrc_aanvraagbabs', {id: request.id}) }}
                                        {% else %}#{% endif %}"><b>MEER INFO</b></a></td>
                             </tr>
                         {% endfor %}
