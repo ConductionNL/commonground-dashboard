@@ -66,7 +66,7 @@ class EvcController extends AbstractController
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
-//            var_dump(['component'=>'evc','type'=>'clusters','id'=>$id]);
+            $commonGroundService->deleteResource(['component'=>'evc','type'=>'clusters','id'=>$id]);
             $commonGroundService->deleteResource('',['component'=>'evc','type'=>'clusters','id'=>$id]);
             return $this->redirect($this->generateUrl('app_evc_clusters'));
         }
@@ -285,7 +285,7 @@ class EvcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
     		$resource['core'] = (bool)$resource['core'];
-
+        
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'evc', 'type'=>'components']);
     	}
 
@@ -400,8 +400,4 @@ class EvcController extends AbstractController
     	}
 
     }
-
-
-
-
 }

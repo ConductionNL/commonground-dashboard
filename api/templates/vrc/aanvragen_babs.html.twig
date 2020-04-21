@@ -1,0 +1,75 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    {% if requests is defined and requests|length > 0 %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+{#                                <th scope="col">Type</th>#}
+                                <th scope="col">Parent</th>
+                                <th scope="col">Aangemaakt op</th>
+                                <th scope="col">Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for request in requests %}
+                                <tr>
+                                    <td>
+                                        {{ request.id }}
+                                    </td>
+{#                                    {% set requestType = commonground_resource(request.requestType) %}#}
+{#                                    {% if requestType.name is defined and requestType.name is not empty %}#}
+{#                                        <td>#}
+{#                                            {{ requestType.name|capitalize }}#}
+{#                                        </td>#}
+{#                                    {% else %}#}
+{#                                        <td style="color: lightgray;">Geen type</td>#}
+{#                                    {% endif %}#}
+                                    {% if request.parent is defined and request.parent is not empty %}
+                                        <td>
+                                            {{ request.parent.id }}
+                                        </td>
+                                    {% else %}
+                                        <td style="color: lightgray;">Geen parent</td>
+                                    {% endif %}
+                                    {% if request.dateCreated is defined and request.dateCreated is not empty %}
+                                        <td>{{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray;"></td>
+                                    {% endif %}
+                                    {% if request.status is defined and request.status is not empty %}
+                                        <td>{{ request.status|capitalize }}</td>
+                                    {% else %}
+                                        <td style="color: lightgray;">Geen status</td>
+                                    {% endif %}
+                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="p-4">Geen resultaten gevonden.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}
