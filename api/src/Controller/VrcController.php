@@ -38,14 +38,14 @@ class VrcController extends AbstractController
     	$variables['title'] = $translator->trans('requests');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
-        
+
         if($variables['requestType'] === $request->query->get('requestType')){
-            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType'])["results"];
+            $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc','type'=>'request_types','id'=>$variables['requestType']]);
         }
 
         /* If we have specific view for this request type use that instead */
         if(key_exists('requestType',  $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')){
-            return $this->render('vrc/requests_templates/'$variables['requestType']['id'].'.html.twig', $variables);
+            return $this->render('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         }
         else{
             return $this->render('vrc/requests.html.twig', $variables);
@@ -146,7 +146,7 @@ class VrcController extends AbstractController
 
     	/* If we have specific view for this request type use that instead */
         if(key_exists('requestType',  $variables) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')){
-            return $this->render('vrc/request_templates/'$variables['requestType']['id'].'.html.twig', $variables);
+            return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         }
         else{
            return $this->render('vrc/request.html.twig', $variables);
