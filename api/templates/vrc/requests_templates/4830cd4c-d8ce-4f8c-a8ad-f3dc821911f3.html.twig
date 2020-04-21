@@ -1,3 +1,5 @@
+{# RequestType ID: 4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3 voor template: Aanvragen naamwijziging #}
+
 {% extends "body.html.twig" %}
 
 {% block content %}
@@ -44,7 +46,7 @@
                                         <td style="color: lightgray;">Geen status</td>
                                     {% endif %}
                                     <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>
+                                           href="{{ path('app_vrc_request', {id: request.id, requestType: request.requestType} ) }}"><b>Bewerk</b></a>
                                     </td>
                                 </tr>
                             {% endfor %}

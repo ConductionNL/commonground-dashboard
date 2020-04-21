@@ -1,3 +1,5 @@
+{# RequestType ID: cdd7e88b-1890-425d-a158-7f9ec92c9508 voor template: Aanvragen niet beëdigd babs #}
+
 {% extends "body.html.twig" %}
 
 {% block content %}
@@ -43,9 +45,9 @@
                                     {% else %}
                                         <td style="color: lightgray;">Geen status</td>
                                     {% endif %}
-                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>
-                                    </td>
+{#                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
+{#                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>#}
+{#                                    </td>#}
                                 </tr>
                             {% endfor %}
                             </tbody>

@@ -1,3 +1,5 @@
+{# RequestType ID: c8704ea6-4962-4b7e-8d4e-69a257aa9577 voor template: Aanvragen eigen locatie #}
+
 {% extends "body.html.twig" %}
 
 {% block content %}
@@ -43,9 +45,9 @@
                                     {% else %}
                                         <td style="color: lightgray;">Geen status</td>
                                     {% endif %}
-                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>
-                                    </td>
+{#                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
+{#                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>#}
+{#                                    </td>#}
                                 </tr>
                             {% endfor %}
                             </tbody>
