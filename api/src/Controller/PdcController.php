@@ -128,14 +128,12 @@ class PdcController extends AbstractController
      */
     public function groupsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
     	$variables = [];
     	$variables['title'] = $translator->trans('groups');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
     	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
 
     	return $variables;
-
     }
 
     /**

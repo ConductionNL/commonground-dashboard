@@ -9,12 +9,11 @@
 
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
-                    {% if requests is defined and requests|length > 0 %}
+                    {% if resources is defined and resources|length > 0 %}
                         <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
-{#                                <th scope="col">Type</th>#}
                                 <th scope="col">Parent</th>
                                 <th scope="col">Aangemaakt op</th>
                                 <th scope="col">Status</th>
@@ -22,19 +21,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for request in requests %}
+                            {% for request in resources %}
                                 <tr>
                                     <td>
                                         {{ request.id }}
                                     </td>
-{#                                    {% set requestType = commonground_resource(request.requestType) %}#}
-{#                                    {% if requestType.name is defined and requestType.name is not empty %}#}
-{#                                        <td>#}
-{#                                            {{ requestType.name|capitalize }}#}
-{#                                        </td>#}
-{#                                    {% else %}#}
-{#                                        <td style="color: lightgray;">Geen type</td>#}
-{#                                    {% endif %}#}
                                     {% if request.parent is defined and request.parent is not empty %}
                                         <td>
                                             {{ request.parent.id }}
@@ -42,8 +33,8 @@
                                     {% else %}
                                         <td style="color: lightgray;">Geen parent</td>
                                     {% endif %}
-                                    {% if request.dateCreated is defined and request.dateCreated is not empty %}
-                                        <td>{{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    {% if request.date_created is defined and request.date_created is not empty %}
+                                        <td>{{ request.date_created|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                     {% else %}
                                         <td style="color: lightgray;"></td>
                                     {% endif %}
