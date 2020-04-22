@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Service\CommonGroundService;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class BabsController
@@ -438,6 +439,62 @@ class BabsController extends AbstractController
         $functie = "Beheerder";
 
         return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+    }
+
+    /**
+     * @Route("/aanvragen-naamwijziging")
+     * @Template
+     */
+    public function aanvragenNaamwijzigingAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('aanvragen naamwijziging');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen naamwijziging');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3'])["hydra:member"];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/aanvragen-beedigd-babs")
+     * @Template
+     */
+    public function aanvragenBeedigdBabsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('aanvragen beedigd babs');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen beedigd babs');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1'])["hydra:member"];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/aanvragen-niet-beedigd-babs")
+     * @Template
+     */
+    public function aanvragenNietBeedigdBabsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('aanvragen niet beedigd babs');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen niet beedigd babs');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/cdd7e88b-1890-425d-a158-7f9ec92c9508'])["hydra:member"];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/aanvragen-eigen-locatie")
+     * @Template
+     */
+    public function aanvragenEigenLocatieAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('aanvragen eigen locatie');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen eigen locatie');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/c8704ea6-4962-4b7e-8d4e-69a257aa9577'])["hydra:member"];
+
+        return $variables;
     }
 }
 

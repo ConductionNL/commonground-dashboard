@@ -627,8 +627,6 @@ class CommonGroundService
             $path_parts = pathinfo($parsedId['path']);
             $path_parts['dirname'];
 
-            //var_dump($path_parts);
-
             if (is_string($path_parts['basename']) && (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', $path_parts['basename']) == 1)) {
                 $object['id'] = $path_parts['basename'];
                 break;
@@ -710,6 +708,7 @@ class CommonGroundService
 
 
         }
+
 
         if (!$url && $resource && array_key_exists('@id', $resource)) {
             $url = $resource['@id'];
@@ -833,9 +832,6 @@ class CommonGroundService
 
         // Lets loop trough the endoints and get health (the self endpoint is included)
         foreach ($component['endpoints'] as $key=>$endpoint) {
-
-            //var_dump($component['endpoints']);
-            //var_dump($endpoint);
 
             $response = $this->client->request('GET', $component['href'].$endpoint['href'], ['Headers' =>['Authorization' => $component['authorization'], 'Accept' => 'application/health+json']]);
             if ($response->getStatusCode() == 200) {
