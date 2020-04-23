@@ -49,8 +49,7 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('accommodations');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('accommodations');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://lc.huwelijksplanner.online/accommodations')["hydra:member"];
-
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['accommodations.id'=>$id])["hydra:member"];
         return $variables;
     }
 
@@ -68,8 +67,7 @@ class LcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/accommodations/'.$id);
-        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'accommodation','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
@@ -79,7 +77,7 @@ class LcController extends AbstractController
 
         $variables['title'] = $translator->trans('accommodation');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('accommodation');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -92,7 +90,8 @@ class LcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://lc.huwelijksplanner.online/accommodations/');
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'resource','id'=>$id]));
         }
 
 
@@ -109,9 +108,9 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('places');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('places');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://lc.huwelijksplanner.online/places')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['places.id'=>$id])["hydra:member"];
 
-    	return $variables;
+        return $variables;
     }
 
     /**
@@ -127,7 +126,7 @@ class LcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://lc.huwelijksplanner.online/places/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'places','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -138,7 +137,8 @@ class LcController extends AbstractController
 
         $variables['title'] = $translator->trans('place');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('place');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['places.id'=>$id])["hydra:member"];
+
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -151,7 +151,8 @@ class LcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://lc.huwelijksplanner.online/places/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'resource','id'=>$id]));
+
         }
 
     	return $variables;

@@ -49,7 +49,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('orders');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('orders');
-        $variables['resources'] = $commonGroundService->getResourceList('https://orc.huwelijksplanner.online/orders')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['orders.id'=>$id])["hydra:member"];
 
         return $variables;
     }
@@ -68,7 +68,7 @@ class OrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://orc.huwelijksplanner.online/orders/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'orders','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -79,7 +79,7 @@ class OrcController extends AbstractController
 
         $variables['title'] = $translator->trans('order');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('order');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -92,7 +92,7 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://orc.huwelijksplanner.online/orders/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'resource','id'=>$id]));
         }
 
         return $variables;
@@ -107,7 +107,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('persons');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('persons');
-        $variables['resources'] = $commonGroundService->getResourceList('https://orc.huwelijksplanner.online/order_items')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['orderItems.id'=>$id])["hydra:member"];
 
         return $variables;
     }
@@ -126,7 +126,7 @@ class OrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://orc.huwelijksplanner.online/order_items/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'orderitems','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -137,7 +137,7 @@ class OrcController extends AbstractController
 
         $variables['title'] = $translator->trans('order item');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('order item');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -150,7 +150,7 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://orc.huwelijksplanner.online/order_items/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'resource','id'=>$id]));
         }
 
         return $variables;
@@ -165,7 +165,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('taxes');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('taxes');
-        $variables['resources'] = $commonGroundService->getResourceList('https://orc.huwelijksplanner.online/taxes')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['taxes.id'=>$id])["hydra:member"];
 
         return $variables;
     }
@@ -184,7 +184,7 @@ class OrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://orc.huwelijksplanner.online/taxes/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'taxes','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -195,7 +195,7 @@ class OrcController extends AbstractController
 
         $variables['title'] = $translator->trans('tax');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('tax');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -208,7 +208,8 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://orc.huwelijksplanner.online/taxes/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'resource','id'=>$id]));
+
         }
 
         return $variables;
@@ -223,7 +224,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('organizations');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('organizations');
-        $variables['resources'] = $commonGroundService->getResourceList('https://orc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['organizations.id'=>$id])["hydra:member"];
 
         return $variables;
     }
@@ -242,7 +243,7 @@ class OrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://orc.huwelijksplanner.online/organizations/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'organizations','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -253,8 +254,7 @@ class OrcController extends AbstractController
 
         $variables['title'] = $translator->trans('organization');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organization');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
@@ -266,7 +266,7 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://orc.huwelijksplanner.online/organizations/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'resource','id'=>$id]));
         }
 
         return $variables;
