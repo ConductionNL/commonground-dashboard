@@ -396,11 +396,6 @@ class WrcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
 
-    		$reload = false;
-
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
-
             // Lets see if we also need to add an configuration
             if(array_key_exists('configuration', $resource)){
                 $configuration = $resource['configuration'];
@@ -440,7 +435,7 @@ class WrcController extends AbstractController
                 }
 
                 $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
-                $reload = true;
+                $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
             }
 
             // Lets see if we also need to add an configuration
@@ -466,7 +461,7 @@ class WrcController extends AbstractController
                 $menu['application'] = $resource['@id'];
 
                 // The resource action section
-                if(key_exists("@id",$menu) && key_exists("action",v)){
+                if(key_exists("@id",$menu) && key_exists("action",$menu)){
                     // The delete action
                     if($menu['action'] == 'delete'){
                         $commonGroundService->deleteResource($menu);
@@ -474,7 +469,7 @@ class WrcController extends AbstractController
                     }
                 }
                 $menu = $commonGroundService->saveResource($menu, ['component'=>'wrc','type'=>'menus']);
-                $reload = true;
+                $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
             }
 
             // If we do a reload here anyway? why dont we get the lates version of the resource
