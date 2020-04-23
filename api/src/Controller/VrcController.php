@@ -37,10 +37,16 @@ class VrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('requests');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
 
-        if($variables['requestType'] === $request->query->get('requestType')){
+        $variables['requestType'] = $request->query->get('requestType');
+
+        if(isset($variables['requestType'])){
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc','type'=>'request_types','id'=>$variables['requestType']]);
+            $variables['subtitle'] = "alle ".$variables['requestType']['name'];
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'],['requestType'=> $variables['requestType']['@id']])["hydra:member"];
+        }
+        else{
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
         }
 
         /* If we have specific view for this request type use that instead */
@@ -90,7 +96,7 @@ class VrcController extends AbstractController
     	}
 
         if(array_key_exists ('requestType', $variables['resource'])){
-            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType'])["results"];
+            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
         }
 
     	// Lets see if there is a post to procces
