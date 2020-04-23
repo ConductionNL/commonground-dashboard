@@ -99,7 +99,7 @@ class EvcController extends AbstractController
             if(key_exists('domain', $resource)){
                 $domain = $resource['domain'];
                 $domain['cluster'] = $resource['@id'];
-                if(in_array('id',$domain)){
+                if(key_exists('id',$domain)){
                     $domain['@id'] = $domain['id'];
                 }
                 $domain = $commonGroundService->saveResource($domain,['component'=>'evc','type'=>'domains']);
@@ -387,16 +387,19 @@ class EvcController extends AbstractController
     		return $this->redirect($this->generateUrl('app_evc_installations'));
     	}
     	if($request->query->get('action') == 'install'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/install');
-    		return $this->redirect($this->generateUrl('app_evc_cluster').'/'.$variables['resource']['cluster']['id']);
+    		$commonGroundService->getResource($variables['resource']['@id'].'/install',null,true);
+//            var_dump($variables['resource']);
+    		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
     	if($request->query->get('action') == 'update'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/update');
-    		return $this->redirect($this->generateUrl($this->generateUrl('app_evc_cluster').'/'.$variables['resource']['cluster']['id']));
+    		$commonGroundService->getResource($variables['resource']['@id'].'/update', null, true);
+            //var_dump($variables['resource']);
+    		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
     	if($request->query->get('action') == 'uninstall'){
     		$commonGroundService->getResource($variables['resource']['@id'].'/delete');
-    		return $this->redirect($this->generateUrl($this->generateUrl('app_evc_cluster').'/'.$variables['resource']['cluster']['id']));
+    		var_dump($variables['resource']);
+            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
 
     }
