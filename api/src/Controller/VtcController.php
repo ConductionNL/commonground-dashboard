@@ -51,7 +51,7 @@ class VtcController extends AbstractController
 		$variables = [];
 		$variables['title'] = $translator->trans('request types');
 		$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('request types');
-		$variables['resources'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/request_types')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vtc','type'=>'request_types'])["hydra:member"];
 
 		return $variables;
 

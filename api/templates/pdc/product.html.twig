@@ -2,12 +2,6 @@
 
 {% block content %}
 
-    <style>
-        th {
-            width: 33.33%;
-        }
-    </style>
-
     <div class="main-panel">
         <div class="container">
 
@@ -16,79 +10,64 @@
             <div class="page-inner">
                 <div class="row">
 
-                    <div style="margin-top: -50px;" class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                    <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+
+                        <div style="margin-top: -50px;" class="col-md-12">
+                            <div class="card p-4 full-height">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger"
-                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
+                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteApplication">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                       value="{% if resource.id is defined %}{{ resource.id }}{% endif %}"
+                                                       disabled>
+                                            </div>
+                                        </div> <!-- /.col -->
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       name="name"
+                                                       value="{% if resource.name is defined %}{{ resource.name }}{% endif %}"
+                                                       required>
                                             </div>
                                         </div> <!-- /.col -->
-
+                                    </div><!-- /.row -->
+                                    <div class="row">
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
+                                                <label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
+                                                <select id="catalogue" name="catalogue"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for catalogue in catalogues %}
+                                                        <option value="{{ catalogue['@id'] }}"
+                                                                {% if resource.catalogue is defined and catalogue['@id'] == resource.catalogue %}selected=""{% endif %}>{{ catalogue.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="organization" name="organization"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}"
+                                                                {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
 
                                     </div><!-- /.row -->
                                     <div class="row">
@@ -105,33 +84,90 @@
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->
-                            </form>
-                        </div><!-- /.card -->
-                    </div>
-                </div>
+                            </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card full-height p-1">
+                                        <div class="card-header">
+                                            <h3 class="d-inline-block">{{ 'groups'|trans|capitalize }}</h3>
+                                        </div>
+                                        {% if resource.groups is defined %}
+                                            <div class="card-list">
+                                                {% for group in resource.groups %}
+                                                    <div class="item-list">
+                                                        <div class="info-user ml-3">
+                                                            <div class="username">
+                                                                <h4>{{ group.name|capitalize }}</h4></div>
+                                                            <div class="status">{{ group.description }}</div>
+                                                        </div>
+                                                        <button class="btn btn-icon btn-primary btn-round btn-s"
+                                                                style="margin-right: 5px" data-toggle="modal"
+                                                                data-target="#editGroup{{ group.id }}">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-icon btn-danger btn-round btn-s"
+                                                                style="margin-right: 15px" data-toggle="modal"
+                                                                data-target="#deleteGroup{{ group.id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div><!-- /.item-list -->
+                                                {% endfor %}
+                                            </div><!-- /.card-list -->
+                                        {% endif %}
+
+                                        <div class="card-body">
+                                        </div> <!-- /.card-body -->
+                                        <div class="card-action  p-1">
+                                            <a class="btn btn-info btn-block" style="margin-right: 25px"
+                                               href="#addGroup"
+                                               data-toggle="modal"
+                                               data-target="#addGroup">{{ 'add group'|trans|capitalize }}</a>
+                                        </div><!-- /.card-action -->
+                                    </div><!-- /.card -->
+                                </div><!-- /.col -->
+                                <div class="col-md-6">
+                                    <div class="card full-height p-1">
+                                        <div class="card-header">
+                                            <h3 class="d-inline-block">{{ 'offers'|trans|capitalize }}</h3>
+                                        </div>
+                                        {% if resource.offers is defined %}
+                                            <div class="card-list">
+                                                {% for offer in resource.offers %}
+                                                    <div class="item-list">
+                                                        <div class="info-user ml-3">
+                                                            <div class="username">
+                                                                <h4>{{ offer.name|capitalize }}</h4></div>
+                                                            <div class="status">{{ offer.description }}</div>
+                                                        </div>
+                                                        <button class="btn btn-icon btn-primary btn-round btn-s"
+                                                                style="margin-right: 5px" data-toggle="modal"
+                                                                data-target="#editOffer{{ offer.id }}">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-icon btn-danger btn-round btn-s"
+                                                                style="margin-right: 15px" data-toggle="modal"
+                                                                data-target="#deleteOffer{{ offer.id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div><!-- /.item-list -->
+                                                {% endfor %}
+                                            </div><!-- /.card-list -->
+                                        {% endif %}
+
+                                        <div class="card-body">
+                                        </div> <!-- /.card-body -->
+                                        <div class="card-action  p-1">
+                                            <a class="btn btn-info btn-block" style="margin-right: 25px"
+                                               href="#addOffer"
+                                               data-toggle="modal"
+                                               data-target="#addOffer">{{ 'add offer'|trans|capitalize }}</a>
+                                        </div><!-- /.card-action -->
+                                    </div><!-- /.card -->
+                                </div><!-- /.col -->
+                            </div><!-- /.card -->
                         </div>
-                    </div>
+                    </form>
                 </div>
 
             </div><!-- /.row -->
