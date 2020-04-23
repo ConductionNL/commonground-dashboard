@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class MrcController
+ * Class CcController
  * @package App\Controller
  * @Route("/cc")
  */
@@ -49,7 +49,8 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('persons');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('persons');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://cc.huwelijksplanner.online/people')["hydra:member"];
+    	//$variables['resources'] = $commonGroundService->getResourceList('https://cc.huwelijksplanner.online/people')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
 
         return $variables;
     }
@@ -60,6 +61,11 @@ class CcController extends AbstractController
      */
     public function personAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'cc','type'=>'people','id'=> $id]);
+            return $this->redirect($this->generateUrl('app_cc_persons'));
+        }
 
     	$variables = [];
 
@@ -68,18 +74,20 @@ class CcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://cc.huwelijksplanner.online/people/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'people','id'=> $id]);
         }
 
+        /*
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
             return $this->redirect($this->generateUrl('app_cc_persons'));
         }
+        */
 
         $variables['title'] = $translator->trans('person');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('person');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -89,10 +97,7 @@ class CcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            // If there are any sub data sources the need to be removed below in order to save the resource
-            // unset($resource['somedatasource'])
-
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://cc.huwelijksplanner.online/people/');
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'cc','type'=>'people']);
         }
 
         return $variables;
