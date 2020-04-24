@@ -1,0 +1,34 @@
+
+<div class="modal fade" style="text-align: center" id="{{ id }}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content" style="width: 750px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Label"><b>{{ 'changeLog'|trans|capitalize }}</b></h5>
+            </div><!-- /.header -->
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'version'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'action'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'username'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'data'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for record in changeLog %}
+                    <tr>
+                        <td>{{ record.version }}</td>
+                        <td>{{ record.action }}</td>
+                        <td>{{ record.username }}</td>
+                        <td><ul>{# for key, value in record.data %}<li><b>{{ key }}</b>: {{ value }}</li>{% endfor #}</ul></td>
+                        <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div><!-- /.content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
