@@ -40,6 +40,7 @@ class VrcController extends AbstractController
 
         $variables['requestType'] = $request->query->get('requestType');
 
+
         if(isset($variables['requestType'])){
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc','type'=>'request_types','id'=>$variables['requestType']]);
             $variables['subtitle'] = "alle ".$variables['requestType']['name'];
@@ -56,6 +57,7 @@ class VrcController extends AbstractController
         else{
             return $this->render('vrc/requests.html.twig', $variables);
         }
+        return $this->render('vrc/requests.html.twig', $variables);
     }
 
     /**
@@ -80,6 +82,13 @@ class VrcController extends AbstractController
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
             $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
+
+            /*
+            $variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/submitters/' . $id);
+            $variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/audit_trail')["hydra:member"];
+            */
         }
 
     	$variables['title'] = $translator->trans('request');
@@ -150,22 +159,14 @@ class VrcController extends AbstractController
     		$variables['resource'] = $commonGroundService->saveResource($resource,'https://vrc.huwelijksplanner.online/requests/');
     	}
 
-    	/* If we have specific view for this request type use that instead */
-        if(key_exists('requestType',  $variables) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')){
+
+
+        /* If we have specific view for this request type use that instead */
+        if(key_exists('requestType',  $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')){
             return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/submitters/' . $id);
-            $variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
-            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
-            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/audit_trail')["hydra:member"];
-        }
-
-        // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_vrc_submitters'));
-
+            return $this->render('vrc/request.html.twig', $variables);
         }
     }
 }
