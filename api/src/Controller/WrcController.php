@@ -422,7 +422,7 @@ class WrcController extends AbstractController
 
                 // This needs to be al boolean for posting
                 if(key_exists("slug",$template)){
-                    $template['slug']= $template['slug'] === 'true'? true: false;;
+                    $template['slug']= $template['slug'] === 'true'? true: false;
                 }
 
                 // The resource action section
@@ -452,7 +452,6 @@ class WrcController extends AbstractController
                     }
                 }
                 $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc','type'=>'slugs']);
-                $reload = true;
             }
 
             // Lets see if we also need to add an configuration
