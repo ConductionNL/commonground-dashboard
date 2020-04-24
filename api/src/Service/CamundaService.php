@@ -62,7 +62,7 @@ class CamundaService
             'timeout'  => 4000.0,
             // To work with NLX we need a couple of default headers
             'headers' => $this->headers,
-            // Authenticatoin
+            // Authentication
             'auth' => [$username, $password],
         ];
 
