@@ -82,6 +82,11 @@ class VrcController extends AbstractController
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
             $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
+            $variables['submitters'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
+
+            if(array_key_exists('requestType',$variables['resource'])){
+            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
+            }
 
             /*
             $variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/submitters/' . $id);
@@ -91,8 +96,14 @@ class VrcController extends AbstractController
             */
         }
 
-    	$variables['title'] = $translator->trans('request');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request');
+        if(isset($variables['requestType'])){
+            $variables['title'] = $translator->trans($variables['requestType']['name']);
+            $variables['subtitle'] = $translator->trans('save or create a').' '.$variables['requestType']['name'].' '.$translator->trans('request');
+        }
+        else{
+            $variables['title'] = $translator->trans('request');
+            $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request');
+        }
 
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component'=>'vtc','type'=>'request_types'])["hydra:member"];

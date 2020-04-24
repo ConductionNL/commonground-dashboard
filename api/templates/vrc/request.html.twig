@@ -13,32 +13,59 @@
                         <div class="card p-4 full-height">
                         	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.reference }} </h2>
+                                    <h2 class="d-inline-block">{{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
                                     <div class="float-right">
                                         {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
                                         {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
-                                        <a href="{{ path('app_vrc_request', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteRequest">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-3 col-sm-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}" disabled="">
+        										<label for="largeInput">{{ 'case'|trans|capitalize }}</label>
+                                                {% if resource.cases is defined and resource.cases|length >0  %}
+        										    <input type="text" class="form-control form-control-lg"  value="{% if resource.cases is defined %}{{ resource.cases[0] }}{% endif %}" disabled="">
+                                                {% else %}
+                                                    {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+                                                {% endif %}
         									</div>
     									</div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										<select id="organization" name="organization" class="form-control form-control-lg" {% if resource.organization is defined and resource.organization is not empty %}disabled{% endif %}>
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if c is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'type'|trans|capitalize }}</label>
+                                                <select id="requestType" name="requestType" class="form-control form-control-lg" {% if resource.requestType is defined and resource.requestType is not empty %}disabled{% endif %}>
+                                                    {% for value in requestTypes %}
+                                                        <option value="{{ value['@id'] }}" {% if resource.requestType is defined and value['@id'] == resource.organization  %}selected{% endif %}>{{ value.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                                                <select id="status" name="status" class="form-control form-control-lg">
+                                                    <option value="incomplete" {% if resource.status is defined and 'incomplete ' == resource.status  %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
+                                                    <option value="complete" {% if resource.status is defined and 'complete ' == resource.status  %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
+                                                    <option value="submitted" {% if resource.status is defined and 'submitted ' == resource.status  %}selected{% endif %}>{{ 'submitted'|trans|capitalize }}</option>
+                                                    <option value="processed" {% if resource.status is defined and 'processed ' == resource.status  %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
     								</div><!-- /.row -->
 
 								</div> <!-- /.card-body -->
@@ -51,64 +78,21 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'properties'|trans|capitalize }}</h3>
-                            </div>
-                            <div class="card-body">
-                                {% if resource.properties is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'property'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'value'|trans|capitalize }}</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for key,value in resource.properties %}
-                                            <tr>
-                                                <td>{{ key }}</td>
-                                                <td>{{ dump(value) }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
-                            </div> <!-- /.card-body -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/properties.html.twig'
+                            with {
+                            'properties': resource.properties } %}
 
-                            <div class="card-action">
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
                     </div><!-- /.col -->
                     <div class="col-md-4">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'cases'|trans|capitalize }}</h3>
-                            </div>
-                            <div class="card-body">
-                                {% if resource.cases is defined %}
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">{{ 'case'|trans|capitalize }}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for case in resource.cases %}
-                                        <tr>
-                                            <td>{# <a href="{{ path('app_zgw_case', {'id': commonground_resource(''case'').id}) }}">{{ commonground_resource(case).omschrijving }}</a> #}{{ case }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                                {% endif %}
-                            </div> <!-- /.card-body -->
-
-                            <div class="card-action">
-                                {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                        {% include 'vrc/widgets/submitters.html.twig'
+                            with {
+                            'submitters': resource.submitters } %}
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/children.html.twig'
+                            with {
+                            'children': resource.children } %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
@@ -117,48 +101,27 @@
     </div>
 
     {% if resource.organization is defined and resource.requestType is defined %}
-    <div class="modal fade" style="text-align: center" id="addCase" tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog model-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'add case'|trans|capitalize }}</b></h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                    <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
-        				<div class="form-group">
-        					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
-        					<select id="zaak[zaaktype]" name="zaak[zaaktype]" class="form-control form-control-lg">
-        					{% for casetype in casetypes %}
-                                {% if casetype.eindeGeldigheid is empty %}
-                        		<option value="{{ casetype['@id'] }}">{{ casetype.omschrijving }}</option>
-                                {% endif %}
-                         	{% endfor %}
-                   			</select>
-        				</div><!-- /.form-group -->
+        {% if changeLog is defined %}
+            {% include 'vrc/modals/case.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'changeLog':changeLog,
+                'id':'changeLogModal' } %}
+        {% endif %}
 
-        				<input type="hidden" id="zaak[bronorganisatie]" name ="zaak[bronorganisatie]" value="{{ commonground_resource(resource.organization).rsin }}">
-        				<input type="hidden" id="zaak[verantwoordelijkeOrganisatie]" name ="zaak[verantwoordelijkeOrganisatie]" value="{{ commonground_resource(resource.organization).rsin  }}">
-        				<input type="hidden" id="zaak[omschrijving]" name ="zaak[omschrijving]" value="{{ commonground_resource(resource.requestType).name }}">
-
-                        <button type="submit" class="btn btn-success m-3  mx-auto">
-                            {{ 'add'|trans|capitalize }}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     {% endif %}
+
+    {% include 'widgets/delete_modal.html.twig'
+        with {
+        'route': 'app_vrc_request',
+        'resource':resource,
+        'id':'deleteRequest' } %}
 
     {% if changeLog is defined %}
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_vtc_requesttype',
+            'route': 'app_vrc_request',
             'resource':resource,
             'changeLog':changeLog,
             'id':'changeLogModal' } %}
@@ -167,7 +130,7 @@
     {% if auditTrail is defined %}
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_vtc_requesttype',
+            'route': 'app_vrc_request',
             'resource':resource,
             'auditTrail':auditTrail,
             'id':'auditTrailModal' } %}
