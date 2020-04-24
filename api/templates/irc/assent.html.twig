@@ -11,7 +11,7 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PDC -> Products -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> IRC -> Assents -> '~resource.name } %}
 
             <div class="page-inner">
                 <div class="row">
@@ -38,6 +38,43 @@
                                             </div>
                                         </div> <!-- /.col -->
 
+
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'request'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="request"
+                                                       name="name" placeholder="Large Input"
+                                                       value="{{ resource.request }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'person'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="person"
+                                                       name="person" placeholder="Large Input"
+                                                       value="{{ resource.person }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                        for="largeInput">{{ 'status'|trans|capitalize }} {{ 'assent'|trans }}</label>
+                                                <select class="form-control form-control-lg" id="status"
+                                                        name="status">
+                                                    <option value="">-</option>
+
+
+                                                    {% if groups is defined and groups is not empty %}
+                                                        {% for group in groups %}
+                                                            <option
+                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
 
                                     </div><!-- /.row -->
                                     <div class="row">

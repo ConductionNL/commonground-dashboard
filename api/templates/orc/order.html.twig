@@ -39,7 +39,44 @@
                                         </div> <!-- /.col -->
 
 
-                                    </div><!-- /.row -->
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'price'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="price"
+                                                       name="price" placeholder="Large Input"
+                                                       value="{{ resource.price }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                        <div class="form-group">
+                                                <label
+                                                        for="largeInput">{{ 'priceCurrency'|trans|capitalize }} {{ 'price'|trans }}</label>
+                                                <select class="form-control form-control-lg" id="statuspayment"
+                                                        name="statuspayment">
+                                                    <option value="">EUR</option>
+                                                    <option value="">-</option>
+
+
+                                                    {% if groups is defined and groups is not empty %}
+                                                        {% for group in groups %}
+                                                            <option
+                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                    </div>
+
+
+
+                                        <!-- /.col -->
+                                    </div>
+
+                                    <!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">

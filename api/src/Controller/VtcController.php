@@ -31,7 +31,7 @@ class VtcController extends AbstractController
 	 * @Route("/")
 	 * @Template
 	 */
-	public function indexAction()
+    public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
 	{
 		$variables = [];
 		$variables['title'] = $translator->trans('product and service catalouge');
@@ -63,6 +63,13 @@ class VtcController extends AbstractController
 	 */
 	public function requestTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'vtc','type'=>'request_types','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_vtc_requesttypes'));
+        }
+
 		$variables = [];
 
 		// Lets see if we need to create
@@ -70,33 +77,81 @@ class VtcController extends AbstractController
 			$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
 		}
 		else{
-			$variables['resource'] = $commonGroundService->getResource('https://vtc.huwelijksplanner.online/request_types/'.$id);
-            $variables['changeLog'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/request_types/'.$id.'/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vtc.huwelijksplanner.online/request_types/'.$id.'/audit_trail');
-		}
-
-		// If it is a delete action we can stop right here
-		if($request->query->get('action') == 'delete'){
-			$commonGroundService->deleteResource($variables['resource']);
-			return $this->redirect($this->generateUrl('app_vtc_requesttypes'));
+			$variables['resource'] = $commonGroundService->getResource(['component'=>'vtc','type'=>'request_types','id'=>$id]);
+            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
 		}
 
 		$variables['title'] = $translator->trans('request type');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request type');
-		$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['requestTypes'] = $commonGroundService->getResourceList(['component'=>'vtc','type'=>'request_types'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
 
 			// Passing the variables to the resource
 			$resource = $request->request->all();
+
 			$resource['@id'] = $variables['resource']['@id'];
 			$resource['id'] = $variables['resource']['id'];
 
-			// If there are any sub data sources the need to be removed below in order to save the resource
-			// unset($resource['somedatasource'])
+            unset($resource['properties']);
 
-			$variables['resource'] = $commonGroundService->saveResource($resource,'https://vtc.huwelijksplanner.online/request_types/');
+            //var_dump(json_encode($resource));
+            //die;
+
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('property', $resource)){
+                $property = $resource['property'];
+                $property['requestType'] = $resource['@id'];
+
+                // We need to force some properties to integer
+                $property['multipleOf'] =       intval( $property['multipleOf']);
+                $property['maximum'] =          intval( $property['maximum']);
+                $property['minimum'] =          intval( $property['minimum']);
+                $property['maxLength'] =        intval( $property['maxLength']);
+                $property['minLength'] =        intval( $property['minLength']);
+                $property['maxItems'] =         intval( $property['maxItems']);
+                $property['minItems'] =         intval( $property['minItems']);
+                $property['maxProperties'] =    intval( $property['maxProperties']);
+                $property['minProperties'] =    intval( $property['minProperties']);
+
+                // We to force some properties to boolean
+                $property['exclusiveMaximum']=  $property['exclusiveMaximum'] === 'true'? true: false;
+                $property['exclusiveMinimum']=  $property['exclusiveMinimum'] === 'true'? true: false;
+                $property['uniqueItems']=       $property['uniqueItems'] === 'true'? true: false;
+                $property['nullable']=          $property['nullable'] === 'true'? true: false;
+                $property['required']=          $property['required'] === 'true'? true: false;
+                $property['readOnly']=          $property['readOnly'] === 'true'? true: false;
+                $property['writeOnly']=         $property['writeOnly'] === 'true'? true: false;
+                $property['deprecated']=        $property['readOnly'] === 'deprecated'? true: false;
+                $property['start']=             $property['start'] === 'true'? true: false;
+
+                // We to force some properties to array
+                $property['enum']=             explode(',',$property['enum']);
+
+                // We want to strip all empty values (this prevents the forced setting of exit dates)
+                foreach($property as $key => $value){
+                    if($value == ""){
+                        unset($property[$key]);
+                    }
+                }
+
+                // The resource action section
+                if(key_exists("@id",$property) && key_exists("action",$property)){
+                    // The delete action
+                    if($property['action'] == 'delete'){
+                        $commonGroundService->deleteResource($property);
+                        return $this->redirect($this->generateUrl('app_vtc_requesttype',['id'=>$id]));
+                    }
+                }
+
+                $property = $commonGroundService->saveResource($property, ['component'=>'vtc','type'=>'properties']);
+                return $this->redirect($this->generateUrl('app_vtc_requesttype',['id'=>$id]));
+            }
+
+			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'vtc','type'=>'request_types']);
 		}
 		return $variables;
 	}
