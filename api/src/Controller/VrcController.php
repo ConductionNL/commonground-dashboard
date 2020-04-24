@@ -43,6 +43,8 @@ class VrcController extends AbstractController
         if(isset($variables['requestType'])){
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc','type'=>'request_types','id'=>$variables['requestType']]);
             $variables['subtitle'] = "alle ".$variables['requestType']['name'];
+            var_dump($variables['requestType']['@id']);
+            die;
             $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'],['requestType'=> $variables['requestType']['@id']])["hydra:member"];
         }
         else{
