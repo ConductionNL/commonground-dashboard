@@ -17,13 +17,13 @@
                                     <div class="float-right">
                                         {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
                                         {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
-                                         <a href="{{ path('app_vtc_requesttype', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                         <a href="{{ path('app_vtc_requesttype', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-6 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
@@ -39,7 +39,81 @@
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="icon" name ="icon" value="{% if resource.icon is defined %}{{ resource.icon }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
     								</div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'caseType'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="caseType" name ="caseType" value="{% if resource.caseType is defined %}{{ resource.caseType }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'camundaProces'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="camundaProces" name ="camundaProces" value="{% if resource.camundaProces is defined %}{{ resource.camundaProces }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'parent'|trans|capitalize }}</label>
+                                                <select id="parent" name="parent" class="form-control form-control-lg">
+                                                    <option value="">{{ 'none'|trans|capitalize }}</option>
+                                                    {% for requestType in requestTypes %}
+                                                        <option value="{{ requestType['@id'] }}" {% if resource.parent is defined and requestType['@id'] == resource.parent  %}selected=""{% endif %}>{{ requestType.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'extends'|trans|capitalize }}</label>
+                                                <select id="extends" name="extends" class="form-control form-control-lg">
+                                                    <option value="">{{ 'none'|trans|capitalize }}</option>
+                                                    {% for requestType in requestTypes %}
+                                                        <option value="{{ requestType['@id'] }}" {% if resource.extends is defined and requestType['@id'] == resource.extends  %}selected=""{% endif %}>{{ requestType.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'unique'|trans|capitalize }}</label>
+                                                <select id="unique" name="unique" class="form-control form-control-lg" required>
+                                                    <option value="true" {% if resource.unique is defined and  resource.unique == true %}selected{% endif %}>{{ 'yes'|trans|capitalize }}</option>
+                                                    <option value="false" {% if resource.unique is defined and resource.unique == false %}selected{% endif %}>{{ 'no'|trans|capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'parent required'|trans|capitalize }}</label>
+                                                <select id="parentRequired" name="parentRequired" class="form-control form-control-lg" required>
+                                                    <option value="true" {% if resource.parentRequired is defined and  resource.parentRequired == true %}selected{% endif %}>{{ 'yes'|trans|capitalize }}</option>
+                                                    <option value="false" {% if resource.parentRequired is defined and resource.parentRequired == false %}selected{% endif %}>{{ 'no'|trans|capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'availableFrom'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="availableFrom" name ="availableFrom" value="{% if resource.availableFrom is defined %}{{ resource.availableFrom }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'availableUntil'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="availableUntil" name ="availableUntil" value="{% if resource.availableUntil is defined %}{{ resource.availableUntil }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
@@ -57,84 +131,122 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card full-height p-1">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'properties'|trans|capitalize }}</h3>
+                            </div>
+                            {% if resource.properties is defined %}
+                                <div class="card-list">
+                                    {% for property in resource.properties %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ property.name|capitalize }}</h4></div>
+                                                <div class="status">{{ property.description }}</div>
+                                            </div>
+                                            <button class="btn btn-icon btn-primary btn-round btn-s"
+                                                    style="margin-right: 5px" data-toggle="modal"
+                                                    data-target="#editProperty{{ property.id }}">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-icon btn-danger btn-round btn-s"
+                                                    style="margin-right: 15px" data-toggle="modal"
+                                                    data-target="#deleteProperty{{ property.id }}">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body">
+                            </div> <!-- /.card-body -->
+                            <div class="card-action  p-1">
+                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addProperty"
+                                   data-toggle="modal"
+                                   data-target="#addProperty">{{ 'add property'|trans|capitalize }}</a>
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        <div class="card p-1  full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'children'|trans|capitalize }}</h3>
+                            </div>
+
+                            {% if resource.children is defined %}
+                                <div class="card-list">
+                                    {% for child in resource.children %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ child.name|capitalize }}</h4></div>
+                                                <div class="status">{{ child.description }}</div>
+                                            </div>
+                                            <a class="btn btn-icon btn-primary btn-round btn-s"
+                                               style="margin-right: 5px"
+                                               href="{{ path('app_vtc_requesttype', {id: child.id}) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body">
+                            </div> <!-- /.card-body -->
+                            <div class="card-action  p-1">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.page-inner -->
 
             {% include 'footer.html.twig' %}
 
         </div>
     </div>
+    {# the template modals #}
+    {% include 'vtc/modals/property.html.twig'
+        with {
+        'route': 'app_vtc_requesttype',
+        'resource':resource,
+        'id':'addProperty' } %}
+
+    {% if resource.properties is defined %}
+        {% for property in resource.properties %}
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_vtc_requesttype',
+                'resource':resource,
+                'item':property,
+                'id':'deleteProperty' } %}
+            {% include 'vtc/modals/property.html.twig'
+                with {
+                'route': 'app_wrc_application',
+                'resource':resource,
+                'item':property,
+                'id':'editProperty' } %}
+        {% endfor %}
+    {% endif %}
 
     {% if changeLog is defined %}
-        <div class="modal fade" style="text-align: center" id="changeLogModal" tabindex="-1"
-             role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered" role="document">
-                <div class="modal-content" style="width: 750px;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'changeLog'|trans|capitalize }}</b></h5>
-                    </div><!-- /.header -->
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">{{ 'version'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'action'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'username'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'data'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for record in changeLog %}
-                            <tr>
-                                <td>{{ record.version }}</td>
-                                <td>{{ record.action }}</td>
-                                <td>{{ record.username }}</td>
-                                <td><ul>{# for key, value in record.data %}<li><b>{{ key }}</b>: {{ value }}</li>{% endfor #}</ul></td>
-                                <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div><!-- /.content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_vtc_requesttype',
+            'resource':resource,
+            'changeLog':changeLog,
+            'id':'changeLogModal' } %}
     {% endif %}
 
     {% if auditTrail is defined %}
-        <div class="modal fade" style="text-align: center" id="auditTrailModal" tabindex="-1"
-             role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered" role="document">
-                <div class="modal-content" style="width: 850px;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'auditTrail'|trans|capitalize }}</b></h5>
-                    </div><!-- /.header -->
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">{{ 'method'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'user'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'ip'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'session'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for record in auditTrail %}
-                            <tr>
-                                <td>{{ record.method }}</td>
-                                <td>{{ record.user }}</td>
-                                <td>{{ record.ip }}</td>
-                                <td>{{ record.session }}</td>
-                                <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div><!-- /.content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_vtc_requesttype',
+            'resource':resource,
+            'auditTrail':auditTrail,
+            'id':'auditTrailModal' } %}
     {% endif %}
 
 {% endblock %}

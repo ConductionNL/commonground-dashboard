@@ -36,16 +36,15 @@
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
-        										{% if resource.catalogue is not defined %}
         										<select id="catalogue" name="catalogue" class="form-control form-control-lg">
-        										 {% for catalogue in catalogues %}
+        										 {% for catalogue in catalogue %}
                                                		<option value="{{ catalogue['@id'] }}">{{ catalogue.name }}</option>
                                                 {% endfor %}
                                                 </select>
-        										{% else %}        										
+        										{% else %}
         										<input disabled="" type="text" class="form-control form-control-lg" value="{{  commonground_resource(resource.catalogue).name }}">
-        										{% endif %}
-        									</div><!-- /.form-group -->  
+
+        									</div><!-- /.form-group -->
         								</div> <!-- /.col -->  
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
@@ -87,3 +86,4 @@
     </div>
 
 {% endblock %}
+

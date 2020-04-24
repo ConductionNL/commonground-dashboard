@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_zgw_case' %}
+{% set view = 'app_zgw_verdict' %}
 
 {% block content %}
 
@@ -27,7 +27,7 @@
                         {% for resource in resources %}
                         <tr>
                             <td>{{ resource.name }}</td>
-                            <td><a href="{{ path('app_pdc_catalogue', {id: resource.catalogue.id}) }}">{{resource.catalogue['name']}}</a></td>
+                            <td><a href="{{ path('app_zgw_verdict', {id: resource.catalogue.id}) }}">{{resource.catalogue['name']}}</a></td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>

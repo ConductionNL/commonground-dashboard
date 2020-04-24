@@ -415,14 +415,14 @@
                                     </a>
                                 </li>
                                 {% endif %}
-                                {% if 'scope.vtc-requesttypes-write' in app.user.roles %}
+                                {# if 'scope.vtc-requesttypes-write' in app.user.roles #}
                                 <li>
                                     <a href="{{ path("app_vtc_requesttypes") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'requests types'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                                {% endif %}
+                                {# endif #}
                             </ul>
                         </div>
                     </li>
