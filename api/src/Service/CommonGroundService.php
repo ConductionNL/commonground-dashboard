@@ -698,6 +698,9 @@ class CommonGroundService
             if( array_key_exists ('id' , $url )){
                 $route = $route.'/'.$url['id'];
             }
+            if( array_key_exists ('subresource' , $url )){
+                $route = $route.'/'.$url['subresource'];
+            }
 
             $url = $component['location'].$route;
 

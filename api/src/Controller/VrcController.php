@@ -155,7 +155,6 @@ class VrcController extends AbstractController
             return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         }
         else{
-<<<<<<< HEAD
             $variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/submitters/' . $id);
             $variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
             $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
@@ -166,9 +165,7 @@ class VrcController extends AbstractController
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
             return $this->redirect($this->generateUrl('app_vrc_submitters'));
-=======
-           return $this->render('vrc/request.html.twig', $variables);
->>>>>>> dev-ruben
+
         }
     }
 }

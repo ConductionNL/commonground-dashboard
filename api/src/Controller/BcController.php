@@ -49,7 +49,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('payments');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('payments');
-        $variables['resources'] = $commonGroundService->getResourceList('https://bc.huwelijksplanner.online/payments')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'payments'])["hydra:member"];
 
         return $variables;
     }
@@ -65,7 +65,7 @@ class BcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_ac_alarms'));
+            return $this->redirect($this->generateUrl('app_bc_payments'));
         }
 
         // Lets see if we need to create
@@ -73,7 +73,7 @@ class BcController extends AbstractController
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'imgaes','id'=>$id]);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'payments','id'=>$id]);
         }
 
 
@@ -169,7 +169,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('organizations');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('organizations');
-        $variables['resources'] = $commonGroundService->getResourceList('https://bc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'organizations'])["hydra:member"];
 
         return $variables;
     }
@@ -193,7 +193,7 @@ class BcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'organization','id'=> $id]);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'organizations','id'=> $id]);
         }
 
 
