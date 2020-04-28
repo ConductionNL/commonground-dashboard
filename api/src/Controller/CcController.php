@@ -112,7 +112,7 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('addresses');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('addresses');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'resources'],['adresses.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'resources'])["hydra:member"];
         return $variables;
     }
 
@@ -166,7 +166,7 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('emails');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('emails');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'resources'],['emails.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'resources'])["hydra:member"];
 
         return $variables;
     }
@@ -223,7 +223,7 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('telephones');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('telephones');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'slugs'],['telephones.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -280,7 +280,7 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('organizations');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('organizations');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'slugs'],['organizations.id'=>$id])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -336,7 +336,7 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('contact lists');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('contact lists');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }

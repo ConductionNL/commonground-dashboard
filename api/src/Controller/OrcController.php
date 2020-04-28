@@ -49,7 +49,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('orders');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('orders');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['orders.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -107,7 +107,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('persons');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('persons');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['orderItems.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -165,7 +165,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('taxes');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('taxes');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['taxes.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -224,7 +224,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('organizations');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('organizations');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['organizations.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }

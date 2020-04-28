@@ -49,7 +49,7 @@ class MrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('employees');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('employees');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'slugs'],['employees.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }

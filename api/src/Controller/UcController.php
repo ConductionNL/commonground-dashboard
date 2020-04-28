@@ -163,7 +163,7 @@ class UcController extends AbstractController
 
                 }
 
-                $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+                $template = $commonGroundService->saveResource(['component'=>'wrc','type'=>'templates']);
                 $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
             }
 

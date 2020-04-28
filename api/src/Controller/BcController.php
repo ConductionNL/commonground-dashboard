@@ -226,7 +226,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'invoice'])["hydra:member"];
         return $variables;
     }
 
@@ -279,7 +279,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['resource'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'resource'],['invoice-itmes.id'=>$id])["hydra:member"];
+        $variables['resource'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'resource'])["hydra:member"];
         return $variables;
     }
 
@@ -337,7 +337,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('tax');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('tax');
-        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc','type'=>'taxes','id'=> $id]);
+        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc','type'=>'taxes']);
         return $variables;
     }
 

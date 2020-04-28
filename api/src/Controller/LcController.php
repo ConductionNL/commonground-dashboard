@@ -49,7 +49,7 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('accommodations');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('accommodations');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['accommodations.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'accommodations'])["hydra:member"];
         return $variables;
     }
 
@@ -108,7 +108,7 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('places');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('places');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['places.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'places'])["hydra:member"];
 
         return $variables;
     }

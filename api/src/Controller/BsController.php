@@ -48,7 +48,7 @@ class BsController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('services');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('services');
-        $variables['resources'] = $commonGroundService->getResource(['component'=>'bs','type'=>'services','id'=> $id]);
+        $variables['resources'] = $commonGroundService->getResource(['component'=>'bs','type'=>'services']);
         return $variables;
     }
 
@@ -104,7 +104,7 @@ class BsController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('messages');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('messages');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['messages.id'=>$id])["hydra:member"];
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'])["hydra:member"];
         return $variables;
 
     }

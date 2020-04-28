@@ -85,6 +85,131 @@
         <source>customer types</source>
         <target>klant types</target>
       </trans-unit>
+      <trans-unit id="EfG9n" resname="employees">
+              <source>Employees</source>
+              <target>Mederwerkers</target>
+            </trans-unit>
+            <trans-unit id="Aq2gG8n" resname="components">
+                    <source>Components</source>
+                    <target>Componenten</target>
+                  </trans-unit>
+                   <trans-unit id="E3eG4n" resname="components">
+                   <source>Components</source>
+                   <target>Componenten</target>
+                  </trans-unit>
+        <trans-unit id="EqdF4n" resname="locations">
+              <source>Locations</source>
+              <target>Locaties</target>
+        </trans-unit>
+          <trans-unit id="EaSrT4n" resname="accommodations">
+                      <source>Accommodations</source>
+                      <target>Accommodaties</target>
+        </trans-unit>
+        <trans-unit id="EwsF9n" resname="places">
+         <source>Places</source>
+         <target>Plaatsen</target>
+        </trans-unit>
+        <trans-unit id="EptF7n" resname="assents">
+                    <source>Assents</source>
+                    <target>Instemmingen</target>
+              </trans-unit>
+        <trans-unit id="WqtF4n" resname="Deployments">
+                    <source>Deployments</source>
+                    <target>implementaties</target>
+              </trans-unit>
+        <trans-unit id="DqrF4n" resname="clusters">
+                    <source>Clusters</source>
+                    <target>Clusters</target>
+              </trans-unit>
+        <trans-unit id="EldF4n" resname="healt logs">
+                    <source>Healt logs</source>
+                    <target>Healt logs</target>
+              </trans-unit>
+        <trans-unit id="DfdF4n" resname="calendar">
+                    <source>calendar</source>
+                    <target>Kalender</target>
+              </trans-unit>
+<trans-unit id="QmdF4n" resname="calendars">
+                    <source>calendars</source>
+                    <target>Kalenders</target>
+              </trans-unit>
+
+              <trans-unit id="MmdF4n" resname="invoice">
+                                  <source>invoice</source>
+                                  <target>factuur</target>
+                            </trans-unit>
+              <trans-unit id="EsdF4n" resname="resources">
+              <source>resources</source>
+              <target>Middelen</target>
+               </trans-unit>
+     <trans-unit id="EzdF4n" resname="payments">
+        <source>payments</source>
+        <target>Betalingen</target>
+     </trans-unit>
+     <trans-unit id="EmjF4n" resname="invoices">
+            <source>invoices</source>
+            <target>Facturen</target>
+     </trans-unit>
+     <trans-unit id="EpzF4n" resname="messages">
+            <source>messages</source>
+            <target>Berichten</target>
+       </trans-unit>
+       <trans-unit id="EsW5xn" resname="contacts">
+                           <source>contacts</source>
+                           <target>Contacten</target>
+      </trans-unit>
+      <trans-unit id="EsdG3n" resname="persons">
+                          <source>persons</source>
+                          <target>Personen</target>
+       </trans-unit>
+     <trans-unit id="EcvB2n" resname="contact lists">
+                           <source>contact lists</source>
+                           <target>Contact lijsten</target>
+     </trans-unit>
+     <trans-unit id="EsdL4n" resname="addresses">
+                         <source>addresses</source>
+                         <target>Addressen</target>
+     </trans-unit>
+     <trans-unit id="EsxQ4n" resname="telephones">
+                         <source>telephones</source>
+                         <target>Telefoonnummers</target>
+     </trans-unit>
+  <trans-unit id="EztF4n" resname="requests">
+                         <source>requests</source>
+                         <target>verzoeken</target>
+     </trans-unit>
+     <trans-unit id="EhtF4n" resname="requests types">
+          <source>requests types</source>
+          <target>verzoek types</target>
+     </trans-unit>
+     <trans-unit id="EptF4n" resname="types">
+            <source>types</source>
+            <target>typen</target>
+     </trans-unit>
+     <trans-unit id="E.tF4n" resname="documents">
+            <source>documents</source>
+            <target>documenten</target>
+     </trans-unit>
+     <trans-unit id="ErqtF4n" resname="verdicts">
+          <source>verdicts</source>
+          <target>uitspraken</target>
+     </trans-unit>
+     <trans-unit id="LztF4n" resname="styles">
+       <source>styles</source>
+       <target>stijlen</target>
+     </trans-unit>
+     <trans-unit id="QztF4n" resname="images">
+          <source>images</source>
+          <target>afbeeldingen</target>
+     </trans-unit>
+     <trans-unit id="EzDF4L" resname="applications">
+           <source>applications</source>
+           <target>Applicaties</target>
+     </trans-unit>
+     <trans-unit id="EzdT4n" resname="configurations">
+         <source>configurations</source>
+         <target>configuraties</target>
+     </trans-unit>
       <trans-unit id="Tj2qtab" resname="customer type">
         <source>customer type</source>
         <target>klant type</target>
