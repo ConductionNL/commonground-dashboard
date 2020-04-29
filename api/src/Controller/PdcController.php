@@ -49,7 +49,7 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('products');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('products');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'pdc','type'=>'products'])["hydra:member"];
 
         return $variables;
     }
@@ -60,6 +60,11 @@ class PdcController extends AbstractController
      */
     public function productAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'pdc','type'=>'products','id'=> $id]);
+            return $this->redirect($this->generateUrl('app_pdc_products'));
+        }
 
     	$variables = [];
 
@@ -68,7 +73,7 @@ class PdcController extends AbstractController
             $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
         }
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/products/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'pdc','type'=>'products','id'=> $id]);
     	}
 
         // If it is a delete action we can stop right here
@@ -77,43 +82,54 @@ class PdcController extends AbstractController
             return $this->redirect($this->generateUrl('app_pdc_products'));
         }
 
-        $variables['title'] = $translator->trans('catalogue');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('catalogue');
-        $variables['groups'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
-        $variables['catalogues'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['title'] = $translator->trans('product');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('product');
+        $variables['groups'] = $commonGroundService->getResourceList(['component'=>'pdc','type'=>'groups'])["hydra:member"];
+        $variables['catalogues'] = $commonGroundService->getResourceList(['component'=>'pdc','type'=>'catalogues'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
 
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
 
-    		foreach ($variables['resource']['groups'] as $group){
-    			$resource['groups'][] = 'groups/'.$group['id'];
-    		}
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'pdc', 'type' => 'products']);
 
-    		if($resource['addgroup'] != ""){
-    			$resource['groups'][] = $resource['addgroup'];
-    		}
+            if(key_exists('addgroup', $resource)){
+                foreach ($variables['resource']['groups'] as $group) {
+                    $resource['groups'][] = 'groups/' . $group['id'];
+                }
 
-    		if($resource['removegroup'] != ""){
-    			foreach($resource['groups'] as $key=>$group){
-    				if($group == $resource['removegroup']){
-    					unset($resource['groups'][$key]);
-    				}
-    			}
-    		}
+                if ($resource['addgroup'] != "") {
+                    $resource['groups'][] = $resource['addgroup'];
+                }
 
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
+                if ($resource['removegroup'] != "") {
+                    foreach ($resource['groups'] as $key => $group) {
+                        if ($group == $resource['removegroup']) {
+                            unset($resource['groups'][$key]);
+                        }
+                    }
+                }
+            }
+            if(key_exists('offer', $resource)){
+                $offer = $resource['offer'];
+                $offer['products'][] = $resource['@id'];
+                if(key_exists('id',$offer)){
+                    $offer['@id'] = $offer['id'];
+                }
+                $offer['price'] = (string)(int)($offer['price']*100);
 
-    		// If there are any sub data sources the need to be removed below in order to save the resource
-    		// unset($resource['somedatasource'])
+                $offer = $commonGroundService->saveResource($offer,['component'=>'pdc','type'=>'offers']);
+            }
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/products/');
-    	}
-
+            $variables['resource'] = $commonGroundService->saveResource($resource, 'https://pdc.huwelijksplanner.online/products/');
+        }
         return $variables;
     }
 
@@ -123,14 +139,12 @@ class PdcController extends AbstractController
      */
     public function groupsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
     	$variables = [];
     	$variables['title'] = $translator->trans('groups');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
     	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
 
     	return $variables;
-
     }
 
     /**
