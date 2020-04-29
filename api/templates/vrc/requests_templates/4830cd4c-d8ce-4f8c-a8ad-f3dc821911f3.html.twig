@@ -35,8 +35,8 @@
                                     {% else %}
                                         <td style="color: lightgray;">Geen parent</td>
                                     {% endif %}
-                                    {% if request.date_created is defined and request.date_created is not empty %}
-                                        <td>{{ request.date_created|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    {% if request.dateCreated is defined and request.dateCreated is not empty %}
+                                        <td>{{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                     {% else %}
                                         <td style="color: lightgray;"></td>
                                     {% endif %}
