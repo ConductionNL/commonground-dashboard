@@ -37,13 +37,16 @@ class VrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('requests');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
 
         $variables['requestType'] = $request->query->get('requestType');
 
         if(isset($variables['requestType'])){
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc','type'=>'request_types','id'=>$variables['requestType']]);
             $variables['subtitle'] = "alle ".$variables['requestType']['name'];
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'],['requestType'=> $variables['requestType']['@id']])["hydra:member"];
+        }
+        else{
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
         }
 
         /* If we have specific view for this request type use that instead */
@@ -93,7 +96,7 @@ class VrcController extends AbstractController
     	}
 
         if(array_key_exists ('requestType', $variables['resource'])){
-            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType'])["results"];
+            $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
         }
 
     	// Lets see if there is a post to procces
@@ -152,7 +155,17 @@ class VrcController extends AbstractController
             return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         }
         else{
-           return $this->render('vrc/request.html.twig', $variables);
+            $variables['resource'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/submitters/' . $id);
+            $variables['groups'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id);
+            $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
+            $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/audit_trail')["hydra:member"];
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_vrc_submitters'));
+
         }
     }
 }

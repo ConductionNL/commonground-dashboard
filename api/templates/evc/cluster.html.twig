@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card p-4 full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'domains'|trans|capitalize }}</h3>
@@ -92,7 +92,7 @@
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card p-4 full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'environments'|trans|capitalize }}</h3>
@@ -124,7 +124,9 @@
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
-                    <div class="col-md-4">
+                </div><!--/.row -->
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'installations'|trans|capitalize }}</h3>
@@ -138,6 +140,7 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'environment'|trans|capitalize }}</th>
                                             <th scope="col"></th>
                                             <th scope="col"></th>
                                             <th scope="col"></th>
@@ -148,7 +151,8 @@
                                         {% for installation in installations %}
                                             <tr>
                                                 <td>{{ installation.name }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editDomain{{ installation.id }}"  data-toggle="modal" data-target="#editDomain{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td><
+                                                <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'update'}) }}">{{ 'update'|trans|capitalize }}</a></td>
                                                 <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
@@ -394,18 +398,19 @@
 
             {% if installations is defined %}
                 {% for installation in installations %}
-                    <div class="modal fade" style="text-align: center" id="editInstallation" tabindex="-1"
+                    <div class="modal fade" style="text-align: center" id="editInstallation{{ installation.id }}" tabindex="-1"
                          role="dialog"
                          aria-labelledby="editInstallationTitle" aria-hidden="true">
                         <div class="modal-dialog model-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editInstallationTitle"><b>{{ 'add schedule'|trans|capitalize }}</b></h5>
+                                    <h5 class="modal-title" id="editInstallationTitle"><b>{{ 'edit installation'|trans|capitalize }}</b></h5>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
+{#                                {{ dump(installation) }}#}
                                 <form action="{{ path('app_evc_cluster', {id: resource.id}) }}" method="post">
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
@@ -421,7 +426,7 @@
                                             <option value="">{{ 'none'|trans|capitalize }}</option>
                                             {% if domains is defined %}
                                                 {% for domain in domains %}
-                                                    <option value="{{ domain['@id'] }}" {% if installation.domain is defined and domain['@id'] == installation.domain %} selected=""{% endif %}>{{ domain.name }}</option>
+                                                    <option value="{{ domain['@id'] }}" {% if installation.domain is defined and domain['@id'] == installation.domain['@id'] %} selected=""{% endif %}>{{ domain.name }}</option>
                                                 {% endfor %}
                                             {% endif %}
                                         </select>
@@ -432,18 +437,18 @@
                                             <option value="">{{ 'none'|trans|capitalize }}</option>
                                             {% if environments is defined %}
                                                 {% for environment in environments %}
-                                                    <option value="{{ environment['@id'] }}" {% if environment.domain is defined and environment['@id'] == installation.environment %} selected=""{% endif %}>{{ environment.name }}</option>
+                                                    <option value="{{ environment['@id'] }}" {% if installation.environment is defined and environment['@id'] == installation.environment['@id'] %} selected=""{% endif %}>{{ environment.name }}</option>
                                                 {% endfor %}
                                             {% endif %}
                                         </select>
                                     </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="">{{ 'component'|trans|capitalize }}</label>
-                                        <select id="installation[environment]" name="installation[environment]" class="form-control form-control-lg">
+                                        <select id="installation[component]" name="installation[component]" class="form-control form-control-lg">
                                             <option value="">{{ 'none'|trans|capitalize }}</option>
                                             {% if components is defined %}
                                                 {% for component in components %}
-                                                    <option value="{{ component['@id'] }}" {% if installation.component is defined and component['@id'] == installation.component %} selected=""{% endif %}>{{ component.name }}</option>
+                                                    <option value="{{ component['@id'] }}" {% if installation.component is defined and component['@id'] == installation.component['@id'] %} selected=""{% endif %}>{{ component.name }}</option>
                                                 {% endfor %}
                                             {% endif %}
                                         </select>

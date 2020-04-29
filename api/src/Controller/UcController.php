@@ -64,6 +64,12 @@ class UcController extends AbstractController
 	 */
 	public function userAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'uc','type'=>'users','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_uc_users'));
+        }
+
 		$variables = [];
 
 		// Lets see if we need to create
@@ -74,15 +80,10 @@ class UcController extends AbstractController
 			$variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'users','id'=>$id]);
 		}
 
-		// If it is a delete action we can stop right here
-		if($request->query->get('action') == 'delete'){
-			$commonGroundService->deleteResource($variables['resource']);
-			return $this->redirect($this->generateUrl('app_uc_users'));
-		}
-
 		$variables['title'] = $translator->trans('users');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('users');
 		$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['groups'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'groups'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
@@ -123,6 +124,11 @@ class UcController extends AbstractController
 	 */
 	public function groupAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'uc','type'=>'groups','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_uc_groups'));
+        }
 		$variables = [];
 
 		// Lets see if we need to create
@@ -133,15 +139,10 @@ class UcController extends AbstractController
 			$variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'groups','id'=>$id]);
 		}
 
-		// If it is a delete action we can stop right here
-		if($request->query->get('action') == 'delete'){
-			$commonGroundService->deleteResource($variables['resource']);
-			return $this->redirect($this->generateUrl('app_uc_groups'));
-		}
-
 		$variables['title'] = $translator->trans('group');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
 		$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['scopes'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'scopes'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {
@@ -151,8 +152,20 @@ class UcController extends AbstractController
 			$resource['@id'] = $variables['resource']['@id'];
 			$resource['id'] = $variables['resource']['id'];
 
-			// If there are any sub data sources the need to be removed below in order to save the resource
-			// unset($resource['somedatasource'])
+
+            // Lets see if we also need to add an configuration
+            if(array_key_exists('scope', $resource)){
+                $scope = $resource['scope'];
+
+                // The resource action section
+                if(key_exists("@id",$scope) && key_exists("action",$scope)){
+
+
+                }
+
+                $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+                $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['application.id'=>$id])["hydra:member"];
+            }
 
 			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'groups']);
 		}
@@ -182,6 +195,12 @@ class UcController extends AbstractController
 	 */
 	public function scopeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
 	{
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'uc','type'=>'scopes','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_uc_scopes'));
+        }
+
 		$variables = [];
 
 		// Lets see if we need to create
@@ -201,6 +220,7 @@ class UcController extends AbstractController
 		$variables['title'] = $translator->trans('scope');
 		$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('scope');
 		$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
 
 		// Lets see if there is a post to procces
 		if ($request->isMethod('POST')) {

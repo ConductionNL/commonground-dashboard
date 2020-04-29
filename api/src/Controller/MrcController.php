@@ -49,7 +49,7 @@ class MrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('employees');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('employees');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://mrc.huwelijksplanner.online/employees')["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'slugs'],['employees.id'=>$id])["hydra:member"];
 
         return $variables;
     }
@@ -68,7 +68,7 @@ class MrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource('https://mrc.huwelijksplanner.online/employees/'.$id);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'mrc','type'=>'employees','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -79,7 +79,7 @@ class MrcController extends AbstractController
 
         $variables['title'] = $translator->trans('employee');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('employee');
-        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -92,7 +92,8 @@ class MrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://mrc.huwelijksplanner.online/employees/');
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'resource','id'=>$id]));
+
         }
 
         return $variables;
