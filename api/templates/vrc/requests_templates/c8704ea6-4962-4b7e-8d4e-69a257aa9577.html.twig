@@ -35,8 +35,8 @@
                                     {% else %}
                                         <td style="color: lightgray;">Geen parent</td>
                                     {% endif %}
-                                    {% if request.date_created is defined and request.date_created is not empty %}
-                                        <td>{{ request.date_created|date("d-m-Y H:i", "Europe/Paris") }}</td>
+                                    {% if requestdateCreated is defined and request.dateCreated is not empty %}
+                                        <td>{{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</td>
                                     {% else %}
                                         <td style="color: lightgray;"></td>
                                     {% endif %}
@@ -45,10 +45,9 @@
                                     {% else %}
                                         <td style="color: lightgray;">Geen status</td>
                                     {% endif %}
-{#                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
-{#                                           href="{{ path('app_vrc_aanvraagbabs', {id: request.id} ) }}"><b>Bewerk</b></a>#}
-{#                                    </td>#}
-                                </tr>
+                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                           href="{{ path('app_vrc_request', {id: request.id, requestType: request.requestType} ) }}"><b>Bewerk</b></a>
+                                    </td>
                             {% endfor %}
                             </tbody>
                         </table>

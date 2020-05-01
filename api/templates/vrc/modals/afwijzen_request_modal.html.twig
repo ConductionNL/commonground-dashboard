@@ -1,0 +1,36 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="{% if item is defined %}{{ path( route , {id: resource.id}) }}{% else %}{{ path( route , {id: resource.id,'action':'reject'}) }}{% endif %}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'reject '|trans|capitalize }}{% if item is defined %}{{ item.name }}{% else %}{{ resource.name }}{% endif %}</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-dialog">
+                    {{ 'are you sure that you want to reject '|trans|capitalize }} <strong>
+                        {% if item is defined %}{{ item.name }}{% else %}{{ resource.name }}{% endif %}</strong>?
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger mx-auto">
+                        {{ 'yes'|trans|capitalize }}
+                    </button>
+                    <button type="button" class="btn btn-secondary mx-auto" data-dismiss="modal">{{ 'no'|trans|capitalize }}</button>
+                    {% if item is defined %}
+                    <input type="hidden" id="{{ item['@type']|lower }}[action]" name ="{{ item['@type']|lower }}[action]" value="delete">
+                    <input type="hidden" id="{{ item['@type']|lower }}[id]" name ="{{ item['@type']|lower }}[id]" value="{{ item['id'] }}">
+                    <input type="hidden" id="{{ item['@type']|lower }}[@id]" name ="{{ item['@type']|lower }}[@id]" value="{{ item['@id'] }}">
+                    {% else %}
+                    <input type="hidden" id="id" name ="id" value="{{ resource['id'] }}">
+                    <input type="hidden" id="@id" name ="@id" value="{{ resource['@id'] }}">
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
