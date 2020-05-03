@@ -123,12 +123,12 @@ parameters:
     env(APP_COMMONGROUND_NRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
 
     # Zaakregistratiecomponent
-    env(APP_COMMONGROUND_ZRC_LOCATION): 'https://zrc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_ZRC_LOCATION): 'https://openzaak.utrechtproeftuin.nl/zaken/api/v1/'
     env(APP_COMMONGROUND_ZRC_ID): '%env(APP_COMMONGROUND_ID)%'
     env(APP_COMMONGROUND_ZRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
 
     # Zaaktypecatalogus
-    env(APP_COMMONGROUND_ZTC_LOCATION): 'https://ztc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_ZTC_LOCATION): 'https://openzaak.utrechtproeftuin.nl/catalogi/api/v1/'
     env(APP_COMMONGROUND_ZTC_ID): '%env(APP_COMMONGROUND_ID)%'
     env(APP_COMMONGROUND_ZTC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
     
@@ -268,10 +268,10 @@ parameters:
             accept: 'application/json'
             autowire: false
         zrc:
-            location: '%env(APP_COMMONGROUND_NRC_LOCATION)%'
+            location: '%env(APP_COMMONGROUND_ZRC_LOCATION)%'
             auth: 'jwt'
             id: 'huwelijksplanner-Wex83XXe'
-            secret: '%env(APP_COMMONGROUND_NRC_SECRET)%'
+            secret: '%env(APP_COMMONGROUND_ZRC_SECRET)%'
             accept: 'application/json'
             autowire: false
         ztc:

@@ -15,17 +15,17 @@
                         <thead>
                         <tr>
                             <th scope="col">{{ 'description'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'caseType'|trans|capitalize }}</th> 
-                            <th scope="col">{{ 'startDate'|trans|capitalize }}</th> 
-                            <th scope="col">{{ 'registrationDate'|trans|capitalize }}</th> 
+                            <th scope="col">{{ 'caseType'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'startDate'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'registrationDate'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for resource in resources %}
                         <tr>
-                            <td>{{ resource.omschrijving }}</td> 
-                            <td>{{ openzaak_resource(resource.zaaktype).omschrijving }}</td>
+                            <td>{{ resource.omschrijving }}</td>
+                            <td>{# commonground_resource(resource.zaaktype).omschrijving #}</td>
                             <td>{{ resource.startdatum|date("d-m-Y", "Europe/Paris") }}</td>
                             <td>{{ resource.registratiedatum|date("d-m-Y", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>

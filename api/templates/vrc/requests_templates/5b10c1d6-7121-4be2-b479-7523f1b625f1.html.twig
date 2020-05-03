@@ -1,0 +1,91 @@
+{# RequestType ID: 5b10c1d6-7121-4be2-b479-7523f1b625f1 voor template: Aanvragen huwelijken of partnerschap #}
+
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    {% if resources is defined and resources|length > 0 %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ 'reference'|trans|capitalize }} 1</th>
+                                <th scope="col">{{ 'partner'|trans|capitalize }} 1</th>
+                                <th scope="col">{{ 'partner'|trans|capitalize }} 2</th>
+                                <th scope="col">{{ 'type'|trans|capitalize }}</th>
+                                <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                                <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for resource in resources %}
+                                <tr>
+                                    <td>
+                                        {{ resource.reference }}
+                                    </td>
+                                    <td {# style="color: lightgray;" #}>
+                                    {% if resource.properties.partners[0] is defined and resource.properties.partners[0] is not empty %}
+                                        {% set assent1 = commonground_resource(resource.properties.partners.0) %}
+                                        {% set contact1 = commonground_resource(assent1.contact) %}
+                                       {{ contact1.name }}
+                                    {% else %}
+                                        {{ 'no partner'|trans|capitalize }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if resource.properties.partners[1] is defined and resource.properties.partners[1] is not empty %}
+                                        {% set assent2 = commonground_resource(resource.properties.partners.1) %}
+                                        {% set contact2 = commonground_resource(assent2.contact) %}
+                                       {{ contact2.name }}
+                                    {% else %}
+                                        {{ 'no partner'|trans|capitalize }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if resource.properties.type is defined and resource.properties.type is not empty %}
+                                        {{ resource.properties.type|capitalize }}
+                                    {% else %}
+                                        {{ 'no type'|trans|capitalize }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if resource.dateCreated is defined and resource.dateCreated is not empty %}
+                                        {{ resource.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if resource.status is defined and resource.status is not empty %}
+                                        {{ resource.status|capitalize }}
+                                    {% else %}
+                                        {{ 'no status'|trans|capitalize }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                        <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_request', {id: resource.id}) }}">{{ 'edit'|trans|capitalize }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="p-4">{{ 'no results'|trans|capitalize }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+{% endblock %}
+
