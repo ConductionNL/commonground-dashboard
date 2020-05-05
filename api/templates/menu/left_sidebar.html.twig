@@ -42,12 +42,12 @@
 {#                </div>#}
 {#            </div>#}
             <ul class="nav nav-primary">
-                {% if 'group.trouw-ambtenaar' in app.user.roles or 'balie-medewerkers' in app.user.roles %}
+                {% if 'group.trouw-ambtenaar' in app.user.roles or 'group.balie-medewerkers' in app.user.roles %}
                     <li class="nav-section">
                         <h4 style="color: black" class="text-section">Aanvragen</h4>
                     </li>
                 {% endif %}
-                {% if 'group.trouw-ambtenaar' in app.user.roles or 'balie-medewerkers' in app.user.roles %}
+                {% if 'group.trouw-ambtenaar' in app.user.roles or 'group.balie-medewerkers' in app.user.roles %}
                     <li class="nav-item">
                         <a href="{{ path('app_vrc_requests',{'requestType': "5b10c1d6-7121-4be2-b479-7523f1b625f1"}) }}">
                             Huwelijken
