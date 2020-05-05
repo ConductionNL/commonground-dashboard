@@ -46,6 +46,9 @@ class VrcController extends AbstractController
             $variables['subtitle'] = "alle ".$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'],['requestType'=> $variables['requestType']['@id']])["hydra:member"];
         }
+        else{
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
+        }
 
         /* If we have specific view for this request type use that instead */
         if (key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig')) {
@@ -74,11 +77,6 @@ class VrcController extends AbstractController
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
         } else {
-            $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id]);
-            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/audit_trail');
-        }
-        else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
             $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
@@ -121,7 +119,7 @@ class VrcController extends AbstractController
 
         // Lets see if there is a post to procces
         if ($request->query->get('action') == 'save') {
-    	    
+
             //Check requestType
             if ($variables['requestType']['id'] == "cdd7e88b-1890-425d-a158-7f9ec92c9508") {
 

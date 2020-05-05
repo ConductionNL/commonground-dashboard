@@ -918,6 +918,9 @@ class CommonGroundService
 
         $jwtToken = $base64UrlHeader.'.'.$base64UrlPayload.'.'.$base64UrlSignature;
 
+        //var_dump($jwtToken);
+        //die;
+
         // Return JWT
         return $jwtToken;
     }
