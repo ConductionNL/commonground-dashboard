@@ -15,6 +15,7 @@
                         <thead>
                         <tr>
                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'groups'|trans|capitalize }}</th>
                             <th scope="col">{{ 'application'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
@@ -25,6 +26,13 @@
                         {% for resource in resources %}
                         <tr>
                             <td>{{ resource.name }}</td>
+                            <td>{% if resource.templateGroups is defined and resource.templateGroups is not empty %}
+
+                                    {% for group in resource.templateGroups %}
+                                    {{ group.name }}
+                                    {% endfor %}
+
+                                {% endif %}</td>
                             <td>{% if resource.application is defined and resource.application  is not empty %}{{ resource.application.name }}{% endif %}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
