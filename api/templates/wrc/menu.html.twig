@@ -15,7 +15,9 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="#deleteMenu" class="btn btn-danger" style="margin-right: 25px" data-toggle="modal" data-target="#deleteMenu">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="#deleteMenu" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteMenu">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -67,6 +69,10 @@
                 </div><!-- /.row -->
                 <div class="row">
                     <div class="col-md-12">
+                        {% include 'wrc/widgets/menuItems.html.twig'
+                            with {
+                            'menuItems': resource.menuItems } %}
+
                         <div class="card p-4 full-height">
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'menu items'|trans|capitalize }}</h3>
@@ -112,37 +118,6 @@
                     'resource':resource,
                     'id':'deleteMenu' }
             %}
-
-
-            {% include 'wrc/modals/menuItem.html.twig'
-                with {
-                    'route': 'app_wrc_menu',
-                    'resource':resource,
-                    'id':'addItem' }
-            %}
-
-            {% if resource.menuItems is defined %}
-                {% for item in resource.menuItems %}
-
-                    {% include 'widgets/delete_modal.html.twig'
-                with {
-                    'route': 'app_wrc_menu',
-                    'resource':resource,
-                    'item':item,
-                    'id':'deleteItem' }
-            %}
-
-                    {% include 'wrc/modals/menuItem.html.twig'
-                with {
-                    'route': 'app_wrc_menu',
-                    'resource':resource,
-                    'item':item,
-                    'id':'editItem' }
-            %}
-
-                {% endfor %}
-            {% endif %}
-
 
             {% include 'footer.html.twig' %}
 

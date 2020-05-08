@@ -15,7 +15,9 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a href="{{ path('app_wrc_template', {'id': resource.id, 'action':'delete'}) }}" class="btn btn-danger" style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</a>
+                                        <a href="#deleteTemplate" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteTemplate">{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -78,124 +80,21 @@
                 </div><!-- /.row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
-                                <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"  data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                {% if slugs is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'slug'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'application'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'template'|trans|capitalize }}</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for slug in slugs %}
-                                        {% if slug.template.id == resource.id %}
-                                            <tr>
-                                                <td>{{ slug.slug }}</td>
-                                                <td><a href="path(app_wrc_application, {id: slug.application.id}) }}">{{  slug.application.name }} </a></td>
-                                                <td><a href="path(app_wrc_template, {id: slug.template.id}) }}">{{  slug.template.name }}</a></td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editSlug{{ slug.id }}"  data-toggle="modal" data-target="#editSlug{{ slug.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                            </tr>
-                                        {% endif %}
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
-                            </div> <!-- /.card-body -->
-
-                            <div class="card-action">
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                        {% include 'wrc/widgets/slugs.html.twig'
+                            with {
+                            'slugs': slugs } %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
-
-
-            <div class="modal fade" style="text-align: center" id="addSlug" tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="addSlugTitle" aria-hidden="true">
-                <div class="modal-dialog model-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addSlugTitle"><b>{{ 'add slug'|trans|capitalize }}</b></h5>
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="{{ path('app_wrc_template', {id: resource.id}) }}" method="post">
-                            <div class="form-group">
-                                <label for="slug[application]">{{ 'application'|trans|capitalize }}</label>
-                                <select id="slug[application]" name="slug[application]" class="form-control form-control-lg" required>
-                                    {% for application in applications %}
-                                    <option value="{{ application['@id'] }}">{{ application.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="">
-                            </div><!-- /.form-group -->
-
-
-                            <button type="submit" class="btn btn-success m-3  mx-auto">
-                                {{ 'add'|trans|capitalize }}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        {% if slugs is defined %}
-            {% for slug in slugs %}
-        <div class="modal fade" style="text-align: center" id="editSlug{{ slug.id }}" tabindex="-1"
-             role="dialog"
-             aria-labelledby="addSlugTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addSlugTitle"><b>{{ 'edit slug'|trans|capitalize }} {{ slug.slug }}</b></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ path('app_wrc_template', {id: resource.id}) }}" method="post">
-                        <div class="form-group">
-                            <label for="slug[application]">{{ 'application'|trans|capitalize }}</label>
-                            <select id="slug[application]" name="slug[application]" class="form-control form-control-lg" required>
-                                {% for application in applications %}
-                                    <option value="{{ application['@id'] }}" >{{ application.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div><!-- /.form-group -->
-                        <div class="form-group">
-                            <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
-                            <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="{{ slug.slug }}">
-                        </div><!-- /.form-group -->
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_wrc_template',
+            'resource':resource,
+            'id':'deleteTemplate' } %}
 
-                        <input type="hidden" id="slug[@id]" name ="slug[@id]" value="{{ slug['@id'] }}">
-                        <button type="submit" class="btn btn-success m-3  mx-auto">
-                            {{ 'save'|trans|capitalize }}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </div>
-            {% endfor %}
-        {% endif %}
-
-            {% include 'footer.html.twig' %}
+        {% include 'footer.html.twig' %}
 
         </div>
     </div>
