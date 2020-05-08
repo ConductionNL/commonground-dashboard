@@ -240,6 +240,9 @@ parameters:
     # nlx-out
     env(APP_COMMONGROUND_NLX_OUT_LOCATION): 'https://nlx-out.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_NLX_OUT_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # TakenComponent
+    env(APP_COMMONGROUND_TC_LOCATION): 'https://tc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_TC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -380,6 +383,9 @@ parameters:
         memo:
             location: '%env(APP_COMMONGROUND_MEMO_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_MEMO_APIKEY)%'
+        tc:
+            location: '%env(APP_COMMONGROUND_TC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
