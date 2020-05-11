@@ -22,9 +22,9 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class cmcController
  * @package App\Controller
- * @Route("/contact_moment")
+ * @Route("/cmc")
  */
-class ContactMomentController extends AbstractController
+class CmcController extends AbstractController
 {
 
 	/**
