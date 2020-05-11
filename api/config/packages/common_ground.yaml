@@ -252,6 +252,9 @@ parameters:
     # ReviewComponent
     env(APP_COMMONGROUND_RC_LOCATION): 'https://rc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_RC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # PortfolioComponent
+    env(APP_COMMONGROUND_PFC_LOCATION): 'https://pfc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_PFC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -404,6 +407,9 @@ parameters:
         rc:
             location: '%env(APP_COMMONGROUND_RC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_RC_APIKEY)%'
+        pfc:
+            location: '%env(APP_COMMONGROUND_PFC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_PFC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
