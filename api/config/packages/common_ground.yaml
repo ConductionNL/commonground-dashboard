@@ -243,6 +243,9 @@ parameters:
     # TakenComponent
     env(APP_COMMONGROUND_TC_LOCATION): 'https://tc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_TC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # ChallengeComponent
+    env(APP_COMMONGROUND_CHRC_LOCATION): 'https://chrc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_CHRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -385,7 +388,10 @@ parameters:
             apikey: '%env(APP_COMMONGROUND_MEMO_APIKEY)%'
         tc:
             location: '%env(APP_COMMONGROUND_TC_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'
+            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'\
+        tc:
+            location: '%env(APP_COMMONGROUND_CHRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_CHRC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
