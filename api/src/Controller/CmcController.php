@@ -20,11 +20,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class memoController
+ * Class cmcController
  * @package App\Controller
- * @Route("/memo")
+ * @Route("/contact_moment")
  */
-class MemoController extends AbstractController
+class ContactMomentController extends AbstractController
 {
 
 	/**
@@ -34,30 +34,30 @@ class MemoController extends AbstractController
 	public function indexAction(TranslatorInterface $translator)
 	{
 		$variables = [];
-		$variables['title'] = $translator->trans('memos');
-		$variables['subtitle'] = $translator->trans('the memos component holds memos.');
+		$variables['title'] = $translator->trans('contact moments');
+		$variables['subtitle'] = $translator->trans('the contact moments component holds contact moments');
 
 		return $variables;
 	}
 
     /**
-     * @Route("/memos")
+     * @Route("/contact_moments")
      * @Template
      */
-	public function memosAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function ContactMomentsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
-    	$variables['title'] = $translator->trans('memos');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('memos');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'memo','type'=>'memos'])["hydra:member"];
+    	$variables['title'] = $translator->trans('contact_moments');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('contact_moments');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cmc','type'=>'contact_moments'])["hydra:member"];
         return $variables;
     }
 
     /**
-     * @Route("/memos/{id}")
+     * @Route("/contact_moments/{id}")
      * @Template
      */
-    public function memoAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function ContactMomentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
     	$variables = [];
@@ -67,17 +67,17 @@ class MemoController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'memo','type'=>'memos','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'cmc','type'=>'contact_moment','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_memo_memos'));
+            return $this->redirect($this->generateUrl('app_cmc_contact_moments'));
         }
 
-        $variables['title'] = $translator->trans('memo');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('memo');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'memo','type'=>'organizations'])["hydra:member"];
+        $variables['title'] = $translator->trans('contact_moment');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('contact_moment');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cmc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -91,7 +91,7 @@ class MemoController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'memo','type'=>'memos','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cmc','type'=>'contact_moment','id'=>$id]));
         }
 
 
