@@ -1,11 +1,7 @@
 {# RequestType ID: cdd7e88b-1890-425d-a158-7f9ec92c9508 voor template: Aanvraag niet beëdigd babs #}
-
 {% extends "body.html.twig" %}
 
 {% block content %}
-
-    {% set view = 'app_vrc_aanvraagbabs' %}
-    {% set resource = request %}
 
     <style>
         th {
@@ -16,40 +12,34 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'title': 'Aanvraag bewerken','subtitle': 'Dashboard -> VRC -> Aanvragen babs -> '~resource.name } %}
+            {% include 'widgets/babs/title_h1.html.twig' %}
 
             <div class="page-inner">
                 <div class="row">
-
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    {% if resource.requestType is defined and resource.requestType is not empty %}
-                                        {% set requestType = commonground_resource(resource.requestType) %}
-                                        <h2 class="d-inline-block">{{ requestType.name }} </h2>
-                                    {% else %}
-                                        <h2 class="d-inline-block">{{ resource.name }} </h2>
-                                    {% endif %}
+                                    <h2 class="d-inline-block">{{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}</h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger"
-                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
-                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        <a href="#annuleerRequest" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#annuleerRequest">{{ 'annuleren'|trans|capitalize }}</a>
+                                        <a href="#afwijzenRequest" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#afwijzenRequest">{{ 'afwijzen'|trans|capitalize }}</a>
+                                        <button type="submit" class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
-
                                     <div class="row">
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 {% if resource.id == resource.name %}
                                                     <h4><b>ID:</b> {{ resource.id }}</h4>
+                                                    <h4><b>Referentie:</b> {{ resource.reference }}</h4>
                                                 {% else %}
-                                                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                    <input type="text" class="form-control form-control-lg" id="name"
-                                                           name="name" placeholder="Large Input"
-                                                           value="{{ resource.name }}">
+                                                    {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
                                                 {% endif %}
                                             </div>
                                         </div> <!-- /.col -->
@@ -73,41 +63,61 @@
 
                                     <div class="row">
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <h4>Gegevens</h4>
 
-                                                <label for="name">Voornaam</label>
-                                                <input id="name" class="form-control" type="text" name="name"
-                                                       {% if resource.properties.gegevens.name is defined and resource.properties.gegevens.name is not empty %}value="{{ resource.properties.gegevens.name }}"{% endif %}>
+                                                <div class="row" style="margin-top: 15px">
+                                                    <div class="col-md-6">
+                                                        <label for="name">Voornaam</label>
+                                                        <input id="name" class="form-control" type="text" name="name"
+                                                               {% if resource.properties.gegevens.name is defined and resource.properties.gegevens.name is not empty %}value="{{ resource.properties.gegevens.name }}"{% endif %}>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="familyName">Achternaam</label>
+                                                        <input id="familyName" class="form-control" type="text"
+                                                               name="familyName"
+                                                               {% if resource.properties.gegevens.familyName is defined and resource.properties.gegevens.familyName is not empty %}value="{{ resource.properties.gegevens.familyName }}"{% endif %}>
+                                                    </div>
+                                                </div>
 
-                                                <label for="familyName">Achternaam</label>
-                                                <input id="familyName" class="form-control" type="text" name="familyName"
-                                                       {% if resource.properties.gegevens.familyName is defined and resource.properties.gegevens.familyName is not empty %}value="{{ resource.properties.gegevens.familyName }}"{% endif %}>
+                                                <div class="row" style="margin-top: 15px">
+                                                    <div class="col-md-6">
+                                                        <label for="email">E-mail</label>
+                                                        <input id="email" class="form-control" type="text" name="email"
+                                                               {% if resource.properties.gegevens.email is defined and resource.properties.gegevens.email is not empty %}value="{{ resource.properties.gegevens.email }}"{% endif %}>
+                                                    </div>
 
-                                                <label for="email">E-mail</label>
-                                                <input id="email" class="form-control" type="text" name="email"
-                                                       {% if resource.properties.gegevens.email is defined and resource.properties.gegevens.email is not empty %}value="{{ resource.properties.gegevens.email }}"{% endif %}>
+                                                    <div class="col-md-6">
+                                                        <label for="telefoon">Telefoonnummer</label>
+                                                        <input id="telefoon" class="form-control" type="text"
+                                                               name="email"
+                                                               {% if resource.properties.gegevens.telephone is defined and resource.properties.gegevens.telephone is not empty %}value="{{ resource.properties.gegevens.email }}"{% endif %}>
 
-                                                <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
-                                                <select class="form-control" id="status" name="status">
-                                                    <option value="processed"
-                                                            {% if resource.status == "processed" %}selected{% endif %}>
-                                                        Processed
-                                                    </option>
-                                                    <option value="requested"
-                                                            {% if resource.status == "requested" %}selected{% endif %}>
-                                                        Requested
-                                                    </option>
-                                                    <option value="submitted"
-                                                            {% if resource.status == "submitted" %}selected{% endif %}>
-                                                        Submitted
-                                                    </option>
-                                                    <option value="Incomplete"
-                                                            {% if resource.status == "incomplete" %}selected{% endif %}>
-                                                        Incomplete
-                                                    </option>
-                                                </select>
+                                                    </div>
+                                                </div>
+                                                <div class="" style="margin-top: 15px">
+
+                                                    <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                                                    <select class="form-control" id="status" name="status">
+                                                        <option value="processed"
+                                                                {% if resource.status == "processed" %}selected{% endif %}>
+                                                            Processed
+                                                        </option>
+                                                        <option value="requested"
+                                                                {% if resource.status == "requested" %}selected{% endif %}>
+                                                            Requested
+                                                        </option>
+                                                        <option value="submitted"
+                                                                {% if resource.status == "submitted" %}selected{% endif %}>
+                                                            Submitted
+                                                        </option>
+                                                        <option value="Incomplete"
+                                                                {% if resource.status == "incomplete" %}selected{% endif %}>
+                                                            Incomplete
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div> <!-- /.row -->
@@ -118,15 +128,52 @@
                                 </div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
-                    </div>
-                </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/properties_babs.html.twig'
+                            with {
+                            'properties': resource.properties } %}
 
-            </div><!-- /.row -->
-        </div><!-- /.page-inner -->
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/submitters.html.twig'
+                            with {
+                            'submitters': resource.submitters } %}
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/documents.html.twig' %}
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+            {% include 'footer.html.twig' %}
+        </div>
+    </div>
 
-        {% include 'footer.html.twig' %}
+    {% if resource.organization is defined and resource.requestType is defined %}
+        {% if changeLog is defined %}
+            {% include 'vrc/modals/case.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'changeLog':changeLog,
+                'id':'changeLogModal' } %}
+        {% endif %}
 
     </div>
-    </div>
+
+    {% include 'vrc/modals/annuleer_request_modal.html.twig'
+        with {
+        'route': 'app_vrc_request',
+        'resource':resource,
+        'id':'annuleerRequest' } %}
+
+    {% include 'vrc/modals/afwijzen_request_modal.html.twig'
+        with {
+        'route': 'app_vrc_request',
+        'resource':resource,
+        'id':'afwijzenRequest' } %}
 
 {% endblock %}
+

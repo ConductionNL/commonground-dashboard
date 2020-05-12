@@ -1,5 +1,3 @@
-{# RequestType ID: 4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3 voor template: Aanvraag naamwijziging #}
-
 {% extends "body.html.twig" %}
 
 {% block content %}
@@ -12,7 +10,7 @@
             <div class="page-inner">
                 <div class="row">
 
-                    <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                    <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
 
                         <div style="margin-top: -50px;" class="col-md-12">
                             <div class="card p-4 full-height">
@@ -51,10 +49,10 @@
                                                 <label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
                                                 <select id="catalogue" name="catalogue"
                                                         class="form-control form-control-lg" required>
-                                                    {% for catalogue in catalogues %}
-                                                        <option value="{{ catalogue['@id'] }}"
-                                                                {% if resource.catalogue is defined and catalogue['@id'] == resource.catalogue %}selected=""{% endif %}>{{ catalogue.name }}</option>
-                                                    {% endfor %}
+{#                                                    {% for catalogue in catalogues %}#}
+{#                                                        <option value="{{ catalogue['@id'] }}"#}
+{#                                                                {% if resource.catalogue is defined and catalogue['@id'] == resource.catalogue %}selected=""{% endif %}>{{ catalogue.name }}</option>#}
+{#                                                    {% endfor %}#}
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
@@ -103,11 +101,11 @@
                                                                 <h4>{{ group.name|capitalize }}</h4></div>
                                                             <div class="status">{{ group.description }}</div>
                                                         </div>
-                                                        <button class="btn btn-icon btn-primary btn-round btn-s"
-                                                                style="margin-right: 5px" data-toggle="modal"
-                                                                data-target="#editGroup{{ group.id }}">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
+                                                        <a class="btn btn-icon btn-primary btn-round btn-s"
+                                                           style="margin-right: 5px" data-toggle="modal"
+                                                           data-target="#editGroup{{ group.id }}">
+                                                            <i class="fa fa-edit white"></i>
+                                                        </a>
                                                         <button class="btn btn-icon btn-danger btn-round btn-s"
                                                                 style="margin-right: 15px" data-toggle="modal"
                                                                 data-target="#deleteGroup{{ group.id }}">
@@ -142,11 +140,11 @@
                                                                 <h4>{{ offer.name|capitalize }}</h4></div>
                                                             <div class="status">{{ offer.description }}</div>
                                                         </div>
-                                                        <button class="btn btn-icon btn-primary btn-round btn-s"
-                                                                style="margin-right: 5px" data-toggle="modal"
-                                                                data-target="#editOffer{{ offer.id }}">
+                                                        <a class="btn btn-icon btn-primary btn-round btn-s"
+                                                           style="margin-right: 5px" data-toggle="modal"
+                                                           data-target="#editOffer{{ offer.id }}">
                                                             <i class="fa fa-edit"></i>
-                                                        </button>
+                                                        </a>
                                                         <button class="btn btn-icon btn-danger btn-round btn-s"
                                                                 style="margin-right: 15px" data-toggle="modal"
                                                                 data-target="#deleteOffer{{ offer.id }}">
@@ -175,9 +173,178 @@
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
+
+        <div class="modal fade" style="text-align: center" id="addOffer" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addOfferTitle" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addOfferTitle"><b>{{ 'add offer'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="offer[name]" name="offer[name]" value="" required>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="offer[description]" name="offer[description]" value="">
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'price'|trans|capitalize }}</label>
+                            €<input type="number" class="form-control form-control-lg" id="offer[price]" name="offer[price]" value="" required step="0.01">
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="">{{ 'organization'|trans|capitalize }}</label>
+                            <select id="offer[offeredBy]" name="offer[offeredBy]" class="form-control form-control-lg" required>
+                                <option value="">{{ 'none'|trans|capitalize }}</option>
+                                {% if organizations is defined %}
+                                    {% for organization in organizations %}
+                                        <option value="{{ organization['@id'] }}">{{ organization.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'available from'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="offer[availabilityStarts]" name="offer[availabilityStarts]" value="">
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'available until'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="offer[availabilityEnds]" name="offer[availabilityEnds]" value="">
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="">{{ 'audience'|trans|capitalize }}</label>
+                            <select id="offer[audience]" name="offer[audience]" class="form-control form-control-lg" required>
+                                <option value="public">{{ 'public'|trans|capitalize }}</option>
+                                <option value="internal">{{ 'internal'|trans|capitalize }}</option>
+
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="">{{ 'taxes'|trans|capitalize }}</label>
+                            <select id="offer[taxes][]" name="offer[taxes][]" class="form-control form-control-lg" required>
+                                <option value="">{{ 'none'|trans|capitalize }}</option>
+                                {% if taxes is defined %}
+                                    {% for tax in taxes %}
+                                        <option value="{{ tax['@id'] }}">{{ tax.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="">{{ 'customer types'|trans|capitalize }}</label>
+                            <select id="offer[eligibleCustomerTypes][]" name="offer[eligibleCustomerTypes][]" class="form-control form-control-lg">
+                                <option value="">{{ 'none'|trans|capitalize }}</option>
+                                {% if customerTypes is defined %}
+                                    {% for customerType in customerTypes %}
+                                        <option value="{{ customerType['@id'] }}">{{ customerType.name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                            {{ 'add'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% if resource.offers is defined %}
+            {% for offer in resource.offers %}
+                <div class="modal fade" style="text-align: center" id="editOffer{{ offer.id }}" tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="addOfferTitle" aria-hidden="true">
+                    <div class="modal-dialog model-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addOfferTitle"><b>{{ 'add offer'|trans|capitalize }}</b></h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                    <input type="text" class="form-control form-control-lg" id="offer[name]" name="offer[name]" value="{{ offer.name }}" required>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                    <input type="text" class="form-control form-control-lg" id="offer[description]" name="offer[description]" value="{% if offer.description is defined %}{{ offer.description }}{% endif %}">
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'price'|trans|capitalize }}</label>
+                                    €<input type="number" class="form-control form-control-lg" id="offer[price]" name="offer[price]" value="{{ offer.price/100 }}" required step="0.01">
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="">{{ 'organization'|trans|capitalize }}</label>
+                                    <select id="offer[offeredBy]" name="offer[offeredBy]" class="form-control form-control-lg" required>
+                                        <option value="">{{ 'none'|trans|capitalize }}</option>
+                                        {% if organizations is defined %}
+                                            {% for organization in organizations %}
+                                                <option value="{{ organization['@id'] }}" {% if offer.offeredBy == organization['@id'] %}selected=""{% endif %}>{{ organization.name }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'available from'|trans|capitalize }}</label>
+                                    <input type="datetime-local" class="form-control form-control-lg" id="offer[availabilityStarts]" name="offer[availabilityStarts]" value="{% if organization.availabilityStarts is defined %}{{ organization.availabilityStarts }}{% endif %}">
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'available until'|trans|capitalize }}</label>
+                                    <input type="datetime-local" class="form-control form-control-lg" id="offer[availabilityEnds]" name="offer[availabilityEnds]" value="{% if organization.availabilityEnds is defined %}{{ organization.availabilityEnds }}{% endif %}">
+                                </div><!-- /.form-group -->
+{#                                <div class="form-group">#}
+{#                                    <label for="">{{ 'audience'|trans|capitalize }}</label>#}
+{#                                    <select id="offer[audience]" name="offer[audience]" class="form-control form-control-lg" required>#}
+{#                                        <option value="public" {% if offer.audience == 'public' %}selected=""{% endif %}>{{ 'public'|trans|capitalize }}</option>#}
+{#                                        <option value="internal" {% if offer.audience == 'internal' %}selected=""{% endif %}>{{ 'internal'|trans|capitalize }}</option>#}
+
+{#                                    </select>#}
+{#                                </div><!-- /.form-group -->#}
+                                {#                                <div class="form-group">#}
+                                {#                                    <label for="">{{ 'taxes'|trans|capitalize }}</label>#}
+                                {#                                    <select id="offer[taxes][]" name="offer[taxes][]" class="form-control form-control-lg" >#}
+                                {#                                        <option value="">{{ 'none'|trans|capitalize }}</option>#}
+                                {#                                        {% if taxes is defined %}#}
+                                {#                                            {% for tax in taxes %}#}
+                                {#                                                <option value="{{ tax['@id'] }}">{{ tax.name }}</option>#}
+                                {#                                            {% endfor %}#}
+                                {#                                        {% endif %}#}
+                                {#                                    </select>#}
+                                {#                                </div><!-- /.form-group -->#}
+                                {#                                <div class="form-group">#}
+                                {#                                    <label for="">{{ 'customer types'|trans|capitalize }}</label>#}
+                                {#                                    <select id="offer[eligibleCustomerTypes][]" name="offer[eligibleCustomerTypes][]" class="form-control form-control-lg">#}
+                                {#                                        <option value="">{{ 'none'|trans|capitalize }}</option>#}
+                                {#                                        {% if customerTypes is defined %}#}
+                                {#                                            {% for customerType in customerTypes %}#}
+                                {#                                                <option value="{{ customerType['@id'] }}">{{ customerType.name }}</option>#}
+                                {#                                            {% endfor %}#}
+                                {#                                        {% endif %}#}
+                                {#                                    </select>#}
+                                {#                                </div><!-- /.form-group -->#}
+                                <input type="hidden" id="offer[@id]" name ="offer[id]" value="{{ offer['@id'] }}">
+                                <input type="hidden" id="offer[cluster]" name ="offer[cluster]" value="{{ resource['@id'] }}">
+                                <button type="submit" class="btn btn-success m-3  mx-auto">
+                                    {{ 'edit'|trans|capitalize }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
         {% include 'footer.html.twig' %}
 
-    </div>
     </div>
 
 {% endblock %}

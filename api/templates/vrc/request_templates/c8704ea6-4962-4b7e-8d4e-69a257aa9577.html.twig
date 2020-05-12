@@ -12,7 +12,7 @@
             <div class="page-inner">
                 <div class="row">
 
-                    <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                    <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
 
                         <div style="margin-top: -50px;" class="col-md-12">
                             <div class="card p-4 full-height">
@@ -51,10 +51,10 @@
                                                 <label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
                                                 <select id="catalogue" name="catalogue"
                                                         class="form-control form-control-lg" required>
-                                                    {% for catalogue in catalogues %}
-                                                        <option value="{{ catalogue['@id'] }}"
-                                                                {% if resource.catalogue is defined and catalogue['@id'] == resource.catalogue %}selected=""{% endif %}>{{ catalogue.name }}</option>
-                                                    {% endfor %}
+{#                                                    {% for catalogue in catalogues %}#}
+{#                                                        <option value="{{ catalogue['@id'] }}"#}
+{#                                                                {% if resource.catalogue is defined and catalogue['@id'] == resource.catalogue %}selected=""{% endif %}>{{ catalogue.name }}</option>#}
+{#                                                    {% endfor %}#}
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
