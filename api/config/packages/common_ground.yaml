@@ -255,6 +255,9 @@ parameters:
     # PortfolioComponent
     env(APP_COMMONGROUND_PFC_LOCATION): 'https://pfc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_PFC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # GrafRegistratieComponent
+    env(APP_COMMONGROUND_GRC_LOCATION): 'https://grc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_GRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -410,6 +413,9 @@ parameters:
         pfc:
             location: '%env(APP_COMMONGROUND_PFC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_PFC_APIKEY)%'
+        grc:
+            location: '%env(APP_COMMONGROUND_GRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_GRC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl

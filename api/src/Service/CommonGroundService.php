@@ -805,6 +805,7 @@ class CommonGroundService
             'wrc' => ['href'=>'http://wrc.zaakonline.nl', 'authorization'=>''],
             'orc' => ['href'=>'http://orc.zaakonline.nl', 'authorization'=>''],
             'bc'  => ['href'=>'http://orc.zaakonline.nl', 'authorization'=>''],
+            'grc'  => ['href'=>'http://grc.zaakonline.nl', 'authorization'=>''],
         ];
 
         return $components;

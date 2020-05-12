@@ -1,0 +1,88 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_grc_grave', {'id': resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.id }} </h2>
+                                    <div class="float-right">
+                                        <a href="#deleteGrave" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteGrave">{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-9 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                         /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control" rows="5" id="description" name ="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            <div class="row">
+                <div class="col-md-3">
+                    {% include 'grc/widgets/configurations.html.twig'
+                        with {
+                        'configurations': configurations } %}
+                </div><!-- /.col -->
+                <div class="col-md-3">
+                    <div class="card p-1  full-height">
+                        {% include 'grc/widgets/templates.html.twig'
+                            with {
+                            'templates': templates } %}
+                    </div><!-- /.col -->
+                    <div class="col-md-3">
+                        <div class="card p-0 full-height">
+                            {% include 'grc/widgets/slugs.html.twig'
+                                with {
+                                'slugs': slugs } %}
+                        </div><!-- /.col -->
+                        <div class="col-md-3">
+                            {% include 'grc/widgets/menus.html.twig'
+                                with {
+                                'menus': menus } %}
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.page-inner -->
+
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_grc_grave',
+                'resource':resource,
+                'id':'deleteGrave' } %}
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}
