@@ -1,5 +1,5 @@
 <?php
-// src/Controller/DefaultController.php
+// src/Controller/LcController.php
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -20,13 +20,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PdcController
+ * Class LcController
  * @package App\Controller
  * @Route("/lc")
  */
 class LcController extends AbstractController
 {
-
 	/**
 	 * @Route("/")
 	 * @Template
@@ -54,7 +53,7 @@ class LcController extends AbstractController
     }
 
     /**
-     * @Route("/accommodation/{id}")
+     * @Route("/accommodations/{id}")
      * @Template
      */
     public function accommodationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
@@ -67,7 +66,8 @@ class LcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'accommodation','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'accommodations','id'=> $id]);
+        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
@@ -90,8 +90,7 @@ class LcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodation','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodations','id'=>$id]));
         }
 
 

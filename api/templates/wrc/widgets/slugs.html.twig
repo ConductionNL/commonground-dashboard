@@ -1,0 +1,62 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
+    </div>
+    {% if slugs is defined %}
+        <div class="card-list">
+            {% for slug in slugs %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ slug.name|capitalize }}</h4></div>
+                        <div class="status">{{ slug.description }}</div>
+                    </div>
+                    <a class="btn btn-icon btn-primary btn-round btn-s"
+                       style="margin-right: 5px"
+                       data-toggle="modal"
+                       data-target="#editSlug{{ slug.id }}"
+                       href="#editSlug{{ slug.id }}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteCase{{ case }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the slugs modals #}
+{% include 'wrc/modals/slug.html.twig'
+    with {
+    'route': 'app_wrc_application',
+    'resource':resource,
+    'id':'addSlug' } %}
+
+{% if slugs is defined %}
+    {% for slug in slugs %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_wrc_application',
+            'resource':resource,
+            'item':slug,
+            'id':'deleteSlug' } %}
+
+        {% include 'wrc/modals/slug.html.twig'
+            with {
+            'route': 'app_wrc_application',
+            'resource':resource,
+            'item':slug,
+            'templates':templates,
+            'id':'editSlug' } %}
+    {% endfor %}
+{% endif %}
