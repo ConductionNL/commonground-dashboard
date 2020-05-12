@@ -158,6 +158,10 @@ parameters:
     # ContactenComponent
     env(APP_COMMONGROUND_CC_LOCATION): 'https://cc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_CC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+
+    # MemoComponent
+    env(APP_COMMONGROUND_MEMO_LOCATION): 'https://memo.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_MEMO_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # InstemmingenRegistratiecomponent
     env(APP_COMMONGROUND_IRC_LOCATION): 'https://irc.%env(APP_DOMAIN)%'
@@ -236,6 +240,21 @@ parameters:
     # nlx-out
     env(APP_COMMONGROUND_NLX_OUT_LOCATION): 'https://nlx-out.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_NLX_OUT_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # TakenComponent
+    env(APP_COMMONGROUND_TC_LOCATION): 'https://tc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_TC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # ChallengeComponent
+    env(APP_COMMONGROUND_CHRC_LOCATION): 'https://chrc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_CHRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # ContactMomentComponent
+    env(APP_COMMONGROUND_CMC_LOCATION): 'https://cmc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_CMC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # ReviewComponent
+    env(APP_COMMONGROUND_RC_LOCATION): 'https://rc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_RC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # PortfolioComponent
+    env(APP_COMMONGROUND_PFC_LOCATION): 'https://pfc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_PFC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -373,6 +392,24 @@ parameters:
         vtc:
             location: '%env(APP_COMMONGROUND_VTC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_VTC_APIKEY)%'
+        memo:
+            location: '%env(APP_COMMONGROUND_MEMO_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_MEMO_APIKEY)%'
+        tc:
+            location: '%env(APP_COMMONGROUND_TC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'\
+        chrc:
+            location: '%env(APP_COMMONGROUND_CHRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_CHRC_APIKEY)%'
+        cmc:
+            location: '%env(APP_COMMONGROUND_CMC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_CMC_APIKEY)%'
+        rc:
+            location: '%env(APP_COMMONGROUND_RC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_RC_APIKEY)%'
+        pfc:
+            location: '%env(APP_COMMONGROUND_PFC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_PFC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
