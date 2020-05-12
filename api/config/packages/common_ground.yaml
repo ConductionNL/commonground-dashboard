@@ -397,7 +397,7 @@ parameters:
             apikey: '%env(APP_COMMONGROUND_MEMO_APIKEY)%'
         tc:
             location: '%env(APP_COMMONGROUND_TC_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'\
+            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'
         chrc:
             location: '%env(APP_COMMONGROUND_CHRC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_CHRC_APIKEY)%'
