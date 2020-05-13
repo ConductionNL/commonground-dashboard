@@ -27,9 +27,15 @@ services:
     # please note that last definitions always *replace* previous ones
 
     'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter': ~
-    
+
     # We use a custom swagger decorator to add the commonground specific docs 
-    'App\Swagger\SwaggerDecorator':
+    'Conduction\CommonGroundBundle\Swagger\SwaggerDecorator':
         decorates: 'api_platform.swagger.normalizer.api_gateway'
-        arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
+        arguments: [ '@Conduction\CommonGroundBundle\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
+
+    #CommonGround Twig Extension
+    'Conduction\CommonGroundBundle\Twig\CommonGroundExtension':
+        tags: ['twig.extension']
+    'Conduction\CommonGroundBundle\Twig\CommonGroundRuntime':
+        tags: ['twig.runtime']
