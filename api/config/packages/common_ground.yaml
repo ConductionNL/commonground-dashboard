@@ -264,6 +264,9 @@ parameters:
     # CommonGroundRegistratieComponent
     env(APP_COMMONGROUND_CGRC_LOCATION): 'https://cgrc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_CGRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # LandelijkeTabellenCatalogus
+    env(APP_COMMONGROUND_LTC_LOCATION): 'https://ltc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_LTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -428,6 +431,9 @@ parameters:
         cgrc:
             location: '%env(APP_COMMONGROUND_CGRC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_CGRC_APIKEY)%'
+        ltc:
+            location: '%env(APP_COMMONGROUND_LTC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_LTC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
