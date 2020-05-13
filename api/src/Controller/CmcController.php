@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class cmcController
+ * Class CmcController
  * @package App\Controller
  * @Route("/cmc")
  */
