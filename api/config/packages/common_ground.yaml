@@ -261,6 +261,9 @@ parameters:
     # DocParser
     env(APP_COMMONGROUND_DPS_LOCATION): 'https://dps.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_DPS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # CommonGroundRegistratieComponent
+    env(APP_COMMONGROUND_CGRC_LOCATION): 'https://cgrc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_CGRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -403,7 +406,7 @@ parameters:
             apikey: '%env(APP_COMMONGROUND_MEMO_APIKEY)%'
         tc:
             location: '%env(APP_COMMONGROUND_TC_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'\
+            apikey: '%env(APP_COMMONGROUND_TC_APIKEY)%'
         chrc:
             location: '%env(APP_COMMONGROUND_CHRC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_CHRC_APIKEY)%'
@@ -422,6 +425,9 @@ parameters:
         dps:
             location: '%env(APP_COMMONGROUND_DPS_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_DPS_APIKEY)%'
+        cgrc:
+            location: '%env(APP_COMMONGROUND_CGRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_CGRC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
