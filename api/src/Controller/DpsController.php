@@ -20,11 +20,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class MemoController
+ * Class dpsController
  * @package App\Controller
- * @Route("/memo")
+ * @Route("/dps")
  */
-class MemoController extends AbstractController
+class DpsController extends AbstractController
 {
 
 	/**
@@ -34,30 +34,30 @@ class MemoController extends AbstractController
 	public function indexAction(TranslatorInterface $translator)
 	{
 		$variables = [];
-		$variables['title'] = $translator->trans('memos');
-		$variables['subtitle'] = $translator->trans('the memos component holds memos.');
+		$variables['title'] = $translator->trans('doc parsers');
+		$variables['subtitle'] = $translator->trans('The doc parser holds doc parsers');
 
 		return $variables;
 	}
 
     /**
-     * @Route("/memos")
+     * @Route("/api_docs")
      * @Template
      */
-	public function memosAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function ApiDocsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
-    	$variables['title'] = $translator->trans('memos');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('memos');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'memo','type'=>'memos'])["hydra:member"];
+    	$variables['title'] = $translator->trans('api docs');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('api docs');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'dps','type'=>'api_docs'])["hydra:member"];
         return $variables;
     }
 
     /**
-     * @Route("/memos/{id}")
+     * @Route("/api_docs/{id}")
      * @Template
      */
-    public function memoAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function ApiDocAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
     	$variables = [];
@@ -67,17 +67,17 @@ class MemoController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'memo','type'=>'memos','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'dps','type'=>'api_docs','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_memo_memos'));
+            return $this->redirect($this->generateUrl('app_dps_api_docs'));
         }
 
-        $variables['title'] = $translator->trans('memo');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('memo');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'memo','type'=>'organizations'])["hydra:member"];
+        $variables['title'] = $translator->trans('api doc');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('api doc');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'dps','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -91,7 +91,7 @@ class MemoController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'memo','type'=>'memos','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'dps','type'=>'api_docs','id'=>$id]));
         }
 
 

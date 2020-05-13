@@ -258,6 +258,9 @@ parameters:
     # ProcesTypeCatalogus
     env(APP_COMMONGROUND_PTC_LOCATION): 'https://ptc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_PTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # DocParser
+    env(APP_COMMONGROUND_DPS_LOCATION): 'https://dps.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_DPS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # Test for commonground component by array
     common_ground.components:
@@ -416,6 +419,9 @@ parameters:
         ptc:
             location: '%env(APP_COMMONGROUND_PTC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_PTC_APIKEY)%'
+        dps:
+            location: '%env(APP_COMMONGROUND_DPS_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_DPS_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
