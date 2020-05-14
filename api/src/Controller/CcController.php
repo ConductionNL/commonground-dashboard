@@ -66,6 +66,7 @@ class CcController extends AbstractController
             return $this->redirect($this->generateUrl('app_cc_persons'));
         }
 
+
     	$variables = [];
 
         // Lets see if we need to create
