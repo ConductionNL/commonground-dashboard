@@ -7,6 +7,7 @@
 
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'title': 'save or create a application',
+
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -31,10 +32,10 @@
                                     <div class="float-right">
 
                                         <a class="btn btn-primary mr-4" href="{{ path('app_wrc_applications')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-success" style="margin-right: 25px"
+                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-success" style="margin-right: 25px"
+                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trial'|trans|capitalize }}</a>
                                         <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
