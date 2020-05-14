@@ -26,7 +26,7 @@
                             <td>{{ resource.name }}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b> <i class="far fa-edit"></i></a></td>
                         </tr>
                         {% endfor %}
                         </tbody>

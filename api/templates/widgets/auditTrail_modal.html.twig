@@ -1,35 +1,17 @@
-
-<div class="modal fade" style="text-align: center" id="{{ id }}" tabindex="-1"
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item is defined %}{{ item.id }}{% endif %}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
     <div class="modal-dialog model-dialog-centered" role="document">
-        <div class="modal-content" style="width: 850px;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="{{ id }}Label"><b>{{ 'auditTrail'|trans|capitalize }}</b></h5>
-            </div><!-- /.header -->
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">{{ 'method'|trans|capitalize }}</th>
-                    <th scope="col">{{ 'user'|trans|capitalize }}</th>
-                    <th scope="col">{{ 'ip'|trans|capitalize }}</th>
-                    <th scope="col">{{ 'session'|trans|capitalize }}</th>
-                    <th scope="col">{{ 'created'|trans|capitalize }}</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for record in auditTrail %}
-                    <tr>
-                        <td>{{ record.method }}</td>
-                        <td>{{ record.user }}</td>
-                        <td>{{ record.ip }}</td>
-                        <td>{{ record.session }}</td>
-                        <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div><!-- /.content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'audit trial '|trans|capitalize }}</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
