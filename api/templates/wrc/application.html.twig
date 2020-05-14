@@ -5,7 +5,21 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'title': 'save or create a application',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'applications' : {
+                        'name' : 'applications',
+                        'path' : 'app_wrc_applications'
+                    }
+                }]
+            }
+            %}
 
             <div class="page-inner">
                 <div class="row">
