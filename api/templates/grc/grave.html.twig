@@ -13,7 +13,7 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_grc_grave', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.id }} </h2>
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
                                         <a href="#deleteGrave" class="btn btn-danger" style="margin-right: 25px"
                                            data-toggle="modal"
@@ -23,13 +23,103 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                       value="{% if resource.id is defined %}{{ resource.id }}{% endif %}"
+                                                       disabled>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
                                         <div class="col-md-9 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                         /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                                                <select id="status" name="status"
+                                                        class="form-control form-control-lg" required>
+                                                    <option value="Beschikbaar">Beschikbaar</option>
+                                                    <option value="Bezet">Bezet</option>
+                                                    <option value="Administratief geruimd">Administratief Geruimd</option>
+                                                </select>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                </div> <!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'grave type'|trans|capitalize }}</label>
+                                                <select id="graveType" name="graveType"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for graveType in gravetypes %}
+                                                        <option value="{{ graveType['@id'] }}"
+                                                                {% if resource.graveType is defined and graveType['@id'] == resource.graveType %}selected=""{% endif %}>{{ graveType.reference }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'cemetery'|trans|capitalize }}</label>
+                                                <select id="cemetery" name="cemetery"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for cemetery in cemeteries %}
+                                                        <option value="{{ cemetery['@id'] }}"
+                                                                {% if resource.cemetery is defined and cemetery['@id'] == resource.cemetery %}selected=""{% endif %}>{{ cemetery.reference }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'deceased'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="deceased" name ="deceased" value="{% if resource.deceased is defined %}{{ resource.deceased }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'stakeholder'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="stakeholder" name ="stakeholder" value="{% if resource.stakeholder is defined %}{{ resource.stakeholder }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-9 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'acquisition'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="acquisition" name ="acquisition" value="{% if resource.acquisition is defined %}{{ resource.acquisition }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="location" name ="location" value="{% if resource.location is defined %}{{ resource.location }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'position'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="position" name ="position" value="{% if resource.position is defined %}{{ resource.position }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -39,7 +129,8 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
+                        </div> <!-- /.card-body -->
+
 
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
@@ -48,31 +139,9 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-            <div class="row">
-                <div class="col-md-3">
-                    {% include 'grc/widgets/configurations.html.twig'
-                        with {
-                        'configurations': configurations } %}
-                </div><!-- /.col -->
-                <div class="col-md-3">
-                    <div class="card p-1  full-height">
-                        {% include 'grc/widgets/templates.html.twig'
-                            with {
-                            'templates': templates } %}
-                    </div><!-- /.col -->
-                    <div class="col-md-3">
-                        <div class="card p-0 full-height">
-                            {% include 'grc/widgets/slugs.html.twig'
-                                with {
-                                'slugs': slugs } %}
-                        </div><!-- /.col -->
-                        <div class="col-md-3">
-                            {% include 'grc/widgets/menus.html.twig'
-                                with {
-                                'menus': menus } %}
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.page-inner -->
+            </div><!-- /.page-inner -->
+            <div class="col-md-3">
+
 
             {% include 'widgets/delete_modal.html.twig'
                 with {

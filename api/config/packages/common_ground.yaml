@@ -172,7 +172,7 @@ parameters:
     env(APP_COMMONGROUND_EVC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # AgendaRegistratieComponent
-    env(APP_COMMONGROUND_ARC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_ARC_LOCATION): 'https://arc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_ARC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     
     # MedewerkersRegistratieComponent

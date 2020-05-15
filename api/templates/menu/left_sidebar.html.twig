@@ -352,7 +352,7 @@
                 {% if 'group.beheerder' in app.user.roles %}
                     <li class="nav-item">
                         <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
-                            <p style="color: #575962">{{ 'graves'|trans|capitalize }}</p>
+                            <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
                             <span style="color: #575962" class="caret"></span>
                         </a>
                         <div class="collapse" id="graves">
@@ -361,6 +361,14 @@
                                     <a href="{{ path("app_grc_graves") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'graves'|trans|capitalize }}</span>
+                                    </a>
+                                    <a href="{{ path("app_grc_gravetypes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'gravetypes'|trans|capitalize }}</span>
+                                    </a>
+                                    <a href="{{ path("app_grc_cemeteries") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'cemeteries'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                             </ul>
