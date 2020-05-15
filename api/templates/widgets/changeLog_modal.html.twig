@@ -1,17 +1,29 @@
-<div class="modal fade" style="text-align: center" id="{{ id }}{% if item is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+<div class="modal fade" style="text-align: center" id="{{ id }}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
     <div class="modal-dialog model-dialog-centered" role="document">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'change log '|trans|capitalize }}</b></h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+        <div class="modal-content" style="width: 750px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Label"><b>{{ 'changeLog'|trans|capitalize }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- /.header -->
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'version'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'action'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'username'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'data'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div><!-- /.content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

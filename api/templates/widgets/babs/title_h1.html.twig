@@ -3,7 +3,7 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
                 <h2 class="text-white pb-2 fw-bold">{% block headerTitle %}{% if headerTitle is defined %}{{ headerTitle|trans|capitalize }}{% endif %}{% endblock %}</h2>
-                <nav class="text-white op-7 mb-2">
+                <nav class="op-7" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         {% block breadcrumbs %}
                             {% if breadcrumbs is defined %}
@@ -12,13 +12,11 @@
                                         <li class="breadcrumb-item"><a href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize}} </a></li>
                                     {% endfor %}
                                 {% endfor %}
-                                <li class="breadcrumb-item active" aria-current="page">{{ name }}</li>
+                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name }}</li>
                             {% endif %}
                         {% endblock %}
                     </ol>
                 </nav>
-
-
             </div>
             <div class="ml-md-auto py-2 py-md-0">
 				{% block buttons %}
