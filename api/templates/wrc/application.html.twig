@@ -36,7 +36,7 @@
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
                                         <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trial'|trans|capitalize }}</a>
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
                                         <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#deleteApplication"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
@@ -182,4 +182,23 @@
 
         </div>
     </div>
+
+            {% block javascripts %}
+            <script>
+                $.ajax({
+                    url: "/api/wrc/audit_trails",
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(res) {
+                        console.log(res);
+                        alert(res);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                        alert(textStatus + '' + errorThrown);
+                    }
+                });
+            </script>
+            {% endblock %}
+
 {% endblock %}

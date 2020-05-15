@@ -1,3 +1,4 @@
+
 <div class="modal fade" style="text-align: center" id="{{ id }}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
@@ -24,18 +25,12 @@
                 </thead>
                 <tbody>
                     {% block content %}
-                        <script>
-
-                            $("button").click(function(){
-                                $.get("api/wrc/audit_trails", function(data, status){
-                                    alert("Data: " + data + "\nStatus: " + status);
-                                });
-                            });
+                        <div id="result"></div>
+                        <script type="text/javascript">
 
                         </script>
 
                     {% endblock %}
-                <div id="result">test</div>
                 </tbody>
             </table>
         </div><!-- /.content -->
