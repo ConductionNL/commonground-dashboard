@@ -39,7 +39,8 @@
                                                        name="name" placeholder="Large Input"
                                                        value="{{ resource.name }}">
                                             </div>
-                                        </div> <!-- /.col -->
+                                        </div>
+                                        <!-- /.col -->
 
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
@@ -139,9 +140,64 @@
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_pfc_product',
+            'resource':resource,
+            'id':'delete' } %}
+
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_pfc_product',
+            'resource':resource,
+            'id':'auditTrial' } %}
+
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_pfc_product',
+            'resource':resource,
+            'id':'changeLog' } %}
+
+
         {% include 'footer.html.twig' %}
 
     </div>
     </div>
-
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/pfc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/pfc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
 {% endblock %}

@@ -1,16 +1,18 @@
+
 <div class="modal fade" style="text-align: center" id="{{ id }}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
     <div class="modal-dialog model-dialog-centered" role="document">
-        <div class="modal-content" style="width: 750px;">
+        <div class="modal-content" style="width: 850px;">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{ id }}Label"><b>{{ 'changeLog'|trans|capitalize }}</b></h5>
+                <h5 class="modal-title" id="{{ id }}Label"><b>{{ 'change log'|trans|capitalize }}</b></h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div><!-- /.header -->
-            <table class="table table-hover">
+
+            <table class="table table-hover" >
                 <thead>
                 <tr>
                     <th scope="col">{{ 'version'|trans|capitalize }}</th>
@@ -18,10 +20,14 @@
                     <th scope="col">{{ 'username'|trans|capitalize }}</th>
                     <th scope="col">{{ 'data'|trans|capitalize }}</th>
                     <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="changelog">
+                {% block content %}
 
+
+                {% endblock %}
                 </tbody>
             </table>
         </div><!-- /.content -->
