@@ -57,6 +57,16 @@
                         </a>
                     </li>
                 {% endif %}
+
+
+                {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.create' in app.user.roles %}
+                    <a href="{{ path("app_wrc_applications") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'applications'|trans|capitalize }}</span>
+                    </a>
+                {% endif %}
+
+
                 {% if 'group.balie-medewerkers' in app.user.roles %}
                     <li  class="nav-item">
                         <a href="{{ path('app_vrc_requests', {'requestType': "4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3"}) }}">

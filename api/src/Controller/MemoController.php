@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class memoController
+ * Class MemoController
  * @package App\Controller
  * @Route("/memo")
  */
