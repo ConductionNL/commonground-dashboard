@@ -463,23 +463,23 @@
       </trans-unit>
       <trans-unit id="IjZUFsW" resname="pitches">
         <source>pitches</source>
-        <target>__pitches</target>
+        <target>voorstellen</target>
       </trans-unit>
       <trans-unit id="RQKEbys" resname="pitch">
         <source>pitch</source>
-        <target>__pitch</target>
+        <target>voorstel</target>
       </trans-unit>
       <trans-unit id="algAhEh" resname="challenges">
         <source>challenges</source>
-        <target>__challenges</target>
+        <target>uitdagingen</target>
       </trans-unit>
       <trans-unit id="LdAL134" resname="challenge">
         <source>challenge</source>
-        <target>__challenge</target>
+        <target>uitdaging</target>
       </trans-unit>
       <trans-unit id="WE08OhD" resname="contact moments">
         <source>contact moments</source>
-        <target>__contact moments</target>
+        <target>contact momenten</target>
       </trans-unit>
       <trans-unit id="_VApqHp" resname="the contact moments component holds contact moments">
         <source>the contact moments component holds contact moments</source>
@@ -487,11 +487,11 @@
       </trans-unit>
       <trans-unit id="89LWHvX" resname="contact_moments">
         <source>contact_moments</source>
-        <target>__contact_moments</target>
+        <target>contact momenten</target>
       </trans-unit>
       <trans-unit id="v9eV9SF" resname="contact_moment">
         <source>contact_moment</source>
-        <target>__contact_moment</target>
+        <target>contact momenten</target>
       </trans-unit>
       <trans-unit id="ewjRLRM" resname="doc parsers">
         <source>doc parsers</source>
@@ -519,11 +519,11 @@
       </trans-unit>
       <trans-unit id="634ddTq" resname="clusters">
         <source>clusters</source>
-        <target>__clusters</target>
+        <target>klusters</target>
       </trans-unit>
       <trans-unit id="FkzxyoO" resname="cluster">
         <source>cluster</source>
-        <target>__cluster</target>
+        <target>kluster</target>
       </trans-unit>
       <trans-unit id="lMVV4M_" resname="health logs">
         <source>health logs</source>
@@ -663,11 +663,11 @@
       </trans-unit>
       <trans-unit id="2pD4fJz" resname="evaluations">
         <source>evaluations</source>
-        <target>__evaluations</target>
+        <target>evaluaties</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
         <source>evaluation</source>
-        <target>__evaluation</target>
+        <target>evaluatie</target>
       </trans-unit>
       <trans-unit id="L6.C0ji" resname="formalRecognitions">
         <source>formalRecognitions</source>
@@ -687,11 +687,11 @@
       </trans-unit>
       <trans-unit id="wJkUK8M" resname="results">
         <source>results</source>
-        <target>__results</target>
+        <target>resultaten</target>
       </trans-unit>
       <trans-unit id="9qIU96X" resname="result">
         <source>result</source>
-        <target>__result</target>
+        <target>resultaat</target>
       </trans-unit>
       <trans-unit id="eb9urDi" resname="process type catalogue">
         <source>process type catalogue</source>
@@ -743,11 +743,11 @@
       </trans-unit>
       <trans-unit id="bo6f16J" resname="ratings">
         <source>ratings</source>
-        <target>__ratings</target>
+        <target>waarderingen</target>
       </trans-unit>
       <trans-unit id="ESiV169" resname="rating">
         <source>rating</source>
-        <target>__rating</target>
+        <target>waardering</target>
       </trans-unit>
       <trans-unit id="VGQQUSA" resname="reviews">
         <source>reviews</source>
@@ -767,7 +767,7 @@
       </trans-unit>
       <trans-unit id="CFFUCEx" resname="tasks">
         <source>tasks</source>
-        <target>__tasks</target>
+        <target>taken</target>
       </trans-unit>
       <trans-unit id="UDHym1e" resname="the tasks component holds tasks">
         <source>the tasks component holds tasks</source>
@@ -775,7 +775,7 @@
       </trans-unit>
       <trans-unit id="DrtCn6h" resname="task">
         <source>task</source>
-        <target>__task</target>
+        <target>taak</target>
       </trans-unit>
       <trans-unit id="j41rlZ5" resname="aanvragen naamwijziging">
         <source>aanvragen naamwijziging</source>
@@ -795,15 +795,15 @@
       </trans-unit>
       <trans-unit id="13LrtFk" resname="labels">
         <source>labels</source>
-        <target>__labels</target>
+        <target>labels</target>
       </trans-unit>
       <trans-unit id="qx3av7z" resname="request types">
         <source>request types</source>
-        <target>__request types</target>
+        <target>verzoektypes</target>
       </trans-unit>
       <trans-unit id="R5WDPTs" resname="request type">
         <source>request type</source>
-        <target>__request type</target>
+        <target>veroektype</target>
       </trans-unit>
       <trans-unit id="i1RgpPO" resname="slugs">
         <source>slugs</source>
@@ -819,19 +819,19 @@
       </trans-unit>
       <trans-unit id="YQXWzHa" resname="image">
         <source>image</source>
-        <target>__image</target>
+        <target>afbeelding</target>
       </trans-unit>
       <trans-unit id="kKdXjK_" resname="styles">
         <source>styles</source>
-        <target>__styles</target>
+        <target>stijlen</target>
       </trans-unit>
       <trans-unit id="y4brLZF" resname="style">
         <source>style</source>
-        <target>__style</target>
+        <target>stijl</target>
       </trans-unit>
       <trans-unit id=".VTlqC4" resname="applications">
         <source>applications</source>
-        <target>__applications</target>
+        <target>applicaties</target>
       </trans-unit>
       <trans-unit id="kEXW8Fy" resname="menus">
         <source>menus</source>
@@ -843,27 +843,27 @@
       </trans-unit>
       <trans-unit id="6F7FO9p" resname="configurations">
         <source>configurations</source>
-        <target>__configurations</target>
+        <target>configuraties</target>
       </trans-unit>
       <trans-unit id="48CWme1" resname="case type">
         <source>case type</source>
-        <target>__case type</target>
+        <target>zaaktype</target>
       </trans-unit>
       <trans-unit id="7T3a3YF" resname="case types">
         <source>case types</source>
-        <target>__case types</target>
+        <target>zaaktypes</target>
       </trans-unit>
       <trans-unit id="Q8wj_lK" resname="document">
         <source>document</source>
-        <target>__document</target>
+        <target>document</target>
       </trans-unit>
       <trans-unit id="EeIhvRt" resname="verdict">
         <source>verdict</source>
-        <target>__verdict</target>
+        <target>besluit</target>
       </trans-unit>
       <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
-        <target>__cancel</target>
+        <target>annuleren</target>
       </trans-unit>
       <trans-unit id="4Ay5tpW" resname="change log">
         <source>change log</source>
@@ -875,11 +875,11 @@
       </trans-unit>
       <trans-unit id="QjwT8Mp" resname="alarms">
         <source>alarms</source>
-        <target>__alarms</target>
+        <target>alarmen</target>
       </trans-unit>
       <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>
-        <target>__timezone</target>
+        <target>tijdzonnes</target>
       </trans-unit>
       <trans-unit id="bpoasqA" resname="schedules">
         <source>schedules</source>
@@ -891,11 +891,11 @@
       </trans-unit>
       <trans-unit id="hiQXuef" resname="events">
         <source>events</source>
-        <target>__events</target>
+        <target>evenementen</target>
       </trans-unit>
       <trans-unit id="lL6HeQr" resname="add event">
         <source>add event</source>
-        <target>__add event</target>
+        <target>voeg evenement toe</target>
       </trans-unit>
       <trans-unit id="yPfOJ2A" resname="todos">
         <source>todos</source>
@@ -923,27 +923,27 @@
       </trans-unit>
       <trans-unit id="pWFFJwz" resname="id">
         <source>id</source>
-        <target>__id</target>
+        <target>id</target>
       </trans-unit>
       <trans-unit id="dYV6RYm" resname="from">
         <source>from</source>
-        <target>__from</target>
+        <target>van</target>
       </trans-unit>
       <trans-unit id="LjIA3oS" resname="until">
         <source>until</source>
-        <target>__until</target>
+        <target>tot</target>
       </trans-unit>
       <trans-unit id="RGgazvd" resname="free or busy?">
         <source>free or busy?</source>
-        <target>__free or busy?</target>
+        <target>bezet of vrij?</target>
       </trans-unit>
       <trans-unit id="rZXV_mU" resname="free">
         <source>free</source>
-        <target>__free</target>
+        <target>vrij</target>
       </trans-unit>
       <trans-unit id="ybwHL0_" resname="busy">
         <source>busy</source>
-        <target>__busy</target>
+        <target>bezet</target>
       </trans-unit>
       <trans-unit id="aGRvSK1" resname="add alarm">
         <source>add alarm</source>
@@ -951,15 +951,15 @@
       </trans-unit>
       <trans-unit id="vZOMaI9" resname="action">
         <source>action</source>
-        <target>__action</target>
+        <target>aktie</target>
       </trans-unit>
       <trans-unit id="btiRnOI" resname="audio">
         <source>audio</source>
-        <target>__audio</target>
+        <target>audio</target>
       </trans-unit>
       <trans-unit id="37uInPG" resname="display">
         <source>display</source>
-        <target>__display</target>
+        <target>weergave</target>
       </trans-unit>
       <trans-unit id="BIfCSXM" resname="procedure">
         <source>procedure</source>
@@ -995,7 +995,7 @@
       </trans-unit>
       <trans-unit id="BA.9WSX" resname="payment">
         <source>payment</source>
-        <target>__payment</target>
+        <target>betaling</target>
       </trans-unit>
       <trans-unit id="Gm1rYOx" resname="paymentId">
         <source>paymentId</source>
@@ -1003,7 +1003,7 @@
       </trans-unit>
       <trans-unit id="R79yS73" resname="reciever">
         <source>reciever</source>
-        <target>__reciever</target>
+        <target>ontvanger</target>
       </trans-unit>
       <trans-unit id="CjZ7ks8" resname="sender">
         <source>sender</source>
@@ -1055,7 +1055,7 @@
       </trans-unit>
       <trans-unit id="ulKFFhu" resname="environment">
         <source>environment</source>
-        <target>__environment</target>
+        <target>omgeving</target>
       </trans-unit>
       <trans-unit id="HhQuYne" resname="install">
         <source>install</source>
@@ -1071,7 +1071,7 @@
       </trans-unit>
       <trans-unit id="5urqGOi" resname="location">
         <source>location</source>
-        <target>__location</target>
+        <target>locatie</target>
       </trans-unit>
       <trans-unit id="NL91cmw" resname="edit domain">
         <source>edit domain</source>
@@ -1563,7 +1563,7 @@
       </trans-unit>
       <trans-unit id="H_KJIFk" resname="application">
         <source>application</source>
-        <target>__application</target>
+        <target>applicatie</target>
       </trans-unit>
       <trans-unit id="XzxPhYD" resname="items">
         <source>items</source>
