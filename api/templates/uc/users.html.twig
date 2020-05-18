@@ -9,7 +9,7 @@
 
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'headerTitle': 'users',
-                'name' : 'users'|capitalize,
+                'name' : 'users'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',

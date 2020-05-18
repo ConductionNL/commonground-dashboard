@@ -9,7 +9,7 @@
 
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'headerTitle': 'emails',
-                'name' : 'emails'|capitalize,
+                'name' : 'emails'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',

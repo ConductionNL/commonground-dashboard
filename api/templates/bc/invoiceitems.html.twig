@@ -9,7 +9,7 @@
 
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'headerTitle': 'invoice items',
-                'name' : 'invoice items'|capitalize,
+                'name' : 'invoice items'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',

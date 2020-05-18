@@ -23,7 +23,7 @@
                     },
                     'stuf interfaces' : {
                         'name' : 'stuf interfaces',
-                        'path' : 'app_stuf_stuf_interfaces'
+                        'path' : 'app_stuf_stufinterfaces'
                     }
                 }]
             }
@@ -37,7 +37,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_stuf_stuf_interfaces')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_stuf_stufinterfaces')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
@@ -159,6 +159,25 @@
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
+
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_stuf_stufinterface',
+            'resource':resource,
+            'id':'delete' } %}
+
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_stuf_stufinterface',
+            'resource':resource,
+            'id':'auditTrial' } %}
+
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_stuf_stufinterface',
+            'resource':resource,
+            'id':'changeLog' } %}
+
 
         {% include 'footer.html.twig' %}
 
