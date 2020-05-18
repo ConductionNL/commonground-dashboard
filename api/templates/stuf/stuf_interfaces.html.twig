@@ -7,8 +7,17 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Stuf_Interfaces','functie': 'Stuf_Interfaces'} %}
-
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'stuf interfaces',
+                'name' : 'stuf interfaces'|capitalize,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    }
+                }]
+            }
+            %}
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
                     <table class="table table-hover">

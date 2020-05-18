@@ -59,82 +59,65 @@
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
 
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_vrc_submitter',
+                'resource':resource,
+                'id':'delete' } %}
+
+            {% include 'widgets/auditTrail_modal.html.twig'
+                with {
+                'route': 'app_vrc_submitter',
+                'resource':resource,
+                'id':'auditTrial' } %}
+
+            {% include 'widgets/changeLog_modal.html.twig'
+                with {
+                'route': 'app_vrc_submitter',
+                'resource':resource,
+                'id':'changeLog' } %}
+
+
             {% include 'footer.html.twig' %}
 
         </div>
     </div>
 
-    {% if changeLog is defined %}
-        <div class="modal fade" style="text-align: center" id="changeLogModal" tabindex="-1"
-             role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered" role="document">
-                <div class="modal-content" style="width: 750px;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'changeLog'|trans|capitalize }}</b></h5>
-                    </div><!-- /.header -->
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">{{ 'version'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'action'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'username'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'data'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for record in changeLog %}
-                            <tr>
-                                <td>{{ record.version }}</td>
-                                <td>{{ record.action }}</td>
-                                <td>{{ record.username }}</td>
-                                <td><ul>{# for key, value in record.data %}<li><b>{{ key }}</b>: {{ value }}</li>{% endfor #}</ul></td>
-                                <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div><!-- /.content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    {% endif %}
-
-    {% if auditTrail is defined %}
-        <div class="modal fade" style="text-align: center" id="auditTrailModal" tabindex="-1"
-             role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered" role="document">
-                <div class="modal-content" style="width: 850px;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'auditTrail'|trans|capitalize }}</b></h5>
-                    </div><!-- /.header -->
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">{{ 'method'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'user'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'ip'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'session'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for record in auditTrail %}
-                            <tr>
-                                <td>{{ record.method }}</td>
-                                <td>{{ record.user }}</td>
-                                <td>{{ record.ip }}</td>
-                                <td>{{ record.session }}</td>
-                                <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div><!-- /.content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    {% endif %}
-
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/vrc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/vrc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
 {% endblock %}

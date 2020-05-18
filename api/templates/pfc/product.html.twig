@@ -13,8 +13,21 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Product bewerken','functie': 'Dashboard -> PFC -> Products -> '~resource.name } %}
-
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a product',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'products' : {
+                        'name' : 'products',
+                        'path' : 'app_pfc_products'
+                    }
+                }]
+            }
+            %}
             <div class="page-inner">
                 <div class="row">
 
@@ -24,9 +37,17 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger"
-                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
-                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_pfc_products')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -98,7 +119,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description"
+                                                <textarea class="form-control" rows="5" id="summernote"
                                                           name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
