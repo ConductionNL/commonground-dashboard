@@ -99,7 +99,7 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        $user = $this->commonGroundService->createResource($credentials, ['compent'=>'uc','type'=>'login']);
+        $user = $this->commonGroundService->createResource($credentials, ['component'=>'uc','type'=>'login']);
 
         if (!$user) {
             return false;
