@@ -378,9 +378,6 @@ class WrcController extends AbstractController
             $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
     	}
 
-    	$variables['title'] = $translator->trans('application');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
-
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Als we een organisatie hebben kunnen we ook de style ophalen @to engels!

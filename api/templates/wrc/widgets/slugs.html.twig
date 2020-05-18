@@ -8,7 +8,7 @@
                 <div class="item-list">
                     <div class="info-user ml-3">
                         <div class="username"><h4>{{ slug.name|capitalize }}</h4></div>
-                        <div class="status">{{ slug.description }}</div>
+                        <div class="status">{{ slug.application.name }}</div>
                     </div>
                     <a class="btn btn-icon btn-primary btn-round btn-s"
                        style="margin-right: 5px"
@@ -19,7 +19,7 @@
                     </a>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
                             style="margin-right: 15px" data-toggle="modal"
-                            data-target="#deleteCase{{ case }}">
+                            data-target="#deleteSlug{{ slug.id }}">
                         <i class="fa fa-trash"></i>
                     </button>
                 </div><!-- /.item-list -->
