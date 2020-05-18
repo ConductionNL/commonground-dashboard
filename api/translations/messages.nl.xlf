@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
-        <target>__type</target>
+        <target>type</target>
       </trans-unit>
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
@@ -319,15 +319,15 @@
       </trans-unit>
       <trans-unit id="9f7XNYv" resname="calendars">
         <source>calendars</source>
-        <target>__calendars</target>
+        <target>kalenders</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
-        <target>__calendar</target>
+        <target>kalender</target>
       </trans-unit>
-      <trans-unit id="JvMM2SJ" resname="Betaal Component">
-        <source>Betaal Component</source>
-        <target>__Betaal Component</target>
+      <trans-unit id="JvMM2SJ" resname="Payment Component">
+        <source>Payment Component</source>
+        <target>Betaal Component</target>
       </trans-unit>
       <trans-unit id="CTbbBXo" resname="the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.">
         <source>the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.</source>
@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="3zhK6Xx" resname="payments">
         <source>payments</source>
-        <target>__payments</target>
+        <target>betalingen</target>
       </trans-unit>
       <trans-unit id="7xxLRfL" resname="services">
         <source>services</source>
@@ -343,11 +343,11 @@
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
-        <target>__invoice</target>
+        <target>factuur</target>
       </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
-        <target>__invoices</target>
+        <target>facturen</target>
       </trans-unit>
       <trans-unit id="WUz7B.i" resname="Basis Registratie Personen">
         <source>Basis Registratie Personen</source>
@@ -363,23 +363,23 @@
       </trans-unit>
       <trans-unit id="9czPtzd" resname="messages">
         <source>messages</source>
-        <target>__messages</target>
+        <target>berichten</target>
       </trans-unit>
       <trans-unit id="q1MKE_R" resname="message">
         <source>message</source>
-        <target>__message</target>
+        <target>bericht</target>
       </trans-unit>
       <trans-unit id="UlTIC6Q" resname="location catalogue">
         <source>location catalogue</source>
-        <target>__location catalogue</target>
+        <target>locatie catalogus</target>
       </trans-unit>
       <trans-unit id="05JF_o_" resname="persons">
         <source>persons</source>
-        <target>__persons</target>
+        <target>personen</target>
       </trans-unit>
       <trans-unit id="OKgeh_e" resname="person">
         <source>person</source>
-        <target>__person</target>
+        <target>persoon</target>
       </trans-unit>
       <trans-unit id=".nnX1Pc" resname="addresses">
         <source>addresses</source>
@@ -627,19 +627,19 @@
       </trans-unit>
       <trans-unit id="xJ3j0mX" resname="employees">
         <source>employees</source>
-        <target>__employees</target>
+        <target>medewerkers</target>
       </trans-unit>
       <trans-unit id="L9wBdwV" resname="employee">
         <source>employee</source>
-        <target>__employee</target>
+        <target>medewerker</target>
       </trans-unit>
       <trans-unit id="HBaK2wD" resname="orders">
         <source>orders</source>
-        <target>__orders</target>
+        <target>bestellingen</target>
       </trans-unit>
       <trans-unit id="Put_luW" resname="order">
         <source>order</source>
-        <target>__order</target>
+        <target>bestelling</target>
       </trans-unit>
       <trans-unit id="KkTNZwk" resname="order item">
         <source>order item</source>
@@ -647,7 +647,7 @@
       </trans-unit>
       <trans-unit id="qHkhV8t" resname="product">
         <source>product</source>
-        <target>__product</target>
+        <target>product</target>
       </trans-unit>
       <trans-unit id="irRGS3D" resname="Portfolio Component">
         <source>Portfolio Component</source>
