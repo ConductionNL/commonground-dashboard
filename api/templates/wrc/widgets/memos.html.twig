@@ -1,0 +1,53 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'memos'|trans|capitalize }}</h3>
+    </div>
+    {% if memos is defined %}
+    <div class="card-list">
+        {% for memo in memos %}
+            <div class="item-list">
+                <div class="info-user ml-3">
+                    <div class="username"><h4>{{ memo.name|capitalize }}</h4></div>
+                    <div class="status">{{ memo.description }}</div>
+                </div>
+                <a class="btn btn-icon btn-primary btn-round btn-s"
+                   style="margin-right: 5px"
+                   href="{{ path('app_memo_memo', {id: memo.id}) }}">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <button class="btn btn-icon btn-danger btn-round btn-s"
+                        style="margin-right: 15px" data-toggle="modal"
+                        data-target="#deleteSlug{{ slug.id }}">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div><!-- /.item-list -->
+        {% endfor %}
+    </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addMemo"
+           data-toggle="modal" data-target="#addMemo">{{ 'add memo'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the memo modals #}
+{% include 'wrc/modals/memo.html.twig'
+    with {
+    'route': 'app_memo_memo',
+    'resource':resource,
+    'id':'addMemo' } %}
+
+{% if memos is defined %}
+    {% for memo in memos %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_memo_memo',
+            'resource':resource,
+            'item':memo,
+            'id':'deleteMemo' } %}
+    {% endfor %}
+{% endif %}

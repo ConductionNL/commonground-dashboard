@@ -14,7 +14,7 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }} {{ resource.reference }}</h2> {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
+                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}</h2> {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
                                     <div class="float-right">
                                         {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
                                         {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}

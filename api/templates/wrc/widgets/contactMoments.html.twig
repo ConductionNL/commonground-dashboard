@@ -1,0 +1,53 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'contact moments'|trans|capitalize }}</h3>
+    </div>
+    {% if contactMoments is defined %}
+    <div class="card-list">
+        {% for contactMoment in contactMoments %}
+            <div class="item-list">
+                <div class="info-user ml-3">
+                    <div class="username"><h4>{{ contactMoment.name|capitalize }}</h4></div>
+                    <div class="status">{{ contactMoment.description }}</div>
+                </div>
+                <a class="btn btn-icon btn-primary btn-round btn-s"
+                   style="margin-right: 5px"
+                   href="{{ path('app_cmc_contactmoment', {id: contactMoment.id}) }}">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <button class="btn btn-icon btn-danger btn-round btn-s"
+                        style="margin-right: 15px" data-toggle="modal"
+                        data-target="#deleteSlug{{ slug.id }}">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div><!-- /.item-list -->
+        {% endfor %}
+    </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addContactMoment"
+           data-toggle="modal" data-target="#addContactMoment">{{ 'add contact moment'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the contactmoment modals #}
+{% include 'wrc/modals/contactMoment.html.twig'
+    with {
+    'route': 'app_cmc_contactmoment',
+    'resource':resource,
+    'id':'addContactMoment' } %}
+
+{% if contactMoments is defined %}
+    {% for contactMoment in contactMoments %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_cmc_contactmoment',
+            'resource':resource,
+            'item':contactMoment,
+            'id':'deleteContactMoment' } %}
+    {% endfor %}
+{% endif %}

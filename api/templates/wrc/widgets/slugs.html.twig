@@ -10,18 +10,19 @@
                         <div class="username"><h4>{{ slug.name|capitalize }}</h4></div>
                         <div class="status">{{ slug.application.name }}</div>
                     </div>
-                    <a class="btn btn-icon btn-primary btn-round btn-s"
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
                        style="margin-right: 5px"
                        data-toggle="modal"
-                       data-target="#editSlug{{ slug.id }}"
-                       href="#editSlug{{ slug.id }}">
+                       data-target="#editSlug{{ slug.id }}">
                         <i class="fa fa-edit"></i>
-                    </a>
+                    </button>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
-                            style="margin-right: 15px" data-toggle="modal"
+                            style="margin-right: 15px"
+                            data-toggle="modal"
                             data-target="#deleteSlug{{ slug.id }}">
                         <i class="fa fa-trash"></i>
                     </button>
+
                 </div><!-- /.item-list -->
             {% endfor %}
         </div><!-- /.card-list -->
@@ -56,7 +57,6 @@
             'route': 'app_wrc_application',
             'resource':resource,
             'item':slug,
-            'templates':templates,
             'id':'editSlug' } %}
     {% endfor %}
 {% endif %}
