@@ -1783,15 +1783,15 @@
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
-        <target>__roles</target>
+        <target>rollen</target>
       </trans-unit>
       <trans-unit id="_8xMZAl" resname="set status">
         <source>set status</source>
-        <target>__set status</target>
+        <target>set status</target>
       </trans-unit>
       <trans-unit id="94.K5n1" resname="explanation">
         <source>explanation</source>
-        <target>__explanation</target>
+        <target>toelichting</target>
       </trans-unit>
       <trans-unit id="88s3ftC" resname="set results">
         <source>set results</source>
@@ -1807,35 +1807,35 @@
       </trans-unit>
       <trans-unit id="7cdtnaO" resname="add role">
         <source>add role</source>
-        <target>__add role</target>
+        <target>voeg rol toe</target>
       </trans-unit>
       <trans-unit id="vOkFVHo" resname="betrokkeneType">
         <source>betrokkeneType</source>
-        <target>__betrokkeneType</target>
+        <target>betrokkene type</target>
       </trans-unit>
       <trans-unit id="Lwrcg49" resname="natural person">
         <source>natural person</source>
-        <target>__natural person</target>
+        <target>natuurlijk-persoon</target>
       </trans-unit>
       <trans-unit id="LKLFlM9" resname="non-natural person">
         <source>non-natural person</source>
-        <target>__non-natural person</target>
+        <target>niet natuurlijk-persoon</target>
       </trans-unit>
       <trans-unit id="OFz9vAD" resname="unit">
         <source>unit</source>
-        <target>__unit</target>
+        <target>Eenheid</target>
       </trans-unit>
       <trans-unit id="SxaNiNy" resname="role">
         <source>role</source>
-        <target>__role</target>
+        <target>Rol</target>
       </trans-unit>
       <trans-unit id="zZxFgFV" resname="startDate">
         <source>startDate</source>
-        <target>__startDate</target>
+        <target>Start Datum</target>
       </trans-unit>
       <trans-unit id="yqXsMfT" resname="registrationDate">
         <source>registrationDate</source>
-        <target>__registrationDate</target>
+        <target>Registratie Datum</target>
       </trans-unit>
     </body>
   </file>
