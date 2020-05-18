@@ -37,7 +37,7 @@
                             <td>{# commonground_resource(resource.zaaktype).omschrijving #}</td>
                             <td>{{ resource.startdatum|date("d-m-Y", "Europe/Paris") }}</td>
                             <td>{{ resource.registratiedatum|date("d-m-Y", "Europe/Paris") }}</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                         </tr>
                         {% endfor %}
                         </tbody>
