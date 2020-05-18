@@ -5,8 +5,21 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' %}
-
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a request',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'requests' : {
+                        'name' : 'requests',
+                        'path' : 'app_vrc_requests'
+                    }
+                }]
+            }
+            %}
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
@@ -96,45 +109,69 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'id':'delete' } %}
+
+            {% include 'widgets/auditTrail_modal.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'id':'auditTrial' } %}
+
+            {% include 'widgets/changeLog_modal.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'id':'changeLog' } %}
+
             {% include 'footer.html.twig' %}
         </div>
     </div>
 
-    {% if resource.organization is defined and resource.requestType is defined %}
-        {% if changeLog is defined %}
-            {% include 'vrc/modals/case.html.twig'
-                with {
-                'route': 'app_vrc_request',
-                'resource':resource,
-                'changeLog':changeLog,
-                'id':'changeLogModal' } %}
-        {% endif %}
-
-    {% endif %}
-
-    {% include 'widgets/delete_modal.html.twig'
-        with {
-        'route': 'app_vrc_request',
-        'resource':resource,
-        'id':'deleteRequest' } %}
-
-    {% if changeLog is defined %}
-        {% include 'widgets/changeLog_modal.html.twig'
-            with {
-            'route': 'app_vrc_request',
-            'resource':resource,
-            'changeLog':changeLog,
-            'id':'changeLogModal' } %}
-    {% endif %}
-
-    {% if auditTrail is defined %}
-        {% include 'widgets/auditTrail_modal.html.twig'
-            with {
-            'route': 'app_vrc_request',
-            'resource':resource,
-            'auditTrail':auditTrail,
-            'id':'auditTrailModal' } %}
-    {% endif %}
 
 
+
+
+
+
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/vrc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/vrc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
 {% endblock %}
