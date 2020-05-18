@@ -26,20 +26,15 @@
                         <div class="card p-4 full-height">
                         	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}</h2>
-                                        <div class="float-right">
-                                            <a class="btn btn-primary mr-4" href="{{ path('app_vrc_requests')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                            <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
-                                               data-toggle="modal"
-                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                            <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
-                                               data-toggle="modal"
-                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                            <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
-                                               data-toggle="modal"
-                                               data-target="#deleteApplication"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
-                                            <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
-                                        </div>
+                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
+                                    <div class="float-right">
+                                        {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
+                                        {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
+                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteRequest">{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                    </div>
                                 </div>
 								<div class="card-body">
 									<div class="row">
