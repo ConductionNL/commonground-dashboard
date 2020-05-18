@@ -23,15 +23,15 @@
       </trans-unit>
       <trans-unit id="hVVLud1" resname="incomplete">
         <source>incomplete</source>
-        <target>inkompleet</target>
+        <target>incompleet</target>
       </trans-unit>
       <trans-unit id="7rv2RX5" resname="complete">
         <source>complete</source>
-        <target>kompleet</target>
+        <target>compleet</target>
       </trans-unit>
       <trans-unit id="WBkP_r_" resname="processed">
         <source>processed</source>
-        <target>verwerked</target>
+        <target>verwerkt</target>
       </trans-unit>
       <trans-unit id="i0cEXre" resname="cancelled">
         <source>cancelled</source>
@@ -337,10 +337,6 @@
         <source>payments</source>
         <target>betalingen</target>
       </trans-unit>
-      <trans-unit id="7xxLRfL" resname="services">
-        <source>services</source>
-        <target>__services</target>
-      </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>factuur</target>
@@ -539,19 +535,19 @@
       </trans-unit>
       <trans-unit id="Vh8KPYT" resname="installation">
         <source>installation</source>
-        <target>__installation</target>
+        <target>installaties</target>
       </trans-unit>
       <trans-unit id="JI7.HrJ" resname="assent">
         <source>assent</source>
-        <target>__assent</target>
+        <target>instemming</target>
       </trans-unit>
       <trans-unit id="oFdE4b_" resname="accommodation">
         <source>accommodation</source>
-        <target>__accommodation</target>
+        <target>accommodatie</target>
       </trans-unit>
       <trans-unit id="gd9jWAz" resname="place">
         <source>place</source>
-        <target>__place</target>
+        <target>plaats</target>
       </trans-unit>
       <trans-unit id="4FYBqY2" resname="Landelijke tabellen catalogus">
         <source>Landelijke tabellen catalogus</source>
@@ -615,7 +611,7 @@
       </trans-unit>
       <trans-unit id="K42N_Bn" resname="memos">
         <source>memos</source>
-        <target>__memos</target>
+        <target>memos</target>
       </trans-unit>
       <trans-unit id="Zm7J4qj" resname="the memos component holds memos.">
         <source>the memos component holds memos.</source>
@@ -623,7 +619,7 @@
       </trans-unit>
       <trans-unit id="nCJalQu" resname="memo">
         <source>memo</source>
-        <target>__memo</target>
+        <target>memo</target>
       </trans-unit>
       <trans-unit id="xJ3j0mX" resname="employees">
         <source>employees</source>
@@ -1189,9 +1185,9 @@
         <source>healt logs</source>
         <target>__healt logs</target>
       </trans-unit>
-      <trans-unit id="6dv7MFn" resname="servicesf">
-        <source>servicesf</source>
-        <target>__servicesf</target>
+      <trans-unit id="6dv7MFn" resname="services">
+        <source>services</source>
+        <target>diensten</target>
       </trans-unit>
       <trans-unit id="qlr0CE8" resname="contacts">
         <source>contacts</source>
@@ -1783,11 +1779,11 @@
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
-        <target>rollen</target>
+        <target>__roles</target>
       </trans-unit>
       <trans-unit id="_8xMZAl" resname="set status">
         <source>set status</source>
-        <target>set status</target>
+        <target>__set status</target>
       </trans-unit>
       <trans-unit id="94.K5n1" resname="explanation">
         <source>explanation</source>
@@ -1803,7 +1799,7 @@
       </trans-unit>
       <trans-unit id="cNyDbYl" resname="add verdict">
         <source>add verdict</source>
-        <target>__add verdict</target>
+        <target>voeg besluit toe</target>
       </trans-unit>
       <trans-unit id="7cdtnaO" resname="add role">
         <source>add role</source>
@@ -1811,31 +1807,31 @@
       </trans-unit>
       <trans-unit id="vOkFVHo" resname="betrokkeneType">
         <source>betrokkeneType</source>
-        <target>betrokkene type</target>
+        <target>__betrokkeneType</target>
       </trans-unit>
       <trans-unit id="Lwrcg49" resname="natural person">
         <source>natural person</source>
-        <target>natuurlijk-persoon</target>
+        <target>natuurlijk person</target>
       </trans-unit>
       <trans-unit id="LKLFlM9" resname="non-natural person">
         <source>non-natural person</source>
-        <target>niet natuurlijk-persoon</target>
+        <target>niet natuurlijk persoon</target>
       </trans-unit>
       <trans-unit id="OFz9vAD" resname="unit">
         <source>unit</source>
-        <target>Eenheid</target>
+        <target>eenheid</target>
       </trans-unit>
       <trans-unit id="SxaNiNy" resname="role">
         <source>role</source>
-        <target>Rol</target>
+        <target>rol</target>
       </trans-unit>
       <trans-unit id="zZxFgFV" resname="startDate">
         <source>startDate</source>
-        <target>Start Datum</target>
+        <target>start datum</target>
       </trans-unit>
       <trans-unit id="yqXsMfT" resname="registrationDate">
         <source>registrationDate</source>
-        <target>Registratie Datum</target>
+        <target>registratie datum</target>
       </trans-unit>
     </body>
   </file>
