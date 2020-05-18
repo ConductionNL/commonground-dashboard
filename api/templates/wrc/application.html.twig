@@ -5,7 +5,21 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a application',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'applications' : {
+                        'name' : 'applications',
+                        'path' : 'app_wrc_applications'
+                    }
+                }]
+            }
+            %}
 
             <div class="page-inner">
                 <div class="row">
@@ -15,10 +29,18 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_wrc_applications')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
                                         <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
                                            data-toggle="modal"
-                                           data-target="#deleteApplication">{{ 'delete'|trans|capitalize }}</a>
-                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                           data-target="#deleteApplication"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -98,14 +120,18 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description"
+                                                <textarea class="form-control" rows="5" id="summernote"
                                                           name="description"
                                                           required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
 
+
+                                    <div id="test"></div>
+
+
+                                </div> <!-- /.card-body -->
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->
@@ -115,159 +141,29 @@
                 </div><!-- /.row -->
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="card full-height p-1">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'configurations'|trans|capitalize }}</h3>
-                            </div>
-                            {% if configurations is defined %}
-                                <div class="card-list">
-                                    {% for configuration in configurations %}
-                                        <div class="item-list">
-                                            <div class="info-user ml-3">
-                                                <div class="username"><h4>{{ configuration.name|capitalize }}</h4></div>
-                                                <div class="status">{{ configuration.description }}</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-primary btn-round btn-s"
-                                                    style="margin-right: 5px" data-toggle="modal"
-                                                    data-target="#editConfiguration{{ configuration.id }}">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-danger btn-round btn-s"
-                                                    style="margin-right: 15px" data-toggle="modal"
-                                                    data-target="#deleteConfiguration{{ configuration.id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </div><!-- /.item-list -->
-                                    {% endfor %}
-                                </div><!-- /.card-list -->
-                            {% endif %}
-
-                            <div class="card-body">
-                            </div> <!-- /.card-body -->
-                            <div class="card-action  p-1">
-                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"
-                                   data-toggle="modal"
-                                   data-target="#addConfiguration">{{ 'add configuration'|trans|capitalize }}</a>
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                        {% include 'wrc/widgets/configurations.html.twig'
+                            with {
+                            'configurations': configurations } %}
                     </div><!-- /.col -->
                     <div class="col-md-3">
                         <div class="card p-1  full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'templates'|trans|capitalize }}</h3>
-                            </div>
-
-                            {% if templates is defined %}
-                                <div class="card-list">
-                                    {% for template in templates %}
-                                        <div class="item-list">
-                                            <div class="info-user ml-3">
-                                                <div class="username"><h4>{{ template.name|capitalize }}</h4></div>
-                                                <div class="status">{{ template.description }}</div>
-                                            </div>
-                                            <a class="btn btn-icon btn-primary btn-round btn-s"
-                                               style="margin-right: 5px"
-                                               href="{{ path('app_wrc_template', {id: template.id}) }}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button class="btn btn-icon btn-danger btn-round btn-s"
-                                                    style="margin-right: 15px" data-toggle="modal"
-                                                    data-target="#deleteTemplate{{ template.id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </div><!-- /.item-list -->
-                                    {% endfor %}
-                                </div><!-- /.card-list -->
-                            {% endif %}
-
-                            <div class="card-body">
-                            </div> <!-- /.card-body -->
-                            <div class="card-action  p-1">
-                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTemplate"
-                                   data-toggle="modal"
-                                   data-target="#addTemplate">{{ 'add template'|trans|capitalize }}</a>
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                            {% include 'wrc/widgets/templates.html.twig'
+                                with {
+                                'templates': templates } %}
                     </div><!-- /.col -->
                     <div class="col-md-3">
                         <div class="card p-0 full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
-                            </div>
-
-                            {% if slugs is defined %}
-                                <div class="card-list">
-                                    {% for slug in slugs %}
-                                        <div class="item-list">
-                                            <div class="info-user ml-3">
-                                                <div class="username"><h4>/{{ slug.slug|trans }}</h4></div>
-                                                <div class="status">{{ slug.template.name }}</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-primary btn-round btn-s"
-                                                    style="margin-right: 5px" data-toggle="modal"
-                                                    data-target="#editSlug{{ slug.id }}">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-danger btn-round btn-s"
-                                                    style="margin-right: 15px" data-toggle="modal"
-                                                    data-target="#deleteSlug{{ slug.id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </div><!-- /.item-list -->
-                                    {% endfor %}
-                                </div><!-- /.card-list -->
-                            {% endif %}
-
-                            <div class="card-body ">
-                            </div><!-- /.card-body -->
-                            <div class="card-action  p-1">
-                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"
-                                   data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                            {% include 'wrc/widgets/slugs.html.twig'
+                                with {
+                                'slugs': slugs } %}
                     </div><!-- /.col -->
-
                     <div class="col-md-3">
-                        <div class="card p-1 full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'menus'|trans|capitalize }}</h3>
-                            </div>
-
-                            {% if menus is defined %}
-                                <div class="card-list">
-                                    {% for menu in menus %}
-                                        <div class="item-list">
-                                            <div class="info-user ml-3">
-                                                <div class="username"><h4>{{ menu.name|capitalize }}</h4></div>
-                                                <div class="status">{{ menu.description }}</div>
-                                            </div>
-                                            <a class="btn btn-icon btn-primary btn-round btn-s"
-                                               style="margin-right: 5px"
-                                               href="{{ path('app_wrc_menu', {id: menu.id}) }}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button class="btn btn-icon btn-danger btn-round btn-s"
-                                                    style="margin-right: 15px" data-toggle="modal"
-                                                    data-target="#deleteMenu{{ menu.id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </div><!-- /.item-list -->
-                                    {% endfor %}
-                                </div><!-- /.card-list -->
-                            {% endif %}
-
-                            <div class="card-body">
-                            </div> <!-- /.card-body -->
-                            <div class="card-action p-1">
-                                <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addMenu"
-                                   data-toggle="modal" data-target="#addMenu">{{ 'add menu'|trans|capitalize }}</a>
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                        {% include 'wrc/widgets/menus.html.twig'
+                            with {
+                            'menus': menus } %}
                     </div><!-- /.col -->
-
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
-
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
@@ -275,97 +171,59 @@
                 'resource':resource,
                 'id':'deleteApplication' } %}
 
-            {# the configuration modals #}
-            {% include 'wrc/modals/configuration.html.twig'
-                with {
-                'route': 'app_wrc_application',
-                'resource':resource,
-                'id':'addConfiguration' } %}
-
-            {% if configurations is defined %}
-                {% for configuration in configurations %}
-                    {% include 'widgets/delete_modal.html.twig'
+                    {% include 'widgets/auditTrail_modal.html.twig'
                         with {
                         'route': 'app_wrc_application',
                         'resource':resource,
-                        'item':configuration,
-                        'id':'deleteConfiguration' } %}
+                        'id':'auditTrial' } %}
 
-                    {% include 'wrc/modals/configuration.html.twig'
+                    {% include 'widgets/changeLog_modal.html.twig'
                         with {
                         'route': 'app_wrc_application',
                         'resource':resource,
-                        'item':configuration,
-                        'id':'editConfiguration' } %}
-                {% endfor %}
-            {% endif %}
-
-            {# the template modals #}
-            {% include 'wrc/modals/template.html.twig'
-                with {
-                'route': 'app_wrc_application',
-                'resource':resource,
-                'id':'addTemplate' } %}
-
-            {% if templates is defined %}
-                {% for template in templates %}
-                    {% include 'widgets/delete_modal.html.twig'
-                        with {
-                        'route': 'app_wrc_application',
-                        'resource':resource,
-                        'item':template,
-                        'id':'deleteTemplate' } %}
-                {% endfor %}
-            {% endif %}
-
-            {# the template menus #}
-            {% include 'wrc/modals/menu.html.twig'
-                with {
-                'route': 'app_wrc_application',
-                'resource':resource,
-                'id':'addMenu' } %}
-
-            {% if menus is defined %}
-                {% for menu in menus %}
-                    {% include 'widgets/delete_modal.html.twig'
-                        with {
-                        'route': 'app_wrc_application',
-                        'resource':resource,
-                        'item':menu,
-                        'id':'deleteMenu' } %}
-                {% endfor %}
-            {% endif %}
-
-            {# the slugs modals #}
-            {% include 'wrc/modals/slug.html.twig'
-                with {
-                'route': 'app_wrc_application',
-                'resource':resource,
-                'id':'addSlug' } %}
-
-            {% if slugs is defined %}
-                {% for slug in slugs %}
-                    {% include 'widgets/delete_modal.html.twig'
-                        with {
-                        'route': 'app_wrc_application',
-                        'resource':resource,
-                        'item':slug,
-                        'id':'deleteSlug' } %}
-
-                    {% include 'wrc/modals/slug.html.twig'
-                        with {
-                        'route': 'app_wrc_application',
-                        'resource':resource,
-                        'item':slug,
-                        'templates':templates,
-                        'id':'editSlug' } %}
-                {% endfor %}
-            {% endif %}
-
+                        'id':'changeLog' } %}
 
             {% include 'footer.html.twig' %}
 
         </div>
     </div>
-
+            {% block javascript %}
+            //audit_trails
+            $.ajax({
+                url: "/api/wrc/audit_trails",
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    for(let i = 0; i < result['hydra:member'].length; i++ ){
+                        $('#audit').append('<tr>')
+                        $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                        $('#audit').append('</tr>')
+                    }
+                },
+            });
+            //change_logs
+            $.ajax({
+                url: "/api/wrc/change_logs",
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                  console.log(result);
+                    for(let i = 0; i < result['hydra:member'].length; i++ ){
+                        $('#changelog').append('<tr>')
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                        $('#changelog').append('</tr>')
+                    }
+                },
+            });
+            {% endblock %}
 {% endblock %}
+
+

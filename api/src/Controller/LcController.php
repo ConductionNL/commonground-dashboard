@@ -1,5 +1,5 @@
 <?php
-// src/Controller/DefaultController.php
+// src/Controller/LcController.php
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -20,13 +20,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PdcController
+ * Class LcController
  * @package App\Controller
  * @Route("/lc")
  */
 class LcController extends AbstractController
 {
-
 	/**
 	 * @Route("/")
 	 * @Template
@@ -49,12 +48,12 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('accommodations');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('accommodations');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['accommodations.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'accommodations'])["hydra:member"];
         return $variables;
     }
 
     /**
-     * @Route("/accommodation/{id}")
+     * @Route("/accommodations/{id}")
      * @Template
      */
     public function accommodationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
@@ -67,7 +66,8 @@ class LcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'accommodation','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'accommodations','id'=> $id]);
+        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
@@ -77,7 +77,7 @@ class LcController extends AbstractController
 
         $variables['title'] = $translator->trans('accommodation');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('accommodation');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -90,8 +90,7 @@ class LcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'resource','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodations','id'=>$id]));
         }
 
 
@@ -108,7 +107,7 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('places');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('places');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['places.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -137,7 +136,7 @@ class LcController extends AbstractController
 
         $variables['title'] = $translator->trans('place');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('place');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'],['places.id'=>$id])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
 
         // Lets see if there is a post to procces
@@ -151,7 +150,7 @@ class LcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'resource','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'places','id'=>$id]));
 
         }
 

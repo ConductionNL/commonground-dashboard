@@ -1,0 +1,35 @@
+<div class="modal fade" style="text-align: center" id="addCase" tabindex="-1"
+     role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>{{ 'add case'|trans|capitalize }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
+                    <select id="zaak[zaaktype]" name="zaak[zaaktype]" class="form-control form-control-lg">
+                        {% for casetype in casetypes %}
+                            {% if casetype.eindeGeldigheid is empty %}
+                                <option value="{{ casetype['@id'] }}">{{ casetype.omschrijving }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div><!-- /.form-group -->
+
+                <input type="hidden" id="zaak[bronorganisatie]" name ="zaak[bronorganisatie]" value="{{ commonground_resource(resource.organization).rsin }}">
+                <input type="hidden" id="zaak[verantwoordelijkeOrganisatie]" name ="zaak[verantwoordelijkeOrganisatie]" value="{{ commonground_resource(resource.organization).rsin  }}">
+                <input type="hidden" id="zaak[omschrijving]" name ="zaak[omschrijving]" value="{{ commonground_resource(resource.requestType).name }}">
+
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {{ 'add'|trans|capitalize }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

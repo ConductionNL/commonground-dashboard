@@ -709,7 +709,6 @@ class CommonGroundService
                 $autowire = $component["autowire"];
             }
 
-
         }
 
 
@@ -917,7 +916,12 @@ class CommonGroundService
         // Encode Signature to Base64Url String
         $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
 
+        $jwtToken = $base64UrlHeader.'.'.$base64UrlPayload.'.'.$base64UrlSignature;
+
+        //var_dump($jwtToken);
+        //die;
+
         // Return JWT
-        return $base64UrlHeader.'.'.$base64UrlPayload.'.'.$base64UrlSignature;
+        return $jwtToken;
     }
 }

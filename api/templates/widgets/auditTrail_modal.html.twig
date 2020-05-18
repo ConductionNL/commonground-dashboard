@@ -6,8 +6,13 @@
         <div class="modal-content" style="width: 850px;">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{ id }}Label"><b>{{ 'auditTrail'|trans|capitalize }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div><!-- /.header -->
-            <table class="table table-hover">
+
+            <table class="table table-hover" >
                 <thead>
                 <tr>
                     <th scope="col">{{ 'method'|trans|capitalize }}</th>
@@ -18,16 +23,11 @@
                     <th scope="col"></th>
                 </tr>
                 </thead>
-                <tbody>
-                {% for record in auditTrail %}
-                    <tr>
-                        <td>{{ record.method }}</td>
-                        <td>{{ record.user }}</td>
-                        <td>{{ record.ip }}</td>
-                        <td>{{ record.session }}</td>
-                        <td>{{ record.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                    </tr>
-                {% endfor %}
+                <tbody id="audit">
+                    {% block content %}
+
+
+                    {% endblock %}
                 </tbody>
             </table>
         </div><!-- /.content -->
