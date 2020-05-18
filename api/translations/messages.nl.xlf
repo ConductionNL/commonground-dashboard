@@ -217,6 +217,59 @@
         <source>status</source>
         <target>status</target>
       </trans-unit>
+      <trans-unit id="ApegE31" resname="requests">
+        <source>requests</source>
+        <target>verzoeken</target>
+      </trans-unit>
+      <trans-unit id="g2iYpo6" resname="components">
+        <source>components</source>
+        <target>componenten</target>
+      </trans-unit>
+      <trans-unit id="eF098uJ" resname="locations">
+        <source>locations</source>
+        <target>locaties</target>
+      </trans-unit>
+      <trans-unit id="Ghi214o" resname="accommodations">
+        <source>accommodations</source>
+        <target>accommodaties</target>
+      </trans-unit>
+      <trans-unit id="83uJhMw" resname="places">
+        <source>places</source>
+        <target>plaatsen</target>
+      </trans-unit>
+      <trans-unit id="ert0pLJ" resname="assents">
+        <source>assents</source>
+        <target>instemmingen</target>
+      </trans-unit>
+      <trans-unit id="Bh7jWm9" resname="types">
+        <source>types</source>
+        <target>types</target>
+      </trans-unit>
+      <trans-unit id="4gIj7Om" resname="documents">
+        <source>documents</source>
+        <target>documenten</target>
+      </trans-unit>
+      <trans-unit id="jh6kl5X" resname="verdicts">
+        <source>verdicts</source>
+        <target>uitspraken</target>
+      </trans-unit>
+      <trans-unit id="hg7UjKo" resname="my">
+        <source>my</source>
+        <target>mijn</target>
+      </trans-unit>
+      <trans-unit id="egh5Wu9" resname="marriages">
+        <source>marriages</source>
+        <target>huwelijken</target>
+      </trans-unit>
+      <trans-unit id="Y7tU9nG" resname="reference">
+        <source>reference</source>
+        <target>kenmerk</target>
+      </trans-unit>
+      <trans-unit id="D21h7jm" resname="request">
+        <source>request</source>
+        <target>verzoek</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
