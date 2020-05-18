@@ -226,7 +226,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'invoices'])["hydra:member"];
         return $variables;
     }
 
@@ -254,7 +254,7 @@ class BcController extends AbstractController
 
         $variables['title'] = $translator->trans('invoices');
         $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('invoices');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['invoices.id'=>$id])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
@@ -266,7 +266,7 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'resource','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'invoices','id'=>$id]));        }
     }
 
     /**
@@ -279,7 +279,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['resource'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'resource'],['invoice-itmes.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'resource'],['invoice-itmes.id'=>$id])["hydra:member"];
         return $variables;
     }
 
@@ -337,7 +337,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('tax');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('tax');
-        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc','type'=>'taxes','id'=> $id]);
+        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc','type'=>'taxes']);
         return $variables;
     }
 
@@ -366,7 +366,7 @@ class BcController extends AbstractController
 
         $variables['title'] = $translator->trans('taxes');
         $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('taxes');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['taxes.id'=>$id])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {

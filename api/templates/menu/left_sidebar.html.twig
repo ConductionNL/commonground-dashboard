@@ -2,58 +2,71 @@
 <div class="sidebar sidebar-style-2">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
-            <div class="user">
-                <div class="avatar-sm float-left mr-2">
-                    <img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="..."
-                         class="avatar-img rounded-circle">
-                </div>
-                <div class="info">
-                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-								<span>
-									{{ app.user.username }}
+{#            <div class="user">#}
+{#                <div class="avatar-sm float-left mr-2">#}
+{#                    <img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="..."#}
+{#                         class="avatar-img rounded-circle">#}
+{#                </div>#}
+{#                <div class="info">#}
+{#                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">#}
+{#								<span>#}
+{#									{{ app.user.username }}#}
 
-                                    {% if 'balie-medewerkers' in app.user.roles %}
-                                        <span class="user-level">Balie medewerker</span>
-                                    {% endif %}
-                                    {% if 'group.trouw-ambtenaar' in app.user.roles %}
-                                        <span class="user-level">Trouwambtenaar</span>
-                                    {% endif %}
-                                    {% if 'group.locatie-beheerders' in app.user.roles %}
-                                        <span class="user-level">Locatie beheerder</span>
-                                    {% endif %}
-                                    {% if 'group.beheerder' in app.user.roles %}
-                                        <span class="user-level">Beheerder</span>
-                                    {% endif %}
+{#                                    {% if 'balie-medewerkers' in app.user.roles %}#}
+{#                                        <span class="user-level">Balie medewerker</span>#}
+{#                                    {% endif %}#}
+{#                                    {% if 'group.trouw-ambtenaar' in app.user.roles %}#}
+{#                                        <span class="user-level">Trouwambtenaar</span>#}
+{#                                    {% endif %}#}
+{#                                    {% if 'group.locatie-beheerders' in app.user.roles %}#}
+{#                                        <span class="user-level">Locatie beheerder</span>#}
+{#                                    {% endif %}#}
+{#                                    {% if 'group.beheerder' in app.user.roles %}#}
+{#                                        <span class="user-level">Beheerder</span>#}
+{#                                    {% endif %}#}
 
-									<span class="caret"></span>
-								</span>
-                    </a>
-                    <div class="clearfix"></div>
+{#									<span class="caret"></span>#}
+{#								</span>#}
+{#                    </a>#}
+{#                    <div class="clearfix"></div>#}
 
-                    <div class="collapse in" id="collapseExample">
-                        <ul class="nav">
-                            <li>
-                                <a href="{{ path('app_user_logout') }}">
-                                    <span class="link-collapse">Logout</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+{#                    <div class="collapse in" id="collapseExample">#}
+{#                        <ul class="nav">#}
+{#                            <li>#}
+{#                                <a href="{{ path('app_user_logout') }}">#}
+{#                                    <span class="link-collapse">Logout</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
             <ul class="nav nav-primary">
-                {% if 'group.trouw-ambtenaar' in app.user.roles or 'balie-medewerkers' in app.user.roles %}
-                    <li class="nav-section">
-                        <h4 style="color: black" class="text-section">Aanvragen</h4>
-                    </li>
-                {% endif %}
-                {% if 'group.trouw-ambtenaar' in app.user.roles or 'balie-medewerkers' in app.user.roles %}
+                <li class="nav-section">
+                    <h4 style="color: black" class="text-section">Aanvragen</h4>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'roles.betrokkene': app.user.person }) }}">
+                        Mijn aanvragen
+                    </a>
+                </li>
+                {% if 'group.trouw-ambtenaar' in app.user.roles or 'group.balie-medewerkers' in app.user.roles %}
                     <li class="nav-item">
                         <a href="{{ path('app_vrc_requests',{'requestType': "5b10c1d6-7121-4be2-b479-7523f1b625f1"}) }}">
                             Huwelijken
                         </a>
                     </li>
                 {% endif %}
+
+
+                {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.create' in app.user.roles %}
+                    <a href="{{ path("app_wrc_applications") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'applications'|trans|capitalize }}</span>
+                    </a>
+                {% endif %}
+
+
                 {% if 'group.balie-medewerkers' in app.user.roles %}
                     <li  class="nav-item">
                         <a href="{{ path('app_vrc_requests', {'requestType': "4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3"}) }}">

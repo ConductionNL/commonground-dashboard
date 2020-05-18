@@ -1,0 +1,58 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit contact moment'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add contact moment'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'topic'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="contactMoment[topic]" name="contactMoment[topic]" value="{% if item.topic is defined %}{{ item.topic }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'message'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="contactMoment[message]" name="contactMoment[message]" value="{% if item.message is defined %}{{ item.message }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'sender'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="contactMoment[sender]" name="contactMoment[sender]" value="{% if item.sender is defined %}{{ item.sender }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'receiver'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="contactMoment[receiver]" name="contactMoment[receiver]" value="{% if item.receiver is defined %}{{ item.receiver }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'channel'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="contactMoment[channel]" name="contactMoment[channel]" value="{% if item.channel is defined %}{{ item.channel }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'resources'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="contactMoment[resources]" name="contactMoment[resources]" value="{% if item.resources is defined %}{{ item.resources }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'dateInteraction'|trans|capitalize }}</label>
+                    <input type="date" class="form-control form-control-lg" id="contactMoment[dateInteraction]" name="contactMoment[dateInteraction]" value="{% if item.dateInteraction is defined %}{{ item.dateInteraction }}{% endif %}" required>
+                </div><!-- /.form-group -->
+
+
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="contactMoment[id]" name ="contactMoment[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="contactMoment[@id]" name ="contactMoment[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {{ 'add'|trans|capitalize }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

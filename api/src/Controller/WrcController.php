@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -363,7 +364,6 @@ class WrcController extends AbstractController
             $commonGroundService->deleteResource(null,['component'=>'wrc','type'=>'applications','id'=>$id]);
             return $this->redirect($this->generateUrl('app_wrc_applications'));
         }
-
     	$variables = [];
 
     	// Lets see if we need to create
@@ -378,8 +378,7 @@ class WrcController extends AbstractController
             $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
     	}
 
-    	$variables['title'] = $translator->trans('application');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
+
 
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 

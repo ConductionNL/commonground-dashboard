@@ -7,6 +7,7 @@
 	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
+    <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
 	<script src="/assets/js/plugin/webfont/webfont.min.js"></script>
 	<script>
 		WebFont.load({
@@ -19,14 +20,21 @@
 	</script>
 
 	<!-- CSS Files -->
+
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/assets/css/atlantis.css">
+    <link rel="stylesheet" href="/assets/css/summernote-bs4.css">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="/assets/css/demo.css">
 
+    <!-- Font awesome -->
+
+
 	<!-- overwrites -->
+
 	<style>
+
 		.logo-header  {
 			background: #CC0000 !important;
 		}
@@ -115,6 +123,12 @@
 	<!-- Atlantis JS -->
 	<script src="/assets/js/atlantis.min.js"></script>
 
+    <!-- Summernote JS -->
+    <script src="/assets/js/summernote-bs4.js"></script>
+
+
+
+
 	<script>
 	{% for label, messages in app.flashes(['warning', 'error', 'success']) %}
         {% for message in messages %}
@@ -133,10 +147,19 @@
         });
         {% endfor %}
     {% endfor %}
-	</script>
 
-	{% block javascript %}
+    $('#summernote').summernote({
+        placeholder: 'Hello Bootstrap 4',
+        tabsize: 2,
+        height: 100
+    });
+
+    {% block javascript %}
 
     {% endblock %}
+
+	</script>
+
+
 </body>
 </html>
