@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Service\RequestService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +63,7 @@ class VrcController extends AbstractController
     /**
      * @Route("/requests/{id}")
      */
-    public function requestAction(Request $request, CommonGroundService $commonGroundService, ZgwService $zgwService, TranslatorInterface $translator, $id)
+    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, ZgwService $zgwService, TranslatorInterface $translator, $id)
     {
 
         // If it is a delete action we can stop right here
@@ -120,6 +121,10 @@ class VrcController extends AbstractController
             $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
         }
 
+        if ($variables['requestType']['id'] == "5b10c1d6-7121-4be2-b479-7523f1b625f1") {
+            $variables['requestStatus'] = $requestService->checkRequestStatus($variables['resource'], $variables['requestType']);
+        }
+      
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
@@ -131,14 +136,14 @@ class VrcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'request','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'request','id'=>$id]));        
         }
 
         // Lets see if there is a post to procces
         if ($request->query->get('action') == 'save') {
 
             //Check requestType
-            if ($variables['requestType']['id'] == "cdd7e88b-1890-425d-a158-7f9ec92c9508") {
+            if ($variables['requestType']['id'] == "5b10c1d6-7121-4be2-b479-7523f1b625f1") {
 
                 $resource['properties'] = $request->request->all();
                 $resource['properties'] = $variables['huwelijk']['properties'];
