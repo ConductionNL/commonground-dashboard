@@ -30,7 +30,7 @@ class UdController extends AbstractController
     public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
         $variables = [];
-        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'])["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'],['roles.participant'=>$this->getUser()->getPerson()])["hydra:member"];
         //$variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
         //$variables['events'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'events'])["hydra:member"];
         return $variables;
