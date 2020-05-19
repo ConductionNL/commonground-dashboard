@@ -88,10 +88,10 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
                                                 <select id="status" name="status" class="form-control form-control-lg">
-                                                    <option value="incomplete" {% if resource.status is defined and 'incomplete ' == resource.status  %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
-                                                    <option value="complete" {% if resource.status is defined and 'complete ' == resource.status  %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
-                                                    <option value="submitted" {% if resource.status is defined and 'submitted ' == resource.status  %}selected{% endif %}>{{ 'submitted'|trans|capitalize }}</option>
-                                                    <option value="processed" {% if resource.status is defined and 'processed ' == resource.status  %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
+                                                    <option value="incomplete" {% if resource.status is defined and 'incomplete' == resource.status  %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
+                                                    <option value="complete" {% if resource.status is defined and 'complete' == resource.status  %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
+                                                    <option value="submitted" {% if resource.status is defined and 'submitted' == resource.status  %}selected{% endif %}>{{ 'submitted'|trans|capitalize }}</option>
+                                                    <option value="processed" {% if resource.status is defined and 'processed' == resource.status  %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
