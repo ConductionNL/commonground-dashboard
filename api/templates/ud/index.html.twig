@@ -5,30 +5,31 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/dashboard_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'dashboard',
+                'name' : 'dashboard'|trans|capitalize,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    }
+                }]
+            }
+            %}
 
             <div class="page-inner">
-
-                    <div class="row">
-                        <div class="col-md-8">
-
-                            <div class="card">
-                            {% include 'ud/widgets/requests.html.twig'
-                                with {'requests': requests} %}
-                                </div>
-
-                        <div class="col-md-4">
-
-                            <div class="card">
-                                test
-                            </div>
-
-                        </div><!-- /.col -->
+                <div class="row">
+                    <div class="col-md-8">
+                        {% include 'ud/widgets/requests.html.twig'
+                            with {'requests': requests} %}
                     </div>
+                    <div class="col-md-4">
+
+                    </div><!-- /.col -->
                 </div>
             </div>
+
+    {% include 'footer.html.twig' %}
         </div>
     </div>
-    {% include 'footer.html.twig' %}
-
 {% endblock %}

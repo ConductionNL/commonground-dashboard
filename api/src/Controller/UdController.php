@@ -31,6 +31,8 @@ class UdController extends AbstractController
     {
         $variables = [];
         $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'])["hydra:member"];
+        //$variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
+        //$variables['events'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'events'])["hydra:member"];
         return $variables;
     }
 

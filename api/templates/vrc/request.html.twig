@@ -115,7 +115,10 @@
                     <div class="col-md-4">
                         {% include 'vrc/widgets/roles.html.twig'
                             with {
-                            'roles': resource.roles } %}
+                            'roles': roles } %}
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/tasks.html.twig' %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
