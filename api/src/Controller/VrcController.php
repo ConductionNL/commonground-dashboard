@@ -72,7 +72,7 @@ class VrcController extends AbstractController
         }
 
         $variables = [];
-
+        $variables['employees'] = $commonGroundService->getResourceList(['component' => 'mrc', 'type' => 'employees'])["hydra:member"];
         // Lets see if we need to create
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
@@ -82,6 +82,7 @@ class VrcController extends AbstractController
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
             $variables['submitters'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])["hydra:member"];
+
             //$variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
 
             if(array_key_exists('requestType',$variables['resource'])){
@@ -106,7 +107,7 @@ class VrcController extends AbstractController
         }
 
 
-        $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])["hydra:member"];
+        $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'requestTypes'])["hydra:member"];
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])["hydra:member"];
 
         $variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
@@ -117,6 +118,20 @@ class VrcController extends AbstractController
 
         if (array_key_exists('requestType', $variables['resource'])) {
             $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
+        }
+
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'request','id'=>$id]));
         }
 
         // Lets see if there is a post to procces
@@ -146,7 +161,6 @@ class VrcController extends AbstractController
 
                 $variables['resource'] = $commonGroundService->saveResource($resource, 'https://vrc.huwelijksplanner.online/requests/');
             }
-
 
 //            if(array_key_exists('submitter', $resource)){
 //                $submitter = $resource['submitter'];

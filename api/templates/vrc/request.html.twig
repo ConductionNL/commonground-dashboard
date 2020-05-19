@@ -5,21 +5,39 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a request',
-                'name' : resource.name,
-                'breadcrumbs': [{
-                    'home' : {
-                        'name' : 'home',
-                        'path' : 'app_default_index'
-                    },
-                    'requests' : {
-                        'name' : 'requests',
-                        'path' : 'app_vrc_requests'
-                    }
-                }]
-            }
-            %}
+            {% if resource.reference is defined %}
+                {% include 'widgets/babs/title_h1.html.twig' with {
+                    'headerTitle': 'save or create a request',
+                    'name' : resource.refence,
+                    'breadcrumbs': [{
+                        'home' : {
+                            'name' : 'home',
+                            'path' : 'app_default_index'
+                        },
+                        'requests' : {
+                            'name' : 'requests',
+                            'path' : 'app_vrc_requests'
+                        }
+                    }]
+                }
+                %}
+            {% else %}
+                {% include 'widgets/babs/title_h1.html.twig' with {
+                    'headerTitle': 'save or create a request',
+                    'name' : 'new',
+                    'breadcrumbs': [{
+                        'home' : {
+                            'name' : 'home',
+                            'path' : 'app_default_index'
+                        },
+                        'requests' : {
+                            'name' : 'requests',
+                            'path' : 'app_vrc_requests'
+                        }
+                    }]
+                }
+                %}
+            {% endif %}
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
@@ -114,7 +132,8 @@
                     <div class="col-md-4">
                         {% include 'vrc/widgets/roles.html.twig'
                             with {
-                            'resource':resource } %}
+                            'resource':resource,
+                            'employees':employees} %}
                     </div><!-- /.col -->
                     <div class="col-md-4">
                         {% include 'vrc/widgets/tasks.html.twig' %}

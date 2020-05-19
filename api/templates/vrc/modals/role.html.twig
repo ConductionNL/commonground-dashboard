@@ -22,7 +22,11 @@
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'participant'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="role[participant]" name="role[participant]" value="{% if item.participant is defined %}{{ item.participant }}{% endif %}">
+                    <select name="participant" id="participant" class="form-control form-control-lg" required>
+                        {% for employee in employees %}
+                            <option value="{{ employee.person }}">{{ employee.person }}</option>
+                        {% endfor %}
+                    </select>
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'participant type'|trans|capitalize }}</label>

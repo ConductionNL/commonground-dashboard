@@ -12,7 +12,7 @@
                     </div>
                     <a class="btn btn-icon btn-primary btn-round btn-s"
                        style="margin-right: 5px"
-                       href="{{ path('app_vrc_role', {id: role.id}) }}">
+                       href="{{ path('app_vrc_request', {id: request.id}) }}">
                         <i class="fa fa-edit"></i>
                     </a>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
@@ -37,7 +37,7 @@
 {# the role modals #}
 {% include 'vrc/modals/role.html.twig'
     with {
-    'route': 'app_vrc_role',
+    'route': 'app_vrc_request',
     'resource':resource,
     'id':'addRole' } %}
 
@@ -45,9 +45,16 @@
     {% for role in roles %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_vrc_role',
+            'route': 'app_vrc_request',
             'resource':resource,
             'item':role,
             'id':'deleteRole' } %}
+
+        {% include 'wrc/modals/role.html.twig'
+            with {
+            'route': 'app_vrc_request',
+            'resource':resource,
+            'item':role,
+            'id':'editSlug' } %}
     {% endfor %}
 {% endif %}

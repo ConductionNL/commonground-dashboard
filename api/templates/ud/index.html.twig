@@ -24,7 +24,12 @@
                             with {'requests': requests} %}
                     </div>
                     <div class="col-md-4">
-
+                        {% include 'ud/widgets/events.html.twig'
+                            with {'events': events} %}
+                    </div><!-- /.col -->
+                    <div class="col-md-4 ml-auto">
+                        {% include 'ud/widgets/events.html.twig'
+                            with {'events': events} %}
                     </div><!-- /.col -->
                 </div>
             </div>

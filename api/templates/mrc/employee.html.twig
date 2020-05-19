@@ -11,10 +11,10 @@
 
     <div class="main-panel">
         <div class="container">
-
+            {% if resource.person is defined %}
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'headerTitle': 'save or create a employee',
-                'name' : resource.name,
+                'name' : resource.person,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
@@ -27,7 +27,23 @@
                 }]
             }
             %}
-
+                {% else %}
+                    {% include 'widgets/babs/title_h1.html.twig' with {
+                        'headerTitle': 'save or create a employee',
+                        'name' : 'new',
+                        'breadcrumbs': [{
+                            'home' : {
+                                'name' : 'home',
+                                'path' : 'app_default_index'
+                            },
+                            'employees' : {
+                                'name' : 'employees',
+                                'path' : 'app_mrc_employees'
+                            }
+                        }]
+                    }
+                    %}
+        {% endif %}
             <div class="page-inner">
                 <div class="row">
 
@@ -35,7 +51,9 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_mrc_employee', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
+                                    {% if resource.name is defined %}
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    {% endif %}
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_mrc_employees')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
@@ -70,7 +88,7 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
 
-                                                <select name="person" id="person" class="form-control form-control-lg" required>
+                                                <select name="organization" id="organization" class="form-control form-control-lg" required>
                                                     {% for organization in organizations %}
                                                         <option value="{{ organization.name }}">{{ organization.name }}</option>
                                                     {% endfor %}

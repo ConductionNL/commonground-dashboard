@@ -867,11 +867,11 @@
       </trans-unit>
       <trans-unit id="4Ay5tpW" resname="change log">
         <source>change log</source>
-        <target>__change log</target>
+        <target>logboek</target>
       </trans-unit>
       <trans-unit id="2_4dZZw" resname="audit trail">
         <source>audit trail</source>
-        <target>__audit trail</target>
+        <target>controle spoor</target>
       </trans-unit>
       <trans-unit id="QjwT8Mp" resname="alarms">
         <source>alarms</source>
@@ -1275,7 +1275,7 @@
       </trans-unit>
       <trans-unit id="O4jlk6W" resname="changeLog">
         <source>changeLog</source>
-        <target>__changeLog</target>
+        <target>logboek</target>
       </trans-unit>
       <trans-unit id="okRzAEG" resname="auditTrail">
         <source>auditTrail</source>
