@@ -3,9 +3,9 @@
         <h3 class="d-inline-block">{{ 'submitters'|trans|capitalize }}</h3>
     </div>
 
-    {% if request.submitters is defined %}
+    {% if resource.submitters is defined %}
     <div class="card-list">
-        {% for submitter in request.submitters %}
+        {% for submitter in resource.submitters %}
             <div class="item-list">
                 <div class="info-user ml-3">
                     <div class="username"><h4>{{ commonground_resource(submitter.person).name }}</h4></div>

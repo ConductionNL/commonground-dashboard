@@ -1323,15 +1323,15 @@
       </trans-unit>
       <trans-unit id="tPz8Gbi" resname="child requests">
         <source>child requests</source>
-        <target>__child requests</target>
+        <target>subverzoeken/target>
       </trans-unit>
       <trans-unit id="eRAOs09" resname="add child request">
         <source>add child request</source>
-        <target>__add child request</target>
+        <target>voeg subverzoek toe</target>
       </trans-unit>
       <trans-unit id="yQqoOKu" resname="add a document">
         <source>add a document</source>
-        <target>__add a document</target>
+        <target>voeg document toe</target>
       </trans-unit>
       <trans-unit id="lq25JFK" resname="properties">
         <source>properties</source>
