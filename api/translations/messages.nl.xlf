@@ -519,11 +519,11 @@
       </trans-unit>
       <trans-unit id="634ddTq" resname="clusters">
         <source>clusters</source>
-        <target>klusters</target>
+        <target>kubernetes clusters</target>
       </trans-unit>
       <trans-unit id="FkzxyoO" resname="cluster">
         <source>cluster</source>
-        <target>kluster</target>
+        <target>kubernetes cluster</target>
       </trans-unit>
       <trans-unit id="Vh8KPYT" resname="installation">
         <source>installation</source>
@@ -775,11 +775,11 @@
       </trans-unit>
       <trans-unit id="WCUMjMU" resname="requests sworn civil servant">
         <source>requests sworn civil servant</source>
-        <target>aanvragen beëdigde ambtenaar burgelijkestand</target>
+        <target>Aanvragen eigen BABS beëdigde</target>
       </trans-unit>
       <trans-unit id="Xs.DOkP" resname="requests non sworn civil servant">
         <source>requests non sworn civil servant</source>
-        <target>aanvragen niet beëdigde ambtenaar burgelijkestand</target>
+        <target>Aanvragen eigen BABS niet beëdigd</target>
       </trans-unit>
       <trans-unit id="CsCwDQT" resname="requests non sanctioned location">
         <source>requests non sanctioned location</source>
