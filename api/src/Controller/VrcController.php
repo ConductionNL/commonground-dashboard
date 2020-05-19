@@ -81,7 +81,7 @@ class VrcController extends AbstractController
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
             $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
-            $variables['submitters'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);
+            //$variables['submitters'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'submitters'],['request'=> $variables['resource']['@id']])["hydra:member"];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])["hydra:member"];
 
             //$variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
@@ -124,7 +124,7 @@ class VrcController extends AbstractController
         if ($variables['requestType']['id'] == "5b10c1d6-7121-4be2-b479-7523f1b625f1") {
             $variables['requestStatus'] = $requestService->checkRequestStatus($variables['resource'], $variables['requestType']);
         }
-      
+
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
@@ -136,7 +136,7 @@ class VrcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'request','id'=>$id]));        
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'request','id'=>$id]));
         }
 
         // Lets see if there is a post to procces

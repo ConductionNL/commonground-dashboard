@@ -1263,7 +1263,7 @@
       </trans-unit>
       <trans-unit id="UxfUAqa" resname="belongs to">
         <source>belongs to</source>
-        <target>__belongs to</target>
+        <target>hoort bij</target>
       </trans-unit>
       <trans-unit id="O4jlk6W" resname="changeLog">
         <source>changeLog</source>

@@ -11,8 +11,21 @@
 
     <div class="main-panel">
         <div class="container">
-
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a request',
+                'name' : resource.reference,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'requests' : {
+                        'name' : 'requests',
+                        'path' : 'app_vrc_requests'
+                    }
+                }]
+            }
+            %}
 
             <div class="page-inner">
                 <div class="row">
