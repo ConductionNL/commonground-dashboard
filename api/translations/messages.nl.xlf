@@ -1267,7 +1267,7 @@
       </trans-unit>
       <trans-unit id="PM9Ok2E" resname="casetype">
         <source>casetype</source>
-        <target>zaaktype</target>
+        <target>verzoek type</target>
       </trans-unit>
       <trans-unit id="UxfUAqa" resname="belongs to">
         <source>belongs to</source>
@@ -1323,7 +1323,7 @@
       </trans-unit>
       <trans-unit id="tPz8Gbi" resname="child requests">
         <source>child requests</source>
-        <target>subverzoeken/target>
+        <target>sub verzoeken</target>
       </trans-unit>
       <trans-unit id="eRAOs09" resname="add child request">
         <source>add child request</source>
@@ -1331,7 +1331,7 @@
       </trans-unit>
       <trans-unit id="yQqoOKu" resname="add a document">
         <source>add a document</source>
-        <target>voeg document toe</target>
+        <target>__add a document</target>
       </trans-unit>
       <trans-unit id="lq25JFK" resname="properties">
         <source>properties</source>

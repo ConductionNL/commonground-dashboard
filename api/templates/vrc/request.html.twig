@@ -25,7 +25,7 @@
                         <div class="card full-height">
                         	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }} {% if resource.refence is defined %} {{ resource.reference }} {% else %} {{ 'new request'|trans|capitalize }} {% endif%} </h2>{% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
+                                    <h2 class="d-inline-block">{% if resource.reference is defined %}{{ 'reference'|trans|capitalize }} {{ resource.reference }} {% else %} {{ 'new request'|trans|capitalize }} {% endif%} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary" href="{{ path('app_vrc_requests')}}">
                                             <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
@@ -42,6 +42,17 @@
                                     </div>
                                 </div>
 								<div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <b>{{ 'type'|trans|capitalize }}</b>: {{ requestType.name }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            {% if resource.parent is defined and resource.parent is not empty %} <b>{{ 'belongs to'|trans|capitalize }}</b> <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a>({{ commonground_resource(resource.parent.requestType).name }}) {% endif %}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            
+                                        </div>
+                                    </div> <!-- /.col -->
 									<div class="row">
         								<div class="col-md-3 col-sm-12">
         									<div class="form-group">
@@ -96,7 +107,7 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         {% include 'vrc/widgets/properties.html.twig'
                             with {
                             'resource': resource } %}

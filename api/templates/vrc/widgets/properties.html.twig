@@ -4,20 +4,28 @@
         <h3 class="d-inline-block">{{ 'properties'|trans|capitalize }}</h3>
     </div>
     <div class="card-body p-0">
-        {% if resource.properties is defined %}
+        {% if requestType.properties is defined %}
             <table class="table table-hover">
                 <tbody>
+
+
+                {% for property in requestType.properties %}
+                    <tr>
+                        <td>{{ property.name }}</td>
+                        <td>{# resource.properties[property.name] #}</td>
+                        <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="#"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                    </tr>
+                {% endfor %}
+                {#
                 {% for key,value in resource.properties %}
                     <tr>
                         <td>{{ key }}</td>
                         <td>{{ dump(value) }}</td>
                     </tr>
                 {% endfor %}
+                #}
                 </tbody>
             </table>
         {% endif %}
     </div> <!-- /.card-body -->
-
-    <div class="card-action">
-    </div><!-- /.card-action -->
 </div><!-- /.card -->
