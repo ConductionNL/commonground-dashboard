@@ -21,7 +21,7 @@
                             {% endif %}
                         </td>
                         <td>{{ property.name }}</td>
-                        <td>{{ property.type }} ({{ property.format }})</td>
+                        <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td>
                         <td>{% if property.name in resource.properties|keys  %}
                                 {% if resource.properties[property.name] is iterable %}
                                     <ul style="padding-left: 0px;">

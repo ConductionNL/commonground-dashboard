@@ -1,7 +1,14 @@
 
 
+
+
+
 {% if property.format is not defined %}
     {{ value }}
-{% elseif property.format == 'url' or property.format == 'uri' %}
+{% elseif property.iri is defined and '/' in property.iri %}
+
+    {% set component = property.iri|split('/') %}
+    {% set path = 'app_' + component[0] + '_' + component[1] %}
+
     <a href="{{ value }}"> {{ commonground_resource(value).id }}</a>
 {% endif %}
