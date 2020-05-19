@@ -7,7 +7,17 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'name changes',
+                'name' : 'name changes'|trans|capitalize,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    }
+                }]
+            }
+            %}
 
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
@@ -54,7 +64,49 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                    {% else %}%}
+                    {% else %}
+                        <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                                    <th scope="col">{{ 'parent'|trans|capitalize }}</th>
+                                    <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                                    <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for request in resources %}
+                                    <tr>
+                                        <td>
+                                            {{ request.reference }}
+                                        </td>
+                                        <td>
+                                            {% if request.parent is defined and request.parent is not empty %}
+                                                {{ request.parent.reference }}
+                                            {% else %}
+                                                {{ 'no parent'|trans|capitalize }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                        {% if request.dateCreated is defined and request.dateCreated is not empty %}
+                                        {{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}
+                                        {% endif %}
+                                        </td>
+                                        <td>
+                                        {% if request.status is defined and request.status is not empty %}
+                                        {{ request.status|capitalize }}
+                                        {% else %}
+                                            {{ 'no status'|trans|capitalize }}
+                                        {% endif %}
+                                        </td>
+                                        <td>
+                                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_request', {id: request.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         <p class="p-4">{{ 'no results'|trans|capitalize }}</p>
                     {% endif %}
                 </div>

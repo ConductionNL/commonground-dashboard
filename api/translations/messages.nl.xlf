@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="UjZ6ZiK" resname="reference">
         <source>reference</source>
-        <target>referentie</target>
+        <target>kenmerk</target>
       </trans-unit>
       <trans-unit id="2BxV9Jx" resname="saved">
         <source>saved</source>
@@ -769,9 +769,9 @@
         <source>task</source>
         <target>taak</target>
       </trans-unit>
-      <trans-unit id="j41rlZ5" resname="aanvragen naamwijziging">
-        <source>aanvragen naamwijziging</source>
-        <target>__aanvragen naamwijziging</target>
+      <trans-unit id="j41rlZ5" resname="name changes">
+        <source>name changes</source>
+        <target>naamwijzigingen</target>
       </trans-unit>
       <trans-unit id="WCUMjMU" resname="aanvragen beedigd babs">
         <source>aanvragen beedigd babs</source>
@@ -1295,7 +1295,7 @@
       </trans-unit>
       <trans-unit id="di0hHaz" resname="no results">
         <source>no results</source>
-        <target>__no results</target>
+        <target>geen resultaten gevonden</target>
       </trans-unit>
       <trans-unit id="fz_kjKi" resname="partner">
         <source>partner</source>
