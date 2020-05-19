@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="UjZ6ZiK" resname="reference">
         <source>reference</source>
-        <target>kenmerk</target>
+        <target>referentie</target>
       </trans-unit>
       <trans-unit id="2BxV9Jx" resname="saved">
         <source>saved</source>
@@ -1283,7 +1283,7 @@
       </trans-unit>
       <trans-unit id="5HEllos" resname="parent">
         <source>parent</source>
-        <target>__parent</target>
+        <target>hoofd verzoek</target>
       </trans-unit>
       <trans-unit id="3aI_UY." resname="no parent">
         <source>no parent</source>
