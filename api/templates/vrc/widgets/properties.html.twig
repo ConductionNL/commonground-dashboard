@@ -10,6 +10,7 @@
 
 
                 {% for property in requestType.properties %}
+                    {% if property.type is defined and property.type is not empty %}
                     <tr>
                         <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                             {% if property.required is defined and property.required  %}
@@ -21,7 +22,8 @@
                             {% endif %}
                         </td>
                         <td>{{ property.name }}</td>
-                        <td>{{ property.type }} ({{ property.format }})</td>
+                        {#
+                        <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td> #}
                         <td>{% if property.name in resource.properties|keys  %}
                                 {% if resource.properties[property.name] is iterable %}
                                     <ul style="padding-left: 0px;">
@@ -48,6 +50,7 @@
                         </td>
                         <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="#"><i class="far fa-edit"></i></a></td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
                 {#
                 {% for key,value in resource.properties %}
