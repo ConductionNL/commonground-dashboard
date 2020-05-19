@@ -11,6 +11,15 @@
 
                 {% for property in requestType.properties %}
                     <tr>
+                        <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
+                            {% if property.required is defined and property.required  %}
+                                {% if property.name in resource.properties|keys  %}
+                                    <i style="color: limegreen;" class="fas fa-check"></i>
+                                {% else %}
+                                    <i style="color: red" class="fas fa-times"></i>
+                                {% endif %}
+                            {% endif %}
+                        </td>
                         <td>{{ property.name }}</td>
                         <td>{{ property.type }} ({{ property.format }})</td>
                         <td>{% if property.name in resource.properties|keys  %}
