@@ -50,7 +50,7 @@
                                             {% if resource.parent is defined and resource.parent is not empty %} <b>{{ 'belongs to'|trans|capitalize }}</b> <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a>({{ commonground_resource(resource.parent.requestType).name }}) {% endif %}
                                         </div>
                                         <div class="col-md-6 col-sm-12">
-                                            
+
                                         </div>
                                     </div> <!-- /.col -->
 									<div class="row">

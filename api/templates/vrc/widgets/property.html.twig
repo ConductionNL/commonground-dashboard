@@ -1,0 +1,7 @@
+
+
+{% if property.format is not defined %}
+    {{ value }}
+{% elseif property.format == 'url' or property.format == 'uri' %}
+    <a href="{{ value }}"> {{ commonground_resource(value).id }}</a>
+{% endif %}

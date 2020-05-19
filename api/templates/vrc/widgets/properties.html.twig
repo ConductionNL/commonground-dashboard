@@ -12,8 +12,32 @@
                 {% for property in requestType.properties %}
                     <tr>
                         <td>{{ property.name }}</td>
-                        <td>{# resource.properties[property.name] #}</td>
-                        <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="#"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                        <td>{{ property.type }} ({{ property.format }})</td>
+                        <td>{% if property.name in resource.properties|keys  %}
+                                {% if resource.properties[property.name] is iterable %}
+                                    <ul style="padding-left: 0px;">
+                                    {% for value in resource.properties[property.name] %}
+                                        <li>
+                                        {% include 'vrc/widgets/property.html.twig'
+                                            with {
+                                            'property':property,
+                                            'value':value } %}
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {% include 'vrc/widgets/property.html.twig'
+                                    with {
+                                        'property':property,
+                                        'value':resource.properties[property.name] } %}
+                                {% endif %}
+                            {% else %}
+                                <span class="danger">< {{ 'no value'|trans|capitalize }} ></span>
+                            {% endif %}
+
+
+                        </td>
+                        <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="#"><i class="far fa-edit"></i></a></td>
                     </tr>
                 {% endfor %}
                 {#
