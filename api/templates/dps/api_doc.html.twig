@@ -23,7 +23,7 @@
                     },
                     'api docs' : {
                         'name' : 'api docs',
-                        'path' : 'app_dps_api_docs'
+                        'path' : 'app_dps_apidocs'
                     }
                 }]
             }
@@ -37,7 +37,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_dps_api_docs')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_dps_apidocs')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
@@ -118,7 +118,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description"
+                                                <textarea class="form-control" rows="5" id="summernote"
                                                           name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
@@ -162,19 +162,19 @@
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_dps_api_doc',
+            'route': 'app_dps_apidoc',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_dps_api_doc',
+            'route': 'app_dps_apidoc',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_dps_api_doc',
+            'route': 'app_dps_apidoc',
             'resource':resource,
             'id':'changeLog' } %}
 

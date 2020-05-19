@@ -5,15 +5,28 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' %}
-
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a request',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'requests' : {
+                        'name' : 'requests',
+                        'path' : 'app_vrc_requests'
+                    }
+                }]
+            }
+            %}
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                         	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
+                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}  {{ resource.reference }}</h2>  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
                                     <div class="float-right">
                                         {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
                                         {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
@@ -96,45 +109,28 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'id':'delete' } %}
+
+            {% include 'widgets/auditTrail_modal.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'id':'auditTrial' } %}
+
+            {% include 'widgets/changeLog_modal.html.twig'
+                with {
+                'route': 'app_vrc_request',
+                'resource':resource,
+                'id':'changeLog' } %}
+
             {% include 'footer.html.twig' %}
         </div>
     </div>
 
-    {% if resource.organization is defined and resource.requestType is defined %}
-        {% if changeLog is defined %}
-            {% include 'vrc/modals/case.html.twig'
-                with {
-                'route': 'app_vrc_request',
-                'resource':resource,
-                'changeLog':changeLog,
-                'id':'changeLogModal' } %}
-        {% endif %}
-
-    {% endif %}
-
-    {% include 'widgets/delete_modal.html.twig'
-        with {
-        'route': 'app_vrc_request',
-        'resource':resource,
-        'id':'deleteRequest' } %}
-
-    {% if changeLog is defined %}
-        {% include 'widgets/changeLog_modal.html.twig'
-            with {
-            'route': 'app_vrc_request',
-            'resource':resource,
-            'changeLog':changeLog,
-            'id':'changeLogModal' } %}
-    {% endif %}
-
-    {% if auditTrail is defined %}
-        {% include 'widgets/auditTrail_modal.html.twig'
-            with {
-            'route': 'app_vrc_request',
-            'resource':resource,
-            'auditTrail':auditTrail,
-            'id':'auditTrailModal' } %}
-    {% endif %}
 
 
 {% endblock %}
