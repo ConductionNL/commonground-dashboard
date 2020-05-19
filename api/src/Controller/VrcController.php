@@ -98,16 +98,6 @@ class VrcController extends AbstractController
             */
         }
 
-        if(isset($variables['requestType'])){
-            $variables['title'] = $translator->trans($variables['requestType']['name']);
-            $variables['subtitle'] = $translator->trans('save or create a').' '.$variables['requestType']['name'].' '.$translator->trans('request');
-        }
-        else{
-            $variables['title'] = $translator->trans('request');
-            $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request');
-        }
-
-
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])["hydra:member"];
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])["hydra:member"];
 
