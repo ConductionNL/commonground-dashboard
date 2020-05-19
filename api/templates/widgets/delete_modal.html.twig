@@ -5,7 +5,7 @@
         <div class="modal-content">
             <form action="{% if item is defined %}{{ path( route , {id: resource.id}) }}{% else %}{{ path( route , {id: resource.id,'action':'delete'}) }}{% endif %}" method="post">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'delete '|trans|capitalize }}{% if item is defined %}{{ item.name }}{% else %}{{ resource.name }}{% endif %}</b></h5>
+                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'delete '|trans|capitalize }}{% if item is defined %}{{ item.name }}{% elseif resource is defined %}{{ resource.id }}{% else %}{{ 'item' }}{% endif %}</b></h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="modal-dialog">
                     {{ 'are you sure that you want to delete '|trans|capitalize }} <strong>
-                        {% if item is defined %}{{ item.name }}{% else %}{{ resource.name }}{% endif %}</strong>?
+                        {% if item is defined %}{{ item.name }}{% else %}{{ resource.id }}{% endif %}</strong>?
                 </div>
 
                 <div class="modal-footer">

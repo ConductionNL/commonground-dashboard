@@ -49,7 +49,7 @@ class MrcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('employees');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('employees');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'slugs'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'employees'])["hydra:member"];
 
         return $variables;
     }
@@ -69,6 +69,7 @@ class MrcController extends AbstractController
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'mrc','type'=>'employees','id'=> $id]);
+
         }
 
         // If it is a delete action we can stop right here
@@ -79,7 +80,8 @@ class MrcController extends AbstractController
 
         $variables['title'] = $translator->trans('employee');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('employee');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'organizationss'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'organizations'])["hydra:member"];
+        $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
