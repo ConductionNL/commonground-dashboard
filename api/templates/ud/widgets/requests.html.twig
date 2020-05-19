@@ -1,0 +1,36 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'requests'|trans|capitalize }}</h3>
+    </div>
+
+    {% if requests is defined %}
+        <div class="card-list">
+
+                <div class="item-list">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'type'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for request in requests %}
+                            <tr>
+                                <td>{{ request.reference }}</td>
+                                <td>{{ commonground_resource(request.requestType).name }}</td>
+                                <td>{{ request.status}}</td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_request', {id: request.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                            </tr><!-- /.card-list -->
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.item-list -->
+
+        </div><!-- /.card-list -->
+    {% endif %}
+
+
+</div><!-- /.card -->

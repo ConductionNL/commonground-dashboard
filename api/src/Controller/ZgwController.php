@@ -57,7 +57,7 @@ class ZgwController extends AbstractController
 
 		// Lets see if we need to create
 		if($id == 'new'){
-			$variables['resource'] = ['@id' => null, 'omschrijving'=>'nieuwe zaak','id'=>'new'];
+			$variables['resource'] = ['@id' => null, 'omschrijving'=>'nieuwe zaak','id'=>'new','name'=>'new'];
 		}
 		else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'zrc','type'=>'zaken','id'=>$id]);
@@ -187,7 +187,7 @@ class ZgwController extends AbstractController
 
 		// Lets see if we need to create
 		if($id == 'new'){
-			$variables['resource'] = ['@id' => null];
+			$variables['resource'] = ['@id' => null,'name'=>'new'];
 		}
 		else{
 			$variables['resource'] = $zgwService->getResource('http://openzaak.utrechtproeftuin.nl/catalogi/api/v1/zaaktypen/'.$id);
