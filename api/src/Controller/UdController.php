@@ -27,11 +27,12 @@ class UdController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
-
-        return ['resources'=>$variables];
+        $variables = [];
+        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'])["hydra:member"];
+        return $variables;
     }
 
 }
+

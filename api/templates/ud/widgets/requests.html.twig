@@ -5,31 +5,32 @@
 
     {% if requests is defined %}
         <div class="card-list">
-            {% for request in requests %}
-                <div class="item-list">
-                    <div class="info-user ml-3">
 
-                    </div>
-                    <button class="btn btn-icon btn-primary btn-round btn-s"
-                            style="margin-right: 5px" data-toggle="modal"
-                            data-target="#editRequest{{ request.id }}">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="btn btn-icon btn-danger btn-round btn-s"
-                            style="margin-right: 15px" data-toggle="modal"
-                            data-target="#deleteRequest{{ request.id }}">
-                        <i class="fa fa-trash"></i>
-                    </button>
+                <div class="item-list">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'type'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for request in requests %}
+                            <tr>
+                                <td><a href="{{ path('app_vrc_request', {id: request.id}) }}">{{ commonground_resource(request.requestType).name }}</a></td>
+                                <td>{{ request.reference }}</td>
+                                <td>{{ request.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td>{{ request.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            </tr><!-- /.card-list -->
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div><!-- /.item-list -->
-            {% endfor %}
+
         </div><!-- /.card-list -->
     {% endif %}
 
-    <div class="card-body">
-    </div> <!-- /.card-body -->
-
-    <div class="card-action">
-        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addRequest"  data-toggle="modal" data-target="#addRequest">{{ 'add request'|trans|capitalize }}</a>
-    </div><!-- /.card-action -->
 
 </div><!-- /.card -->

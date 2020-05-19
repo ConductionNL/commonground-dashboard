@@ -7,14 +7,28 @@
 
             {% include 'widgets/dashboard_h1.html.twig' %}
 
-            <div class="page-inner mt--5">
-				<!-- Row Card No Padding -->
+            <div class="page-inner">
+
+                    <div class="row">
+                        <div class="col-md-8">
+
+                            <div class="card">
+                            {% include 'ud/widgets/requests.html.twig'
+                                with {'requests': requests} %}
+                                </div>
+
+                        <div class="col-md-4">
+
+                            <div class="card">
+                                test
+                            </div>
+
+                        </div><!-- /.col -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-
-    </div><!-- /.col -->
     {% include 'footer.html.twig' %}
 
 {% endblock %}
