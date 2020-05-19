@@ -241,7 +241,7 @@ class BcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'invoices','id'=> $id]);        }

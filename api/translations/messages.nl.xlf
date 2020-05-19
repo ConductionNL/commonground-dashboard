@@ -771,7 +771,7 @@
       </trans-unit>
       <trans-unit id="UDHym1e" resname="the tasks component holds tasks">
         <source>the tasks component holds tasks</source>
-        <target>__the tasks component holds tasks</target>
+        <target>het taken component bevat een lijst van taken</target>
       </trans-unit>
       <trans-unit id="DrtCn6h" resname="task">
         <source>task</source>
@@ -1319,7 +1319,7 @@
       </trans-unit>
       <trans-unit id="uVomQuz" resname="submitters">
         <source>submitters</source>
-        <target>__submitters</target>
+        <target>indieners</target>
       </trans-unit>
       <trans-unit id="tPz8Gbi" resname="child requests">
         <source>child requests</source>
@@ -1335,27 +1335,27 @@
       </trans-unit>
       <trans-unit id="lq25JFK" resname="properties">
         <source>properties</source>
-        <target>__properties</target>
+        <target>eigenschappen</target>
       </trans-unit>
       <trans-unit id=".JGEE0r" resname="property">
         <source>property</source>
-        <target>__property</target>
+        <target>eigenschap</target>
       </trans-unit>
       <trans-unit id="zUJATVK" resname="value">
         <source>value</source>
-        <target>__value</target>
+        <target>waarde</target>
       </trans-unit>
       <trans-unit id="HdlI8Il" resname="edit menu">
         <source>edit menu</source>
-        <target>__edit menu</target>
+        <target>menu aanpassen</target>
       </trans-unit>
       <trans-unit id="jsLWnAL" resname="add menu">
         <source>add menu</source>
-        <target>__add menu</target>
+        <target>menu toevoegen</target>
       </trans-unit>
       <trans-unit id="XlxwTVL" resname="add submitter">
         <source>add submitter</source>
-        <target>__add submitter</target>
+        <target>indiener toevoegen</target>
       </trans-unit>
       <trans-unit id="8.2gvIJ" resname="edit property">
         <source>edit property</source>
@@ -1779,7 +1779,7 @@
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
-        <target>__roles</target>
+        <target>rollen</target>
       </trans-unit>
       <trans-unit id="_8xMZAl" resname="set status">
         <source>set status</source>
