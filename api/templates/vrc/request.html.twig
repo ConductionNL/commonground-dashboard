@@ -4,11 +4,9 @@
 
     <div class="main-panel">
         <div class="container">
-
-            {% if resource.reference is defined %}
                 {% include 'widgets/babs/title_h1.html.twig' with {
                     'headerTitle': 'save or create a request',
-                    'name' : resource.refence,
+                    'name' : resource.reference,
                     'breadcrumbs': [{
                         'home' : {
                             'name' : 'home',
@@ -21,39 +19,23 @@
                     }]
                 }
                 %}
-            {% else %}
-                {% include 'widgets/babs/title_h1.html.twig' with {
-                    'headerTitle': 'save or create a request',
-                    'name' : 'new',
-                    'breadcrumbs': [{
-                        'home' : {
-                            'name' : 'home',
-                            'path' : 'app_default_index'
-                        },
-                        'requests' : {
-                            'name' : 'requests',
-                            'path' : 'app_vrc_requests'
-                        }
-                    }]
-                }
-                %}
-            {% endif %}
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
-                        <div class="card p-4 full-height">
+                        <div class="card full-height">
                         	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }} {% if resource.refence is defined %} {{ resource.reference }} {% else %} {{ 'new request'|trans|capitalize }} {% endif%} </h2>{% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_vrc_requests')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
+                                        <a class="btn btn-primary" href="{{ path('app_vrc_requests')}}">
+                                            <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info"
                                            data-toggle="modal"
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
+                                        <a href="#auditTrial" class="btn btn-info"
                                            data-toggle="modal"
                                            data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
+                                        <a href="#delete" class="btn btn-danger"
                                            data-toggle="modal"
                                            data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>

@@ -1263,15 +1263,15 @@
       </trans-unit>
       <trans-unit id="MmVSAAo" resname="add case">
         <source>add case</source>
-        <target>__add case</target>
+        <target>voeg zaak toe</target>
       </trans-unit>
       <trans-unit id="PM9Ok2E" resname="casetype">
         <source>casetype</source>
-        <target>__casetype</target>
+        <target>zaaktype</target>
       </trans-unit>
       <trans-unit id="UxfUAqa" resname="belongs to">
         <source>belongs to</source>
-        <target>__belongs to</target>
+        <target>hoort bij</target>
       </trans-unit>
       <trans-unit id="O4jlk6W" resname="changeLog">
         <source>changeLog</source>
