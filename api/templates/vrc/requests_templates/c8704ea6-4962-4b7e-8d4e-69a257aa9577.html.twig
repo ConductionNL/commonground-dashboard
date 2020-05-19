@@ -8,8 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'requests',
-                'name' : 'requests'|trans|capitalize,
+                'headerTitle': 'requests non sanctioned location',
+                'name' : 'requests non sanctioned location'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
@@ -65,6 +65,48 @@
                             </tbody>
                         </table>
                     {% else %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                                <th scope="col">{{ 'parent'|trans|capitalize }}</th>
+                                <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                                <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for request in resources %}
+                                <tr>
+                                    <td>
+                                        {{ request.reference }}
+                                    </td>
+                                    <td>
+                                    {% if request.parent is defined and request.parent is not empty %}
+                                        {{ request.parent.reference }}
+                                    {% else %}
+                                        {{ 'no parent'|trans|capitalize }}
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if request.dateCreated is defined and request.dateCreated is not empty %}
+                                            {{ request.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if request.status is defined and request.status is not empty %}
+                                            {{ request.status|capitalize }}
+                                        {% else %}
+                                            {{ 'no status'|trans|capitalize }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_request', {id: request.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                         <p class="p-4">{{ 'no results'|trans|capitalize }}</p>
                     {% endif %}
                 </div>
