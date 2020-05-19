@@ -17,7 +17,7 @@
     {% elseif property.iri == 'pdc/ofer'  %}
         <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.name }}</a>
     {% elseif property.iri == 'irc/assent'  %}
-        <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ commonground_resource(cgresource.contact).name }}</a>
+        <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ commonground_resource(cgresource.contact).name }} ({{ cgresource.status|trans }})</a>
     {% elseif property.iri == 'vrc/request'  %}
         <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
     {% endif %}
