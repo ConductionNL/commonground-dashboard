@@ -5,10 +5,24 @@
 
 {% if property.format is not defined %}
     {{ value }}
+
 {% elseif property.iri is defined and '/' in property.iri %}
 
     {% set component = property.iri|split('/') %}
-    {% set path = 'app_' + component[0] + '_' + component[1] %}
+    {% set path = 'app_' ~ component[0] ~ '_' ~ component[1] %}
+    {% set cgresource = commonground_resource(value) %}
 
-    <a href="{{ value }}"> {{ commonground_resource(value).id }}</a>
+    {% if property.iri == 'orc/order' %}
+        <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
+    {% elseif property.iri == 'pdc/ofer'  %}
+        <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.name }}</a>
+    {% elseif property.iri == 'irc/assent'  %}
+        <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ commonground_resource(cgresource.contact).name }}</a>
+    {% elseif property.iri == 'vrc/request'  %}
+        <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
+    {% endif %}
+
+{% elseif property.format == 'date' %}
+    {{ value }}
+
 {% endif %}
