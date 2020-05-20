@@ -403,11 +403,11 @@
       </trans-unit>
       <trans-unit id="__dcDVd" resname="contact lists">
         <source>contact lists</source>
-        <target>__contact lists</target>
+        <target>contactlijsten</target>
       </trans-unit>
       <trans-unit id="vhnq5zq" resname="contact list">
         <source>contact list</source>
-        <target>__contact list</target>
+        <target>contactlijst</target>
       </trans-unit>
       <trans-unit id="hWe.pvn" resname="Common ground Registratie">
         <source>Common ground Registratie</source>
@@ -1003,7 +1003,7 @@
       </trans-unit>
       <trans-unit id="8dtMiWE" resname="Contact lists">
         <source>Contact lists</source>
-        <target>__Contact lists</target>
+        <target>contactlijsten</target>
       </trans-unit>
       <trans-unit id="G9o1H6b" resname="kvk">
         <source>kvk</source>
@@ -1191,7 +1191,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>__contact</target>
+        <target>contact</target>
       </trans-unit>
       <trans-unit id="2SBjkdS" resname="order items">
         <source>order items</source>

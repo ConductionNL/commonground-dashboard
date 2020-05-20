@@ -89,7 +89,6 @@ class LcController extends AbstractController
             $resource['numberOfBathroomsTotal']= (int)$resource['numberOfBathroomsTotal'];
             $resource['floorLevel']= (int)$resource['floorLevel'];
             $resource['maximumAttendeeCapacity']= (int)$resource['maximumAttendeeCapacity'];
-            $resource['resources']= (array)$resource['resources'];
             $resource['petsAllowed']= $resource['petsAllowed'] === 'true'? true: false;
             $resource['wheelchairAccessible']= $resource['wheelchairAccessible'] === 'true'? true: false;
 

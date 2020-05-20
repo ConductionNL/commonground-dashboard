@@ -115,16 +115,16 @@
                                                 <label for="largeInput">{{ 'opening time'|trans|capitalize }}</label>
                                                 <input type="datetime-local" class="form-control form-control-lg" id="openingTime"
                                                        name="openingTime"
-                                                       value="{% if resource.openingTime is defined %}{{ resource.openingTime|date("d-m-Y H:i")}}{% endif %}"
+                                                       value="{% if resource.openingTime is defined %}{{ resource.openingTime|date("Y-m-d\\TH:i")}}{% endif %}"
                                                        required>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'closing time'|trans|capitalize }}</label>
-                                                <input type="datetime-local" class="form-control form-control-lg" id="openingTime"
+                                                <input type="datetime-local" class="form-control form-control-lg" id="closingTime"
                                                        name="closingTime"
-                                                       value="{% if resource.closingTime is defined %}{{ resource.closingTime|date("d-m-Y H:i") }}{% endif %}"
+                                                       value="{% if resource.closingTime is defined %}{{ resource.closingTime|date("Y-m-d\\TH:i")}}{% endif %}"
                                                        required>
                                             </div>
                                         </div>
