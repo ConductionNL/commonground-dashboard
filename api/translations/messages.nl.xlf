@@ -395,11 +395,11 @@
       </trans-unit>
       <trans-unit id="lHjqrKP" resname="telephones">
         <source>telephones</source>
-        <target>__telephones</target>
+        <target>telefoons</target>
       </trans-unit>
       <trans-unit id="czlyUVm" resname="telephone">
         <source>telephone</source>
-        <target>__telephone</target>
+        <target>telefoon</target>
       </trans-unit>
       <trans-unit id="__dcDVd" resname="contact lists">
         <source>contact lists</source>
@@ -1731,7 +1731,7 @@
       </trans-unit>
       <trans-unit id="KOXrq9n" resname="url">
         <source>url</source>
-        <target>__url</target>
+        <target>url</target>
       </trans-unit>
       <trans-unit id="5UDn17l" resname="edit slug">
         <source>edit slug</source>

@@ -144,7 +144,7 @@
                                         <div class="row">
                                             <div class="col-md-3 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="largeInput">{{ 'pets allowed'|trans|capitalize }}</label>
+
                                                     <input class="" type="hidden" name="petsAllowed" value="false" />
                                                     {% if resource.petsAllowed is defined %}
                                                         {% if resource.petsAllowed == 'true' %}
@@ -155,11 +155,14 @@
                                                     {% else %}
                                                         <input class="" type="checkbox" name="petsAllowed" value="true" />
                                                     {% endif %}
+                                                    <label for="largeInput">{{ 'pets allowed'|trans|capitalize }}</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-3 col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="largeInput">{{ 'wheelchair accessible'|trans|capitalize }}</label>
+
                                                     <input class="" type="hidden" name="wheelchairAccessible" value="false" />
                                                     {% if resource.wheelchairAccessible is defined %}
                                                         {% if resource.wheelchairAccessible == 'true' %}
@@ -170,6 +173,7 @@
                                                     {% else %}
                                                         <input class="" type="checkbox" name="wheelchairAccessible" value="true" />
                                                     {% endif %}
+                                                    <label for="largeInput">{{ 'wheelchair accessible'|trans|capitalize }}</label>
                                                 </div>
                                             </div>
                                         </div>

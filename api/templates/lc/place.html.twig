@@ -142,7 +142,6 @@
                                     <div class="row">
                                         <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'public access'|trans|capitalize }}</label>
                                                 <input class="" type="hidden" name="publicAccess" value="false" />
                                                 {% if resource.publicAccess is defined %}
                                                     {% if resource.publicAccess == 'true' %}
@@ -153,11 +152,13 @@
                                                 {% else %}
                                                     <input class="" type="checkbox" name="publicAccess" value="true" />
                                                 {% endif %}
+                                                <label for="largeInput">{{ 'public access'|trans|capitalize }}</label>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'smoking allowed'|trans|capitalize }}</label>
                                                 <input class="" type="hidden" name="smokingAllowed" value="false" />
                                                 {% if resource.smokingAllowed is defined %}
                                                     {% if resource.smokingAllowed == 'true' %}
@@ -168,6 +169,7 @@
                                                 {% else %}
                                                     <input class="" type="checkbox" name="smokingAllowed" value="true" />
                                                 {% endif %}
+                                                <label for="largeInput">{{ 'smoking allowed'|trans|capitalize }}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -189,14 +191,7 @@
                         </div><!-- /.card -->
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        {% include 'lc/widgets/labels.html.twig'
-                            with {
-                            'resource':resource,
-                            'labels':labels} %}
-                    </div><!-- /.col -->
-                </div>
+
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
