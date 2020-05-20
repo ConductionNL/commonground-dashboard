@@ -287,7 +287,7 @@
       </trans-unit>
       <trans-unit id="cN0n49Q" resname="verdicts">
         <source>verdicts</source>
-        <target>uitspraken</target>
+        <target>besluiten</target>
       </trans-unit>
       <trans-unit id="A4RoUYr" resname="my">
         <source>my</source>
@@ -330,7 +330,7 @@
         <target>Betaal Component</target>
       </trans-unit>
       <trans-unit id="CTbbBXo" resname="the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.">
-        <source>the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.</source>
+        <source>the location catalogue holds all data concerning accomodations, places, changelogs and auditrails.</source>
         <target>__the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.</target>
       </trans-unit>
       <trans-unit id="3zhK6Xx" resname="payments">
@@ -524,14 +524,6 @@
       <trans-unit id="FkzxyoO" resname="cluster">
         <source>cluster</source>
         <target>kluster</target>
-      </trans-unit>
-      <trans-unit id="lMVV4M_" resname="health logs">
-        <source>health logs</source>
-        <target>__health logs</target>
-      </trans-unit>
-      <trans-unit id="pH1P5xi" resname="health log">
-        <source>health log</source>
-        <target>__health log</target>
       </trans-unit>
       <trans-unit id="Vh8KPYT" resname="installation">
         <source>installation</source>
@@ -777,21 +769,21 @@
         <source>task</source>
         <target>taak</target>
       </trans-unit>
-      <trans-unit id="j41rlZ5" resname="aanvragen naamwijziging">
-        <source>aanvragen naamwijziging</source>
-        <target>__aanvragen naamwijziging</target>
+      <trans-unit id="j41rlZ5" resname="name changes">
+        <source>name changes</source>
+        <target>naamwijzigingen</target>
       </trans-unit>
-      <trans-unit id="WCUMjMU" resname="aanvragen beedigd babs">
-        <source>aanvragen beedigd babs</source>
-        <target>__aanvragen beedigd babs</target>
+      <trans-unit id="WCUMjMU" resname="requests sworn civil servant">
+        <source>requests sworn civil servant</source>
+        <target>aanvragen beëdigde ambtenaar burgelijkestand</target>
       </trans-unit>
-      <trans-unit id="Xs.DOkP" resname="aanvragen niet beedigd babs">
-        <source>aanvragen niet beedigd babs</source>
-        <target>__aanvragen niet beedigd babs</target>
+      <trans-unit id="Xs.DOkP" resname="requests non sworn civil servant">
+        <source>requests non sworn civil servant</source>
+        <target>aanvragen niet beëdigde ambtenaar burgelijkestand</target>
       </trans-unit>
-      <trans-unit id="CsCwDQT" resname="aanvragen eigen locatie">
-        <source>aanvragen eigen locatie</source>
-        <target>__aanvragen eigen locatie</target>
+      <trans-unit id="CsCwDQT" resname="requests non sanctioned location">
+        <source>requests non sanctioned location</source>
+        <target>aanvragen eigen locatie</target>
       </trans-unit>
       <trans-unit id="13LrtFk" resname="labels">
         <source>labels</source>
@@ -871,7 +863,7 @@
       </trans-unit>
       <trans-unit id="2_4dZZw" resname="audit trail">
         <source>audit trail</source>
-        <target>controle spoor</target>
+        <target>audit log</target>
       </trans-unit>
       <trans-unit id="QjwT8Mp" resname="alarms">
         <source>alarms</source>
@@ -879,7 +871,7 @@
       </trans-unit>
       <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>
-        <target>tijdzonnes</target>
+        <target>tijdzones</target>
       </trans-unit>
       <trans-unit id="bpoasqA" resname="schedules">
         <source>schedules</source>
@@ -951,7 +943,7 @@
       </trans-unit>
       <trans-unit id="vZOMaI9" resname="action">
         <source>action</source>
-        <target>aktie</target>
+        <target>actie</target>
       </trans-unit>
       <trans-unit id="btiRnOI" resname="audio">
         <source>audio</source>
@@ -1177,13 +1169,13 @@
         <source>tabel 56</source>
         <target>__tabel 56</target>
       </trans-unit>
-      <trans-unit id="hCpGl.0" resname="Deployments">
-        <source>Deployments</source>
-        <target>__Deployments</target>
+      <trans-unit id="hCpGl.0" resname="Environments">
+        <source>Environments</source>
+        <target>Omgevingen</target>
       </trans-unit>
-      <trans-unit id="rC5uEtA" resname="healt logs">
-        <source>healt logs</source>
-        <target>__healt logs</target>
+      <trans-unit id="rC5uEtA" resname="health logs">
+        <source>health logs</source>
+        <target>health checks</target>
       </trans-unit>
       <trans-unit id="6dv7MFn" resname="services">
         <source>services</source>
@@ -1191,7 +1183,7 @@
       </trans-unit>
       <trans-unit id="qlr0CE8" resname="contacts">
         <source>contacts</source>
-        <target>__contacts</target>
+        <target>contacten</target>
       </trans-unit>
       <trans-unit id="MyfyKgW" resname="requests types">
         <source>requests types</source>
@@ -1247,7 +1239,7 @@
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
-        <target>__username</target>
+        <target>gebruiker</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject">
         <source>reject</source>
@@ -1263,15 +1255,15 @@
       </trans-unit>
       <trans-unit id="MmVSAAo" resname="add case">
         <source>add case</source>
-        <target>__add case</target>
+        <target>Zaak toevoegen</target>
       </trans-unit>
       <trans-unit id="PM9Ok2E" resname="casetype">
         <source>casetype</source>
-        <target>__casetype</target>
+        <target>zaak type</target>
       </trans-unit>
       <trans-unit id="UxfUAqa" resname="belongs to">
         <source>belongs to</source>
-        <target>__belongs to</target>
+        <target>hoort bij</target>
       </trans-unit>
       <trans-unit id="O4jlk6W" resname="changeLog">
         <source>changeLog</source>
@@ -1279,7 +1271,7 @@
       </trans-unit>
       <trans-unit id="okRzAEG" resname="auditTrail">
         <source>auditTrail</source>
-        <target>__auditTrail</target>
+        <target>audit trail</target>
       </trans-unit>
       <trans-unit id="PoHAmRt" resname="annuleren">
         <source>annuleren</source>
@@ -1291,7 +1283,7 @@
       </trans-unit>
       <trans-unit id="5HEllos" resname="parent">
         <source>parent</source>
-        <target>__parent</target>
+        <target>hoofd verzoek</target>
       </trans-unit>
       <trans-unit id="3aI_UY." resname="no parent">
         <source>no parent</source>
@@ -1303,11 +1295,11 @@
       </trans-unit>
       <trans-unit id="di0hHaz" resname="no results">
         <source>no results</source>
-        <target>__no results</target>
+        <target>geen resultaten gevonden</target>
       </trans-unit>
       <trans-unit id="fz_kjKi" resname="partner">
         <source>partner</source>
-        <target>__partner</target>
+        <target>partner</target>
       </trans-unit>
       <trans-unit id="I6kC4kP" resname="no partner">
         <source>no partner</source>
@@ -1323,15 +1315,15 @@
       </trans-unit>
       <trans-unit id="tPz8Gbi" resname="child requests">
         <source>child requests</source>
-        <target>__child requests</target>
+        <target>subverzoeken</target>
       </trans-unit>
       <trans-unit id="eRAOs09" resname="add child request">
         <source>add child request</source>
-        <target>__add child request</target>
+        <target>voeg een subverzoek toe</target>
       </trans-unit>
       <trans-unit id="yQqoOKu" resname="add a document">
         <source>add a document</source>
-        <target>__add a document</target>
+        <target>voeg een document toe</target>
       </trans-unit>
       <trans-unit id="lq25JFK" resname="properties">
         <source>properties</source>
@@ -1535,23 +1527,23 @@
       </trans-unit>
       <trans-unit id="W35r8tx" resname="method">
         <source>method</source>
-        <target>__method</target>
+        <target>request</target>
       </trans-unit>
       <trans-unit id="u5r10ZF" resname="ip">
         <source>ip</source>
-        <target>__ip</target>
+        <target>ip adres</target>
       </trans-unit>
       <trans-unit id="Pzrx7Ou" resname="session">
         <source>session</source>
-        <target>__session</target>
+        <target>sessie</target>
       </trans-unit>
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
-        <target>__version</target>
+        <target>versie</target>
       </trans-unit>
       <trans-unit id="Om6weQ8" resname="data">
         <source>data</source>
-        <target>__data</target>
+        <target>data</target>
       </trans-unit>
       <trans-unit id="13JCoXo" resname="are you sure that you want to delete">
         <source>are you sure that you want to delete</source>

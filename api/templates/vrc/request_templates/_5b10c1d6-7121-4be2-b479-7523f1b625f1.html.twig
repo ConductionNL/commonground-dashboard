@@ -5,8 +5,21 @@
 
     <div class="main-panel">
         <div class="container">
-
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a request',
+                'name' : resource.reference,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'requests' : {
+                        'name' : 'requests',
+                        'path' : 'app_vrc_requests'
+                    }
+                }]
+            }
+            %}
 
             <div class="page-inner">
                 <div class="row">
@@ -14,7 +27,9 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}</h2>  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
+                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}</h2>
+
+                                    {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
                                         <div class="float-right">
 
                                             {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
@@ -26,6 +41,13 @@
                                         </div>
                                 </div>
                                 <div class="card-body">
+
+                                    {% if requestStatus is defined and requestStatus is not empty %}
+                                    <div class="progress" style="height: 30px; margin-bottom: 15px">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ requestStatus }}%; background-color: {% if requestStatus < 100 %}red{% else %}limegreen{% endif %}; " aria-valuenow="{{ requestStatus }}" aria-valuemin="0" aria-valuemax="100">{{ requestStatus|number_format }}%</div>
+                                    </div>
+                                    {% endif %}
+
                                     <div class="row">
                                         <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
@@ -83,7 +105,8 @@
                     <div class="col-md-4">
                         {% include 'vrc/widgets/properties_checklist.html.twig'
                             with {
-                            'properties': resource.properties } %}
+                            'properties': resource.properties,
+                            'requestStatus': requestStatus } %}
 
                     </div><!-- /.col -->
                     <div class="col-md-4">
