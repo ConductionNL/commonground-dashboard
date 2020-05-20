@@ -141,7 +141,7 @@ class VrcController extends AbstractController
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'requests']));
 
-            /* @to this redirect is a hotfix */ 
+            /* @to this redirect is a hotfix */
             if(array_key_exists('id', $variables['resource'])){
                 return $this->redirect($this->generateUrl('app_vrc_request', ["id" =>  $variables['resource']['id']]));
             }
@@ -183,7 +183,7 @@ class VrcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'label'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'labels','id'=> $id]);        }

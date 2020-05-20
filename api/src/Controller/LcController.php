@@ -78,19 +78,28 @@ class LcController extends AbstractController
         $variables['title'] = $translator->trans('accommodation');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('accommodation');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'places'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
+            $resource['numberOfBathroomsTotal']= (int)$resource['numberOfBathroomsTotal'];
+            $resource['floorLevel']= (int)$resource['floorLevel'];
+            $resource['maximumAttendeeCapacity']= (int)$resource['maximumAttendeeCapacity'];
+            $resource['resources']= (array)$resource['resources'];
+            $resource['petsAllowed']= $resource['petsAllowed'] === 'true'? true: false;
+            $resource['wheelchairAccessible']= $resource['wheelchairAccessible'] === 'true'? true: false;
+
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodations','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodations']));
         }
 
 
@@ -107,7 +116,7 @@ class LcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('places');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('places');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'slugs'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'places'])["hydra:member"];
 
         return $variables;
     }
@@ -144,13 +153,17 @@ class LcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
+            $resource['publicAccess']= $resource['publicAccess'] === 'true'? true: false;
+            $resource['smokingAllowed']= $resource['smokingAllowed'] === 'true'? true: false;
+
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'places','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'places']));
 
         }
 

@@ -1,6 +1,5 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_lc_place' %}
 
 {% block content %}
 
@@ -33,7 +32,7 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_lc_place', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -52,79 +51,137 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       name="name"
+                                                       value="{% if resource.name is defined %}{{ resource.name }}{% endif %}"
+                                                       required>
                                             </div>
                                         </div> <!-- /.col -->
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
+                                                <label for="largeInput">{{ 'bag ID'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="bagId"
+                                                       name="bagId"
+                                                       value="{% if resource.bagId is defined %}{{ resource.bagId }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'telephone'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="telephone"
+                                                       name="telephone"
+                                                       value="{% if resource.telephone is defined %}{{ resource.telephone }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div> <!-- /.card-body -->
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'logo'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="logo"
+                                                       name="logo"
+                                                       value="{% if resource.logo is defined %}{{ resource.logo }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'photo'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="photo"
+                                                       name="photo"
+                                                       value="{% if resource.bagId is defined %}{{ resource.photo }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'has map'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="hasMap"
+                                                       name="hasMap"
+                                                       value="{% if resource.hasMap is defined %}{{ resource.hasMap }}{% endif %}"
+                                                       required>
+
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'opening time'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="openingTime"
+                                                       name="openingTime"
+                                                       value="{% if resource.openingTime is defined %}{{ resource.openingTime|date("d-m-Y H:i")}}{% endif %}"
+                                                       required>
                                             </div>
                                         </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'closing time'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="openingTime"
+                                                       name="closingTime"
+                                                       value="{% if resource.closingTime is defined %}{{ resource.closingTime|date("d-m-Y H:i") }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'url'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="url"
+                                                       name="url"
+                                                       value="{% if resource.url is defined %}{{ resource.url }}{% endif %}"
+                                                       required>
 
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
-                                    </div><!-- /.row -->
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'public access'|trans|capitalize }}</label>
+                                                <input class="" type="hidden" name="publicAccess" value="false" />
+                                                {% if resource.publicAccess is defined %}
+                                                    {% if resource.publicAccess == 'true' %}
+                                                        <input class="" type="checkbox" name="publicAccess" value="true" checked/>
+                                                    {% else %}
+                                                        <input class="" type="checkbox" name="publicAccess" value="true" />
+                                                    {% endif %}
+                                                {% else %}
+                                                    <input class="" type="checkbox" name="publicAccess" value="true" />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'smoking allowed'|trans|capitalize }}</label>
+                                                <input class="" type="hidden" name="smokingAllowed" value="false" />
+                                                {% if resource.smokingAllowed is defined %}
+                                                    {% if resource.smokingAllowed == 'true' %}
+                                                        <input class="" type="checkbox" name="smokingAllowed" value="true" checked/>
+                                                    {% else %}
+                                                        <input class="" type="checkbox" name="smokingAllowed" value="true" />
+                                                    {% endif %}
+                                                {% else %}
+                                                    <input class="" type="checkbox" name="smokingAllowed" value="true" />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
                                                 <textarea class="form-control" rows="5" id="summernote"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                          name="description"
+                                                          required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
-
+                                </div>
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->

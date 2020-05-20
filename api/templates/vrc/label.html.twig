@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% set view = 'app_vrc_label' %}
+
 
     <style>
         th {
@@ -33,7 +33,7 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_vrc_label', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
