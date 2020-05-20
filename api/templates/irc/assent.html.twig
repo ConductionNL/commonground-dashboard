@@ -51,7 +51,7 @@
                                 <div class="card-body">
                                     <div class="row">
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -61,16 +61,16 @@
                                         </div> <!-- /.col -->
 
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'request'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="request"
-                                                       name="name" placeholder="Large Input"
+                                                       name="request" placeholder="Large Input"
                                                        value="{{ resource.request }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'person'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="person"
@@ -79,21 +79,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label
                                                         for="largeInput">{{ 'status'|trans|capitalize }} {{ 'assent'|trans }}</label>
-                                                <select class="form-control form-control-lg" id="status"
-                                                        name="status">
-                                                    <option value="">-</option>
 
-
-                                                    {% if groups is defined and groups is not empty %}
-                                                        {% for group in groups %}
-                                                            <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                        {% endfor %}
-                                                    {% endif %}
+                                                <select id="status" name="status" class="form-control form-control-lg">
+                                                    <option value="requested" {% if resource.status is defined and 'requested' == resource.status  %}selected{% endif %}>{{ 'requested'|trans|capitalize }}</option>
+                                                    <option value="granted" {% if resource.status is defined and 'granted' == resource.status  %}selected{% endif %}>{{ 'granted'|trans|capitalize }}</option>
+                                                    <option value="declined" {% if resource.status is defined and 'declined' == resource.status  %}selected{% endif %}>{{ 'declined'|trans|capitalize }}</option>
+                                                    <option value="withdrawn" {% if resource.status is defined and 'withdrawn' == resource.status  %}selected{% endif %}>{{ 'withdrawn'|trans|capitalize }}</option>
                                                 </select>
                                             </div>
                                         </div>
