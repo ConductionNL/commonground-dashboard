@@ -135,7 +135,7 @@
                                                     <label for="largeInput">{{ 'place'|trans|capitalize }}</label>
                                                     <select name="place" id="place" class="form-control form-control-lg" required>
                                                         {% for place in places %}
-                                                            <option value="{{ place.name }}">{{ place.name }}</option>
+                                                            <option value="{{ place.url }}">{{ place.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>

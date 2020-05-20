@@ -201,7 +201,7 @@ class VrcController extends AbstractController
             return $this->redirect($this->generateUrl('app_vrc_labels'));
         }
 
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -215,7 +215,7 @@ class VrcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'labels','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'labels']));
         }
 
 

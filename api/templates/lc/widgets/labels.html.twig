@@ -1,0 +1,60 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'labels'|trans|capitalize }}</h3>
+    </div>
+    {% if labels is defined %}
+        <div class="card-list">
+            {% for label in labels %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="name"><h4>{{ label.name|capitalize }}</h4></div>
+                    </div>
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                       style="margin-right: 5px"
+                       data-toggle="modal"
+                       data-target="#editLabel{{ label.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px"
+                            data-toggle="modal"
+                            data-target="#deleteLabel{{ label.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addLabel"  data-toggle="modal" data-target="#addLabel">{{ 'add label'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the label modals #}
+{% include 'lc/modals/label.html.twig'
+    with {
+    'route': 'app_lc_place',
+    'resource':resource,
+    'id':'addLabel' } %}
+
+{% if labels is defined %}
+    {% for label in labels %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_lc_place',
+            'resource':resource,
+            'item':label,
+            'id':'deleteLabel' } %}
+
+        {% include 'lc/modals/label.html.twig'
+            with {
+            'route': 'app_lc_place',
+            'resource':resource,
+            'item':label,
+            'id':'editLabel' } %}
+    {% endfor %}
+{% endif %}
