@@ -137,7 +137,14 @@ class VrcController extends AbstractController
             }
 
             // If there are any sub data sources the need to be removed below in order to save the resource
-            // unset($resource['somedatasource'])
+
+            // Lets see if we also need to add an slug
+            if(array_key_exists('unsetProperty', $resource) && is_array($resource['unsetProperty'])){
+
+            }
+            if(array_key_exists('setProperty', $resource) && is_array($resource['setProperty'])){
+
+            }
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'requests']));
 
