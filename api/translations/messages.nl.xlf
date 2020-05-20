@@ -1303,11 +1303,11 @@
       </trans-unit>
       <trans-unit id="I6kC4kP" resname="no partner">
         <source>no partner</source>
-        <target>__no partner</target>
+        <target>geen partner gekozen</target>
       </trans-unit>
       <trans-unit id="9H8bdZz" resname="no type">
         <source>no type</source>
-        <target>__no type</target>
+        <target>geen ceremonie gekozen</target>
       </trans-unit>
       <trans-unit id="uVomQuz" resname="submitters">
         <source>submitters</source>

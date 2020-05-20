@@ -29,6 +29,7 @@
                                 <th scope="col">{{ 'parent'|trans|capitalize }}</th>
                                 <th scope="col">{{ 'created'|trans|capitalize }}</th>
                                 <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                                <th scope="col">{{ 'progress'|trans|capitalize }}</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
@@ -55,6 +56,28 @@
                                             {{ request.status|capitalize }}
                                         {% else %}
                                             {{ 'no status'|trans|capitalize }}
+                                        {% endif %}
+                                    </td>
+                                    <td >
+                                        {% if request.status is same as('incomplete') %}
+                                            <div class="progress" style="height: 25px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 25%; color: black; background-color: red;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        {% endif %}
+                                        {% if request.status is same as('complete') %}
+                                            <div class="progress" style="height: 25px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 50%; color: black; background-color:orangered;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        {% endif %}
+                                        {% if request.status is same as('submitted') %}
+                                            <div class="progress" style="height: 25px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 75%; color: black; background-color: limegreen" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        {% endif %}
+                                        {% if request.status is same as('processed') %}
+                                            <div class="progress" style="height: 25px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 100%; color: black; background-color: green" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
                                         {% endif %}
                                     </td>
                                     <td>
