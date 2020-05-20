@@ -30,7 +30,7 @@
                                 {% if resource.properties[property.name] is iterable %}
                                     <ul style="padding-left: 0px;">
                                     {% for value in resource.properties[property.name] %}
-                                        <li>
+                                        <li class="m-2 ml-0">
                                         {% include 'vrc/widgets/property.html.twig'
                                             with {
                                             'property':property,
@@ -50,7 +50,11 @@
 
 
                         </td>
-                        <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="#"><i class="far fa-edit"></i></a></td>
+                        <td>
+                            {% if property.name not in resource.properties|keys or property.type == 'array' %}
+                                <a class="btn btn-success" href="#"><i class="fa fa-plus"></i></a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
                 {% endfor %}
