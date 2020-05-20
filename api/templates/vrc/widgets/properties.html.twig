@@ -15,20 +15,22 @@
                         <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                             {% if property.required is defined and property.required  %}
                                 {% if property.name in resource.properties|keys  %}
-                                    <i style="color: limegreen;" class="fas fa-check"></i>
+                                    <i style="color: limegreen;" class="fas fa-check" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
                                 {% else %}
-                                    <i style="color: red" class="fas fa-times"></i>
+                                    <i style="color: red" class="fas fa-times" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
                                 {% endif %}
+                            {% else %}
+                                <i style="color: deepskyblue" class="fas fa-info" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
                             {% endif %}
                         </td>
-                        <td>{{ property.name }}</td>
+                        <td>{{ property.title }}</td>
                         {#
                         <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td> #}
                         <td>{% if property.name in resource.properties|keys  %}
                                 {% if resource.properties[property.name] is iterable %}
                                     <ul style="padding-left: 0px;">
                                     {% for value in resource.properties[property.name] %}
-                                        <li>
+                                        <li class="m-2 ml-0">
                                         {% include 'vrc/widgets/property.html.twig'
                                             with {
                                             'property':property,
@@ -48,7 +50,11 @@
 
 
                         </td>
-                        <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="#"><i class="far fa-edit"></i></a></td>
+                        <td>
+                            {% if property.name not in resource.properties|keys or property.type == 'array' %}
+                                <a class="btn btn-success" href="#"><i class="fa fa-plus"></i></a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
                 {% endfor %}
