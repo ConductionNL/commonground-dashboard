@@ -51,59 +51,113 @@
                                 <div class="card-body">
                                     <div class="row">
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       name="name" placeholder=""
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
 
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'request'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="request"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.request }}">
+                                                       name="request" placeholder=""
+                                                       value="{% if resource.request is defined %}{{ resource.request }} {% endif %}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'person'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="person"
-                                                       name="person" placeholder="Large Input"
-                                                       value="{{ resource.person }}">
+                                                <select name="person" id="person" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person.name }} "{% if resource.person is defined and resource.person == person.name  %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label
                                                         for="largeInput">{{ 'status'|trans|capitalize }} {{ 'assent'|trans }}</label>
-                                                <select class="form-control form-control-lg" id="status"
-                                                        name="status">
-                                                    <option value="">-</option>
 
-
-                                                    {% if groups is defined and groups is not empty %}
-                                                        {% for group in groups %}
-                                                            <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                        {% endfor %}
-                                                    {% endif %}
+                                                <select id="status" name="status" class="form-control form-control-lg">
+                                                    <option value="requested" {% if resource.status is defined and 'requested' == resource.status  %}selected{% endif %}>{{ 'requested'|trans|capitalize }}</option>
+                                                    <option value="granted" {% if resource.status is defined and 'granted' == resource.status  %}selected{% endif %}>{{ 'granted'|trans|capitalize }}</option>
+                                                    <option value="declined" {% if resource.status is defined and 'declined' == resource.status  %}selected{% endif %}>{{ 'declined'|trans|capitalize }}</option>
+                                                    <option value="withdrawn" {% if resource.status is defined and 'withdrawn' == resource.status  %}selected{% endif %}>{{ 'withdrawn'|trans|capitalize }}</option>
+                                                    <option value="cancelled" {% if resource.status is defined and 'cancelled' == resource.status  %}selected{% endif %}>{{ 'cancelled'|trans|capitalize }}</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                     </div><!-- /.row -->
                                     <div class="row">
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'forward url'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="forwardUrl"
+                                                       name="forwardUrl" placeholder=""
+                                                       value="{% if resource.forwardUrl is defined %}{{ resource.forwardUrl }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'property'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="property"
+                                                       name="property" placeholder=""
+                                                       value="{% if resource.property is defined %}{{ resource.property }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'process'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="process"
+                                                       name="process" placeholder=""
+                                                       value="{% if resource.process is defined %}{{ resource.process }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'contact'|trans|capitalize }}</label>
+                                                <select name="contact" id="contact" class="form-control form-control-lg" required>
+                                                    {% for employee in employees %}
+                                                        <option value="{{ employee.person }}"{% if resource.contact is defined and resource.contact == employee.person  %}selected{% endif %}>{{ employee.person }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'requester'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="requester"
+                                                       name="requester" placeholder=""
+                                                       value="{% if resource.requester is defined %}{{ resource.requester }} {% endif %}">
+                                            </div>
+                                        </div>
+
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <textarea class="form-control" rows="5" id="summernote" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
@@ -117,29 +171,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->

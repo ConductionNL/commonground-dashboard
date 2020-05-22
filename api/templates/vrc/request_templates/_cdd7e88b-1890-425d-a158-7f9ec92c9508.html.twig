@@ -11,8 +11,21 @@
 
     <div class="main-panel">
         <div class="container">
-
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a request',
+                'name' : resource.reference,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'requests' : {
+                        'name' : 'requests',
+                        'path' : 'app_vrc_requests'
+                    }
+                }]
+            }
+            %}
 
             <div class="page-inner">
                 <div class="row">
@@ -20,7 +33,7 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}</h2>
+                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}</h2>
                                     <div class="float-right">
                                         <a href="#annuleerRequest" class="btn btn-danger" style="margin-right: 25px"
                                            data-toggle="modal"
@@ -160,8 +173,8 @@
                 'changeLog':changeLog,
                 'id':'changeLogModal' } %}
         {% endif %}
-
-    </div>
+    {% endif %}
+</div>
 
     {% include 'vrc/modals/annuleer_request_modal.html.twig'
         with {

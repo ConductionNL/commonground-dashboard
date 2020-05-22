@@ -12,7 +12,9 @@
                                         <li class="breadcrumb-item"><a href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize}} </a></li>
                                     {% endfor %}
                                 {% endfor %}
-                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name }}</li>
+                                {% if name is defined %}
+                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name|trans|capitalize }}</li>
+                                    {% endif %}
                             {% endif %}
                         {% endblock %}
                     </ol>
@@ -21,7 +23,7 @@
             <div class="ml-md-auto py-2 py-md-0">
 				{% block buttons %}
 {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
-                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ 'add'|trans|capitalize }} {{ title|trans }} {% endif %}</a>
+                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ 'add'|trans|capitalize }} {{ headerTitle|trans }} {% endif %}</a>
 				{% endblock %}
             </div>
         </div>

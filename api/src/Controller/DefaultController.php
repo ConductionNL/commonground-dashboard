@@ -24,6 +24,6 @@ class DefaultController extends AbstractController
      */
 	public function indexAction()
     {
-    	return $this->redirect($this->generateUrl('app_wrc_templates'));
+    	return $this->redirect($this->generateUrl('app_ud_index'));
     }
 }

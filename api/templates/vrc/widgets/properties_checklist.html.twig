@@ -1,143 +1,286 @@
 
-<div class="card p-4 full-height">
+<div class="card full-height">
     <form action="{{ path('app_vrc_request', {id: resource.id}) }}" method="post">
         <div class="card-header">
-            <h2 class="d-inline-block">Checklist</h2>
+            <h2 class="d-inline-block">Checklist </h2>
         </div>
         <table class="table table-hover">
+
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
+                    {% if properties.type is not defined or properties.type is empty %}
+                        <i style="color:red">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}
+                </td>
                 <th>Ceremonie</th>
-                <td>Huwelijk</td>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#ceremonieModal"><i style=""
-                                                                                 class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.type is not defined or properties.type is empty %}
+                    {% else %}
+                        {{ properties.type|capitalize }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
+                    {% if properties.plechtigheid is not defined or properties.plechtigheid is empty %}
+                        <i style="color:red">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}
+                </td>
                 <th>Plechtigheid</th>
-                <td>Trouwen</td>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#plechtigheidModal"><i style=""
-                                                                                    class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.plechtigheid is not defined or properties.plechtigheid is empty %}
+                    {% else %}
+                        {{ commonground_resource(properties.plechtigheid).name }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
+                    {% if properties.locatie is not defined or properties.locatie is empty %}
+                        <i style="color:red">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}
+                </td>
                 <th>Locatie</th>
-                <td>Utrecht, stadhuis grote zaal</td>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#locatieModal"><i style=""
-                                                                               class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.locatie is not defined or properties.locatie is empty %}
+                    {% else %}
+                        {{ commonground_resource(properties.locatie).name }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
+                    {% if properties.datum is not defined or properties.datum is empty %}
+                        <i style="color:red">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}
+                </td>
                 <th>Datum</th>
-                <td>10-2-2020</td>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#datumModal"><i style=""
-                                                                             class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.datum is not defined or properties.datum is empty %}
+                    {% else %}
+                        {{ properties.datum|date("d-m-Y H:i", "Europe/Paris") }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
-                <th>Tijdstip</th>
-                <td>10:50 - 11:50</td>
+                    {% if properties.ambtenaar is not defined or properties.ambtenaar is empty %}
+                        <i style="color:red">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}
+                </td>
+                <th>Ambtenaar</th>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#tijdstipModal"><i style=""
-                                                                                class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.ambtenaar is not defined or properties.ambtenaar is empty %}
+                    {% else %}
+                        {{ commonground_resource(properties.ambtenaar).name }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
-                <th>Babs</th>
-                <td>Dhr. Erik Hendrik</td>
-                <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#babsModal"><i style=""
-                                                                            class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.getuigen is not defined or properties.getuigen is empty or properties.getuigen|length <= 2 %}
+                        <i style="color: red;">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}
                 </td>
-            </tr>
-            <tr>
-                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: red;">X</i></td>
                 <th>Getuigen</th>
-                <td>John Doe<br>
-                    Jane Doe<br>
-                </td>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#getuigenModal"><i style=""
-                                                                                class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.getuigen is not defined or properties.getuigen is empty %}
+                    {% else %}
+                        {% for getuige in properties.getuigen %}
+                            {% set assent = commonground_resource(getuige) %}
+                            {% set contact = commonground_resource(assent.contact) %}
+                            {% if assent.status == "granted" %}
+                                {{ contact.formalName }}<br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </td>
             </tr>
+            {#                                <tr>#}
+            {#                                    <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+            {#                                        <i style="color: red;">X</i></td>#}
+            {#                                    <th>Tolk</th>#}
+            {#                                    {% if variables.huwelijk.properties.overig.nederlands is defined and variables.huwelijk.properties.overig.nederlands is not empty and variables.huwelijk.properties.overig.nederlands == "nee" %}#}
+            {#                                        <td style="color: lightgray">Tolk nodig</td>#}
+            {#                                    {% else %}#}
+            {#                                        <td style="color: lightgray">Geen tolk</td>#}
+            {#                                    {% endif %}#}
+            {#                                    <td>#}
+            {#                                        <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+            {#                                                class="btn btn-primary"#}
+            {#                                                data-toggle="modal" data-target="#tolkModal"><i style=""#}
+            {#                                                                                                class="fas fa-edit"></i>#}
+            {#                                        </button>#}
+            {#                                    </td>#}
+            {#                                </tr>#}
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
-                <th>Tolk</th>
-                <td style="color: lightgray">Niet van toepassing</td>
-                <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#tolkModal"><i style=""
-                                                                            class="fas fa-edit"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
+                    {% if properties.extras is not defined or properties.extras is empty %}
+                        <i style="color: red;">X</i>
+                    {% else %}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+                    {% endif %}</td>
                 <th>Extra's</th>
-                <td>Trouwboek</td>
                 <td>
-                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal" data-target="#extraModal"><i style=""
-                                                                             class="fas fa-edit"></i>
-                    </button>
+                    {% if properties.extras is not defined or properties.extras is empty %}
+                    {% else %}
+                        {% for extra in properties.extras %}
+                            {{ commonground_resource(extra).name }}<br>
+                        {% endfor %}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: red;">X</i></td>
-                <th>Status</th>
-                <td>In behandeling</td>
-                <td></td>
+                    <i style="color: red;">X</i>
+                </td>
+                <th>Betaald</th>
+                <td>Nee</td>
             </tr>
             <tr>
                 <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
-                    <i style="color: limegreen;" class="fas fa-check"></i></td>
-                <th>Betaald</th>
-                <td>Ja</td>
+{#                    {% if variables.huwelijk.status != "completed" and variables.huwelijk.status != "processed" %}#}
+{#                        <i style="color: red;">X</i>#}
+{#                    {% else %}#}
+                        <i style="color: limegreen;" class="fas fa-check"></i>
+{#                    {% endif %}#}
+                </td>
+                <th>Status</th>
+{#                <td>{{ variables.huwelijk.status|capitalize }}</td>#}
                 <td></td>
             </tr>
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Plechtigheid</th>#}
+{#                <td>Trouwen</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#plechtigheidModal"><i style=""#}
+{#                                                                                    class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Locatie</th>#}
+{#                <td>Utrecht, stadhuis grote zaal</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#locatieModal"><i style=""#}
+{#                                                                               class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Datum</th>#}
+{#                <td>10-2-2020</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#datumModal"><i style=""#}
+{#                                                                             class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Tijdstip</th>#}
+{#                <td>10:50 - 11:50</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#tijdstipModal"><i style=""#}
+{#                                                                                class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Babs</th>#}
+{#                <td>Dhr. Erik Hendrik</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#babsModal"><i style=""#}
+{#                                                                            class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: red;">X</i></td>#}
+{#                <th>Getuigen</th>#}
+{#                <td>John Doe<br>#}
+{#                    Jane Doe<br>#}
+{#                </td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#getuigenModal"><i style=""#}
+{#                                                                                class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Tolk</th>#}
+{#                <td style="color: lightgray">Niet van toepassing</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#tolkModal"><i style=""#}
+{#                                                                            class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Extra's</th>#}
+{#                <td>Trouwboek</td>#}
+{#                <td>#}
+{#                    <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"#}
+{#                            class="btn btn-primary"#}
+{#                            data-toggle="modal" data-target="#extraModal"><i style=""#}
+{#                                                                             class="fas fa-edit"></i>#}
+{#                    </button>#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: red;">X</i></td>#}
+{#                <th>Status</th>#}
+{#                <td>In behandeling</td>#}
+{#                <td></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td style="width: 75px !important; padding-right: 0 !important; text-align: center">#}
+{#                    <i style="color: limegreen;" class="fas fa-check"></i></td>#}
+{#                <th>Betaald</th>#}
+{#                <td>Ja</td>#}
+{#                <td></td>#}
+{#            </tr>#}
 
         </table>
 
@@ -147,12 +290,12 @@
             <tr>
                 <th>Datum verzoek verzonden</th>
                 <td>15-1-2020</td>
-                <td></td>
             </tr>
             <tr>
                 <th>Tijdstip verzoek verzonden</th>
                 <td>16:30</td>
-                <td></td>
             </tr>
         </table>
+
+    </form>
 </div>

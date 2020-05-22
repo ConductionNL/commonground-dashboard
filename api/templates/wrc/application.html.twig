@@ -40,7 +40,6 @@
                                            data-toggle="modal"
                                            data-target="#deleteApplication"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
-
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -126,11 +125,6 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-
-
-                                    <div id="test"></div>
-
-
                                 </div> <!-- /.card-body -->
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
@@ -150,12 +144,14 @@
                             {% include 'wrc/widgets/templates.html.twig'
                                 with {
                                 'templates': templates } %}
+                        </div>
                     </div><!-- /.col -->
                     <div class="col-md-3">
                         <div class="card p-0 full-height">
                             {% include 'wrc/widgets/slugs.html.twig'
                                 with {
                                 'slugs': slugs } %}
+                        </div>
                     </div><!-- /.col -->
                     <div class="col-md-3">
                         {% include 'wrc/widgets/menus.html.twig'
@@ -184,9 +180,9 @@
                         'id':'changeLog' } %}
 
             {% include 'footer.html.twig' %}
+                    </div>
+                </div>
 
-        </div>
-    </div>
             {% block javascript %}
             //audit_trails
             $.ajax({

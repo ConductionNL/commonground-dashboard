@@ -93,6 +93,9 @@ class VtcController extends AbstractController
 			// Passing the variables to the resource
 			$resource = $request->request->all();
 
+            $resource['unique']= $resource['unique'] === 'true'? true: false;
+            $resource['parentRequired']= $resource['parentRequired'] === 'true'? true: false;
+
 			$resource['@id'] = $variables['resource']['@id'];
 			$resource['id'] = $variables['resource']['id'];
 

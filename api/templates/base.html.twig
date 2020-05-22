@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Commonground Dashboard</title>
+	<title>{{ commonground_application()['name'] }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
@@ -39,8 +39,10 @@
 			background: #CC0000 !important;
 		}
 		.navbar-header{
-			background: #CC0000 !important;
+			background: #cc0000 !important;
 		}
+
+        {{ commonground_application()['style'] }}
 	</style>
 </head>
 <body>
@@ -148,10 +150,8 @@
         {% endfor %}
     {% endfor %}
 
-    $('#summernote').summernote({
-        placeholder: 'Hello Bootstrap 4',
-        tabsize: 2,
-        height: 100
+    $(document).ready(function() {
+        $('#summernote').summernote();
     });
 
     {% block javascript %}

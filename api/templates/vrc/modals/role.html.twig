@@ -1,0 +1,64 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit role'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add role'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'rol type'|trans|capitalize }}</label>
+                    <select id="role[rolType]" name="role[rolType]" class="form-control form-control-lg" required>
+                        <option value="initiator">initiator</option>
+                        <option value="behandelaar">behandelaar</option>
+                        <option value="belanghebbende">belanghebbende</option>
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'participant'|trans|capitalize }}</label>
+                    <select name="role[participant]" id="role[participant]" class="form-control form-control-lg" required>
+                        {% for employee in employees %}
+                            <option value="{{ employee['@id'] }}">{{ employee.person }}</option>
+                        {% endfor %}
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'participant type'|trans|capitalize }}</label>
+                    <select id="role[participantType]" name="role[participantType]" class="form-control form-control-lg" required>
+                        <option value="Natuurlijk persoon">Natuurlijk persoon</option>
+                        <option value="niet natuurlijk persoon">niet natuurlijk persoon</option>
+                        <option value="Organisatorische eenheid">Organisatorische eenheid</option>
+                        <option value="medewerker">medewerker</option>
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'request'|trans|capitalize }}</label>
+                    <select id="role[request]" name="role[request]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.reference }}</option>
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="role[id]" name ="role[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="role[@id]" name ="role[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

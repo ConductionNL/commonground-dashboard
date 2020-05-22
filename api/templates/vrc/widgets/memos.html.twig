@@ -1,17 +1,37 @@
 
-<div class="card p-4 full-height">
+<div class="card full-height">
     <div class="card-header">
-        <h2 class="d-inline-block">Opmerkingen</h2>
+        <h2 class="d-inline-block">{{ 'memos'|trans|capitalize }}</h2>
         <button style="padding: 7px 14px 7px 14px;" type="button"
                 class="btn btn-primary float-right"
                 data-toggle="modal" data-target="#contactModal"><i style=""
                                                                    class="fas fa-plus"></i>
         </button>
     </div>
-    <div style="margin-left: 12.5px;border-bottom: 1px solid #ebecec">
-        <h4 style="margin: 10px; margin-top: 20px"><b>24-1-2020</b></h4>
-        <h5 style="margin: 10px"><b>Opmerking:</b></h5>
-        <p style="margin: 10px">M. Timmers heeft verzocht om de trouwlocatie te wijzigen naar de
-            grote zaal.</p>
-    </div>
+
+    {% if memos is defined %}
+        <div class="card-list">
+            {% for memo in memos %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="name"><h4>{{ memo.name|capitalize }}</h4></div>
+                        <div class="description">{{ memo.description }}</div>
+                    </div>
+                    <a class="btn btn-icon btn-primary btn-round btn-s"
+                       style="margin-right: 5px"
+                       href="{{ path('app_memo_memo', {id: memo.id}) }}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteMemo{{ memo.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
 </div>
