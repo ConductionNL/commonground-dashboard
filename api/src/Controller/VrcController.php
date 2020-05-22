@@ -131,6 +131,21 @@ class VrcController extends AbstractController
                 $resource['id'] = $variables['resource']['id'];
             }
 
+            if(array_key_exists('role', $resource)){
+                $role = $resource['role'];
+                $role['request'] = $resource['@id'];
+
+                // The resource action section
+                if(key_exists("@id",$role) && key_exists("action",$role)){
+                    // The delete action
+                    if($role['action'] == 'delete'){
+                        $commonGroundService->deleteResource($role);
+                        return $this->redirect($this->generateUrl('app_vrc_request',['id'=>$id]));
+                    }
+                }
+                $role = $commonGroundService->saveResource($role, ['component'=>'vrc','type'=>'roles']);
+            }
+
             // Fix for properties not being nullabe @todo long term fix should be implemented
             if(!array_key_exists('properties', $resource)){
                 $resource['properties'] = [];
@@ -190,7 +205,7 @@ class VrcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'label'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'labels','id'=> $id]);        }
@@ -201,7 +216,7 @@ class VrcController extends AbstractController
             return $this->redirect($this->generateUrl('app_vrc_labels'));
         }
 
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -215,7 +230,7 @@ class VrcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'labels','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'vrc','type'=>'labels']));
         }
 
 

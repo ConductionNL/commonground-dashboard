@@ -22,9 +22,9 @@
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'participant'|trans|capitalize }}</label>
-                    <select name="participant" id="participant" class="form-control form-control-lg" required>
+                    <select name="role[participant]" id="role[participant]" class="form-control form-control-lg" required>
                         {% for employee in employees %}
-                            <option value="{{ employee.person }}">{{ employee.person }}</option>
+                            <option value="{{ employee['@id'] }}">{{ employee.person }}</option>
                         {% endfor %}
                     </select>
                 </div><!-- /.form-group -->
@@ -37,8 +37,26 @@
                         <option value="medewerker">medewerker</option>
                     </select>
                 </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'request'|trans|capitalize }}</label>
+                    <select id="role[request]" name="role[request]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.reference }}</option>
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="role[id]" name ="role[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="role[@id]" name ="role[@id]" value="{{ item['@id'] }}">
+                {% endif %}
                 <button type="submit" class="btn btn-success m-3  mx-auto">
-                    {{ 'add'|trans|capitalize }}
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
                 </button>
             </form>
         </div>

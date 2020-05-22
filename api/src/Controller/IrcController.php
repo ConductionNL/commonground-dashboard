@@ -79,6 +79,8 @@ class IrcController extends AbstractController
         $variables['title'] = $translator->trans('assent');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('assent');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['employees'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'employees'])["hydra:member"];
+        $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -91,7 +93,7 @@ class IrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'irc','type'=>'assents','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'irc','type'=>'assents']));
         }
 
         return $variables;
