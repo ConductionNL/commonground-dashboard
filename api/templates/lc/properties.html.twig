@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_lc_place' %}
+{% set view = 'app_lc_property' %}
 
 {% block content %}
 
@@ -8,8 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'places',
-                'name' : 'places'|trans|capitalize,
+                'headerTitle': 'properties',
+                'name' : 'properties'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
