@@ -158,7 +158,8 @@
                     <div class="col-md-4">
                         {% include 'vrc/widgets/roles.html.twig'
                             with {
-                            'resource':resource,
+                            'request':resource.id,
+                            'roles':resource.roles,
                             'employees':employees} %}
                     </div><!-- /.col -->
                     <div class="col-md-4">

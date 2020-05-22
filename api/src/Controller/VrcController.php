@@ -131,6 +131,21 @@ class VrcController extends AbstractController
                 $resource['id'] = $variables['resource']['id'];
             }
 
+            if(array_key_exists('role', $resource)){
+                $role = $resource['role'];
+                $role['request'] = $resource['@id'];
+
+                // The resource action section
+                if(key_exists("@id",$role) && key_exists("action",$role)){
+                    // The delete action
+                    if($role['action'] == 'delete'){
+                        $commonGroundService->deleteResource($role);
+                        return $this->redirect($this->generateUrl('app_vrc_request',['id'=>$id]));
+                    }
+                }
+                $role = $commonGroundService->saveResource($role, ['component'=>'vrc','type'=>'roles']);
+            }
+
             // Fix for properties not being nullabe @todo long term fix should be implemented
             if(!array_key_exists('properties', $resource)){
                 $resource['properties'] = [];

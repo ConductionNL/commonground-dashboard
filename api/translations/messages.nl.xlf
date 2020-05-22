@@ -379,19 +379,19 @@
       </trans-unit>
       <trans-unit id=".nnX1Pc" resname="addresses">
         <source>addresses</source>
-        <target>__addresses</target>
+        <target>adressen</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
-        <target>__address</target>
+        <target>adres</target>
       </trans-unit>
       <trans-unit id="ztvoGHR" resname="emails">
         <source>emails</source>
-        <target>__emails</target>
+        <target>e-mails</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
         <source>email</source>
-        <target>__email</target>
+        <target>e-mail</target>
       </trans-unit>
       <trans-unit id="lHjqrKP" resname="telephones">
         <source>telephones</source>
@@ -807,7 +807,7 @@
       </trans-unit>
       <trans-unit id="IbLu0eM" resname="images">
         <source>images</source>
-        <target>__images</target>
+        <target>afbeeldingen</target>
       </trans-unit>
       <trans-unit id="YQXWzHa" resname="image">
         <source>image</source>
@@ -827,11 +827,11 @@
       </trans-unit>
       <trans-unit id="kEXW8Fy" resname="menus">
         <source>menus</source>
-        <target>__menus</target>
+        <target>menu's</target>
       </trans-unit>
       <trans-unit id="OYmRAJ2" resname="menu">
         <source>menu</source>
-        <target>__menu</target>
+        <target>menu</target>
       </trans-unit>
       <trans-unit id="6F7FO9p" resname="configurations">
         <source>configurations</source>
@@ -1011,7 +1011,7 @@
       </trans-unit>
       <trans-unit id="_SmBx8C" resname="adresses">
         <source>adresses</source>
-        <target>__adresses</target>
+        <target>adressen</target>
       </trans-unit>
       <trans-unit id="yQImgPi" resname="people">
         <source>people</source>
@@ -1023,7 +1023,7 @@
       </trans-unit>
       <trans-unit id="Gw7BlU7" resname="domains">
         <source>domains</source>
-        <target>__domains</target>
+        <target>domeinen</target>
       </trans-unit>
       <trans-unit id="lG9dCSy" resname="add domain">
         <source>add domain</source>
@@ -1075,11 +1075,11 @@
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
-        <target>__no</target>
+        <target>nee</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
-        <target>__yes</target>
+        <target>ja</target>
       </trans-unit>
       <trans-unit id="p2X3_FX" resname="authorization key">
         <source>authorization key</source>
@@ -1091,11 +1091,11 @@
       </trans-unit>
       <trans-unit id="8v_Dhgp" resname="domain">
         <source>domain</source>
-        <target>__domain</target>
+        <target>domein</target>
       </trans-unit>
       <trans-unit id="FAvtv5w" resname="none">
         <source>none</source>
-        <target>__none</target>
+        <target>geen</target>
       </trans-unit>
       <trans-unit id="JRhWTSD" resname="helm version">
         <source>helm version</source>
@@ -1187,7 +1187,7 @@
       </trans-unit>
       <trans-unit id="MyfyKgW" resname="requests types">
         <source>requests types</source>
-        <target>__requests types</target>
+        <target>verzoek typen</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
@@ -1551,7 +1551,7 @@
       </trans-unit>
       <trans-unit id="c5OFHLt" resname="default configuration">
         <source>default configuration</source>
-        <target>__default configuration</target>
+        <target>standaard configuratie</target>
       </trans-unit>
       <trans-unit id="H_KJIFk" resname="application">
         <source>application</source>

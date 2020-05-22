@@ -7,14 +7,15 @@
             {% for role in roles %}
                 <div class="item-list">
                     <div class="info-user ml-3">
-                        <div class="roleType"><h4>{{ role.roleType|capitalize }}</h4></div>
-                        <div class="participant">{{ role.participant }}</div>
+                        <div class="roleType"><h4>{{ role.rolType|capitalize }}</h4></div>
+                        <div class="participant">{{ commonground_resource(role.participant).person }}</div>
                     </div>
-                    <a class="btn btn-icon btn-primary btn-round btn-s"
-                       style="margin-right: 5px"
-                       href="{{ path('app_vrc_request', {id: request.id}) }}">
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                            style="margin-right: 5px"
+                            data-toggle="modal"
+                            data-target="#editRole{{ role.id }}">
                         <i class="fa fa-edit"></i>
-                    </a>
+                    </button>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
                             style="margin-right: 15px" data-toggle="modal"
                             data-target="#deleteRole{{ role.id }}">
@@ -50,11 +51,11 @@
             'item':role,
             'id':'deleteRole' } %}
 
-        {% include 'wrc/modals/role.html.twig'
+        {% include 'vrc/modals/role.html.twig'
             with {
             'route': 'app_vrc_request',
             'resource':resource,
             'item':role,
-            'id':'editSlug' } %}
+            'id':'editRole' } %}
     {% endfor %}
 {% endif %}
