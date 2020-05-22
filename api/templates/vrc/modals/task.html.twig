@@ -17,8 +17,8 @@
                     <input type="text" class="form-control form-control-lg" id="task[name]" name="task[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
-                    <label for="largeInput">{{ 'owner'|trans|capitalize }}</label>
-                    <select name="task[owner]" id="task[owner]" class="form-control form-control-lg" required>
+                    <label for="largeInput">{{ 'assignee'|trans|capitalize }}</label>
+                    <select name="task[assignee]" id="task[assignee]" class="form-control form-control-lg" required>
                         {% for employee in employees %}
                             <option value="{{ employee['@id'] }}">{{ employee.person }}</option>
                         {% endfor %}
@@ -46,7 +46,7 @@
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'topic'|trans|capitalize }}</label>
-                    <select id="memo[topic]" name="memo[topic]" class="form-control form-control-lg" required disabled>
+                    <select id="task[topic]" name="task[topic]" class="form-control form-control-lg" required disabled>
                         {% if resource.id is defined %}
                             <option value="{{ resource['@id'] }}">{{ resource.reference }}</option>
                         {% endif %}
@@ -57,10 +57,10 @@
                     <input type="text" class="form-control form-control-lg summernote" id="task[description]" name="task[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
                 </div><!-- /.form-group -->
                 {% if item['id'] is defined %}
-                    <input type="hidden" id="memo[id]" name ="memo[id]" value="{{ item['id'] }}">
+                    <input type="hidden" id="task[id]" name ="task[id]" value="{{ item['id'] }}">
                 {% endif %}
                 {% if item['@id'] is defined %}
-                    <input type="hidden" id="memo[@id]" name ="memo[@id]" value="{{ item['@id'] }}">
+                    <input type="hidden" id="task[@id]" name ="task[@id]" value="{{ item['@id'] }}">
                 {% endif %}
                 <button type="submit" class="btn btn-success m-3  mx-auto">
                     {% if item.id is defined %}

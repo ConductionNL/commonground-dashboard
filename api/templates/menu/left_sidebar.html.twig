@@ -54,7 +54,7 @@
                 {% endif %}
 
 
-                {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.create' in app.user.roles %}
+                {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.write' in app.user.roles %}
                     <a href="{{ path("app_wrc_applications") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'applications'|trans|capitalize }}</span>

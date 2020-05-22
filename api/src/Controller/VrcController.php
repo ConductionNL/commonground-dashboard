@@ -166,6 +166,8 @@ class VrcController extends AbstractController
             if(array_key_exists('task', $resource)){
                 $task = $resource['task'];
                 $task['topic'] = $resource['@id'];
+                $task['priority'] = (int)$task['priority'];
+                $task['percentageDone'] = (int)$task['percentageDone'];
 
 
                 // The resource action section
