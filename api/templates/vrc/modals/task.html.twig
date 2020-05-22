@@ -54,7 +54,7 @@
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg summernote" id="task[description]" name="task[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="task[description]" name="task[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
                 </div><!-- /.form-group -->
                 {% if item['id'] is defined %}
                     <input type="hidden" id="task[id]" name ="task[id]" value="{{ item['id'] }}">
