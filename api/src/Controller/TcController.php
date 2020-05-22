@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PdcController
+ * Class TcController
  * @package App\Controller
  * @Route("/task")
  */

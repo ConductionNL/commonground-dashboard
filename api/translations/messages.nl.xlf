@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="kxW44RI" resname="last updated add">
         <source>last updated add</source>
-        <target>laats bewerkt op</target>
+        <target>laatst bewerkt op </target>
       </trans-unit>
       <trans-unit id="uAAShRz" resname="modified">
         <source>modified</source>
