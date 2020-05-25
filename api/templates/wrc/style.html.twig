@@ -64,10 +64,18 @@
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="summernote" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control" rows="5" id="description" name ="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'style'|trans|capitalize }}</label>
+                                                <textarea class="form-control" rows="5" id="css" name ="css">{% if resource.css is defined %}{{ resource.css }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
 								</div> <!-- /.card-body -->
 
 								<div class="card-action">

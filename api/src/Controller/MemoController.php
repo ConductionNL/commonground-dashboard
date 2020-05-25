@@ -64,7 +64,7 @@ class MemoController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'memo','type'=>'memos','id'=> $id]);        }

@@ -1,0 +1,40 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'dashboard',
+                'name' : 'dashboard'|trans|capitalize,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    }
+                }]
+            }
+            %}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'ud/widgets/requests.html.twig'
+                            with {'requests': requests} %}
+                    </div>
+                    <div class="col-md-6 ml-auto">
+                        {% include 'ud/widgets/tasks.html.twig'
+                            with {'events': events} %}
+                    </div><!-- /.col -->
+                    <div class="col-md-6 ml-auto">
+                        {% include 'ud/widgets/events.html.twig'
+                            with {'events': events} %}
+                    </div><!-- /.col -->
+                </div>
+            </div>
+
+    {% include 'footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

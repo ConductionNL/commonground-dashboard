@@ -12,7 +12,9 @@
                                         <li class="breadcrumb-item"><a href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize}} </a></li>
                                     {% endfor %}
                                 {% endfor %}
-                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name }}</li>
+                                {% if name is defined %}
+                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name|trans|capitalize }}</li>
+                                    {% endif %}
                             {% endif %}
                         {% endblock %}
                     </ol>

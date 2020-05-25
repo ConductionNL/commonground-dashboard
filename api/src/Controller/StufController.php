@@ -64,19 +64,19 @@ class StufController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'stuf','type'=>'stuf_interface','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'stuf','type'=>'stufinterface','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_stuf_stuf_interfaces'));
+            return $this->redirect($this->generateUrl('app_stuf_stufinterfaces'));
         }
 
-        $variables['title'] = $translator->trans('stuf_interface');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('stuf_interface');
+        $variables['title'] = $translator->trans('stufinterface');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('stufinterface');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'stuf','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
@@ -91,7 +91,7 @@ class StufController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'stuf','type'=>'stuf_interface','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'stuf','type'=>'stufinterface','id'=>$id]));
         }
 
 

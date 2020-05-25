@@ -75,7 +75,7 @@
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
-                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }} {{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }} {% endif %}
                                 </div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
