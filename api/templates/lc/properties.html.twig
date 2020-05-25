@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_bs_message' %}
+{% set view = 'app_lc_property' %}
 
 {% block content %}
 
@@ -8,8 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'messages',
-                'name' : 'messages'|trans|capitalize,
+                'headerTitle': 'properties',
+                'name' : 'properties'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
@@ -23,10 +23,7 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'reciever'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'sender'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'service'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
@@ -35,10 +32,7 @@
                         <tbody>
                         {% for resource in resources %}
                         <tr>
-                            <td>{{ resource.status }}</td>
-                            <td>{{ commonground_resource(resource.reciever).name }}</td>
-                            <td>{{ commonground_resource(resource.sender).name }}</td>
-                            <td>{{ resource.service.type }}</td>
+                            <td>{{ resource.name }}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>

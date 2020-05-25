@@ -5,22 +5,25 @@
     {% if tasks is defined %}
         <div class="card-list">
             {% for task in tasks %}
-                <div class="item-list">
-                    <div class="info-user ml-3">
-                        <div class="name"><h4>{{ task.name|capitalize }}</h4></div>
-                        <div class="description">{{ task.description }}</div>
-                    </div>
-                    <a class="btn btn-icon btn-primary btn-round btn-s"
-                       style="margin-right: 5px"
-                       href="{{ path('app_tc_task', {id: task.id}) }}">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <button class="btn btn-icon btn-danger btn-round btn-s"
-                            style="margin-right: 15px" data-toggle="modal"
-                            data-target="#deleteTask{{ task.id }}">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div><!-- /.item-list -->
+                {% if task.topic == resource['@id'] %}
+                    <div class="item-list">
+                        <div class="info-user ml-3">
+                            <div class="name"><h4>{{ task.name|capitalize }}</h4></div>
+                            <div class="participant">{{ task.description }}</div>
+                        </div>
+                        <button class="btn btn-icon btn-primary btn-round btn-s"
+                                style="margin-right: 5px"
+                                data-toggle="modal"
+                                data-target="#editTask{{ task.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-icon btn-danger btn-round btn-s"
+                                style="margin-right: 15px" data-toggle="modal"
+                                data-target="#deleteTask{{ task.id }}">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div><!-- /.item-list -->
+                {% endif %}
             {% endfor %}
         </div><!-- /.card-list -->
     {% endif %}
@@ -37,7 +40,7 @@
 {# the role modals #}
 {% include 'vrc/modals/task.html.twig'
     with {
-    'route': 'app_tc_task',
+    'route': 'app_vrc_request',
     'resource':resource,
     'id':'addTask' } %}
 
@@ -45,9 +48,16 @@
     {% for task in tasks %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_tc_task',
+            'route': 'app_vrc_request',
             'resource':resource,
             'item':task,
             'id':'deleteTask' } %}
+
+        {% include 'vrc/modals/task.html.twig'
+            with {
+            'route': 'app_vrc_request',
+            'resource':resource,
+            'item':task,
+            'id':'editTask' } %}
     {% endfor %}
 {% endif %}

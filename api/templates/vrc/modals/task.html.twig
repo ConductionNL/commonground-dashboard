@@ -4,7 +4,7 @@
     <div class="modal-dialog model-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit role'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add role'|trans|capitalize }}{% endif %}</b></h5>
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit task'|trans|capitalize }} {{ item.name }}{%  else %}{{ 'add task'|trans|capitalize }}{% endif %}</b></h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -13,28 +13,61 @@
 
             <form action="{{ path(route, {id: resource.id}) }}" method="post">
                 <div class="form-group">
-                    <label for="largeInput">{{ 'rol type'|trans|capitalize }}</label>
-                    <select id="role[rolType]" name="role[rolType]" class="form-control form-control-lg" required>
-                        <option value="initiator">initiator</option>
-                        <option value="behandelaar">behandelaar</option>
-                        <option value="belanghebbende">belanghebbende</option>
+                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="task[name]" name="task[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'assignee'|trans|capitalize }}</label>
+                    <select name="task[assignee]" id="task[assignee]" class="form-control form-control-lg" required>
+                        {% for employee in employees %}
+                            <option value="{{ employee['@id'] }}">{{ employee.person }}</option>
+                        {% endfor %}
+                    </select>
+                </div><!-- /.form-group -->
+
+                <div class="form-group">
+                    <label for="largeInput">{{ 'percentage done'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="task[percentageDone]" name="task[percentageDone]" value="{% if item.percentageDone is defined %}{{ item.percentageDone }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'priority'|trans|capitalize }}</label>
+                    <select id="memo[priority]" name="task[priority]" class="form-control form-control-lg" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+
                     </select>
                 </div><!-- /.form-group -->
                 <div class="form-group">
-                    <label for="largeInput">{{ 'participant'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="role[participant]" name="role[participant]" value="{% if item.participant is defined %}{{ item.participant }}{% endif %}">
-                </div><!-- /.form-group -->
-                <div class="form-group">
-                    <label for="largeInput">{{ 'participant type'|trans|capitalize }}</label>
-                    <select id="role[participantType]" name="role[participantType]" class="form-control form-control-lg" required>
-                        <option value="Natuurlijk persoon">Natuurlijk persoon</option>
-                        <option value="niet natuurlijk persoon">niet natuurlijk persoon</option>
-                        <option value="Organisatorische eenheid">Organisatorische eenheid</option>
-                        <option value="medewerker">medewerker</option>
+                    <label for="largeInput">{{ 'topic'|trans|capitalize }}</label>
+                    <select id="task[topic]" name="task[topic]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.reference }}</option>
+                        {% endif %}
                     </select>
                 </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="task[description]" name="task[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                </div><!-- /.form-group -->
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="task[id]" name ="task[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="task[@id]" name ="task[@id]" value="{{ item['@id'] }}">
+                {% endif %}
                 <button type="submit" class="btn btn-success m-3  mx-auto">
-                    {{ 'add'|trans|capitalize }}
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
                 </button>
             </form>
         </div>

@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="kxW44RI" resname="last updated add">
         <source>last updated add</source>
-        <target>laats bewerkt op</target>
+        <target>laatst bewerkt op </target>
       </trans-unit>
       <trans-unit id="uAAShRz" resname="modified">
         <source>modified</source>
@@ -379,35 +379,35 @@
       </trans-unit>
       <trans-unit id=".nnX1Pc" resname="addresses">
         <source>addresses</source>
-        <target>__addresses</target>
+        <target>adressen</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
-        <target>__address</target>
+        <target>adres</target>
       </trans-unit>
       <trans-unit id="ztvoGHR" resname="emails">
         <source>emails</source>
-        <target>__emails</target>
+        <target>e-mails</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
         <source>email</source>
-        <target>__email</target>
+        <target>e-mail</target>
       </trans-unit>
       <trans-unit id="lHjqrKP" resname="telephones">
         <source>telephones</source>
-        <target>__telephones</target>
+        <target>telefoons</target>
       </trans-unit>
       <trans-unit id="czlyUVm" resname="telephone">
         <source>telephone</source>
-        <target>__telephone</target>
+        <target>telefoon</target>
       </trans-unit>
       <trans-unit id="__dcDVd" resname="contact lists">
         <source>contact lists</source>
-        <target>__contact lists</target>
+        <target>contactlijsten</target>
       </trans-unit>
       <trans-unit id="vhnq5zq" resname="contact list">
         <source>contact list</source>
-        <target>__contact list</target>
+        <target>contactlijst</target>
       </trans-unit>
       <trans-unit id="hWe.pvn" resname="Common ground Registratie">
         <source>Common ground Registratie</source>
@@ -807,7 +807,7 @@
       </trans-unit>
       <trans-unit id="IbLu0eM" resname="images">
         <source>images</source>
-        <target>__images</target>
+        <target>afbeeldingen</target>
       </trans-unit>
       <trans-unit id="YQXWzHa" resname="image">
         <source>image</source>
@@ -827,11 +827,11 @@
       </trans-unit>
       <trans-unit id="kEXW8Fy" resname="menus">
         <source>menus</source>
-        <target>__menus</target>
+        <target>menu's</target>
       </trans-unit>
       <trans-unit id="OYmRAJ2" resname="menu">
         <source>menu</source>
-        <target>__menu</target>
+        <target>menu</target>
       </trans-unit>
       <trans-unit id="6F7FO9p" resname="configurations">
         <source>configurations</source>
@@ -1003,7 +1003,7 @@
       </trans-unit>
       <trans-unit id="8dtMiWE" resname="Contact lists">
         <source>Contact lists</source>
-        <target>__Contact lists</target>
+        <target>contactlijsten</target>
       </trans-unit>
       <trans-unit id="G9o1H6b" resname="kvk">
         <source>kvk</source>
@@ -1011,7 +1011,7 @@
       </trans-unit>
       <trans-unit id="_SmBx8C" resname="adresses">
         <source>adresses</source>
-        <target>__adresses</target>
+        <target>adressen</target>
       </trans-unit>
       <trans-unit id="yQImgPi" resname="people">
         <source>people</source>
@@ -1023,7 +1023,7 @@
       </trans-unit>
       <trans-unit id="Gw7BlU7" resname="domains">
         <source>domains</source>
-        <target>__domains</target>
+        <target>domeinen</target>
       </trans-unit>
       <trans-unit id="lG9dCSy" resname="add domain">
         <source>add domain</source>
@@ -1075,11 +1075,11 @@
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
-        <target>__no</target>
+        <target>nee</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
-        <target>__yes</target>
+        <target>ja</target>
       </trans-unit>
       <trans-unit id="p2X3_FX" resname="authorization key">
         <source>authorization key</source>
@@ -1091,11 +1091,11 @@
       </trans-unit>
       <trans-unit id="8v_Dhgp" resname="domain">
         <source>domain</source>
-        <target>__domain</target>
+        <target>domein</target>
       </trans-unit>
       <trans-unit id="FAvtv5w" resname="none">
         <source>none</source>
-        <target>__none</target>
+        <target>geen</target>
       </trans-unit>
       <trans-unit id="JRhWTSD" resname="helm version">
         <source>helm version</source>
@@ -1187,11 +1187,11 @@
       </trans-unit>
       <trans-unit id="MyfyKgW" resname="requests types">
         <source>requests types</source>
-        <target>__requests types</target>
+        <target>verzoek typen</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>__contact</target>
+        <target>contact</target>
       </trans-unit>
       <trans-unit id="2SBjkdS" resname="order items">
         <source>order items</source>
@@ -1551,7 +1551,7 @@
       </trans-unit>
       <trans-unit id="c5OFHLt" resname="default configuration">
         <source>default configuration</source>
-        <target>__default configuration</target>
+        <target>standaard configuratie</target>
       </trans-unit>
       <trans-unit id="H_KJIFk" resname="application">
         <source>application</source>
@@ -1675,7 +1675,7 @@
       </trans-unit>
       <trans-unit id="I9YRpvb" resname="topic">
         <source>topic</source>
-        <target>__topic</target>
+        <target>onderwerp</target>
       </trans-unit>
       <trans-unit id="gbrodrc" resname="receiver">
         <source>receiver</source>
@@ -1711,15 +1711,15 @@
       </trans-unit>
       <trans-unit id="PcRxASq" resname="edit memo">
         <source>edit memo</source>
-        <target>__edit memo</target>
+        <target>memo aanpassen:</target>
       </trans-unit>
       <trans-unit id="nNu__pR" resname="add memo">
         <source>add memo</source>
-        <target>__add memo</target>
+        <target>memo toevoegen</target>
       </trans-unit>
       <trans-unit id="Y2SFhol" resname="author">
         <source>author</source>
-        <target>__author</target>
+        <target>auteur</target>
       </trans-unit>
       <trans-unit id="ovdQxYy" resname="edit menu item">
         <source>edit menu item</source>
@@ -1731,7 +1731,7 @@
       </trans-unit>
       <trans-unit id="KOXrq9n" resname="url">
         <source>url</source>
-        <target>__url</target>
+        <target>url</target>
       </trans-unit>
       <trans-unit id="5UDn17l" resname="edit slug">
         <source>edit slug</source>

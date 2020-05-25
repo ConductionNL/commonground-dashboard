@@ -94,7 +94,7 @@ class MrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'employees','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'employees']));
 
         }
 
