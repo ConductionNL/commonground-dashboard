@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PdcController
+ * Class VtcController
  * @package App\Controller
  * @Route("/vtc")
  */
