@@ -1675,7 +1675,7 @@
       </trans-unit>
       <trans-unit id="I9YRpvb" resname="topic">
         <source>topic</source>
-        <target>__topic</target>
+        <target>onderwerp</target>
       </trans-unit>
       <trans-unit id="gbrodrc" resname="receiver">
         <source>receiver</source>
@@ -1711,15 +1711,15 @@
       </trans-unit>
       <trans-unit id="PcRxASq" resname="edit memo">
         <source>edit memo</source>
-        <target>__edit memo</target>
+        <target>memo aanpassen:</target>
       </trans-unit>
       <trans-unit id="nNu__pR" resname="add memo">
         <source>add memo</source>
-        <target>__add memo</target>
+        <target>memo toevoegen</target>
       </trans-unit>
       <trans-unit id="Y2SFhol" resname="author">
         <source>author</source>
-        <target>__author</target>
+        <target>auteur</target>
       </trans-unit>
       <trans-unit id="ovdQxYy" resname="edit menu item">
         <source>edit menu item</source>
