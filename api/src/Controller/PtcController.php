@@ -194,7 +194,7 @@ class PtcController extends AbstractController
 
         $variables['title'] = $translator->trans('section');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('section');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'ptc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
