@@ -43,23 +43,37 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-6 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
-    									<div class="col-md-3 col-sm-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
-        										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
-                                                {% endfor %}
-                                                </select>
-        									</div><!-- /.form-group -->
+    									<div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'rsin'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="rsin" name ="rsin" value="{% if resource.rsin is defined %}{{ resource.rsin }}{% endif %}">
+                                            </div>
         								</div> <!-- /.col -->
     								</div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'chamber of comerce'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="chamberOfComerce" name ="chamberOfComerce" value="{% if resource.chamberOfComerce is defined %}{{ resource.chamberOfComerce }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'contact'|trans|capitalize }}</label>
+                                                <select name="contract" id="contract" class="form-control form-control-lg" required>
+                                                    {% for employee in employees %}
+                                                        <option value="{{ employee['@id'] }}">{{ employee.person }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
@@ -82,19 +96,19 @@
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
-                'route': 'app_wrc_organizaiton',
+                'route': 'app_wrc_organization',
                 'resource':resource,
                 'id':'delete' } %}
 
             {% include 'widgets/auditTrail_modal.html.twig'
                 with {
-                'route': 'app_wrc_organizaiton',
+                'route': 'app_wrc_organization',
                 'resource':resource,
                 'id':'auditTrial' } %}
 
             {% include 'widgets/changeLog_modal.html.twig'
                 with {
-                'route': 'app_wrc_organizaiton',
+                'route': 'app_wrc_organization',
                 'resource':resource,
                 'id':'changeLog' } %}
 

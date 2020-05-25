@@ -43,23 +43,37 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-6 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
-    									<div class="col-md-3 col-sm-12">
+    									<div class="col-md-6 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										<select id="organization" name="organization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
     								</div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'alt'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="alt" name ="alt" value="{% if resource.alt is defined %}{{ resource.alt }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'href'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="href" name ="href" value="{% if resource.href is defined %}{{ resource.href }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
