@@ -6,11 +6,7 @@ url: ""
 landingURL: "" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-<<<<<<< Updated upstream
 releaseDate: "2020-25-05"
-=======
-releaseDate: "2020-19-05"
->>>>>>> Stashed changes
 logo: db.conduction.nl 
 monochromeLogo: img/logo-mono.svg
 
