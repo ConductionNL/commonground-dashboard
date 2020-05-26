@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Commonground Dashboard</title>
+	<title>{{ commonground_application()['name'] }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
+    <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
 	<script src="/assets/js/plugin/webfont/webfont.min.js"></script>
 	<script>
 		WebFont.load({
@@ -19,20 +20,22 @@
 	</script>
 
 	<!-- CSS Files -->
+
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/assets/css/atlantis.css">
+    <link rel="stylesheet" href="/assets/css/summernote-bs4.css">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="/assets/css/demo.css">
 
-	<!-- overwrites -->
+    <!-- Font awesome -->
+
+
+	<!-- Commonground Overwrites -->
 	<style>
-		.logo-header  {
-			background: #CC0000 !important;
-		}
-		.navbar-header{
-			background: #CC0000 !important;
-		}
+        {% if commonground_application()['style'] is defined and commonground_application()['style'] is not empty %}
+		{{ commonground_application()['style']['css'] }}
+        {% endif %}
 	</style>
 </head>
 <body>
@@ -115,6 +118,9 @@
 	<!-- Atlantis JS -->
 	<script src="/assets/js/atlantis.min.js"></script>
 
+    <!-- Summernote JS -->
+    <script src="/assets/js/summernote-bs4.js"></script>
+
 	<script>
 	{% for label, messages in app.flashes(['warning', 'error', 'success']) %}
         {% for message in messages %}
@@ -133,10 +139,19 @@
         });
         {% endfor %}
     {% endfor %}
-	</script>
 
-	{% block javascript %}
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+
+    $(document).ready(function() {
+        $('.summernote').summernote();
+    });
+
+    {% block javascript %}
 
     {% endblock %}
+
+	</script>
 </body>
 </html>

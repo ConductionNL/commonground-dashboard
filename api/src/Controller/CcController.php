@@ -66,11 +66,12 @@ class CcController extends AbstractController
             return $this->redirect($this->generateUrl('app_cc_persons'));
         }
 
+
     	$variables = [];
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'people','id'=> $id]);
@@ -126,7 +127,7 @@ class CcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'adresses','id'=> $id]);        }
@@ -181,7 +182,7 @@ class CcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'emails','id'=> $id]);
@@ -238,7 +239,7 @@ class CcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'telephones','id'=> $id]);        }
@@ -295,7 +296,7 @@ class CcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'organizations','id'=> $id]);        }
@@ -351,7 +352,7 @@ class CcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'contactLists','id'=> $id]);

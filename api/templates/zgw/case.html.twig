@@ -4,9 +4,22 @@
 
     <div class="main-panel">
         <div class="container">
-			
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Zaak bewerken','functie': 'Dashboard -> WRC -> Templates -> '~resource.omschrijving }%}
 
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a case',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'cases' : {
+                        'name' : 'cases',
+                        'path' : 'app_zgw_cases'
+                    }
+                }]
+            }
+            %}
             <div class="page-inner">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
@@ -15,8 +28,17 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.omschrijving }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-danger" href="#setResultModal" data-toggle="modal" data-target="#setResultModal">{{ 'set result'|trans|capitalize }}</a>
-                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_zgw_cases')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
 								<div class="card-body">
@@ -26,128 +48,147 @@
         										<label for="largeInput">{{ 'omschrijving'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="omschrijving" name ="omschrijving" value="{% if resource.omschrijving is defined %}{{ resource.omschrijving }}{% endif %}">
         									</div>
-    									</div> <!-- /.col -->  
+    									</div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
         										<select id="zaaktype" name="zaaktype" class="form-control form-control-lg">
         										 {% for casetype in casetypes %}
-                                               		<option value="{{ casetype['@id'] }}" {% if resource.zaaktype  is defined and casetype['@id'] == resource.zaaktype  %}selected=""{% endif %}>{{ casetype.omschrijving }}</option>                                               		
+                                               		<option value="{{ casetype['@id'] }}" {% if resource.zaaktype  is defined and casetype['@id'] == resource.zaaktype  %}selected=""{% endif %}>{{ casetype.omschrijving }}</option>
                                                 {% endfor %}
                                                 </select>
-        									</div><!-- /.form-group -->  
-        								</div> <!-- /.col -->  
+        									</div><!-- /.form-group -->
+        								</div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'responsible organization'|trans|capitalize }}</label>
         										<select id="verantwoordelijkeOrganisatie" name="verantwoordelijkeOrganisatie" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['rsin'] }}" {% if resource.verantwoordelijkeOrganisatie  is defined and organization['rsin'] == resource.verantwoordelijkeOrganisatie  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
+                                               		<option value="{{ organization['rsin'] }}" {% if resource.verantwoordelijkeOrganisatie  is defined and organization['rsin'] == resource.verantwoordelijkeOrganisatie  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
-        									</div><!-- /.form-group -->  
-        									
-        								</div> <!-- /.col -->  
+        									</div><!-- /.form-group -->
+
+        								</div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'source organization'|trans|capitalize }}</label>
         										<select id="bronorganisatie" name="bronorganisatie" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['rsin'] }}" {% if resource.bronorganisatie is defined and organization['rsin'] == resource.bronorganisatie  %}selected=""{% endif %}>{{ organization.name }}</option>                                               		
+                                               		<option value="{{ organization['rsin'] }}" {% if resource.bronorganisatie is defined and organization['rsin'] == resource.bronorganisatie  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
-        									</div><!-- /.form-group -->  
-        								</div> <!-- /.col -->  
-    								</div><!-- /.row --> 
+        									</div><!-- /.form-group -->
+        								</div> <!-- /.col -->
+    								</div><!-- /.row -->
     								<div class="row">
-        								<div class="col-md-6">    
+        								<div class="col-md-6">
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="description" name ="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-        									</div>       
-        								</div><!-- /.col -->  
-        								<div class="col-md-6">  
+												<textarea class="form-control" rows="5" id="summernote" name ="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+        									</div>
+        								</div><!-- /.col -->
+        								<div class="col-md-6">
             								<div class="row">
-                								<div class="col-md-12">  
-        										 {% for property in caseproperties %} 
+                								<div class="col-md-12">
+        										 {% for property in caseproperties %}
         										 	{{ property.naam }} {{ property.definitie }}
         										 	{{ property.specificatie.formaat }}
         										 {% endfor %}
-                								</div><!-- /.col -->  
-            								</div> <!-- /.row -->  
-        								</div><!-- /.col -->  
-    								</div> <!-- /.row -->       
-								</div> <!-- /.card-body -->        
+                								</div><!-- /.col -->
+            								</div> <!-- /.row -->
+        								</div><!-- /.col -->
+    								</div> <!-- /.row -->
+								</div> <!-- /.card-body -->
 
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->   
+								</div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                <div class="row">                
+                <div class="row">
                     <div class="col-md-3">
                         <div class="card p-4 full-height">
 							<div class="card-header">
                          		<h3 class="d-inline-block">{{ 'documents'|trans|capitalize }}</h3>
                             </div>
 							<div class="card-body">
-							</div> <!-- /.card-body -->        
+							</div> <!-- /.card-body -->
 
 							<div class="card-action">
                            		<a class="btn btn-info" href="#addDocuments" data-toggle="modal" data-target="#addDocumentsModal">{{ 'add'|trans|capitalize }}</a>
-							</div><!-- /.card-action -->   
+							</div><!-- /.card-action -->
                         </div><!-- /.card -->
-                    </div><!-- /.col --> 
+                    </div><!-- /.col -->
                     <div class="col-md-3">
                         <div class="card p-4 full-height">
 							<div class="card-header">
                          		<h3 class="d-inline-block">{{ 'statuses'|trans|capitalize }}</h3>
                             </div>
 							<div class="card-body">
-							</div> <!-- /.card-body -->        
+							</div> <!-- /.card-body -->
 
 							<div class="card-action">
                            		<a class="btn btn-info" href="#addStatusModal" data-toggle="modal" data-target="#addStatusModal">{{ 'add'|trans|capitalize }}</a>
-							</div><!-- /.card-action -->   
+							</div><!-- /.card-action -->
                         </div><!-- /.card -->
-                    </div><!-- /.col --> 
+                    </div><!-- /.col -->
                     <div class="col-md-3">
                         <div class="card p-4 full-height">
 							<div class="card-header">
                          		<h3 class="d-inline-block">{{ 'roles'|trans|capitalize }}</h3>
                             </div>
 							<div class="card-body">
-							</div> <!-- /.card-body -->        
+							</div> <!-- /.card-body -->
 
 							<div class="card-action">
                            			<a class="btn btn-info" href="#addRoleModal" data-toggle="modal" data-target="#addRoleModal">{{ 'add'|trans|capitalize }}</a>
-							</div><!-- /.card-action -->   
+							</div><!-- /.card-action -->
                         </div><!-- /.card -->
-                    </div><!-- /.col --> 
+                    </div><!-- /.col -->
                     <div class="col-md-3">
                         <div class="card p-4 full-height">
 							<div class="card-header">
                          		<h3 class="d-inline-block">{{ 'verdicts'|trans|capitalize }}</h3>
                             </div>
 							<div class="card-body">
-							</div> <!-- /.card-body -->        
+							</div> <!-- /.card-body -->
 
 							<div class="card-action">
                            		<a class="btn btn-info" href="#addVerdictModal" data-toggle="modal" data-target="#addVerdictModal">{{ 'add'|trans|capitalize }}</a>
-							</div><!-- /.card-action -->   
+							</div><!-- /.card-action -->
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                
+
             </div><!-- /.page-inner -->
+
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_zgw_case',
+                'resource':resource,
+                'id':'delete' } %}
+
+            {% include 'widgets/auditTrail_modal.html.twig'
+                with {
+                'route': 'app_zgw_case',
+                'resource':resource,
+                'id':'auditTrial' } %}
+
+            {% include 'widgets/changeLog_modal.html.twig'
+                with {
+                'route': 'app_zgw_case',
+                'resource':resource,
+                'id':'changeLog' } %}
+
 
             {% include 'footer.html.twig' %}
 
         </div>
     </div>
-    
+
     {% if casestatuses is defined %}
     <div class="modal fade" style="text-align: center" id="addStatusModal" tabindex="-1"
          role="dialog"
@@ -169,10 +210,10 @@
         					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
         					<select id="status[statustype]" name="status[statustype]" class="form-control form-control-lg">
         					{% for status in casestatuses %}
-                        		<option value="{{ status['@id'] }}">{{ status.omschrijving }}</option>                                               		
+                        		<option value="{{ status['@id'] }}">{{ status.omschrijving }}</option>
                          	{% endfor %}
                    			</select>
-        				</div><!-- /.form-group --> 
+        				</div><!-- /.form-group -->
 						<div class="form-group">
         					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
         					<input type="text" class="form-control form-control-lg" id="status[statustoelichting]" name ="status[statustoelichting]">
@@ -188,7 +229,7 @@
         </div>
     </div>
     {% endif %}
-    
+
     {% if caseresults is defined %}
     <div class="modal fade" style="text-align: center" id="setResultModal" tabindex="-1"
          role="dialog"
@@ -210,10 +251,10 @@
         					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
         					<select id="result[resultaattype]" name="result[resultaattype]" class="form-control form-control-lg">
         					{% for result in caseresults  %}
-                        		<option value="{{ result['@id'] }}">{{ result.omschrijving }}</option>                                               		
+                        		<option value="{{ result['@id'] }}">{{ result.omschrijving }}</option>
                          	{% endfor %}
                    			</select>
-        				</div><!-- /.form-group --> 
+        				</div><!-- /.form-group -->
 						<div class="form-group">
         					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
         					<input type="text" class="form-control form-control-lg" id="result[toelichting]" name ="result[toelichting]">
@@ -228,8 +269,8 @@
             </div>
         </div>
     </div>
-    {% endif %}    
-    
+    {% endif %}
+
     {% if caseverdics is defined %}
     <div class="modal fade" style="text-align: center" id="addVerdictModal" tabindex="-1"
          role="dialog"
@@ -251,10 +292,10 @@
         					<label for="largeInput">{{ 'casetype'|trans|capitalize }}</label>
         					<select id="verdict[resultaattype]" name="verdict[resultaattype]" class="form-control form-control-lg">
         					{% for verdict in caseverdics  %}
-                        		<option value="{{ result['@id'] }}">{{ result.omschrijving }}</option>                                               		
+                        		<option value="{{ result['@id'] }}">{{ result.omschrijving }}</option>
                          	{% endfor %}
                    			</select>
-        				</div><!-- /.form-group --> 
+        				</div><!-- /.form-group -->
 						<div class="form-group">
         					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
         					<input type="text" class="form-control form-control-lg" id="verdict[toelichting]" name ="verdict[toelichting]">
@@ -269,9 +310,9 @@
             </div>
         </div>
     </div>
-    
-    {% endif %}    
-    
+
+    {% endif %}
+
     {% if caseroles is defined %}
     <div class="modal fade" style="text-align: center" id="addRoleModal" tabindex="-1"
          role="dialog"
@@ -296,21 +337,21 @@
         				<div class="form-group">
         					<label for="largeInput">{{ 'betrokkeneType'|trans|capitalize }}</label>
         					<select id="role[betrokkeneType]" name="role[betrokkeneType]" class="form-control form-control-lg">
-                        		<option value="natuurlijk_persoon">{{ 'natural person'|trans|capitalize }}</option>   
-                        		<option value="niet_natuurlijk_persoon">{{ 'non-natural person'|trans|capitalize }}</option>          
-                        		<option value="vestiging">{{ 'location'|trans|capitalize }}</option>          
-                        		<option value="organisatorische_eenheid">{{ 'unit'|trans|capitalize }}</option>          
-                        		<option value="medewerker">{{ 'employee'|trans|capitalize }}</option>                 
+                        		<option value="natuurlijk_persoon">{{ 'natural person'|trans|capitalize }}</option>
+                        		<option value="niet_natuurlijk_persoon">{{ 'non-natural person'|trans|capitalize }}</option>
+                        		<option value="vestiging">{{ 'location'|trans|capitalize }}</option>
+                        		<option value="organisatorische_eenheid">{{ 'unit'|trans|capitalize }}</option>
+                        		<option value="medewerker">{{ 'employee'|trans|capitalize }}</option>
                    			</select>
-        				</div><!-- /.form-group --> 
+        				</div><!-- /.form-group -->
         				<div class="form-group">
         					<label for="largeInput">{{ 'role'|trans|capitalize }}</label>
         					<select id="role[roltype]" name="role[roltype]" class="form-control form-control-lg">
         					{% for role in caseroles  %}
-                        		<option value="{{ role['@id'] }}">{{ role.omschrijving }}</option>                                               		
+                        		<option value="{{ role['@id'] }}">{{ role.omschrijving }}</option>
                          	{% endfor %}
                    			</select>
-        				</div><!-- /.form-group --> 
+        				</div><!-- /.form-group -->
 						<div class="form-group">
         					<label for="largeInput">{{ 'explanation'|trans|capitalize }}</label>
         					<input type="text" class="form-control form-control-lg" id="role[roltoelichting]" name ="role[roltoelichting]">
@@ -326,5 +367,41 @@
         </div>
     </div>
     {% endif %}
-
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/zgw/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/zgw/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
 {% endblock %}

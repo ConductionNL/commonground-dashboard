@@ -13,8 +13,21 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Pitch bewerken','functie': 'Dashboard -> CHRC -> Pitches -> '~resource.name } %}
-
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a pitch',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'pitches' : {
+                        'name' : 'pitches',
+                        'path' : 'app_chrc_pitches'
+                    }
+                }]
+            }
+            %}
             <div class="page-inner">
                 <div class="row">
 
@@ -24,9 +37,17 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <button class="btn btn-danger"
-                                                style="margin-right: 25px">{{ 'delete'|trans|capitalize }}</button>
-                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_chrc_pitches')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -97,7 +118,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="description"
+                                                <textarea class="form-control" rows="5" id="summernote"
                                                           name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
@@ -139,9 +160,64 @@
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
-        {% include 'footer.html.twig' %}
+    {% include 'widgets/delete_modal.html.twig'
+        with {
+        'route': 'app_chrc_pitch',
+        'resource':resource,
+        'id':'delete' } %}
+
+    {% include 'widgets/auditTrail_modal.html.twig'
+        with {
+        'route': 'app_chrc_pitch',
+        'resource':resource,
+        'id':'auditTrial' } %}
+
+    {% include 'widgets/changeLog_modal.html.twig'
+        with {
+        'route': 'app_chrc_pitch',
+        'resource':resource,
+        'id':'changeLog' } %}
+
+
+    {% include 'footer.html.twig' %}
 
     </div>
     </div>
-
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/chrc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/chrc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
 {% endblock %}
