@@ -222,7 +222,7 @@ parameters:
     # ZaakAfhandelComponent
     env(APP_COMMONGROUND_ZAC_LOCATION): 'https://zac.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_ZAC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # ProcesComponent
+    # ProtoComponent
     env(APP_COMMONGROUND_PC_LOCATION): 'https://pc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_PC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     # UserInterface
@@ -258,6 +258,7 @@ parameters:
     # GrafRegistratieComponent
     env(APP_COMMONGROUND_GRC_LOCATION): 'https://grc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_GRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+
     
     # Test for commonground component by array
     common_ground.components:
@@ -416,6 +417,7 @@ parameters:
         grc:
             location: '%env(APP_COMMONGROUND_GRC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_GRC_APIKEY)%'
+
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl

@@ -1,4 +1,4 @@
-<div class="card p-4 full-height">
+<div class="card full-height">
     <div class="card-header">
         <h3 class="d-inline-block">{{ 'child requests'|trans|capitalize }}</h3>
     </div>
@@ -11,11 +11,11 @@
                     <div class="username"><h4>{{ child.reference }}</h4></div>
                     <div class="status">{{ child.status }}</div>
                 </div>
-                <button class="btn btn-icon btn-primary btn-round btn-s"
-                   style="margin-right: 5px" data-toggle="modal"
-                        data-target="#editSubmitter{{ child.id }}">
-                    <i class="fa fa-edit"></i>
-                </button>
+                <a class="btn btn-icon btn-primary btn-round btn-s"
+                   style="margin-right: 5px"
+                        href="{{ path('app_vrc_request', {'id': child.id}) }}">
+                    <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                </a>
             </div><!-- /.item-list -->
         {% endfor %}
     </div><!-- /.card-list -->
@@ -24,8 +24,5 @@
     <div class="card-body">
     </div> <!-- /.card-body -->
 
-    <div class="card-action">
-       <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addChild"  data-toggle="modal" data-target="#addChild">{{ 'add child request'|trans|capitalize }}</a>
-    </div><!-- /.card-action -->
 
 </div><!-- /.card -->

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Login</title>
+	<title>{{ commonground_application()['name'] }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="https://via.placeholder.com/50" type="image/x-icon"/>
 
@@ -21,11 +21,18 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/assets/css/atlantis.css">
+
+    <!-- Commonground Overwrites -->
+    <style>
+        {% if commonground_application()['style'] is defined and commonground_application()['style'] is not empty %}
+        {{ commonground_application()['style']['css'] }}
+        {% endif %}
+    </style>
 </head>
 <body class="login">
 	<div class="wrapper wrapper-login">
 		<div class="container container-login animated fadeIn">
-			<h3 class="text-center">Huwelijkplanner Dashboard</h3>
+			<h3 class="text-center">{{ commonground_application()['name'] }}</h3>
             <form action="{{ path('app_user_login') }}" method="post" class="login-form">
                 {# if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

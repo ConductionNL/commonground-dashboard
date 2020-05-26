@@ -63,7 +63,7 @@ class PfcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'activities','id'=> $id]);
@@ -119,7 +119,7 @@ class PfcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'evaluations','id'=> $id]);        }
@@ -174,7 +174,7 @@ class PfcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'formalRecognitions','id'=> $id]);        }
@@ -229,7 +229,7 @@ class PfcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'products','id'=> $id]);        }
@@ -284,7 +284,7 @@ class PfcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'reflections','id'=> $id]);        }
@@ -339,7 +339,7 @@ class PfcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'results','id'=> $id]);        }
