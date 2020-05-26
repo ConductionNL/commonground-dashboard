@@ -255,24 +255,10 @@ parameters:
     # PortfolioComponent
     env(APP_COMMONGROUND_PFC_LOCATION): 'https://pfc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_PFC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # ProcesTypeCatalogus
-    env(APP_COMMONGROUND_PTC_LOCATION): 'https://ptc.%env(APP_DOMAIN)%'
-    env(APP_COMMONGROUND_PTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # DocParser
-    env(APP_COMMONGROUND_DPS_LOCATION): 'https://dps.%env(APP_DOMAIN)%'
-    env(APP_COMMONGROUND_DPS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # CommonGroundRegistratieComponent
-    env(APP_COMMONGROUND_CGRC_LOCATION): 'https://cgrc.%env(APP_DOMAIN)%'
-    env(APP_COMMONGROUND_CGRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # LandelijkeTabellenCatalogus
-    env(APP_COMMONGROUND_LTC_LOCATION): 'https://ltc.%env(APP_DOMAIN)%'
-    env(APP_COMMONGROUND_LTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # QueueComponent
-    env(APP_COMMONGROUND_QC_LOCATION): "https://qc.%env(APP_DOMAIN)%"
-    env(APP_COMMONGROUND_QC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    # DocParser
-    env(APP_COMMONGROUND_DPS_LOCATION): "https://dps.%env(APP_DOMAIN)%"
-    env(APP_COMMONGROUND_DPS_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    # GrafRegistratieComponent
+    env(APP_COMMONGROUND_GRC_LOCATION): 'https://grc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_GRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+
     
     # Test for commonground component by array
     common_ground.components:
@@ -428,24 +414,10 @@ parameters:
         pfc:
             location: '%env(APP_COMMONGROUND_PFC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_PFC_APIKEY)%'
-        ptc:
-            location: '%env(APP_COMMONGROUND_PTC_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_PTC_APIKEY)%'
-        dps:
-            location: '%env(APP_COMMONGROUND_DPS_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_DPS_APIKEY)%'
-        cgrc:
-            location: '%env(APP_COMMONGROUND_CGRC_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_CGRC_APIKEY)%'
-        ltc:
-            location: '%env(APP_COMMONGROUND_LTC_LOCATION)%'
-            apikey: '%env(APP_COMMONGROUND_LTC_APIKEY)%'
-        qc:
-            location: "%env(APP_COMMONGROUND_QC_LOCATION)%"
-            apikey: "%env(APP_COMMONGROUND_QC_APIKEY)%"
-        dps:
-            location: "%env(APP_COMMONGROUND_DPS_LOCATION)%"
-            apikey: "%env(APP_COMMONGROUND_DPS_APIKEY)%"
+        grc:
+            location: '%env(APP_COMMONGROUND_GRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_GRC_APIKEY)%'
+
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
