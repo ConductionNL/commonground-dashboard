@@ -20,11 +20,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class TcController
+ * Class AsController
  * @package App\Controller
  * @Route("/task")
  */
-class TcController extends AbstractController
+class AsController extends AbstractController
 {
 
 	/**
@@ -34,30 +34,30 @@ class TcController extends AbstractController
 	public function indexAction(TranslatorInterface $translator)
 	{
 		$variables = [];
-		$variables['title'] = $translator->trans('tasks');
-		$variables['subtitle'] = $translator->trans('the tasks component holds tasks');
+		$variables['title'] = $translator->trans('addresses');
+		$variables['subtitle'] = $translator->trans('the address component holds addresses');
 
 		return $variables;
 	}
 
     /**
-     * @Route("/tasks")
+     * @Route("/addresses")
      * @Template
      */
-	public function tasksAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function addressesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
-    	$variables['title'] = $translator->trans('tasks');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('tasks');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'tc','type'=>'tasks'])["hydra:member"];
+    	$variables['title'] = $translator->trans('addresses');
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('addresses');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'as','type'=>'addresses'])["hydra:member"];
         return $variables;
     }
 
     /**
-     * @Route("/tasks/{id}")
+     * @Route("/adresses/{id}")
      * @Template
      */
-    public function taskAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function addressAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
 
     	$variables = [];
@@ -67,16 +67,16 @@ class TcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'tc','type'=>'tasks','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'as','type'=>'addresses','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_tc_tasks'));
+            return $this->redirect($this->generateUrl('app_as_addresses'));
         }
 
-        $variables['title'] = $translator->trans('task');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('task');
+        $variables['title'] = $translator->trans('address');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('address');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
@@ -91,7 +91,7 @@ class TcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'tc','type'=>'tasks']));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'as','type'=>'addresses']));
         }
 
 

@@ -222,7 +222,7 @@ parameters:
     # ZaakAfhandelComponent
     env(APP_COMMONGROUND_ZAC_LOCATION): 'https://zac.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_ZAC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    # ProcesComponent
+    # ProtoComponent
     env(APP_COMMONGROUND_PC_LOCATION): 'https://pc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_PC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     # UserInterface
@@ -267,6 +267,12 @@ parameters:
     # LandelijkeTabellenCatalogus
     env(APP_COMMONGROUND_LTC_LOCATION): 'https://ltc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_LTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # QueueComponent
+    env(APP_COMMONGROUND_QC_LOCATION): "https://qc.%env(APP_DOMAIN)%"
+    env(APP_COMMONGROUND_QC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    # DocParser
+    env(APP_COMMONGROUND_DPS_LOCATION): "https://dps.%env(APP_DOMAIN)%"
+    env(APP_COMMONGROUND_DPS_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
     
     # Test for commonground component by array
     common_ground.components:
@@ -434,6 +440,12 @@ parameters:
         ltc:
             location: '%env(APP_COMMONGROUND_LTC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_LTC_APIKEY)%'
+        qc:
+            location: "%env(APP_COMMONGROUND_QC_LOCATION)%"
+            apikey: "%env(APP_COMMONGROUND_QC_APIKEY)%"
+        dps:
+            location: "%env(APP_COMMONGROUND_DPS_LOCATION)%"
+            apikey: "%env(APP_COMMONGROUND_DPS_APIKEY)%"
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl

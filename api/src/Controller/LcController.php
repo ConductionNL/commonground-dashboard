@@ -232,4 +232,126 @@ class LcController extends AbstractController
         return $variables;
     }
 
+    /**
+     * @Route("/place_properties")
+     * @Template
+     */
+    public function placePropertiesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'place_properties'])["hydra:member"];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/place_properties/{id}")
+     * @Template
+     */
+    public function placePropertyAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'place_properties','id'=> $id]);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_lc_placeproperties'));
+        }
+
+        $variables['title'] = $translator->trans('place property');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('place property');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['labels'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'place_properties'])["hydra:member"];
+
+
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'place_properties']));
+
+        }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/accommodation_properties")
+     * @Template
+     */
+    public function accommodationPropertiesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'accommodation_properties'])["hydra:member"];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/accommodation_properties/{id}")
+     * @Template
+     */
+    public function accommodationPropertyAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'lc','type'=>'accommodation_properties','id'=> $id]);
+        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_lc_accommodationproperties'));
+        }
+
+        $variables['title'] = $translator->trans('accommodation property');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('accommodation property');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['labels'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'accommodation_properties'])["hydra:member"];
+
+
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodation_properties']));
+
+        }
+
+        return $variables;
+    }
+
 }
