@@ -72,12 +72,12 @@ class CmcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_cmc_contact_moments'));
+            return $this->redirect($this->generateUrl('app_cmc_contactmoments'));
         }
 
-        $variables['title'] = $translator->trans('contact_moment');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('contact_moment');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cmc','type'=>'organizations'])["hydra:member"];
+        $variables['title'] = $translator->trans('contact moment');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('contact moment');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -91,7 +91,7 @@ class CmcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cmc','type'=>'contact_moment','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cmc','type'=>'contact_moment']));
         }
 
 

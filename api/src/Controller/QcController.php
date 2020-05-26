@@ -20,11 +20,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class TcController
+ * Class QcController
  * @package App\Controller
- * @Route("/task")
+ * @Route("/qc")
  */
-class TcController extends AbstractController
+class QcController extends AbstractController
 {
 
 	/**
@@ -35,7 +35,7 @@ class TcController extends AbstractController
 	{
 		$variables = [];
 		$variables['title'] = $translator->trans('tasks');
-		$variables['subtitle'] = $translator->trans('the tasks component holds tasks');
+		$variables['subtitle'] = $translator->trans('the queue component holds queues');
 
 		return $variables;
 	}
@@ -49,7 +49,7 @@ class TcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('tasks');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('tasks');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'tc','type'=>'tasks'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'qc','type'=>'tasks'])["hydra:member"];
         return $variables;
     }
 
@@ -67,12 +67,12 @@ class TcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'tc','type'=>'tasks','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'qc','type'=>'tasks','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_tc_tasks'));
+            return $this->redirect($this->generateUrl('app_qc_tasks'));
         }
 
         $variables['title'] = $translator->trans('task');
@@ -91,7 +91,7 @@ class TcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'tc','type'=>'tasks']));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'qc','type'=>'tasks']));
         }
 
 
