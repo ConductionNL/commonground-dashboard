@@ -1,4 +1,4 @@
-<div class="modal fade" style="text-align: center" id="{% if item.id is defined %}{{ item.id }}{% elseif resource is defined %}{{ resource.id }}{% endif %}" tabindex="-1"
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item is defined %}{{ item.id }}{% endif %}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
     <div class="modal-dialog model-dialog-centered" role="document">
@@ -21,7 +21,7 @@
                         {{ 'yes'|trans|capitalize }}
                     </button>
                     <button type="button" class="btn btn-secondary mx-auto" data-dismiss="modal">{{ 'no'|trans|capitalize }}</button>
-                    {% if item.id is defined %}
+                    {% if item is defined %}
                     <input type="hidden" id="{{ item['@type']|lower }}[action]" name ="{{ item['@type']|lower }}[action]" value="delete">
                     <input type="hidden" id="{{ item['@type']|lower }}[id]" name ="{{ item['@type']|lower }}[id]" value="{{ item['id'] }}">
                     <input type="hidden" id="{{ item['@type']|lower }}[@id]" name ="{{ item['@type']|lower }}[@id]" value="{{ item['@id'] }}">
