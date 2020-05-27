@@ -52,7 +52,7 @@
                             <form action="{{ path('app_mrc_employee', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     {% if resource.person is defined %}
-                                    <h2 class="d-inline-block">{{ resource.person }} </h2>
+                                    <h2 class="d-inline-block"> </h2>
                                         {% else %}
                                             <h2 class="d-inline-block">{{ 'employee'|trans|capitalize }} </h2>
                                     {% endif %}
@@ -80,7 +80,7 @@
                                                 <select name="person" id="person" class="form-control form-control-lg" required>
                                                     {
                                                     {% for person in people %}
-                                                        <option value="{{ person.name }} "{% if resource.person is defined and resource.person == person.name  %}selected{% endif %}>{{ person.name }}</option>
+                                                        <option value="{{ person['@id']}} "{% if resource.person is defined and resource.person == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
                                                     {% endfor %}
                                                 </select>
 
@@ -93,7 +93,7 @@
 
                                                 <select name="organization" id="organization" class="form-control form-control-lg" required>
                                                     {% for organization in organizations %}
-                                                        <option value="{{ organization.name }}"{% if resource.organization is defined and resource.organization == organization.name  %}selected{% endif %}>{{ organization.name }}</option>
+                                                        <option value="{{ organization['@id'] }}"{% if resource.organization is defined and resource.organization == organization['@id']  %}selected{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>

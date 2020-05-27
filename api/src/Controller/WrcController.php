@@ -443,6 +443,7 @@ class WrcController extends AbstractController
 
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         $variables['defaultConfigurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'])["hydra:member"];
+        $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'])["hydra:member"];
 
         // Als we een organisatie hebben kunnen we ook de style ophalen @to engels!
         if(array_key_exists('organization', $variables['resource'])){
