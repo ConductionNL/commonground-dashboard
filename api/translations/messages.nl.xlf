@@ -891,19 +891,19 @@
       </trans-unit>
       <trans-unit id="yPfOJ2A" resname="todos">
         <source>todos</source>
-        <target>__todos</target>
+        <target>todo's</target>
       </trans-unit>
       <trans-unit id="ytmcB9U" resname="add todo">
         <source>add todo</source>
-        <target>__add todo</target>
+        <target>voeg todo toe</target>
       </trans-unit>
       <trans-unit id="_w_6tAS" resname="journals">
         <source>journals</source>
-        <target>__journals</target>
+        <target>logboeken</target>
       </trans-unit>
       <trans-unit id="7JLQYzi" resname="add journal">
         <source>add journal</source>
-        <target>__add journal</target>
+        <target>logboek toevoegen</target>
       </trans-unit>
       <trans-unit id="zqM4lVx" resname="freebusies">
         <source>freebusies</source>
