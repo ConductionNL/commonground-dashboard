@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -53,15 +53,7 @@
                                                        required>
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg"
-                                                       value="{% if resource.id is defined %}{{ resource.id }}{% endif %}"
-                                                       disabled>
-                                            </div>
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'domain'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="domain"
@@ -90,15 +82,10 @@
                                             <div class="form-group">
                                                 <label
                                                     for="defaultConfiguration">{{ 'default configuration'|trans|capitalize }}</label>
-                                                <select id="defaultConfiguration" name="defaultConfiguration"
-                                                        class="form-control form-control-lg"
-                                                        {% if configurations is not defined %}disabled{% endif %}>
-                                                    {% if configurations is defined %}
-                                                        {% for configuration in configurations %}
-                                                            <option value="{{ configuration['@id'] }}"
-                                                                    {% if resource.defaultConfiguration is defined and  resource.defaultConfiguration is not empty and  configuration['@id'] == resource.defaultConfiguration['@id'] %}selected=""{% endif %}>{{ configuration.name }}</option>
-                                                        {% endfor %}
-                                                    {% endif %}
+                                                <select id="defaultConfiguration" name="defaultConfiguration" class="form-control form-control-lg">
+                                                    {% for defaultConfiguration in defaultConfigurations %}
+                                                        <option value="{{ defaultConfiguration['@id'] }}" {% if resource.defaultConfiguration is defined and defaultConfiguration.id == resource.defaultConfiguration.id  %}selected=""{% endif %}>{{ defaultConfiguration.name }}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
@@ -133,10 +120,12 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                {% if resource is defined and resource.id != 'new' %}
                 <div class="row">
                     <div class="col-md-3">
                         {% include 'wrc/widgets/configurations.html.twig'
                             with {
+                            'resource': resource,
                             'configurations': configurations } %}
                     </div><!-- /.col -->
                     <div class="col-md-3">
@@ -159,6 +148,7 @@
                             'menus': menus } %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                {% endif %}
             </div><!-- /.page-inner -->
 
             {% include 'widgets/delete_modal.html.twig'

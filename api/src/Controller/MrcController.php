@@ -80,7 +80,7 @@ class MrcController extends AbstractController
 
         $variables['title'] = $translator->trans('employee');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('employee');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
 
         // Lets see if there is a post to procces

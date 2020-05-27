@@ -2,42 +2,33 @@
 
 {% block content %}
 
-
-
-    <style>
-        th {
-            width: 33.33%;
-        }
-    </style>
-
     <div class="main-panel">
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a memo',
+                'headerTitle': 'save or create a template group',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
                         'path' : 'app_default_index'
                     },
-                    'memos' : {
-                        'name' : 'memos',
-                        'path' : 'app_memo_memos'
+                    'template groups' : {
+                        'name' : 'template groups',
+                        'path' : 'app_wrc_templategroups'
                     }
                 }]
             }
             %}
             <div class="page-inner">
                 <div class="row">
-
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path("app_memo_memo", {id: resource.id}) }}" method="post">
+                        	<form action="{{ path('app_wrc_templategroup', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_memo_memos')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_wrc_templates')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
@@ -50,83 +41,86 @@
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
+								<div class="card-body">
+									<div class="row">
+        								<div class="col-md-4 col-sm-12">
+        									<div class="form-group">
+        										<label for="name">{{ 'name'|trans|capitalize }}</label>
+        										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
+        									</div>
+    									</div> <!-- /.col -->
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'author'|trans|capitalize }}</label>
-                                                <select name="author" id="author" class="form-control form-control-lg" required>
-                                                    {% for employee in employees %}
-                                                        <option value="{{ employee['@id'] }}">{{ employee.person }}</option>
+                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="organization" name="organization" class="form-control form-control-lg">
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization.id == resource.organization.id  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
-                                            </div>
-                                        </div>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'topic'|trans|capitalize }}</label>
-                                                <select name="topic" id="topic" class="form-control form-control-lg" required>
-                                                    {% for request in requests %}
-                                                        <option value="{{ request['@id'] }}">{{ request.reference }}</option>
+                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                <select id="application" name="application" class="form-control form-control-lg">
+                                                    {% for application in applications %}
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application.id == resource.application.id  %}selected=""{% endif %}>{{ application.name }}</option>
                                                     {% endfor %}
                                                 </select>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-                                            </div>
-                                        </div>  <!-- /.col -->
-                                    </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+    								</div><!-- /.row -->
+    								<div class="row">
+        								<div class="col-md-12">
+        									<div class="form-group">
+        										<label for="description">{{ 'description'|trans|capitalize }}</label>
+												<textarea class="form-control summernote" rows="5" id="" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+        									</div>
+        								</div>  <!-- /.col -->
+								</div> <!-- /.card-body -->
 
-                                <div class="card-action">
+								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-                                </div><!-- /.card-action -->
+								</div><!-- /.card-action -->
                             </form>
                         </div><!-- /.card -->
-                    </div>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.page-inner -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+        </div>
+
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_memo_memo',
+            'route': 'app_wrc_template',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_memo_memo',
+            'route': 'app_wrc_template',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_memo_memo',
+            'route': 'app_wrc_template',
             'resource':resource,
             'id':'changeLog' } %}
 
 
+
         {% include 'footer.html.twig' %}
 
-    </div>
+        </div>
     </div>
     {% block javascript %}
+    $(document).ready(function() {
+        $('.summernote').summernote();
+    });
     //audit_trails
     $.ajax({
-        url: "/api/memo/audit_trails",
+        url: "/api/wrc/audit_trails",
         type: 'GET',
         dataType: 'json',
         success: function(result) {
@@ -143,7 +137,7 @@
     });
     //change_logs
     $.ajax({
-        url: "/api/memo/change_logs",
+        url: "/api/wrc/change_logs",
         type: 'GET',
         dataType: 'json',
         success: function(result) {

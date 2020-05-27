@@ -24,7 +24,7 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_wrc_configurations', {'id': resource.id}) }}" method="post">
+                        	<form action="{{ path('app_wrc_configuration', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -43,23 +43,59 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
-    									<div class="col-md-3 col-sm-12">
+    									<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										<select id="organization" name="organization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization.id == resource.organization.id  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                <select id="application" name="application" class="form-control form-control-lg">
+                                                    {% for application in applications %}
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application.id == resource.application.id  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
     								</div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[0] }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[1] }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[2] }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[3] }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">

@@ -63,8 +63,8 @@ class IrcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new' && !$request->isMethod('POST')){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new', 'name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'irc','type'=>'assents','id'=> $id]);

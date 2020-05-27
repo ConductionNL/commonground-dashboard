@@ -315,6 +315,25 @@
 
                 {% if 'group.beheerder' in app.user.roles %}
                     <li class="nav-item">
+                        <a data-toggle="collapse" href="#memo" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'memos'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="memo">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_memo_memos") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'memos'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+
+                {% if 'group.beheerder' in app.user.roles %}
+                    <li class="nav-item">
                         <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
                             <span style="color: #575962" class="caret"></span>
@@ -522,6 +541,12 @@
                                     <a href="{{ path("app_wrc_templates") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'templates'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_wrc_templategroups") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'template groups'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
