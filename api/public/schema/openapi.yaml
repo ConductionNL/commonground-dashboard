@@ -8,7 +8,7 @@ info:
     - Reference: db
     - Enviroment: dev
     - Version: V.0.1
-    - Repository: [online]() / [zip](/archive/master.zip)
+    - Repository: [online](https://github.com/ConductionNL/Commonground-dashboard) / [zip](https://github.com/ConductionNL/Commonground-dashboard/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/db.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-28 12:58:01'
+        example: '2020-05-28 13:13:29'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-28 12:58:01'
+        example: '2020-05-28 13:13:29'
     required: []
   AuditTrail-write:
     properties:
@@ -2414,12 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-28 12:58:01'
+        example: '2020-05-28 13:13:29'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-28 12:58:01'
+        example: '2020-05-28 13:13:29'
     required: []
   ChangeLog-write:
     properties:
