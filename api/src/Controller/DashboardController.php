@@ -4,13 +4,13 @@
 
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Service\CommonGroundService;
 
 /**
  * Class DashboardController
@@ -25,7 +25,7 @@ class DashboardController extends AbstractController
      * @Template
      */
 	public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
-    {    	
+    {
     	$requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
 
     	return ["requests"=>$requests];
