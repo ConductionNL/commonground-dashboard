@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class memoController
+ * Class MemoController
  * @package App\Controller
  * @Route("/memo")
  */
@@ -64,7 +64,7 @@ class MemoController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'memo','type'=>'memos','id'=> $id]);        }

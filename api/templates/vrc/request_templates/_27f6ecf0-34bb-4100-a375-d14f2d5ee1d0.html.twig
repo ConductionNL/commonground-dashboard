@@ -1,4 +1,4 @@
-{# RequestType ID: 5b10c1d6-7121-4be2-b479-7523f1b625f1 voor template: Aanvragen huwelijken of partnerschap #}
+{# RequestType ID: 27f6ecf0-34bb-4100-a375-d14f2d5ee1d0 voor template: Aanvraag beëdigd babs #}
 {% extends "body.html.twig" %}
 
 {% block content %}
@@ -14,16 +14,15 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.reference }}</h2>  {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
-                                        <div class="float-right">
-
-                                            {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
-                                            {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
-                                            <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
-                                               data-toggle="modal"
-                                               data-target="#deleteRequest">{{ 'delete'|trans|capitalize }}</a>
-                                            <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
-                                        </div>
+                                    <h2 class="d-inline-block">{{ 'reference'|trans|capitalize }}: {{ resource.reference }}</h2> {% if resource.parent is defined and resource.parent is not empty %} {{ 'belongs to'|trans|capitalize }} <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> {% endif %}
+                                    <div class="float-right">
+                                        {% if changeLog is defined %}<a class="btn btn-info" href="#changeLogModal" data-toggle="modal" data-target="#changeLogModal">{{ 'changeLog'|trans|capitalize }}</a>{% endif %}
+                                        {% if auditTrail is defined %}<a class="btn btn-info" href="#auditTrailModal" data-toggle="modal" data-target="#auditTrailModal">{{ 'auditTrail'|trans|capitalize }}</a>{% endif %}
+                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
+                                           data-toggle="modal"
+                                           data-target="#deleteRequest">{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -81,25 +80,7 @@
                 </div><!-- /.row -->
                 <div class="row">
                     <div class="col-md-4">
-                        {% include 'vrc/widgets/properties_checklist.html.twig'
-                            with {
-                            'properties': resource.properties } %}
-
-                    </div><!-- /.col -->
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/properties_partners.html.twig'
-                            with {
-                            'submitters': resource.submitters } %}
-                    </div><!-- /.col -->
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/memos.html.twig'
-                            with {
-                            'children': resource.children } %}
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/documents.html.twig'
+                        {% include 'vrc/widgets/properties_babs.html.twig'
                             with {
                             'properties': resource.properties } %}
 
@@ -110,9 +91,7 @@
                             'submitters': resource.submitters } %}
                     </div><!-- /.col -->
                     <div class="col-md-4">
-                        {% include 'vrc/widgets/children.html.twig'
-                            with {
-                            'children': resource.children } %}
+                        {% include 'vrc/widgets/documents.html.twig'%}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->

@@ -237,4 +237,175 @@ class UcController extends AbstractController
 		}
 		return $variables;
 	}
+
+    /**
+     * @Route("/applications")
+     * @Template
+     */
+    public function applicationsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+
+        $variables = [];
+        $variables['title'] = $translator->trans('applications');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('applications');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'applications'])["hydra:member"];
+
+        return $variables;
+
+    }
+
+    /**
+     * @Route("/applications/{id}")
+     * @Template
+     */
+    public function applicationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'uc','type'=>'applications','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_uc_applications'));
+        }
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'applications','id'=>$id]);
+        }
+
+        $variables['title'] = $translator->trans('application');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('application');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+
+            // Lets see if we also need to add an configuration
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'applications']);
+        }
+        return $variables;
+    }
+
+    /**
+     * @Route("/providers")
+     * @Template
+     */
+    public function providersAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+
+        $variables = [];
+        $variables['title'] = $translator->trans('providers');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('providers');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'providers'])["hydra:member"];
+
+        return $variables;
+
+    }
+
+    /**
+     * @Route("/providers/{id}")
+     * @Template
+     */
+    public function providerAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'uc','type'=>'providers','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_uc_providers'));
+        }
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'providers','id'=>$id]);
+        }
+
+        $variables['title'] = $translator->trans('provider');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('provider');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+
+            // Lets see if we also need to add an configuration
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'providers']);
+        }
+        return $variables;
+    }
+
+    /**
+     * @Route("/tokens")
+     * @Template
+     */
+    public function tokensAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+
+        $variables = [];
+        $variables['title'] = $translator->trans('tokens');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('tokens');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc','type'=>'tokens'])["hydra:member"];
+
+        return $variables;
+
+    }
+
+    /**
+     * @Route("/tokens/{id}")
+     * @Template
+     */
+    public function tokenAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(null,['component'=>'uc','type'=>'tokens','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_uc_tokens'));
+        }
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'uc','type'=>'tokens','id'=>$id]);
+        }
+
+        $variables['title'] = $translator->trans('token');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('token');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+
+            // Lets see if we also need to add an configuration
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'tokens']);
+        }
+        return $variables;
+    }
 }

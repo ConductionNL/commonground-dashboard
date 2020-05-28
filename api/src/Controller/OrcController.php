@@ -65,7 +65,7 @@ class OrcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'orders','id'=> $id]);
@@ -123,7 +123,7 @@ class OrcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'orderitems','id'=> $id]);
@@ -181,7 +181,7 @@ class OrcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'taxes','id'=> $id]);
@@ -240,7 +240,7 @@ class OrcController extends AbstractController
 
         // Lets see if we need to create
         if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new'];
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'organizations','id'=> $id]);

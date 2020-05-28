@@ -8,7 +8,7 @@ settings:
   name: db
   title: CommonGround DashBoard
   version: V.0.1
-  id: 
+  id: 28cec1e8-a2b8-4f80-9606-6c3fbd45a84
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
   repro: 

@@ -1,0 +1,86 @@
+{% extends "body.html.twig" %}
+
+{% set view = 'app_grc_grave' %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {'h1': 'Graves','functie': 'Graves'} %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'cemetery'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'gravetype'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resource in resources %}
+                        <tr>
+                            <td>{{ resource.reference }}</td>
+                            <td>{{ resource.description }}</td>
+                            <td>{{ resource.cemetery['reference'] }}</td>
+                            <td>{{ resource.status }}</td>
+                            <td>{{ resource.graveType['reference'] }}</td>
+                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    <p align="center">Beschikbare graven</p>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'cemetery'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'gravetype'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resource in resources %}
+                        {% if resource.status == "Beschikbaar" %}
+                            <tr>
+                                <td>{{ resource.reference }}</td>
+                                <td>{{ resource.description }}</td>
+                                <td>{{ resource.cemetery['reference'] }}</td>
+                                <td>{{ resource.status }}</td>
+                                <td>{{ resource.graveType['reference'] }}</td>
+                                <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                            </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+{% endblock %}

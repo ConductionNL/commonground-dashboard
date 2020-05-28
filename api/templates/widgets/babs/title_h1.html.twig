@@ -1,14 +1,29 @@
-<div class="panel-header bg-primary-gradient" style="background: linear-gradient(-45deg, #2A5587, #2A5587) !important;">
+<div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">{% block title %}{% if title is defined %}{{ title|capitalize }}{% endif %}{% endblock %}</h2>
-                <h5 class="text-white op-7 mb-2">{% block breadcrumbs %}{% if subtitle is defined %}{{ subtitle|capitalize }}{% endif %}{% endblock %}</h5>
+                <h2 class="text-white pb-2 fw-bold">{% block headerTitle %}{% if headerTitle is defined %}{{ headerTitle|trans|capitalize }}{% endif %}{% endblock %}</h2>
+                <nav class="op-7" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% block breadcrumbs %}
+                            {% if breadcrumbs is defined %}
+                                {% for breadcrumb in breadcrumbs %}
+                                    {% for bread in breadcrumb %}
+                                        <li class="breadcrumb-item"><a href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize}} </a></li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% if name is defined %}
+                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name|trans|capitalize }}</li>
+                                    {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    </ol>
+                </nav>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
 				{% block buttons %}
 {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
-                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ 'add'|trans|capitalize }} {{ title }} {% endif %}</a>
+                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ 'add'|trans|capitalize }} {{ headerTitle|trans }} {% endif %}</a>
 				{% endblock %}
             </div>
         </div>
