@@ -54,7 +54,7 @@
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
         										<select id="organization" name="organization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                                     <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization.id == resource.organization.id  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                     <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
@@ -64,7 +64,7 @@
                                                 <label for="largeInput">{{ 'Favorite icon'|trans|capitalize }}</label>
                                                 <select id="favicon" name="favicon" class="form-control form-control-lg">
                                                     {% for image in images %}
-                                                        <option value="{{ image['@id'] }}" {% if resource.favicon is defined and image.id == resource.favicon.id %}selected{% endif %}>{{ image.name }}</option>
+                                                        <option value="{{ image['@id'] }}" {% if resource.favicon is defined and image['@id'] == resource.favicon %}selected{% endif %}>{{ image.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -82,7 +82,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'css'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote" name ="css">{% if resource.css is defined %}{{ resource.css }}{% endif %}</textarea>
+                                                <textarea class="form-control" rows="5" id="css" name ="css">{% if resource.css is defined %}{{ resource.css }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->

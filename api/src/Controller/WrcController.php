@@ -99,6 +99,10 @@ class WrcController extends AbstractController
                 // reload the slugs
                 $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
             }
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_templates', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -139,6 +143,7 @@ class WrcController extends AbstractController
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'template_groups','id'=> $id]);
+            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['templateGroups.id'=>$id])["hydra:member"];
         }
 
         $variables['title'] = $translator->trans('template groups');
@@ -155,8 +160,20 @@ class WrcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
+            if(array_key_exists('template', $resource)){
+                $template = $resource['template'];
+                $template['templateGroups'] = $variables['resource']['@id'];
+                $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+
+                // reload the slugs
+                $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['templateGroups.id'=>$id])["hydra:member"];
+            }
+
 
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc','type'=>'template_groups']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_templategroups', ["id" =>  $variables['resource']['id']]));
+            }
 
             // Lets see if we also need to add an slug
         }
@@ -218,6 +235,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'slugs']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_slugs', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -278,6 +298,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'organizations']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_organizations', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -336,6 +359,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'images']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_images', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -396,6 +422,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc','type'=>'styles']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_styles', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -680,8 +709,7 @@ class WrcController extends AbstractController
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
-
-            $resource['configuration'][] = array_push($resource['configuration']);
+    		
 
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])

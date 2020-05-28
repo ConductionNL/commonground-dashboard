@@ -1199,7 +1199,7 @@
       </trans-unit>
       <trans-unit id="zs7_j_N" resname="costumer types">
         <source>costumer types</source>
-        <target>__costumer types</target>
+        <target>klant types</target>
       </trans-unit>
       <trans-unit id="Em3BRGZ" resname="add group">
         <source>add group</source>
@@ -1267,7 +1267,7 @@
       </trans-unit>
       <trans-unit id="O4jlk6W" resname="changeLog">
         <source>changeLog</source>
-        <target>logboek</target>
+        <target>dagboek</target>
       </trans-unit>
       <trans-unit id="okRzAEG" resname="auditTrail">
         <source>auditTrail</source>

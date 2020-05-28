@@ -70,37 +70,11 @@
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
     								</div><!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[0] }}{% endif %}">
-                                            </div>
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[1] }}{% endif %}">
-                                            </div>
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[2] }}{% endif %}">
-                                            </div>
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'configuration'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="configuration" name ="configuration[]" value="{% if resource.configuration is defined %}{{ resource.configuration[3] }}{% endif %}">
-                                            </div>
-                                        </div> <!-- /.col -->
-                                    </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="summernote" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control description" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -109,11 +83,60 @@
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
 								</div><!-- /.card-action -->
-                            </form>
+
                         </div><!-- /.card -->
+
+
+
                     </div><!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'configurations'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body" id="configBody">
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- /.row -->
+                </form>
             </div><!-- /.page-inner -->
+
+
+            <div class="modal fade" style="text-align: center" id="addConfiguration" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addConfiguration" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add configuration'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="configName" name="name" value="">
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'value'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="configValue" name="value" value="">
+                        </div><!-- /.form-group -->
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="configButton();">{{ 'add'|trans|capitalize }}</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
 
 
             {% include 'widgets/delete_modal.html.twig'
@@ -139,7 +162,28 @@
 
         </div>
     </div>
+    <script>
     {% block javascript %}
+
+
+    //logic for configurations
+    function configButton(){
+        let parent = document.getElementById("configBody")
+        let name = document.getElementById("configName");
+        let value = document.getElementById("configValue");
+        let newConfig = document.createElement("input");
+        let counter = parent.children.length;
+
+        newConfig.value = name.value;
+        newConfig.name = "configuration[]";
+        newConfig.id = counter.toString();
+        parent.appendChild(newConfig);
+    };
+
+
+
+
+
     //audit_trails
     $.ajax({
         url: "/api/wrc/audit_trails",
@@ -163,7 +207,6 @@
         type: 'GET',
         dataType: 'json',
         success: function(result) {
-            console.log(result);
             for(let i = 0; i < result['hydra:member'].length; i++ ){
                 $('#changelog').append('<tr>')
                 $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
@@ -176,4 +219,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

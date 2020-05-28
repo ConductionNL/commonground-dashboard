@@ -72,7 +72,7 @@
                                                 <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                                 <select id="organization" name="organization" class="form-control form-control-lg">
                                                     {% for organization in organizations %}
-                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization.id == resource.organization.id  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -82,7 +82,7 @@
                                                 <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
                                                 <select id="application" name="application" class="form-control form-control-lg">
                                                     {% for application in applications %}
-                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application.id == resource.application.id  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application  %}selected=""{% endif %}>{{ application.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -92,7 +92,7 @@
                                                 <label for="largeInput">{{ 'template groups'|trans|capitalize }}</label>
                                                 <select id="templateGroups[]" name="templateGroups[]" class="form-control form-control-lg">
                                                     {% for templateGroup in templateGroups %}
-                                                        <option value="{{ templateGroup['@id'] }}" {% if resource.templateGroups is defined and templateGroup['@id'] == resource.templateGroups[0]  %}selected=""{% endif %}>{{ templateGroup.name }}</option>
+                                                        <option value="{{ templateGroup['@id'] }}" {% if resource.templateGroups is defined and templateGroup['@id'] == resource.templateGroups  %}selected=""{% endif %}>{{ templateGroup.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -102,7 +102,7 @@
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="description">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control summernote" rows="5" id="" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control summernote" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -110,7 +110,7 @@
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="content">{{ 'content'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="40" id="summernote" name="content" required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
+												<textarea class="form-control" rows="40" id="content" name="content" required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -123,6 +123,7 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+
             </div><!-- /.page-inner -->
         </div>
 
