@@ -62,8 +62,7 @@ class VrcController extends AbstractController
     /**
      * @Route("/requests/{id}")
      */
-    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, ZgwService $zgwService, TranslatorInterface $translator, $id)
-    public function requestAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
 
         // If it is a delete action we can stop right here

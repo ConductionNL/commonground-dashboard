@@ -31,7 +31,7 @@ class UcController extends AbstractController
 	 * @Route("/")
 	 * @Template
 	 */
-	public function indexAction(Request $request, CommonGroundService $commonGroundService)
+	public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
 	{
 		$variables = [];
 		$variables['title'] = $translator->trans('user configuration');
