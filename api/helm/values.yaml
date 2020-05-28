@@ -11,8 +11,8 @@ settings:
   id: 3f44c00e-d919-4f89-bd4c-b730c9b2620a
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
-  repro: 
-  demo: db.zuiddrecht.nl
+  repro: https://github.com/ConductionNL/Commonground-dashboard
+  demo: https://db.zuiddrecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: westfriesland.commonground.nu
   subdomain: db
