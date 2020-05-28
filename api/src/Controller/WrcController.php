@@ -709,7 +709,8 @@ class WrcController extends AbstractController
     		$resource = $request->request->all();
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
-    		
+
+
 
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
