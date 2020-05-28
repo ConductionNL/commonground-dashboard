@@ -12,7 +12,7 @@ settings:
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
   repro: 
-  demo: 
+  demo: db.zuiddrecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: westfriesland.commonground.nu
   subdomain: db
