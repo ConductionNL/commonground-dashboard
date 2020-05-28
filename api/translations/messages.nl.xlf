@@ -1567,7 +1567,7 @@
       </trans-unit>
       <trans-unit id="hkvgCjb" resname="add configuration">
         <source>add configuration</source>
-        <target>__add configuration</target>
+        <target>configuratie toevoegen</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
