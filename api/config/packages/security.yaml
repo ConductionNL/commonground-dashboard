@@ -8,7 +8,7 @@ security:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js|docs)/
             security: false
         # The mollie webhook does not have our API key
         webhook:
