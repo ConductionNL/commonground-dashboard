@@ -4,15 +4,14 @@
 
 namespace App\Controller;
 
-use App\Service\RequestService;
+use Conduction\CommonGroundBundle\Service\RequestService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-use App\Service\CommonGroundService;
-use App\Service\ZgwService;
 
 /**
  * Class DashboardController
@@ -63,7 +62,7 @@ class VrcController extends AbstractController
     /**
      * @Route("/requests/{id}")
      */
-    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, ZgwService $zgwService, TranslatorInterface $translator, $id)
+    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
 
         // If it is a delete action we can stop right here
