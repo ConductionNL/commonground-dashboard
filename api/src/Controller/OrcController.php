@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -113,7 +113,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('persons');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('persons');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['orderItems.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
