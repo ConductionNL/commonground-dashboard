@@ -139,14 +139,14 @@
                                         </div> <!-- /.col -->
                                     </div><!-- /.row -->
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'grave cover'|trans|capitalize }}</label>
                                                 <select id="graveCovers[]" name="graveCovers[]"
                                                         class="form-control form-control-lg" required>
                                                     {% for graveCover in gravecovers %}
                                                         <option value="{{ graveCover['@id'] }}"
-                                                                {% if resource.graveCovers is defined and graveType['@id'] == resource.graveType %}selected=""{% endif %}>{{ graveType.reference }}</option>
+                                                                {% if resource.graveCovers is defined and graveCover['@id'] == resource.graveCovers %}selected=""{% endif %}>{{ graveCover.reference }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>

@@ -92,6 +92,7 @@ class GrcController extends AbstractController
         $variables['gravetypes'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])["hydra:member"];
         $variables['gravecovers'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_covers'])["hydra:member"];
 
+
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
@@ -246,6 +247,7 @@ class GrcController extends AbstractController
             $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('cemetery');
             $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])["hydra:member"];
             $variables['gravetypes'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])["hydra:member"];
+            $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'places'])["hydra:member"];
 
             // Lets see if there is a post to procces
             if ($request->isMethod('POST')) {

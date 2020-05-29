@@ -2281,6 +2281,14 @@
         <source>new cemetery</source>
         <target>nieuwe begraafplaat</target>
       </trans-unit>
+      <trans-unit id="PgFcb.6" resname="grave covers">
+        <source>grave covers</source>
+        <target>graf bedekkingen</target>
+      </trans-unit>
+      <trans-unit id="uLXwkR8" resname="grave cover">
+        <source>grave cover</source>
+        <target>graf bedekking</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
