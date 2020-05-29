@@ -102,63 +102,70 @@ class ArcController extends AbstractController
         return $variables;
     }
 
-//    /**
-//     * @Route("/events")
-//     * @Template
-//     */
-//    public function eventsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
-//    {
-//        $variables = [];
-//        $variables['title'] = $translator->trans('events');
-//        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('events');
-//        $variables['resources'] = $commonGroundService->getResourceList('https://ac.huwelijksplanner.online/events')["hydra:member"];
-//
-//        return $variables;
-//    }
+    /**
+     * @Route("/events")
+     * @Template
+     */
+    public function eventsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('events');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('events');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'arc','type'=>'events'])["hydra:member"];
+        return $variables;
+    }
 
-//    /**
-//     * @Route("/events/{id}")
-//     * @Template
-//     */
-//    public function eventAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-//    {
-//
-//        $variables = [];
-//
-//        // Lets see if we need to create
-//        if($id == 'new'){
-//            $variables['resource'] = ['@id' => null,'id'=>'new'];
-//        }
-//        else{
-//            $variables['resource'] = $commonGroundService->getResource('https://ac.huwelijksplanner.online/events/' . $id);
-//        }
-//
-//        // If it is a delete action we can stop right here
-//        if($request->query->get('action') == 'delete'){
-//            $commonGroundService->deleteResource($variables['resource']);
-//            return $this->redirect($this->generateUrl('app_ac_events'));
-//        }
-//
-//        $variables['title'] = $translator->trans('event');
-//        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('event');
-//        $variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
-//
-//        // Lets see if there is a post to procces
-//        if ($request->isMethod('POST')) {
-//
-//            // Passing the variables to the resource
-//            $resource = $request->request->all();
-//            $resource['@id'] = $variables['resource']['@id'];
-//            $resource['id'] = $variables['resource']['id'];
-//
-//            // If there are any sub data sources the need to be removed below in order to save the resource
-//            // unset($resource['somedatasource'])
-//
-//            $variables['resource'] = $commonGroundService->saveResource($resource,'https://ac.huwelijksplanner.online/events/');
-//        }
-//
-//        return $variables;
-//    }
+    /**
+     * @Route("/events/{id}")
+     * @Template
+     */
+    public function eventAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'arc','type'=>'events','id'=> $id]);        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_arc_events'));
+        }
+
+        $variables['title'] = $translator->trans('event');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('event');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'arc','type'=>'events']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_arc_events', ["id" =>  $variables['resource']['id']]));
+            }
+        }
+
+
+        return $variables;
+    }
+
+
 //
 //    /**
 //     * @Route("/schedules")
