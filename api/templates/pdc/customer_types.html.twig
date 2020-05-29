@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_pdc_group' %}
+{% set view = 'app_pdc_customertype' %}
 
 {% block content %}
 
@@ -30,14 +30,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% set view = 'app_wrc_template' %}
                         {% for resource in resources %}
-                        <tr>
-                            <td>{{ resource.name }}</td>
-                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
-                        </tr>
+                            <tr>
+                                <td>{{ resource.name }}</td>
+                                <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -50,5 +49,4 @@
         {% include 'footer.html.twig' %}
 
     </div>
-
 {% endblock %}

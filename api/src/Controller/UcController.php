@@ -97,6 +97,11 @@ class UcController extends AbstractController
 			// unset($resource['somedatasource'])
 
 			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'users']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_uc_users', ["id" =>  $variables['resource']['id']]));
+            }
 		}
 		return $variables;
 	}
@@ -168,6 +173,11 @@ class UcController extends AbstractController
             }
 
 			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'groups']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_uc_groups', ["id" =>  $variables['resource']['id']]));
+            }
 		}
 		return $variables;
 	}
@@ -234,6 +244,11 @@ class UcController extends AbstractController
 			// unset($resource['somedatasource'])
 
 			$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'scopes']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_uc_scopes', ["id" =>  $variables['resource']['id']]));
+            }
 		}
 		return $variables;
 	}
@@ -291,6 +306,11 @@ class UcController extends AbstractController
             // Lets see if we also need to add an configuration
 
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'applications']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_uc_applications', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }
@@ -348,6 +368,11 @@ class UcController extends AbstractController
             // Lets see if we also need to add an configuration
 
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'providers']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_uc_providers', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }
@@ -405,6 +430,11 @@ class UcController extends AbstractController
             // Lets see if we also need to add an configuration
 
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'uc','type'=>'tokens']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_uc_tokens', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }

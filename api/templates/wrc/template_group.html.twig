@@ -6,16 +6,16 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a template',
+                'headerTitle': 'save or create a template group',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
                         'path' : 'app_default_index'
                     },
-                    'templates' : {
-                        'name' : 'templates',
-                        'path' : 'app_wrc_templates'
+                    'template groups' : {
+                        'name' : 'template groups',
+                        'path' : 'app_wrc_templategroups'
                     }
                 }]
             }
@@ -24,7 +24,7 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_wrc_template', {'id': resource.id}) }}" method="post">
+                        	<form action="{{ path('app_wrc_templategroup', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -51,24 +51,6 @@
     									</div> <!-- /.col -->
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                    <label for="name">{{ 'title'|trans|capitalize }}</label>
-                                                    <input type="text" class="form-control form-control-lg" id="title" name ="title" value="{% if resource.title is defined %}{{ resource.title }}{% endif %}" required>
-                                            </div><!-- /.form-group -->
-                                        </div> <!-- /.col -->
-    									<div class="col-md-4 col-sm-12">
-        									<div class="form-group">
-        										<label for="templateEngine">{{ 'template engine'|trans|capitalize }}</label>
-        										<select id="templateEngine" name="templateEngine" class="form-control form-control-lg" required>
-                                               		<option value="twig" {% if resource.templateEngine is defined and 'twig' == resource.templateEngine  %}selected=""{% endif %}>Twig</option>
-                                                    <option value="md" {% if resource.templateEngine is defined and 'md' == resource.templateEngine  %}selected=""{% endif %}>Markdown</option>
-                                                    <option value="rst" {% if resource.templateEngine is defined and 'rst' == resource.templateEngine  %}selected=""{% endif %}>reStructuredText</option>
-                                                </select>
-        									</div><!-- /.form-group -->
-        								</div> <!-- /.col -->
-    								</div><!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
                                                 <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                                 <select id="organization" name="organization" class="form-control form-control-lg">
                                                     {% for organization in organizations %}
@@ -87,17 +69,7 @@
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'template groups'|trans|capitalize }}</label>
-                                                <select id="templateGroups[]" name="templateGroups[]" class="form-control form-control-lg">
-                                                    {% for templateGroup in templateGroups %}
-                                                        <option value="{{ templateGroup['@id'] }}" {% if resource.templateGroups is defined and templateGroup['@id'] == resource.templateGroups  %}selected=""{% endif %}>{{ templateGroup.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div><!-- /.form-group -->
-                                        </div> <!-- /.col -->
-                                    </div>
+    								</div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
@@ -105,15 +77,6 @@
 												<textarea class="form-control summernote" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
-    								</div> <!-- /.row -->
-    								<div class="row">
-        								<div class="col-md-12">
-        									<div class="form-group">
-        										<label for="content">{{ 'content'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="40" id="content" name="content" required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
-        									</div>
-        								</div>  <!-- /.col -->
-    								</div> <!-- /.row -->
 								</div> <!-- /.card-body -->
 
 								<div class="card-action">
@@ -123,7 +86,15 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-
+                {% if resource['@id'] is defined and  resource['@id'] is not empty  %}
+                    <div class="row">
+                        <div class="col-md-8">
+                            {% include 'wrc/widgets/templates.html.twig'
+                                with {
+                                'templates': templates } %}
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                {% endif %}
             </div><!-- /.page-inner -->
         </div>
 

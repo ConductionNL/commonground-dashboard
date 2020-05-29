@@ -80,7 +80,7 @@ class MrcController extends AbstractController
 
         $variables['title'] = $translator->trans('employee');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('employee');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
 
         // Lets see if there is a post to procces
@@ -95,6 +95,11 @@ class MrcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'employees']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_employees', ["id" =>  $variables['resource']['id']]));
+            }
 
         }
 
@@ -153,6 +158,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'applications']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_applications', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -211,6 +221,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'competences']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_competences', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -269,6 +284,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'contracts']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_contracts', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -327,6 +347,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'interests']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_interests', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -385,6 +410,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'job_functions']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_jobfunctions', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -443,6 +473,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'job_postings']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_jobpostings', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -501,6 +536,11 @@ class MrcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'mrc','type'=>'skills']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_skills', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

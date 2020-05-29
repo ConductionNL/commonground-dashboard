@@ -174,7 +174,23 @@
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_irc_assent',
+            'resource':resource,
+            'id':'delete' } %}
 
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_irc_assent',
+            'resource':resource,
+            'id':'auditTrial' } %}
+
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_irc_assent',
+            'resource':resource,
+            'id':'changeLog' } %}
         {% include 'footer.html.twig' %}
 
     </div>

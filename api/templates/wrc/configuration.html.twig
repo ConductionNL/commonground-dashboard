@@ -21,10 +21,11 @@
             }
             %}
             <div class="page-inner">
+                <form action="{{ path('app_wrc_configuration', {'id': resource.id}) }}" method="post">
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                        	<form action="{{ path('app_wrc_configurations', {'id': resource.id}) }}" method="post">
+
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -43,28 +44,38 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
-    									<div class="col-md-3 col-sm-12">
+    									<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										<select id="organization" name="organization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization.id == resource.organization.id  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                <select id="application" name="application" class="form-control form-control-lg">
+                                                    {% for application in applications %}
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application.id == resource.application.id  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
     								</div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="summernote" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control description" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -73,11 +84,80 @@
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
 								</div><!-- /.card-action -->
-                            </form>
+
                         </div><!-- /.card -->
+
+
+
                     </div><!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'configurations'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body" >
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="configBody">
+                                        {% if resource.configuration is defined %}
+                                            {% set value = 0 %}
+                                        {% for configuration in resource.configuration %}
+                                            <tr id="{{ value }}">
+                                                <td id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[]" value="{{ configuration }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="configDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- /.row -->
+                </form>
             </div><!-- /.page-inner -->
+
+
+            <div class="modal fade" style="text-align: center" id="addConfiguration" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addConfiguration" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add configuration'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="configName" name="name" value="">
+                        </div><!-- /.form-group -->
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="configButton();">{{ 'add'|trans|capitalize }}</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
 
 
             {% include 'widgets/delete_modal.html.twig'
@@ -102,42 +182,101 @@
             {% include 'footer.html.twig' %}
 
         </div>
+        <script>
+            {% block javascript %}
+
+
+
+            //logic for configurations
+
+            function configButton(){
+                let counts = document.getElementById("configBody").lastChild.id;
+                let parent = document.getElementById("configBody")
+                let name = document.getElementById("configName");
+                let newConfig = document.createElement("input");
+                let tr = document.createElement("tr")
+                let td = document.createElement("td")
+                let tdButton = document.createElement("td")
+                let delButton = document.createElement("button")
+                let counter;
+
+                if(counts !== undefined){
+                    counter = parseInt(counts) + 1;
+                } else {
+                    counter = parent.children.length;
+                }
+
+                newConfig.value = name.value;
+                newConfig.name = "configuration[]";
+                newConfig.className = "form-control form-control-lg"
+                newConfig.readOnly = true;
+                newConfig.id = counter.toString();
+                newConfig.setAttribute("style", "height: fit-content !important;");
+                tdButton.id = counter.toString();
+
+                delButton.id = counter.toString();
+                delButton.innerHTML = "<i class='fas fa-minus'></i>";
+                delButton.addEventListener('click', function(){
+                    configDelete(counter);
+                });
+                delButton.className = "btn btn-danger";
+                delButton.type = "button";
+
+                tr.id = counter.toString();
+                td.id = counter.toString();
+
+                parent.appendChild(tr);
+                tr.appendChild(td);
+                td.appendChild(newConfig);
+                tr.appendChild(tdButton);
+                tdButton.appendChild(delButton);
+
+                name.value = "";
+            }
+
+            function configDelete(selected){
+                document.getElementById(selected).remove();
+            }
+
+
+
+
+
+            //audit_trails
+            $.ajax({
+                url: "/api/wrc/audit_trails",
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    for(let i = 0; i < result['hydra:member'].length; i++ ){
+                        $('#audit').append('<tr>')
+                        $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                        $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                        $('#audit').append('</tr>')
+                    }
+                },
+            });
+            //change_logs
+            $.ajax({
+                url: "/api/wrc/change_logs",
+                type: 'GET',
+                dataType: 'json',
+                success: function(result) {
+                    for(let i = 0; i < result['hydra:member'].length; i++ ){
+                        $('#changelog').append('<tr>')
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                        $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                        $('#changelog').append('</tr>')
+                    }
+                },
+            });
+            {% endblock %}
+        </script>
     </div>
-    {% block javascript %}
-    //audit_trails
-    $.ajax({
-        url: "/api/wrc/audit_trails",
-        type: 'GET',
-        dataType: 'json',
-        success: function(result) {
-            for(let i = 0; i < result['hydra:member'].length; i++ ){
-                $('#audit').append('<tr>')
-                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
-                $('#audit').append('</tr>')
-            }
-        },
-    });
-    //change_logs
-    $.ajax({
-        url: "/api/wrc/change_logs",
-        type: 'GET',
-        dataType: 'json',
-        success: function(result) {
-            console.log(result);
-            for(let i = 0; i < result['hydra:member'].length; i++ ){
-                $('#changelog').append('<tr>')
-                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
-                $('#changelog').append('</tr>')
-            }
-        },
-    });
-    {% endblock %}
 {% endblock %}

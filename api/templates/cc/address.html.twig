@@ -1,6 +1,5 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_cc_address' %}
 
 {% block content %}
 
@@ -33,11 +32,11 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_cc_address', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_cc_adresses')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_cc_addresses')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
@@ -52,77 +51,91 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       name="name" placeholder=""
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
+                                                <label for="largeInput">{{ 'bag nummer aanduiding'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="bagnummeraanduiding"
+                                                       name="bagnummeraanduiding" placeholder=""
+                                                       value="{% if resource.bagnummeraanduiding is defined %}{{ resource.bagnummeraanduiding }} {% endif %}">
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'post office box number'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="postOfficeBoxNumber"
+                                                       name="postOfficeBoxNumber" placeholder=""
+                                                       value="{% if resource.postOfficeBoxNumber is defined %}{{ resource.postOfficeBoxNumber }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <label for="largeInput">{{ 'street'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="street"
+                                                       name="street" placeholder=""
+                                                       value="{% if resource.street is defined %}{{ resource.street }} {% endif %}">
                                             </div>
-                                        </div>  <!-- /.col -->
-                                    </div> <!-- /.row -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'house number'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="houseNumber"
+                                                       name="houseNumber" placeholder=""
+                                                       value="{% if resource.houseNumber is defined %}{{ resource.houseNumber }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'house number suffix'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="houseNumberSuffix"
+                                                       name="houseNumberSuffix" placeholder=""
+                                                       value="{% if resource.houseNumberSuffix is defined %}{{ resource.houseNumberSuffix }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'postal code'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="postalCode"
+                                                       name="postalCode" placeholder=""
+                                                       value="{% if resource.postalCode is defined %}{{ resource.postalCode }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'region'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="region"
+                                                       name="region" placeholder=""
+                                                       value="{% if resource.region is defined %}{{ resource.region }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'locality'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="locality"
+                                                       name="locality" placeholder=""
+                                                       value="{% if resource.locality is defined %}{{ resource.locality }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'country'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="country"
+                                                       name="country" placeholder=""
+                                                       value="{% if resource.country is defined %}{{ resource.country }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div>
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
@@ -133,48 +146,24 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_cc_adress',
+            'route': 'app_cc_address',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_cc_adress',
+            'route': 'app_cc_address',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_cc_adress',
+            'route': 'app_cc_address',
             'resource':resource,
             'id':'changeLog' } %}
 

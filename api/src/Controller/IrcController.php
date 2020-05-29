@@ -63,8 +63,8 @@ class IrcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new' && !$request->isMethod('POST')){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new', 'name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'irc','type'=>'assents','id'=> $id]);
@@ -94,6 +94,10 @@ class IrcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'irc','type'=>'assents']));
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_irc_assents', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
         return $variables;

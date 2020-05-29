@@ -23,8 +23,8 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'organization'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'commonground_resource'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'resource.person'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
@@ -33,8 +33,8 @@
                         <tbody>
                         {% for resource in resources %}
                         <tr>
+                            <td>{{ commonground_resource(resource['@id']).person }} </td>
                             <td>{{ resource.person }}</td>
-                            <td>{{ resource.organization }}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>

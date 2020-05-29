@@ -891,19 +891,19 @@
       </trans-unit>
       <trans-unit id="yPfOJ2A" resname="todos">
         <source>todos</source>
-        <target>__todos</target>
+        <target>todo's</target>
       </trans-unit>
       <trans-unit id="ytmcB9U" resname="add todo">
         <source>add todo</source>
-        <target>__add todo</target>
+        <target>voeg todo toe</target>
       </trans-unit>
       <trans-unit id="_w_6tAS" resname="journals">
         <source>journals</source>
-        <target>__journals</target>
+        <target>logboeken</target>
       </trans-unit>
       <trans-unit id="7JLQYzi" resname="add journal">
         <source>add journal</source>
-        <target>__add journal</target>
+        <target>logboek toevoegen</target>
       </trans-unit>
       <trans-unit id="zqM4lVx" resname="freebusies">
         <source>freebusies</source>
@@ -1199,7 +1199,7 @@
       </trans-unit>
       <trans-unit id="zs7_j_N" resname="costumer types">
         <source>costumer types</source>
-        <target>__costumer types</target>
+        <target>klant types</target>
       </trans-unit>
       <trans-unit id="Em3BRGZ" resname="add group">
         <source>add group</source>
@@ -1267,7 +1267,7 @@
       </trans-unit>
       <trans-unit id="O4jlk6W" resname="changeLog">
         <source>changeLog</source>
-        <target>logboek</target>
+        <target>dagboek</target>
       </trans-unit>
       <trans-unit id="okRzAEG" resname="auditTrail">
         <source>auditTrail</source>
@@ -1567,7 +1567,7 @@
       </trans-unit>
       <trans-unit id="hkvgCjb" resname="add configuration">
         <source>add configuration</source>
-        <target>__add configuration</target>
+        <target>configuratie toevoegen</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
