@@ -875,11 +875,11 @@
       </trans-unit>
       <trans-unit id="bpoasqA" resname="schedules">
         <source>schedules</source>
-        <target>__schedules</target>
+        <target>roosters</target>
       </trans-unit>
       <trans-unit id="8hFfuud" resname="add schedule">
         <source>add schedule</source>
-        <target>__add schedule</target>
+        <target>rooster toevoegen</target>
       </trans-unit>
       <trans-unit id="hiQXuef" resname="events">
         <source>events</source>
@@ -899,11 +899,11 @@
       </trans-unit>
       <trans-unit id="_w_6tAS" resname="journals">
         <source>journals</source>
-        <target>logboeken</target>
+        <target>dagboeken</target>
       </trans-unit>
       <trans-unit id="7JLQYzi" resname="add journal">
         <source>add journal</source>
-        <target>logboek toevoegen</target>
+        <target>dagboek toevoegen</target>
       </trans-unit>
       <trans-unit id="zqM4lVx" resname="freebusies">
         <source>freebusies</source>
@@ -939,7 +939,7 @@
       </trans-unit>
       <trans-unit id="aGRvSK1" resname="add alarm">
         <source>add alarm</source>
-        <target>__add alarm</target>
+        <target>alarm toevoegen</target>
       </trans-unit>
       <trans-unit id="vZOMaI9" resname="action">
         <source>action</source>
@@ -967,7 +967,7 @@
       </trans-unit>
       <trans-unit id="pzWlc3q" resname="number of repeats">
         <source>number of repeats</source>
-        <target>__number of repeats</target>
+        <target>aantal herhalingen</target>
       </trans-unit>
       <trans-unit id="BpT7O8b" resname="related event">
         <source>related event</source>

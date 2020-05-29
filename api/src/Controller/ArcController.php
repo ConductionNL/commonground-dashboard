@@ -91,6 +91,12 @@ class ArcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'arc', 'type'=>'resources']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_arc_resources', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
