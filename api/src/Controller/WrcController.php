@@ -564,6 +564,11 @@ class WrcController extends AbstractController
 
             // If we do a reload here anyway? why dont we get the lates version of the resource
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_applications', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -656,6 +661,11 @@ class WrcController extends AbstractController
             }
 
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'menus']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_menus', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -716,6 +726,11 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'configurations']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_configurations', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }

@@ -90,7 +90,13 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'activities','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'activities']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pfc_activities', ["id" =>  $variables['resource']['id']]));
+            }
+        }
 
         return $variables;
     }
@@ -145,7 +151,14 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'evaluations','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'evaluations']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pfc_evaluations', ["id" =>  $variables['resource']['id']]));
+            }
+
+        }
 
         return $variables;
     }
@@ -182,7 +195,7 @@ class PfcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_pfc_formalRecognitions'));
+            return $this->redirect($this->generateUrl('app_pfc_formalrecognitions'));
         }
 
         $variables['title'] = $translator->trans('formalRecognition');
@@ -200,7 +213,14 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'formalRecognitions','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'formalRecognitions']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pfc_formalrecognitions', ["id" =>  $variables['resource']['id']]));
+            }
+
+        }
 
         return $variables;
     }
@@ -255,7 +275,14 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'products','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'products']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pfc_products', ["id" =>  $variables['resource']['id']]));
+            }
+
+        }
 
         return $variables;
     }
@@ -310,7 +337,14 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'reflections','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'reflections']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pfc_reflections', ["id" =>  $variables['resource']['id']]));
+            }
+
+        }
 
         return $variables;
     }
@@ -365,7 +399,14 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'results','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'results']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pfc_results', ["id" =>  $variables['resource']['id']]));
+            }
+
+        }
 
         return $variables;
     }

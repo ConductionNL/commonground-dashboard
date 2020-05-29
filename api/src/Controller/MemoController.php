@@ -94,6 +94,12 @@ class MemoController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'memo','type'=>'memos']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_memos', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
 

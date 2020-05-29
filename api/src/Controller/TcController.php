@@ -92,6 +92,11 @@ class TcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'tc','type'=>'tasks']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_tc_tasks', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

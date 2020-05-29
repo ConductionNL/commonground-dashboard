@@ -129,6 +129,11 @@ class PdcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pdc','type'=>'products']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_products', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }
@@ -186,6 +191,11 @@ class PdcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'groups']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_groups', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -243,6 +253,11 @@ class PdcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'offers']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_offers', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;
@@ -364,6 +379,11 @@ class PdcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'taxes']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_taxes', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;
