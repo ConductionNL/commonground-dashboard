@@ -1211,11 +1211,11 @@
       </trans-unit>
       <trans-unit id="Gsw.zQA" resname="available from">
         <source>available from</source>
-        <target>__available from</target>
+        <target>beschikbaar vanaf</target>
       </trans-unit>
       <trans-unit id="ihqS0_7" resname="available until">
         <source>available until</source>
-        <target>__available until</target>
+        <target>beschikbaar tot</target>
       </trans-unit>
       <trans-unit id="rfDgmZO" resname="audience">
         <source>audience</source>
@@ -1483,11 +1483,11 @@
       </trans-unit>
       <trans-unit id="h_1dXfi" resname="availableFrom">
         <source>availableFrom</source>
-        <target>__availableFrom</target>
+        <target>beschikbaar vanaf</target>
       </trans-unit>
       <trans-unit id="XuBthHA" resname="availableUntil">
         <source>availableUntil</source>
-        <target>__availableUntil</target>
+        <target>beschikbaar tot</target>
       </trans-unit>
       <trans-unit id="kBFbcfJ" resname="minDate">
         <source>minDate</source>
@@ -1503,19 +1503,19 @@
       </trans-unit>
       <trans-unit id="87SPaDv" resname="caseType">
         <source>caseType</source>
-        <target>__caseType</target>
+        <target>zaak type</target>
       </trans-unit>
       <trans-unit id="l6ZiTT8" resname="camundaProces">
         <source>camundaProces</source>
-        <target>__camundaProces</target>
+        <target>camunda proces</target>
       </trans-unit>
       <trans-unit id="jnzna4j" resname="extends">
         <source>extends</source>
-        <target>__extends</target>
+        <target>verlengd</target>
       </trans-unit>
       <trans-unit id="wnIERaR" resname="unique">
         <source>unique</source>
-        <target>__unique</target>
+        <target>uniek</target>
       </trans-unit>
       <trans-unit id="LbaabzW" resname="parent required">
         <source>parent required</source>
@@ -2187,7 +2187,7 @@
       </trans-unit>
       <trans-unit id="tfkKlua" resname="progress">
         <source>progress</source>
-        <target>__progress</target>
+        <target>vooruitgang</target>
       </trans-unit>
       <trans-unit id="dChNncv" resname="color">
         <source>color</source>
@@ -2247,7 +2247,7 @@
       </trans-unit>
       <trans-unit id="I5e5BLh" resname="new request">
         <source>new request</source>
-        <target>__new request</target>
+        <target>nieuw verzoek</target>
       </trans-unit>
       <trans-unit id="A7c_k2s" resname="no value">
         <source>no value</source>

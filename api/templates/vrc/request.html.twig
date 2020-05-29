@@ -65,7 +65,7 @@
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                                 {% if resource.organization is defined and resource.organization is not empty %}
-                                                    <a class="btn btn-info btn-block" href="#" >{{ commonground_resource(resource.organization).name }}</a>
+                                                    <a class="btn btn-info btn-block" href="{{ path('app_wrc_organization',{'id': commonground_resource(resource.organization).id}) }}" >{{ commonground_resource(resource.organization).name }}</a>
                                                 {% else %}
         										<select id="organization" name="organization" class="form-control form-control-lg" >
         										 {% for organization in organizations %}
@@ -162,12 +162,15 @@
                             'roles':resource.roles,
                             'employees':employees} %}
                     </div><!-- /.col -->
+                    {% if tasks is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/tasks.html.twig'
                             with {
                             'resource':resource,
                             'tasks':tasks} %}
                     </div><!-- /.col -->
+                    {% endif %}
+                    {% if memos is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/memos.html.twig'
                             with {
@@ -175,18 +178,23 @@
                             'memos':memos,
                             'employees':employees} %}
                     </div><!-- /.col -->
+                    {% endif %}
+                    {% if messages is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/messages.html.twig'
                             with {
                             'resource':resource,
                             'messages':messages } %}
                     </div><!-- /.col -->
+                    {% endif %}
+                    {% if queues is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/queue.html.twig'
                             with {
                             'resource':resource,
                             'queues':queues } %}
                     </div><!-- /.col -->
+                    {% endif %}
                 </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->

@@ -91,6 +91,7 @@ class GrcController extends AbstractController
         $variables['cemeteries'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'cemeteries'])["hydra:member"];
         $variables['gravetypes'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])["hydra:member"];
         $variables['gravecovers'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_covers'])["hydra:member"];
+        $variables['ingeschrevenpersonen'] = $commonGroundService->getResourceList(['component'=>'brp','type'=>'ingeschrevenpersonen']);
 
 
         // Lets see if there is a post to procces
