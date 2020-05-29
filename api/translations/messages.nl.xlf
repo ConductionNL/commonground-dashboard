@@ -1863,11 +1863,11 @@
       </trans-unit>
       <trans-unit id="VMWe9uh" resname="grave_types">
         <source>grave_types</source>
-        <target>__grave_types</target>
+        <target>graf types</target>
       </trans-unit>
       <trans-unit id="dkuKWMU" resname="grave_type">
         <source>grave_type</source>
-        <target>__grave_type</target>
+        <target>graf type</target>
       </trans-unit>
       <trans-unit id="GrgpxyZ" resname="cemeteries">
         <source>cemeteries</source>
@@ -2059,7 +2059,7 @@
       </trans-unit>
       <trans-unit id="ImhwMZh" resname="deceased">
         <source>deceased</source>
-        <target>__deceased</target>
+        <target>overledene</target>
       </trans-unit>
       <trans-unit id="6VT7.cT" resname="stakeholder">
         <source>stakeholder</source>
@@ -2067,11 +2067,11 @@
       </trans-unit>
       <trans-unit id="Md4xKXf" resname="acquisition">
         <source>acquisition</source>
-        <target>__acquisition</target>
+        <target>verkrijging</target>
       </trans-unit>
       <trans-unit id="WkUkWVA" resname="position">
         <source>position</source>
-        <target>__position</target>
+        <target>positie</target>
       </trans-unit>
       <trans-unit id="uo__5_R" resname="grave types">
         <source>grave types</source>
@@ -2275,7 +2275,11 @@
       </trans-unit>
       <trans-unit id="NuZPGfV" resname="css">
         <source>css</source>
-        <target>__css</target>
+        <target>css</target>
+      </trans-unit>
+      <trans-unit id="AyuSJi7" resname="new cemetery">
+        <source>new cemetery</source>
+        <target>nieuwe begraafplaat</target>
       </trans-unit>
     </body>
   </file>

@@ -113,6 +113,12 @@ class GrcController extends AbstractController
             $grave['position'] = (int) $_POST['position'];
 
             $variables['resource'] = $commonGroundService->saveResource($grave, ['component'=>'grc','type'=>'graves']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_grc_graves', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
@@ -179,6 +185,11 @@ class GrcController extends AbstractController
             $gravetype['reference'] = $_POST['reference'];
 
             $variables['resource'] = $commonGroundService->saveResource($gravetype, ['component' => 'grc', 'type' => 'grave_types']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_grc_gravetypes', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }
@@ -261,6 +272,11 @@ class GrcController extends AbstractController
                 $cemetery['calendar'] = $calendar['@id'];
 
                 $variables['resource'] = $commonGroundService->saveResource($cemetery, ['component' => 'grc', 'type' => 'cemeteries']);
+
+                /* @to this redirect is a hotfix */
+                if(array_key_exists('id', $variables['resource'])){
+                    return $this->redirect($this->generateUrl('app_grc_cemeteries', ["id" =>  $variables['resource']['id']]));
+                }
 
             }
 
