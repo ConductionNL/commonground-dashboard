@@ -325,12 +325,12 @@
         <source>calendar</source>
         <target>kalender</target>
       </trans-unit>
-      <trans-unit id="JvMM2SJ" resname="Payment Component">
+      <trans-unit id="iVlB7xp" resname="Payment Component">
         <source>Payment Component</source>
         <target>Betaal Component</target>
       </trans-unit>
       <trans-unit id="CTbbBXo" resname="the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.">
-        <source>the location catalogue holds all data concerning accomodations, places, changelogs and auditrails.</source>
+        <source>the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.</source>
         <target>__the location catalogue holds al data concerning accomodations, places, changelogs and auditrails.</target>
       </trans-unit>
       <trans-unit id="3zhK6Xx" resname="payments">
@@ -769,19 +769,19 @@
         <source>task</source>
         <target>taak</target>
       </trans-unit>
-      <trans-unit id="j41rlZ5" resname="name changes">
+      <trans-unit id="9uUrXwf" resname="name changes">
         <source>name changes</source>
         <target>naamwijzigingen</target>
       </trans-unit>
-      <trans-unit id="WCUMjMU" resname="requests sworn civil servant">
+      <trans-unit id="NLYrgLh" resname="requests sworn civil servant">
         <source>requests sworn civil servant</source>
         <target>Aanvragen eigen BABS beëdigde</target>
       </trans-unit>
-      <trans-unit id="Xs.DOkP" resname="requests non sworn civil servant">
+      <trans-unit id="Obpjmyy" resname="requests non sworn civil servant">
         <source>requests non sworn civil servant</source>
         <target>Aanvragen eigen BABS niet beëdigd</target>
       </trans-unit>
-      <trans-unit id="CsCwDQT" resname="requests non sanctioned location">
+      <trans-unit id="Qbz7gOF" resname="requests non sanctioned location">
         <source>requests non sanctioned location</source>
         <target>aanvragen eigen locatie</target>
       </trans-unit>
@@ -1169,15 +1169,15 @@
         <source>tabel 56</source>
         <target>__tabel 56</target>
       </trans-unit>
-      <trans-unit id="hCpGl.0" resname="Environments">
+      <trans-unit id="B0N81lG" resname="Environments">
         <source>Environments</source>
         <target>Omgevingen</target>
       </trans-unit>
-      <trans-unit id="rC5uEtA" resname="health logs">
+      <trans-unit id="lMVV4M_" resname="health logs">
         <source>health logs</source>
         <target>health checks</target>
       </trans-unit>
-      <trans-unit id="6dv7MFn" resname="services">
+      <trans-unit id="7xxLRfL" resname="services">
         <source>services</source>
         <target>diensten</target>
       </trans-unit>
@@ -1557,7 +1557,7 @@
         <source>application</source>
         <target>applicatie</target>
       </trans-unit>
-      <trans-unit id="XzxPGhYD" resname="items">
+      <trans-unit id="XzxPhYD" resname="items">
         <source>items</source>
         <target>artikelen</target>
       </trans-unit>
@@ -1824,6 +1824,458 @@
       <trans-unit id="yqXsMfT" resname="registrationDate">
         <source>registrationDate</source>
         <target>registratie datum</target>
+      </trans-unit>
+      <trans-unit id="uOH4C9c" resname="event">
+        <source>event</source>
+        <target>__event</target>
+      </trans-unit>
+      <trans-unit id="iTgVAxi" resname="the address component holds addresses">
+        <source>the address component holds addresses</source>
+        <target>__the address component holds addresses</target>
+      </trans-unit>
+      <trans-unit id="JvMM2SJ" resname="Betaal Component">
+        <source>Betaal Component</source>
+        <target>__Betaal Component</target>
+      </trans-unit>
+      <trans-unit id="9GZik2y" resname="contact moment">
+        <source>contact moment</source>
+        <target>__contact moment</target>
+      </trans-unit>
+      <trans-unit id="pH1P5xi" resname="health log">
+        <source>health log</source>
+        <target>__health log</target>
+      </trans-unit>
+      <trans-unit id="y7OyfB7" resname="Grave registration catalouge">
+        <source>Grave registration catalouge</source>
+        <target>__Grave registration catalouge</target>
+      </trans-unit>
+      <trans-unit id="wmJTYpX" resname="The Grave administration catalouge holds al data concerning issues surround grave administration">
+        <source>The Grave administration catalouge holds al data concerning issues surround grave administration</source>
+        <target>__The Grave administration catalouge holds al data concerning issues surround grave administration</target>
+      </trans-unit>
+      <trans-unit id="65U.1uB" resname="graves">
+        <source>graves</source>
+        <target>graven</target>
+      </trans-unit>
+      <trans-unit id="6_.hhBc" resname="grave">
+        <source>grave</source>
+        <target>graf</target>
+      </trans-unit>
+      <trans-unit id="VMWe9uh" resname="grave_types">
+        <source>grave_types</source>
+        <target>__grave_types</target>
+      </trans-unit>
+      <trans-unit id="dkuKWMU" resname="grave_type">
+        <source>grave_type</source>
+        <target>__grave_type</target>
+      </trans-unit>
+      <trans-unit id="GrgpxyZ" resname="cemeteries">
+        <source>cemeteries</source>
+        <target>begraafplaatsen</target>
+      </trans-unit>
+      <trans-unit id="Gp5UkMG" resname="cemetery">
+        <source>cemetery</source>
+        <target>begraafplaat</target>
+      </trans-unit>
+      <trans-unit id="WiEsFsx" resname="place property">
+        <source>place property</source>
+        <target>__place property</target>
+      </trans-unit>
+      <trans-unit id="zMZtiBk" resname="accommodation property">
+        <source>accommodation property</source>
+        <target>__accommodation property</target>
+      </trans-unit>
+      <trans-unit id="08xPTQ1" resname="competences">
+        <source>competences</source>
+        <target>__competences</target>
+      </trans-unit>
+      <trans-unit id="XI7SxbY" resname="competence">
+        <source>competence</source>
+        <target>__competence</target>
+      </trans-unit>
+      <trans-unit id="sJTbfOL" resname="contracts">
+        <source>contracts</source>
+        <target>__contracts</target>
+      </trans-unit>
+      <trans-unit id="zIMh1jd" resname="contract">
+        <source>contract</source>
+        <target>__contract</target>
+      </trans-unit>
+      <trans-unit id="i0w8kGN" resname="interests">
+        <source>interests</source>
+        <target>__interests</target>
+      </trans-unit>
+      <trans-unit id="goQI5A1" resname="interest">
+        <source>interest</source>
+        <target>__interest</target>
+      </trans-unit>
+      <trans-unit id="eDvptp7" resname="job functions">
+        <source>job functions</source>
+        <target>__job functions</target>
+      </trans-unit>
+      <trans-unit id="xjAr7ci" resname="job function">
+        <source>job function</source>
+        <target>__job function</target>
+      </trans-unit>
+      <trans-unit id="LtX3OR7" resname="job postings">
+        <source>job postings</source>
+        <target>__job postings</target>
+      </trans-unit>
+      <trans-unit id="ZSm9Xvg" resname="job Posting">
+        <source>job Posting</source>
+        <target>__job Posting</target>
+      </trans-unit>
+      <trans-unit id="MsHPSaL" resname="skills">
+        <source>skills</source>
+        <target>__skills</target>
+      </trans-unit>
+      <trans-unit id="nFPAdNe" resname="skill">
+        <source>skill</source>
+        <target>__skill</target>
+      </trans-unit>
+      <trans-unit id="P7RWI8s" resname="section">
+        <source>section</source>
+        <target>__section</target>
+      </trans-unit>
+      <trans-unit id="drrSXDS" resname="the queue component holds queues">
+        <source>the queue component holds queues</source>
+        <target>__the queue component holds queues</target>
+      </trans-unit>
+      <trans-unit id="VLWISQA" resname="stufinterface">
+        <source>stufinterface</source>
+        <target>__stufinterface</target>
+      </trans-unit>
+      <trans-unit id="j41rlZ5" resname="aanvragen naamwijziging">
+        <source>aanvragen naamwijziging</source>
+        <target>__aanvragen naamwijziging</target>
+      </trans-unit>
+      <trans-unit id="WCUMjMU" resname="aanvragen beedigd babs">
+        <source>aanvragen beedigd babs</source>
+        <target>__aanvragen beedigd babs</target>
+      </trans-unit>
+      <trans-unit id="Xs.DOkP" resname="aanvragen niet beedigd babs">
+        <source>aanvragen niet beedigd babs</source>
+        <target>__aanvragen niet beedigd babs</target>
+      </trans-unit>
+      <trans-unit id="CsCwDQT" resname="aanvragen eigen locatie">
+        <source>aanvragen eigen locatie</source>
+        <target>__aanvragen eigen locatie</target>
+      </trans-unit>
+      <trans-unit id="JZt8uW5" resname="user configuration">
+        <source>user configuration</source>
+        <target>__user configuration</target>
+      </trans-unit>
+      <trans-unit id="Hhm6spv" resname="providers">
+        <source>providers</source>
+        <target>__providers</target>
+      </trans-unit>
+      <trans-unit id="XEwZZDQ" resname="provider">
+        <source>provider</source>
+        <target>__provider</target>
+      </trans-unit>
+      <trans-unit id="xR5FW0H" resname="tokens">
+        <source>tokens</source>
+        <target>__tokens</target>
+      </trans-unit>
+      <trans-unit id="PEaenWx" resname="token">
+        <source>token</source>
+        <target>__token</target>
+      </trans-unit>
+      <trans-unit id="LtSsZA7" resname="template groups">
+        <source>template groups</source>
+        <target>__template groups</target>
+      </trans-unit>
+      <trans-unit id="DxLJEN0" resname="template group">
+        <source>template group</source>
+        <target>__template group</target>
+      </trans-unit>
+      <trans-unit id="8hWGjF4" resname="bag nummer aanduiding">
+        <source>bag nummer aanduiding</source>
+        <target>__bag nummer aanduiding</target>
+      </trans-unit>
+      <trans-unit id="6rfBUqn" resname="post office box number">
+        <source>post office box number</source>
+        <target>__post office box number</target>
+      </trans-unit>
+      <trans-unit id="YAjCb0R" resname="street">
+        <source>street</source>
+        <target>__street</target>
+      </trans-unit>
+      <trans-unit id="rBYOWvF" resname="house number">
+        <source>house number</source>
+        <target>__house number</target>
+      </trans-unit>
+      <trans-unit id="v4p3Dn2" resname="house number suffix">
+        <source>house number suffix</source>
+        <target>__house number suffix</target>
+      </trans-unit>
+      <trans-unit id="C.lz6Ex" resname="postal code">
+        <source>postal code</source>
+        <target>__postal code</target>
+      </trans-unit>
+      <trans-unit id="xpfSmBv" resname="region">
+        <source>region</source>
+        <target>__region</target>
+      </trans-unit>
+      <trans-unit id="PXmor8y" resname="locality">
+        <source>locality</source>
+        <target>__locality</target>
+      </trans-unit>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
+        <target>__country</target>
+      </trans-unit>
+      <trans-unit id="JsqJ08M" resname="cementeries">
+        <source>cementeries</source>
+        <target>begraafplaatsen</target>
+      </trans-unit>
+      <trans-unit id="BIVlwEo" resname="Beschikbare graven">
+        <source>Beschikbare graven</source>
+        <target>Beschikbare graven</target>
+      </trans-unit>
+      <trans-unit id="kfXkTmz" resname="add grave">
+        <source>add grave</source>
+        <target>graf toeviegen</target>
+      </trans-unit>
+      <trans-unit id="FismSY1" resname="Filter op grafsoort">
+        <source>Filter op grafsoort</source>
+        <target>Filter op grafsoort</target>
+      </trans-unit>
+      <trans-unit id=".ZrU78Q" resname="gravetype">
+        <source>gravetype</source>
+        <target>graf type</target>
+      </trans-unit>
+      <trans-unit id="mu5K2E2" resname="Alle graven">
+        <source>Alle graven</source>
+        <target>Alle graven</target>
+      </trans-unit>
+      <trans-unit id="gLTlYBG" resname="new grave">
+        <source>new grave</source>
+        <target>nieuw graf</target>
+      </trans-unit>
+      <trans-unit id="dQVwhLn" resname="grave type">
+        <source>grave type</source>
+        <target>graf type</target>
+      </trans-unit>
+      <trans-unit id="ImhwMZh" resname="deceased">
+        <source>deceased</source>
+        <target>__deceased</target>
+      </trans-unit>
+      <trans-unit id="6VT7.cT" resname="stakeholder">
+        <source>stakeholder</source>
+        <target>belanghebbende</target>
+      </trans-unit>
+      <trans-unit id="Md4xKXf" resname="acquisition">
+        <source>acquisition</source>
+        <target>__acquisition</target>
+      </trans-unit>
+      <trans-unit id="WkUkWVA" resname="position">
+        <source>position</source>
+        <target>__position</target>
+      </trans-unit>
+      <trans-unit id="uo__5_R" resname="grave types">
+        <source>grave types</source>
+        <target>graf types</target>
+      </trans-unit>
+      <trans-unit id="6j3Yg8i" resname="edit gravetype">
+        <source>edit gravetype</source>
+        <target>graf type aanpassen</target>
+      </trans-unit>
+      <trans-unit id="2N6DzLM" resname="add gravetype">
+        <source>add gravetype</source>
+        <target>graf type toevoegen</target>
+      </trans-unit>
+      <trans-unit id="dspBnD5" resname="gravetypes">
+        <source>gravetypes</source>
+        <target>graf types</target>
+      </trans-unit>
+      <trans-unit id=".WDEWdA" resname="withdrawn">
+        <source>withdrawn</source>
+        <target>__withdrawn</target>
+      </trans-unit>
+      <trans-unit id="sJNgL3x" resname="forward url">
+        <source>forward url</source>
+        <target>__forward url</target>
+      </trans-unit>
+      <trans-unit id="Ge1Av2L" resname="process">
+        <source>process</source>
+        <target>__process</target>
+      </trans-unit>
+      <trans-unit id="JZHGdOq" resname="requester">
+        <source>requester</source>
+        <target>__requester</target>
+      </trans-unit>
+      <trans-unit id="7bLNO3T" resname="category">
+        <source>category</source>
+        <target>__category</target>
+      </trans-unit>
+      <trans-unit id="qdShv7e" resname="floor size">
+        <source>floor size</source>
+        <target>__floor size</target>
+      </trans-unit>
+      <trans-unit id="MN85C1l" resname="bathrooms">
+        <source>bathrooms</source>
+        <target>__bathrooms</target>
+      </trans-unit>
+      <trans-unit id="8Tfkq6J" resname="floor level">
+        <source>floor level</source>
+        <target>__floor level</target>
+      </trans-unit>
+      <trans-unit id="MBjNta0" resname="maximum attendees">
+        <source>maximum attendees</source>
+        <target>__maximum attendees</target>
+      </trans-unit>
+      <trans-unit id="aLexVR0" resname="pets allowed">
+        <source>pets allowed</source>
+        <target>__pets allowed</target>
+      </trans-unit>
+      <trans-unit id="DRfR9p6" resname="wheelchair accessible">
+        <source>wheelchair accessible</source>
+        <target>__wheelchair accessible</target>
+      </trans-unit>
+      <trans-unit id="OKGO999" resname="bag ID">
+        <source>bag ID</source>
+        <target>__bag ID</target>
+      </trans-unit>
+      <trans-unit id="VcZND81" resname="photo">
+        <source>photo</source>
+        <target>__photo</target>
+      </trans-unit>
+      <trans-unit id="AktyNt5" resname="has map">
+        <source>has map</source>
+        <target>__has map</target>
+      </trans-unit>
+      <trans-unit id="XWdwnUK" resname="opening time">
+        <source>opening time</source>
+        <target>__opening time</target>
+      </trans-unit>
+      <trans-unit id="96czj_6" resname="closing time">
+        <source>closing time</source>
+        <target>__closing time</target>
+      </trans-unit>
+      <trans-unit id="bse4eIC" resname="public access">
+        <source>public access</source>
+        <target>__public access</target>
+      </trans-unit>
+      <trans-unit id="AjD5Mws" resname="smoking allowed">
+        <source>smoking allowed</source>
+        <target>__smoking allowed</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target>__key</target>
+      </trans-unit>
+      <trans-unit id="hCpGl.0" resname="Deployments">
+        <source>Deployments</source>
+        <target>__Deployments</target>
+      </trans-unit>
+      <trans-unit id="9Aksmzw" resname="Grave registration">
+        <source>Grave registration</source>
+        <target>graf registratie</target>
+      </trans-unit>
+      <trans-unit id="e38iIUq" resname="commonground_resource">
+        <source>commonground_resource</source>
+        <target>__commonground_resource</target>
+      </trans-unit>
+      <trans-unit id="ZKsvEax" resname="resource.person">
+        <source>resource.person</source>
+        <target>__resource.person</target>
+      </trans-unit>
+      <trans-unit id="Zs2WiKK" resname="dashboard">
+        <source>dashboard</source>
+        <target>dashboard</target>
+      </trans-unit>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
+        <target>__progress</target>
+      </trans-unit>
+      <trans-unit id="dChNncv" resname="color">
+        <source>color</source>
+        <target>__color</target>
+      </trans-unit>
+      <trans-unit id="kQbWISu" resname="modify">
+        <source>modify</source>
+        <target>__modify</target>
+      </trans-unit>
+      <trans-unit id="7lEdFQC" resname="edit role">
+        <source>edit role</source>
+        <target>__edit role</target>
+      </trans-unit>
+      <trans-unit id="id7OEQi" resname="rol type">
+        <source>rol type</source>
+        <target>__rol type</target>
+      </trans-unit>
+      <trans-unit id="wM3gc_f" resname="participant">
+        <source>participant</source>
+        <target>__participant</target>
+      </trans-unit>
+      <trans-unit id="hv2kmgj" resname="participant type">
+        <source>participant type</source>
+        <target>__participant type</target>
+      </trans-unit>
+      <trans-unit id="DvnB2hg" resname="set property">
+        <source>set property</source>
+        <target>__set property</target>
+      </trans-unit>
+      <trans-unit id="mCeW2P5" resname="edit task">
+        <source>edit task</source>
+        <target>__edit task</target>
+      </trans-unit>
+      <trans-unit id="Q31s6bt" resname="add task">
+        <source>add task</source>
+        <target>__add task</target>
+      </trans-unit>
+      <trans-unit id="U6nWXTY" resname="assignee">
+        <source>assignee</source>
+        <target>__assignee</target>
+      </trans-unit>
+      <trans-unit id="25S0DV2" resname="percentage done">
+        <source>percentage done</source>
+        <target>__percentage done</target>
+      </trans-unit>
+      <trans-unit id="MJKl8Nu" resname="priority">
+        <source>priority</source>
+        <target>__priority</target>
+      </trans-unit>
+      <trans-unit id="Ex1XNpT" resname="unset property">
+        <source>unset property</source>
+        <target>__unset property</target>
+      </trans-unit>
+      <trans-unit id="NncnwCB" resname="are you sure that you want to unset">
+        <source>are you sure that you want to unset</source>
+        <target>__are you sure that you want to unset</target>
+      </trans-unit>
+      <trans-unit id="I5e5BLh" resname="new request">
+        <source>new request</source>
+        <target>__new request</target>
+      </trans-unit>
+      <trans-unit id="A7c_k2s" resname="no value">
+        <source>no value</source>
+        <target>__no value</target>
+      </trans-unit>
+      <trans-unit id="ALEJzxE" resname="queue">
+        <source>queue</source>
+        <target>__queue</target>
+      </trans-unit>
+      <trans-unit id="TUj7ps9" resname="alt">
+        <source>alt</source>
+        <target>__alt</target>
+      </trans-unit>
+      <trans-unit id=".qRfpwp" resname="href">
+        <source>href</source>
+        <target>__href</target>
+      </trans-unit>
+      <trans-unit id="u2RxDuf" resname="chamber of comerce">
+        <source>chamber of comerce</source>
+        <target>__chamber of comerce</target>
+      </trans-unit>
+      <trans-unit id="uUZyGxC" resname="Favorite icon">
+        <source>Favorite icon</source>
+        <target>__Favorite icon</target>
+      </trans-unit>
+      <trans-unit id="NuZPGfV" resname="css">
+        <source>css</source>
+        <target>__css</target>
       </trans-unit>
     </body>
   </file>

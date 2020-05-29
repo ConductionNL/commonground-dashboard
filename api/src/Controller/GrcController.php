@@ -216,7 +216,7 @@ class GrcController extends AbstractController
             // Lets see if we need to create
             if ($id == 'new') {
                 $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
-                $variables['graves'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'graves'],['cemetery.id'=>$id])['hydra:member'];
+
             } else {
                 $variables['resource'] = $commonGroundService->getResource(['component' => 'grc', 'type' => 'cemeteries', 'id' => $id]);
                 $variables['graves'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'graves'],['cemetery.id'=>$id])['hydra:member'];
