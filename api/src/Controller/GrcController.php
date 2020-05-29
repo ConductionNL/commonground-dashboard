@@ -96,25 +96,13 @@ class GrcController extends AbstractController
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
-            // Passing the variables to the resource
-            $timezone = new DateTimeZone('Europe/Amsterdam');
-            $date = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
 
-            $grave = [];
-            $grave['dateCreated'] = $date;
-            $grave['dateModified'] = $date;
-            $grave['description'] = $_POST['description'];
-            $cemetery = $_POST['cemetery'];
-            $grave['cemetery'] = $cemetery;
-            $grave['deceased'] = $_POST['deceased'];
-            $grave['acquisition'] = $_POST['acquisition'];
-            $grave['reference'] = $_POST['reference'];
-            $grave['graveType'] = $_POST['graveType'];
-            $grave['status'] = $_POST['status'];
-            $grave['location'] = $_POST['location'];
-            $grave['position'] = (int) $_POST['position'];
+            $resource['position'] = (int)$resource['position'];
 
-            $variables['resource'] = $commonGroundService->saveResource($grave, ['component'=>'grc','type'=>'graves']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'grc','type'=>'graves']);
 
             /* @to this redirect is a hotfix */
             if(array_key_exists('id', $variables['resource'])){
@@ -176,17 +164,11 @@ class GrcController extends AbstractController
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
-            // Passing the variables to the resource
-            $timezone = new DateTimeZone('Europe/Amsterdam');
-            $date = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
 
-            $gravetype = [];
-            $gravetype['dateCreated'] = $date;
-            $gravetype['dateModified'] = $date;
-            $gravetype['description'] = $_POST['description'];
-            $gravetype['reference'] = $_POST['reference'];
-
-            $variables['resource'] = $commonGroundService->saveResource($gravetype, ['component' => 'grc', 'type' => 'grave_types']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'grc', 'type' => 'grave_types']);
 
             /* @to this redirect is a hotfix */
             if(array_key_exists('id', $variables['resource'])){
@@ -252,29 +234,24 @@ class GrcController extends AbstractController
             // Lets see if there is a post to procces
             if ($request->isMethod('POST')) {
 
-                // Passing the variables to the resource
-                $timezone = new DateTimeZone('Europe/Amsterdam');
-                $date = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
+                $resource = $request->request->all();
+                $resource['@id'] = $variables['resource']['@id'];
+                $resource['id'] = $variables['resource']['id'];
 
-                $cemetery = [];
-                $cemetery['dateCreated'] = $date;
-                $cemetery['dateModified'] = $date;
-                $cemetery['reference'] = $_POST['reference'];
-                $organization = $_POST['organization'];
-                $cemetery['organization'] = $organization;
-                $organizationName = $commonGroundService->getResourceList($organization)['name'];
+                if($id == 'new'){
+                    $calendar = [];
+                    $calendar['dateCreated'] = $date;
+                    $calendar['dateModified'] = $date;
+                    $calendar['name'] = "Calendar " . $_POST['reference'];
+                    $calendar['description'] = "Calendar voor begraafplaats " . $_POST['reference'] . " in gemeente " . $organizationName;
+                    $calendar['timeZone'] = "CET";
 
-                $calendar = [];
-                $calendar['dateCreated'] = $date;
-                $calendar['dateModified'] = $date;
-                $calendar['name'] = "Calendar " . $_POST['reference'];
-                $calendar['description'] = "Calendar voor begraafplaats " . $_POST['reference'] . " in gemeente " . $organizationName;
-                $calendar['timeZone'] = "CET";
+                    $calendar = $commonGroundService->saveResource($calendar, ['component' => 'arc', 'type' => 'calendars']);
+                    $cemetery['calendar'] = $calendar['@id'];
+                }
 
-                $calendar = $commonGroundService->saveResource($calendar, ['component' => 'arc', 'type' => 'calendars']);
-                $cemetery['calendar'] = $calendar['@id'];
 
-                $variables['resource'] = $commonGroundService->saveResource($cemetery, ['component' => 'grc', 'type' => 'cemeteries']);
+                $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'grc', 'type' => 'cemeteries']);
 
                 /* @to this redirect is a hotfix */
                 if(array_key_exists('id', $variables['resource'])){

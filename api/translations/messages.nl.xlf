@@ -311,7 +311,7 @@
       </trans-unit>
       <trans-unit id="QdMRpgV" resname="resources">
         <source>resources</source>
-        <target>__resources</target>
+        <target>middelen</target>
       </trans-unit>
       <trans-unit id="XelTGfF" resname="resource">
         <source>resource</source>
@@ -2135,11 +2135,11 @@
       </trans-unit>
       <trans-unit id="OKGO999" resname="bag ID">
         <source>bag ID</source>
-        <target>__bag ID</target>
+        <target>BAG id</target>
       </trans-unit>
       <trans-unit id="VcZND81" resname="photo">
         <source>photo</source>
-        <target>__photo</target>
+        <target>afbeelding</target>
       </trans-unit>
       <trans-unit id="AktyNt5" resname="has map">
         <source>has map</source>
@@ -2147,19 +2147,19 @@
       </trans-unit>
       <trans-unit id="XWdwnUK" resname="opening time">
         <source>opening time</source>
-        <target>__opening time</target>
+        <target>openingstijd</target>
       </trans-unit>
       <trans-unit id="96czj_6" resname="closing time">
         <source>closing time</source>
-        <target>__closing time</target>
+        <target>sluitingstijd</target>
       </trans-unit>
       <trans-unit id="bse4eIC" resname="public access">
         <source>public access</source>
-        <target>__public access</target>
+        <target>publieke toegang</target>
       </trans-unit>
       <trans-unit id="AjD5Mws" resname="smoking allowed">
         <source>smoking allowed</source>
-        <target>__smoking allowed</target>
+        <target>roken toegestaan</target>
       </trans-unit>
       <trans-unit id="LHDhK3o" resname="key">
         <source>key</source>
@@ -2167,7 +2167,7 @@
       </trans-unit>
       <trans-unit id="hCpGl.0" resname="Deployments">
         <source>Deployments</source>
-        <target>__Deployments</target>
+        <target>implementaties</target>
       </trans-unit>
       <trans-unit id="9Aksmzw" resname="Grave registration">
         <source>Grave registration</source>

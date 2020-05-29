@@ -82,13 +82,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-4 col-sm-12">
                                         <div class="form-group">
                                             <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                             <select id="organization" name="organization"
@@ -100,6 +100,18 @@
                                             </select>
                                         </div>
                                     </div>  <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
+                                                <select id="location" name="location"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for place in places %}
+                                                        <option value="{{ place['@id'] }}"
+                                                                {% if resource.location is defined and place['@id'] == resource.location %}selected=""{% endif %}>{{ place.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>  <!-- /.col -->
                                     </div>
                                 </div> <!-- /.card-body -->
                                 <div class="card-action">

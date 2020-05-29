@@ -227,6 +227,26 @@
 
                 {% if 'group.beheerder' in app.user.roles %}
                     <li class="nav-item">
+                        <a data-toggle="collapse" href="#lc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'location'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="lc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_lc_places") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'location'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+
+                {% if 'group.beheerder' in app.user.roles %}
+                    <li class="nav-item">
                         <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
                             <span style="color: #575962" class="caret"></span>
