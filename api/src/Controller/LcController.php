@@ -373,6 +373,11 @@ class LcController extends AbstractController
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'lc','type'=>'accommodation_properties']));
 
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_lc_accommodationproperties', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;

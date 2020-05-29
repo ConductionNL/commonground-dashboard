@@ -1557,9 +1557,9 @@
         <source>application</source>
         <target>applicatie</target>
       </trans-unit>
-      <trans-unit id="XzxPhYD" resname="items">
+      <trans-unit id="XzxPGhYD" resname="items">
         <source>items</source>
-        <target>__items</target>
+        <target>artikelen</target>
       </trans-unit>
       <trans-unit id="iJRYkKW" resname="edit configuration">
         <source>edit configuration</source>
