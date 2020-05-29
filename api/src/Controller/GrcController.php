@@ -90,6 +90,7 @@ class GrcController extends AbstractController
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('grave');
         $variables['cemeteries'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'cemeteries'])["hydra:member"];
         $variables['gravetypes'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])["hydra:member"];
+        $variables['gravecovers'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_covers'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -282,6 +283,69 @@ class GrcController extends AbstractController
 
             return $variables;
         }
+
+    /**
+     * @Route("/grave_covers")
+     * @Template
+     */
+    public function graveCoversAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('grave covers');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('grave covers');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_covers'])["hydra:member"];
+        return $variables;
+    }
+
+    /**
+     * @Route("/grave_covers/{id}")
+     * @Template
+     */
+    public function graveCoverAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'grc','type'=>'grave_covers','id'=> $id]);        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_grc_gravecovers'));
+        }
+
+        $variables['title'] = $translator->trans('grave cover');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('grave cover');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'grc','type'=>'grave_covers']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_grc_gravecovers', ["id" =>  $variables['resource']['id']]));
+            }
+        }
+
+
+        return $variables;
+    }
 
 
 }
