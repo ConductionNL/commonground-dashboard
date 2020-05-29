@@ -5,10 +5,44 @@
     <div class="main-panel">
         <div class="container">
 
-            {% include 'widgets/babs/title_h1.html.twig' %}
+            {% if resource.reference is defined %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a cemetery',
+                'name' : resource.reference,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'cemeteries' : {
+                        'name' : 'cemeteries',
+                        'path' : 'app_grc_cemeteries'
+                    }
+                }]
+            }
+            %}
+            {% else %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'save or create a cemetery',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'cemeteries' : {
+                        'name' : 'cemeteries',
+                        'path' : 'app_grc_cemeteries'
+                    }
+                }]
+            }
+            %}
+            {% endif %}
 
+            {% if graves is defined %}
             <script>
                 var graves = [
+
 
                     {% for grave in graves %}
 
@@ -21,6 +55,7 @@
 
                     {% endfor %}
                 ];
+                {% endif %}
 
             </script>
             <div class="page-inner">
@@ -29,37 +64,31 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_grc_cemetery', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <h2 class="d-inline-block">{% if resource.reference is defined%} {{ resource.reference}} {% else %} {{ 'new cemetery'|trans|capitalize }} {% endif %} </h2>
                                     <div class="float-right">
-                                        <a href="#deleteGravetype" class="btn btn-danger" style="margin-right: 25px"
+                                        <a class="btn btn-primary" href="{{ path('app_grc_cemeteries')}}">
+                                            <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info"
                                            data-toggle="modal"
-                                           data-target="#deleteGravetype">{{ 'delete'|trans|capitalize }}</a>
-                                        <button class="btn btn-success">{{ 'save'|trans|capitalize }}</button>
+                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                        <a href="#auditTrial" class="btn btn-info"
+                                           data-toggle="modal"
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                        <a href="#delete" class="btn btn-danger"
+                                           data-toggle="modal"
+                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg"
-                                                       value="{% if resource.id is defined %}{{ resource.id }}{% endif %}"
-                                                       disabled>
-                                            </div>
-                                        </div> <!-- /.col -->
-                                    </div><!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-9 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                    </div><!-- /.row -->
-
-
-                                <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                             <select id="organization" name="organization"
@@ -71,9 +100,7 @@
                                             </select>
                                         </div>
                                     </div>  <!-- /.col -->
-                                </div> <!-- /.row -->
-
-
+                                    </div>
                                 </div> <!-- /.card-body -->
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
@@ -82,6 +109,7 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                {% if graves is defined %}
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -311,20 +339,70 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
             </div><!-- /.page-inner -->
 
 
 
 
-            {% include 'widgets/delete_modal.html.twig'
-                with {
-                'route': 'app_grc_cemetery',
-                'resource':resource,
-                'id':'deleteCemetery' } %}
+                {% include 'widgets/delete_modal.html.twig'
+                    with {
+                    'route': 'app_grc_cemetery',
+                    'resource':resource,
+                    'id':'delete' } %}
+
+                {% include 'widgets/auditTrail_modal.html.twig'
+                    with {
+                    'route': 'app_grc_cemetery',
+                    'resource':resource,
+                    'id':'auditTrial' } %}
+
+                {% include 'widgets/changeLog_modal.html.twig'
+                    with {
+                    'route': 'app_grc_cemetery',
+                    'resource':resource,
+                    'id':'changeLog' } %}
 
             {% include 'footer.html.twig' %}
 
+            </div>
         </div>
     </div>
-
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/grc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/grc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
 {% endblock %}

@@ -253,7 +253,7 @@ class ArcController extends AbstractController
         $variables = [];
 
         if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'arc','type'=>'calendars','id'=>$id]);
+            $commonGroundService->deleteResource(null, ['component'=>'arc','type'=>'calendars','id'=>$id]);
             return $this->redirect($this->generateUrl('app_arc_calendars'));
         }
         // Lets see if we need to create

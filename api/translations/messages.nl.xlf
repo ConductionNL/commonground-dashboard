@@ -2035,7 +2035,7 @@
       </trans-unit>
       <trans-unit id="kfXkTmz" resname="add grave">
         <source>add grave</source>
-        <target>graf toeviegen</target>
+        <target>graf toevoegen</target>
       </trans-unit>
       <trans-unit id="FismSY1" resname="Filter op grafsoort">
         <source>Filter op grafsoort</source>
