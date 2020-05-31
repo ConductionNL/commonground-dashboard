@@ -1691,11 +1691,11 @@
       </trans-unit>
       <trans-unit id="7eEtEnw" resname="edit template">
         <source>edit template</source>
-        <target>__edit template</target>
+        <target>sjabloon aanpassen</target>
       </trans-unit>
       <trans-unit id="Xhji_K6" resname="add template">
         <source>add template</source>
-        <target>__add template</target>
+        <target>sjabloon toevoegen</target>
       </trans-unit>
       <trans-unit id="8TOCIha" resname="template engine">
         <source>template engine</source>
@@ -1735,19 +1735,19 @@
       </trans-unit>
       <trans-unit id="5UDn17l" resname="edit slug">
         <source>edit slug</source>
-        <target>__edit slug</target>
+        <target>slug aanpassen</target>
       </trans-unit>
       <trans-unit id="Wjj6agf" resname="add slug">
         <source>add slug</source>
-        <target>__add slug</target>
+        <target>slug toevoegen</target>
       </trans-unit>
       <trans-unit id="LiZUCc2" resname="edit style">
         <source>edit style</source>
-        <target>__edit style</target>
+        <target>style aanpassen</target>
       </trans-unit>
       <trans-unit id="hdSt.1w" resname="add style">
         <source>add style</source>
-        <target>__add style</target>
+        <target>style toevoegen</target>
       </trans-unit>
       <trans-unit id="wFV9ywl" resname="menu items">
         <source>menu items</source>
@@ -1847,7 +1847,7 @@
       </trans-unit>
       <trans-unit id="y7OyfB7" resname="Grave registration catalouge">
         <source>Grave registration catalouge</source>
-        <target>__Grave registration catalouge</target>
+        <target>graf registratie catalogus</target>
       </trans-unit>
       <trans-unit id="wmJTYpX" resname="The Grave administration catalouge holds al data concerning issues surround grave administration">
         <source>The Grave administration catalouge holds al data concerning issues surround grave administration</source>
@@ -1947,19 +1947,19 @@
       </trans-unit>
       <trans-unit id="j41rlZ5" resname="aanvragen naamwijziging">
         <source>aanvragen naamwijziging</source>
-        <target>__aanvragen naamwijziging</target>
+        <target>aanvragen naamwijziging</target>
       </trans-unit>
       <trans-unit id="WCUMjMU" resname="aanvragen beedigd babs">
         <source>aanvragen beedigd babs</source>
-        <target>__aanvragen beedigd babs</target>
+        <target>aanvragen beedigd babs</target>
       </trans-unit>
       <trans-unit id="Xs.DOkP" resname="aanvragen niet beedigd babs">
         <source>aanvragen niet beedigd babs</source>
-        <target>__aanvragen niet beedigd babs</target>
+        <target>aanvragen niet beedigd babs</target>
       </trans-unit>
       <trans-unit id="CsCwDQT" resname="aanvragen eigen locatie">
         <source>aanvragen eigen locatie</source>
-        <target>__aanvragen eigen locatie</target>
+        <target>aanvragen eigen locatie</target>
       </trans-unit>
       <trans-unit id="JZt8uW5" resname="user configuration">
         <source>user configuration</source>
@@ -1983,15 +1983,15 @@
       </trans-unit>
       <trans-unit id="LtSsZA7" resname="template groups">
         <source>template groups</source>
-        <target>__template groups</target>
+        <target>sjabloon groepen</target>
       </trans-unit>
       <trans-unit id="DxLJEN0" resname="template group">
         <source>template group</source>
-        <target>__template group</target>
+        <target>sjabloon groep</target>
       </trans-unit>
       <trans-unit id="8hWGjF4" resname="bag nummer aanduiding">
         <source>bag nummer aanduiding</source>
-        <target>__bag nummer aanduiding</target>
+        <target>bag nummer aanduiding</target>
       </trans-unit>
       <trans-unit id="6rfBUqn" resname="post office box number">
         <source>post office box number</source>
@@ -1999,11 +1999,11 @@
       </trans-unit>
       <trans-unit id="YAjCb0R" resname="street">
         <source>street</source>
-        <target>__street</target>
+        <target>straat</target>
       </trans-unit>
       <trans-unit id="rBYOWvF" resname="house number">
         <source>house number</source>
-        <target>__house number</target>
+        <target>huisnummer</target>
       </trans-unit>
       <trans-unit id="v4p3Dn2" resname="house number suffix">
         <source>house number suffix</source>
@@ -2011,11 +2011,11 @@
       </trans-unit>
       <trans-unit id="C.lz6Ex" resname="postal code">
         <source>postal code</source>
-        <target>__postal code</target>
+        <target>postcode</target>
       </trans-unit>
       <trans-unit id="xpfSmBv" resname="region">
         <source>region</source>
-        <target>__region</target>
+        <target>regio</target>
       </trans-unit>
       <trans-unit id="PXmor8y" resname="locality">
         <source>locality</source>
@@ -2107,7 +2107,7 @@
       </trans-unit>
       <trans-unit id="7bLNO3T" resname="category">
         <source>category</source>
-        <target>__category</target>
+        <target>categorie</target>
       </trans-unit>
       <trans-unit id="qdShv7e" resname="floor size">
         <source>floor size</source>
@@ -2127,11 +2127,11 @@
       </trans-unit>
       <trans-unit id="aLexVR0" resname="pets allowed">
         <source>pets allowed</source>
-        <target>__pets allowed</target>
+        <target>huisdieren toegestaan</target>
       </trans-unit>
       <trans-unit id="DRfR9p6" resname="wheelchair accessible">
         <source>wheelchair accessible</source>
-        <target>__wheelchair accessible</target>
+        <target>rolstoel toegankelijk</target>
       </trans-unit>
       <trans-unit id="OKGO999" resname="bag ID">
         <source>bag ID</source>
@@ -2191,27 +2191,27 @@
       </trans-unit>
       <trans-unit id="dChNncv" resname="color">
         <source>color</source>
-        <target>__color</target>
+        <target>kleur</target>
       </trans-unit>
       <trans-unit id="kQbWISu" resname="modify">
         <source>modify</source>
-        <target>__modify</target>
+        <target>aanpassen</target>
       </trans-unit>
       <trans-unit id="7lEdFQC" resname="edit role">
         <source>edit role</source>
-        <target>__edit role</target>
+        <target>rol aanpassen</target>
       </trans-unit>
       <trans-unit id="id7OEQi" resname="rol type">
         <source>rol type</source>
-        <target>__rol type</target>
+        <target>rol type</target>
       </trans-unit>
       <trans-unit id="wM3gc_f" resname="participant">
         <source>participant</source>
-        <target>__participant</target>
+        <target>deelnemer</target>
       </trans-unit>
       <trans-unit id="hv2kmgj" resname="participant type">
         <source>participant type</source>
-        <target>__participant type</target>
+        <target>soort deelnemer</target>
       </trans-unit>
       <trans-unit id="DvnB2hg" resname="set property">
         <source>set property</source>
@@ -2219,11 +2219,11 @@
       </trans-unit>
       <trans-unit id="mCeW2P5" resname="edit task">
         <source>edit task</source>
-        <target>__edit task</target>
+        <target>taak aanpassen</target>
       </trans-unit>
       <trans-unit id="Q31s6bt" resname="add task">
         <source>add task</source>
-        <target>__add task</target>
+        <target>taak toevoegen</target>
       </trans-unit>
       <trans-unit id="U6nWXTY" resname="assignee">
         <source>assignee</source>
@@ -2235,7 +2235,7 @@
       </trans-unit>
       <trans-unit id="MJKl8Nu" resname="priority">
         <source>priority</source>
-        <target>__priority</target>
+        <target>prioriteit</target>
       </trans-unit>
       <trans-unit id="Ex1XNpT" resname="unset property">
         <source>unset property</source>
@@ -2251,7 +2251,7 @@
       </trans-unit>
       <trans-unit id="A7c_k2s" resname="no value">
         <source>no value</source>
-        <target>__no value</target>
+        <target>geen waarde</target>
       </trans-unit>
       <trans-unit id="ALEJzxE" resname="queue">
         <source>queue</source>
@@ -2259,11 +2259,11 @@
       </trans-unit>
       <trans-unit id="TUj7ps9" resname="alt">
         <source>alt</source>
-        <target>__alt</target>
+        <target>alt</target>
       </trans-unit>
       <trans-unit id=".qRfpwp" resname="href">
         <source>href</source>
-        <target>__href</target>
+        <target>href</target>
       </trans-unit>
       <trans-unit id="u2RxDuf" resname="chamber of comerce">
         <source>chamber of comerce</source>

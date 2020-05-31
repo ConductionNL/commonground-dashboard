@@ -5,7 +5,7 @@
     <div class="main-panel">
         <div class="container">
                 {% include 'widgets/babs/title_h1.html.twig' with {
-                    'headerTitle': 'save or create a request',
+                    'headerTitle': 'request',
                     'name' : resource.reference,
                     'breadcrumbs': [{
                         'home' : {
@@ -221,7 +221,7 @@
         </div>
     </div>
 
-
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -259,4 +259,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

@@ -7,7 +7,7 @@
 
             {% if resource.reference is defined %}
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a grave',
+                'headerTitle': 'grave',
                 'name' : resource.reference,
                 'breadcrumbs': [{
                     'home' : {
@@ -193,7 +193,7 @@
             {% include 'footer.html.twig' %}
             </div>
         </div>
-
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -231,5 +231,6 @@
         },
     });
     {% endblock %}
+    </script>
 
 {% endblock %}

@@ -13,7 +13,7 @@
 
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'name' : resource.name,
-                'headerTitle': 'save or create a resource',
+                'headerTitle': 'resource',
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
@@ -104,6 +104,7 @@
 
     </div>
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -141,4 +142,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

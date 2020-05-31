@@ -6,7 +6,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a template',
+                'headerTitle': 'template',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -152,6 +152,7 @@
 
         </div>
     </div>
+    <script>
     {% block javascript %}
     $(document).ready(function() {
         $('.summernote').summernote();
@@ -192,4 +193,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

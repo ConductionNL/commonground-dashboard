@@ -13,7 +13,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a place',
+                'headerTitle': 'place',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -177,7 +177,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote"
+                                                <textarea class="form-control summernote" rows="5" id="description"
                                                           name="description"
                                                           required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
@@ -219,6 +219,7 @@
 
     </div>
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -256,4 +257,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}
