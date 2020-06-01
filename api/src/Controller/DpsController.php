@@ -71,7 +71,7 @@ class DpsController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_dps_api_docs'));
+            return $this->redirect($this->generateUrl('app_dps_apidocs'));
         }
 
         $variables['title'] = $translator->trans('api doc');
@@ -91,6 +91,11 @@ class DpsController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'dps','type'=>'api_docs','id'=>$id]));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_dps_apidocs', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

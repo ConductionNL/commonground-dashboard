@@ -6,7 +6,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a application',
+                'headerTitle': 'application',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -36,15 +36,15 @@
                                         <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
                                            data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#deleteApplication" class="btn btn-danger" style="margin-right: 25px"
+                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
                                            data-toggle="modal"
-                                           data-target="#deleteApplication"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -53,15 +53,7 @@
                                                        required>
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'id'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg"
-                                                       value="{% if resource.id is defined %}{{ resource.id }}{% endif %}"
-                                                       disabled>
-                                            </div>
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'domain'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="domain"
@@ -75,14 +67,12 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="style">{{ 'style'|trans|capitalize }}</label>
-                                                <select id="style" name="style" class="form-control form-control-lg"
-                                                        {% if styles is not defined %}disabled{% endif %} >
-                                                    {% if styles is defined %}
+                                                <select id="style" name="style" class="form-control form-control-lg">
                                                         {% for style in styles %}
                                                             <option value="{{ style['@id'] }}"
                                                                     {% if resource.style is defined and resource.style is not empty and style['@id'] == resource.style['@id'] %}selected=""{% endif %}>{{ style.name }}</option>
                                                         {% endfor %}
-                                                    {% endif %}
+
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
@@ -90,15 +80,10 @@
                                             <div class="form-group">
                                                 <label
                                                     for="defaultConfiguration">{{ 'default configuration'|trans|capitalize }}</label>
-                                                <select id="defaultConfiguration" name="defaultConfiguration"
-                                                        class="form-control form-control-lg"
-                                                        {% if configurations is not defined %}disabled{% endif %}>
-                                                    {% if configurations is defined %}
-                                                        {% for configuration in configurations %}
-                                                            <option value="{{ configuration['@id'] }}"
-                                                                    {% if resource.defaultConfiguration is defined and  resource.defaultConfiguration is not empty and  configuration['@id'] == resource.defaultConfiguration['@id'] %}selected=""{% endif %}>{{ configuration.name }}</option>
-                                                        {% endfor %}
-                                                    {% endif %}
+                                                <select id="defaultConfiguration" name="defaultConfiguration" class="form-control form-control-lg">
+                                                    {% for defaultConfiguration in defaultConfigurations %}
+                                                        <option value="{{ defaultConfiguration['@id'] }}" {% if resource.defaultConfiguration['@id'] is defined and defaultConfiguration['@id'] == resource.defaultConfiguration  %}selected=""{% endif %}>{{ defaultConfiguration.name }}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
@@ -109,7 +94,7 @@
                                                         class="form-control form-control-lg" required>
                                                     {% for organization in organizations %}
                                                         <option value="{{ organization['@id'] }}"
-                                                                {% if resource.organization is defined and organization['@id'] == resource.organization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                                {% if resource.organization is defined and organization['@id'] == resource.organization['@id'] %}selected=""{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -119,7 +104,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote"
+                                                <textarea class="form-control summernote" rows="5" id="description"
                                                           name="description"
                                                           required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
@@ -133,12 +118,18 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+
                 <div class="row">
+                    {% if resource.configurations is defined %}
                     <div class="col-md-3">
                         {% include 'wrc/widgets/configurations.html.twig'
                             with {
+                            'resource': resource,
                             'configurations': configurations } %}
+
                     </div><!-- /.col -->
+                    {% endif %}
+                    {% if resource.templates is defined %}
                     <div class="col-md-3">
                         <div class="card p-1  full-height">
                             {% include 'wrc/widgets/templates.html.twig'
@@ -146,26 +137,33 @@
                                 'templates': templates } %}
                         </div>
                     </div><!-- /.col -->
+                    {% endif %}
+                    {% if resource.slugs is defined %}
                     <div class="col-md-3">
                         <div class="card p-0 full-height">
                             {% include 'wrc/widgets/slugs.html.twig'
                                 with {
                                 'slugs': slugs } %}
+
                         </div>
                     </div><!-- /.col -->
+                    {% endif %}
+                    {% if resource.menus is defined %}
                     <div class="col-md-3">
                         {% include 'wrc/widgets/menus.html.twig'
                             with {
                             'menus': menus } %}
                     </div><!-- /.col -->
+                    {% endif %}
                 </div><!-- /.row -->
+
             </div><!-- /.page-inner -->
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
                 'route': 'app_wrc_application',
                 'resource':resource,
-                'id':'deleteApplication' } %}
+                'id':'delete' } %}
 
                     {% include 'widgets/auditTrail_modal.html.twig'
                         with {
@@ -182,7 +180,7 @@
             {% include 'footer.html.twig' %}
                     </div>
                 </div>
-
+    <script>
             {% block javascript %}
             //audit_trails
             $.ajax({
@@ -220,6 +218,7 @@
                 },
             });
             {% endblock %}
+    </script>
 {% endblock %}
 
 

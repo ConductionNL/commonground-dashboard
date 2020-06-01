@@ -8,7 +8,7 @@
         {% for submitter in resource.submitters %}
             <div class="item-list">
                 <div class="info-user ml-3">
-                    <div class="username"><h4>{{ commonground_resource(submitter.person).name }}</h4></div>
+                    <div class="username"><h4>{{ submitter.person }}</h4></div>
                     <div class="status">{% if submitter.assent is defined and submitter.assent is not empty %}{{ commonground_resource(submitter.assent).status }}{% endif %}</div>
                 </div>
                 <button class="btn btn-icon btn-primary btn-round btn-s"

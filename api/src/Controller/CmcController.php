@@ -92,6 +92,12 @@ class CmcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cmc','type'=>'contact_moment']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_cmc_contactmoments', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
 

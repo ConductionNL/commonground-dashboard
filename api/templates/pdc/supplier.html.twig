@@ -6,7 +6,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a supplier',
+                'headerTitle': 'supplier',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -43,33 +43,26 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-8 col-sm-12">
+        								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
     									<div class="col-md-4 col-sm-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
-        										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
-                                                {% endfor %}
-                                                </select>
-        									</div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'kvk'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="kvk" name ="kvk" value="{% if resource.kvk is defined %}{{ resource.kvk }}{% endif %}">
+                                            </div>
         								</div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'logo'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="logo" name ="logo" value="{% if resource.logo is defined %}{{ resource.logo }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
     								</div><!-- /.row -->
-    								<div class="row">
-        								<div class="col-md-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="summernote" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-        									</div>
-        								</div>  <!-- /.col -->
-    								</div> <!-- /.row -->
 								</div> <!-- /.card-body -->
-
 								<div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
 								</div><!-- /.card-action -->
@@ -102,6 +95,7 @@
 
         </div>
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -139,4 +133,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

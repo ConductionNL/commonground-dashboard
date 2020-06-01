@@ -90,29 +90,26 @@ class GrcController extends AbstractController
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('grave');
         $variables['cemeteries'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'cemeteries'])["hydra:member"];
         $variables['gravetypes'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])["hydra:member"];
+        $variables['gravecovers'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_covers'])["hydra:member"];
+        $variables['ingeschrevenpersonen'] = $commonGroundService->getResourceList(['component'=>'brp','type'=>'ingeschrevenpersonen']);
+
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
-            // Passing the variables to the resource
-            $timezone = new DateTimeZone('Europe/Amsterdam');
-            $date = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
 
-            $grave = [];
-            $grave['dateCreated'] = $date;
-            $grave['dateModified'] = $date;
-            $grave['description'] = $_POST['description'];
-            $cemetery = $_POST['cemetery'];
-            $grave['cemetery'] = $cemetery;
-            $grave['deceased'] = $_POST['deceased'];
-            $grave['acquisition'] = $_POST['acquisition'];
-            $grave['reference'] = $_POST['reference'];
-            $grave['graveType'] = $_POST['graveType'];
-            $grave['status'] = $_POST['status'];
-            $grave['location'] = $_POST['location'];
-            $grave['position'] = (int) $_POST['position'];
+            $resource['position'] = (int)$resource['position'];
 
-            $variables['resource'] = $commonGroundService->saveResource($grave, ['component'=>'grc','type'=>'graves']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'grc','type'=>'graves']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_grc_graves', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
@@ -168,17 +165,16 @@ class GrcController extends AbstractController
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
-            // Passing the variables to the resource
-            $timezone = new DateTimeZone('Europe/Amsterdam');
-            $date = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
 
-            $gravetype = [];
-            $gravetype['dateCreated'] = $date;
-            $gravetype['dateModified'] = $date;
-            $gravetype['description'] = $_POST['description'];
-            $gravetype['reference'] = $_POST['reference'];
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'grc', 'type' => 'grave_types']);
 
-            $variables['resource'] = $commonGroundService->saveResource($gravetype, ['component' => 'grc', 'type' => 'grave_types']);
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_grc_gravetypes', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }
@@ -216,7 +212,7 @@ class GrcController extends AbstractController
             // Lets see if we need to create
             if ($id == 'new') {
                 $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
-                $variables['graves'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'graves'],['cemetery.id'=>$id])['hydra:member'];
+
             } else {
                 $variables['resource'] = $commonGroundService->getResource(['component' => 'grc', 'type' => 'cemeteries', 'id' => $id]);
                 $variables['graves'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'graves'],['cemetery.id'=>$id])['hydra:member'];
@@ -234,38 +230,102 @@ class GrcController extends AbstractController
             $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('cemetery');
             $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])["hydra:member"];
             $variables['gravetypes'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])["hydra:member"];
+            $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'places'])["hydra:member"];
 
             // Lets see if there is a post to procces
             if ($request->isMethod('POST')) {
 
-                // Passing the variables to the resource
-                $timezone = new DateTimeZone('Europe/Amsterdam');
-                $date = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
+                $resource = $request->request->all();
+                $resource['@id'] = $variables['resource']['@id'];
+                $resource['id'] = $variables['resource']['id'];
 
-                $cemetery = [];
-                $cemetery['dateCreated'] = $date;
-                $cemetery['dateModified'] = $date;
-                $cemetery['reference'] = $_POST['reference'];
-                $organization = $_POST['organization'];
-                $cemetery['organization'] = $organization;
-                $organizationName = $commonGroundService->getResourceList($organization)['name'];
+                if($id == 'new'){
+                    $calendar = [];
+                    $calendar['dateCreated'] = $date;
+                    $calendar['dateModified'] = $date;
+                    $calendar['name'] = "Calendar " . $_POST['reference'];
+                    $calendar['description'] = "Calendar voor begraafplaats " . $_POST['reference'] . " in gemeente " . $organizationName;
+                    $calendar['timeZone'] = "CET";
 
-                $calendar = [];
-                $calendar['dateCreated'] = $date;
-                $calendar['dateModified'] = $date;
-                $calendar['name'] = "Calendar " . $_POST['reference'];
-                $calendar['description'] = "Calendar voor begraafplaats " . $_POST['reference'] . " in gemeente " . $organizationName;
-                $calendar['timeZone'] = "CET";
+                    $calendar = $commonGroundService->saveResource($calendar, ['component' => 'arc', 'type' => 'calendars']);
+                    $cemetery['calendar'] = $calendar['@id'];
+                }
 
-                $calendar = $commonGroundService->saveResource($calendar, ['component' => 'arc', 'type' => 'calendars']);
-                $cemetery['calendar'] = $calendar['@id'];
 
-                $variables['resource'] = $commonGroundService->saveResource($cemetery, ['component' => 'grc', 'type' => 'cemeteries']);
+                $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'grc', 'type' => 'cemeteries']);
+
+                /* @to this redirect is a hotfix */
+                if(array_key_exists('id', $variables['resource'])){
+                    return $this->redirect($this->generateUrl('app_grc_cemeteries', ["id" =>  $variables['resource']['id']]));
+                }
 
             }
 
             return $variables;
         }
+
+    /**
+     * @Route("/grave_covers")
+     * @Template
+     */
+    public function graveCoversAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('grave covers');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('grave covers');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_covers'])["hydra:member"];
+        return $variables;
+    }
+
+    /**
+     * @Route("/grave_covers/{id}")
+     * @Template
+     */
+    public function graveCoverAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'grc','type'=>'grave_covers','id'=> $id]);        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_grc_gravecovers'));
+        }
+
+        $variables['title'] = $translator->trans('grave cover');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('grave cover');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'grc','type'=>'grave_covers']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_grc_gravecovers', ["id" =>  $variables['resource']['id']]));
+            }
+        }
+
+
+        return $variables;
+    }
 
 
 }

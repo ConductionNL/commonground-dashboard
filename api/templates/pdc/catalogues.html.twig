@@ -8,7 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'catalogues',
+                'Title': 'catalogues',
+                'Noun' : 'catalogue',
                 'name' : 'catalogues'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
@@ -30,7 +31,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% set view = 'app_wrc_template' %}
                         {% for resource in resources %}
                         <tr>
                             <td>{{ resource.name }}</td>
