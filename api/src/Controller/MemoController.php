@@ -77,7 +77,9 @@ class MemoController extends AbstractController
 
         $variables['title'] = $translator->trans('memo');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('memo');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'memo','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['employees'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'employees'])["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -91,7 +93,13 @@ class MemoController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'memo','type'=>'memos','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'memo','type'=>'memos']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_mrc_memos', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
 

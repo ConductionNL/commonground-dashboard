@@ -128,7 +128,12 @@ class PdcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, 'https://pdc.huwelijksplanner.online/products/');
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pdc','type'=>'products']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_products', ["id" =>  $variables['resource']['id']]));
+            }
         }
         return $variables;
     }
@@ -142,13 +147,13 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('groups');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/groups')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'groups'])["hydra:member"];
 
     	return $variables;
     }
 
     /**
-     * @Route("/group/{id}")
+     * @Route("/groups/{id}")
      * @Template
      */
     public function groupAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
@@ -160,7 +165,7 @@ class PdcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/groups/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component' =>'pdc', 'type'=>'groups', 'id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -171,8 +176,8 @@ class PdcController extends AbstractController
 
     	$variables['title'] = $translator->trans('group');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
-    	$variables['catalogues'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['catalogues'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'catalogues'])["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component' =>'wrc', 'type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -185,7 +190,12 @@ class PdcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/groups/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'groups']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_groups', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -200,7 +210,7 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('offers');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('offers');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/offers')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'offers'])["hydra:member"];
 
     	return $variables;
     }
@@ -218,7 +228,7 @@ class PdcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/offers/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component' =>'pdc', 'type'=>'offers', 'id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -229,7 +239,7 @@ class PdcController extends AbstractController
 
     	$variables['title'] = $translator->trans('offer');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('offer');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component' =>'wrc', 'type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -242,7 +252,12 @@ class PdcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/offers/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'offers']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_offers', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;
@@ -258,7 +273,7 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('catalogues');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('catalogues');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/catalogues')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'catalogues'])["hydra:member"];
 
     	return $variables;
     }
@@ -276,7 +291,7 @@ class PdcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/catalogues/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component' =>'pdc', 'type'=>'catalogues', 'id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -287,7 +302,7 @@ class PdcController extends AbstractController
 
     	$variables['title'] = $translator->trans('catalogue');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('catalogue');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component' =>'wrc', 'type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -300,7 +315,11 @@ class PdcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/catalogues/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'catalogues']));
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_catalogues', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;
@@ -316,7 +335,7 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('taxes');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('taxes');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/taxes')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'taxes'])["hydra:member"];
 
     	return $variables;
     }
@@ -334,7 +353,7 @@ class PdcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/taxes/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component' =>'pdc', 'type'=>'taxes', 'id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -346,7 +365,7 @@ class PdcController extends AbstractController
 
     	$variables['title'] = $translator->trans('tax');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('tax');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component' =>'wrc', 'type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -359,7 +378,12 @@ class PdcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/taxes/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'taxes']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_taxes', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;
@@ -375,7 +399,7 @@ class PdcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('suppliers');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('suppliers');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/supliers')["hydra:member"];
+    	$variables['resources'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'suppliers'])["hydra:member"];
 
     	return $variables;
     }
@@ -393,18 +417,18 @@ class PdcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/suppliers/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component' =>'pdc', 'type'=>'suppliers', 'id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
     	if($request->query->get('action') == 'delete'){
     		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_pdc_supliers'));
+    		return $this->redirect($this->generateUrl('app_pdc_suppliers'));
     	}
 
     	$variables['title'] = $translator->trans('supplier');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('supplier');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component' =>'wrc', 'type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -417,7 +441,11 @@ class PdcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/suppliers/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,(['component' =>'pdc', 'type'=>'suppliers']));
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_suppliers', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;
@@ -431,8 +459,8 @@ class PdcController extends AbstractController
     {
     	$variables = [];
     	$variables['title'] = $translator->trans('customer types');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('customer type');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/customer_types')["hydra:member"];
+    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('customer types');
+    	$variables['resources'] = $commonGroundService->getResourceList(['component' =>'pdc', 'type'=>'customer_types'])["hydra:member"];
 
     	return $variables;
     }
@@ -450,7 +478,7 @@ class PdcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://pdc.huwelijksplanner.online/customer_types/'.$id);
+    		$variables['resource'] = $commonGroundService->getResource(['component' =>'pdc', 'type'=>'customer_types', 'id'=>$id]);
     	}
 
     	// If it is a delete action we can stop right here
@@ -461,7 +489,7 @@ class PdcController extends AbstractController
 
     	$variables['title'] = $translator->trans('customer type');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('customer type');
-    	$variables['organizations'] = $commonGroundService->getResourceList('https://wrc.huwelijksplanner.online/organizations')["hydra:member"];
+    	$variables['organizations'] = $commonGroundService->getResourceList(['component' =>'wrc', 'type'=>'organizations'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -474,7 +502,11 @@ class PdcController extends AbstractController
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://pdc.huwelijksplanner.online/customer_types/');
+    		$variables['resource'] = $commonGroundService->saveResource($resource,['component' =>'pdc', 'type'=>'customer_types']);
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_pdc_customertypes', ["id" =>  $variables['resource']['id']]));
+            }
     	}
 
     	return $variables;

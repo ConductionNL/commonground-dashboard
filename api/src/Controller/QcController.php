@@ -91,6 +91,11 @@ class QcController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'qc','type'=>'tasks']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_qc_tasks', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

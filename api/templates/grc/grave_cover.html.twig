@@ -7,32 +7,32 @@
 
         {% if resource.reference is defined %}
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'grave type',
+                'headerTitle': 'grave cover',
                 'name' : resource.reference,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
                         'path' : 'app_default_index'
                     },
-                    'grave types' : {
-                        'name' : 'grave types',
-                        'path' : 'app_grc_gravetypes'
+                    'grave covers' : {
+                        'name' : 'grave covers',
+                        'path' : 'app_grc_gravecovers'
                     }
                 }]
             }
             %}
         {% else %}
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a grave type',
+                'headerTitle': 'save or create a grave cover',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
                         'path' : 'app_default_index'
                     },
-                    'grave types' : {
-                        'name' : 'grave types',
-                        'path' : 'app_grc_gravetypes'
+                    'grave covers' : {
+                        'name' : 'grave covers',
+                        'path' : 'app_grc_gravecovers'
                     }
                 }]
             }
@@ -43,11 +43,11 @@
             <div class="row">
                 <div style="margin-top: -50px;" class="col-md-12">
                     <div class="card p-4 full-height">
-                        <form action="{{ path('app_grc_gravetype', {'id': resource.id}) }}" method="post">
+                        <form action="{{ path('app_grc_gravecover', {'id': resource.id}) }}" method="post">
                             <div class="card-header">
-                                <h2 class="d-inline-block">{% if resource.reference is defined%}{{ resource.reference}} {% else %} {{ 'new grave type'}} {% endif %} </h2>
+                                <h2 class="d-inline-block">{% if resource.reference is defined%}{{ resource.reference}} {% else %} {{ 'new grave cover'}} {% endif %} </h2>
                                 <div class="float-right">
-                                    <a class="btn btn-primary" href="{{ path('app_grc_gravetypes')}}">
+                                    <a class="btn btn-primary" href="{{ path('app_grc_gravecovers')}}">
                                         <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                     <a href="#changeLog" class="btn btn-info"
                                        data-toggle="modal"
@@ -93,19 +93,19 @@
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_grc_gravetype',
+            'route': 'app_grc_gravecover',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_grc_gravetype',
+            'route': 'app_grc_gravecover',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_grc_gravetype',
+            'route': 'app_grc_gravecover',
             'resource':resource,
             'id':'changeLog' } %}
 

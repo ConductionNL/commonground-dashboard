@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_orc_organization' %}
+{% set view = 'app_grc_gravecover' %}
 
 {% block content %}
 
@@ -8,9 +8,9 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'Title': 'organizations',
-                'Noun' : 'organization',
-                'name' : 'organizations'|trans|capitalize,
+                'Title': 'grave covers',
+                'Noun' : 'grave cover',
+                'name' : 'grave covers'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
@@ -24,7 +24,8 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
@@ -32,18 +33,18 @@
                         </thead>
                         <tbody>
                         {% for resource in resources %}
-                        <tr>
-                            <td>{{ resource.name }}</td>
-                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
-                        </tr>
+                            <tr>
+                                <td>{{ resource.reference }}</td>
+                                <td>{{ resource.description }}</td>
+                                <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><b>{{ 'edit'|trans|capitalize }}</b></a></td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-
 
         </div>
 
