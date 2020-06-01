@@ -90,7 +90,14 @@ class ChrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'chrc','type'=>'resource','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'chrc','type'=>'pitches']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_chrc_pitches', ["id" =>  $variables['resource']['id']]));
+            }
+
+        }
 
         return $variables;
     }

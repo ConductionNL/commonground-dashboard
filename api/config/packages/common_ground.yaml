@@ -264,8 +264,8 @@ parameters:
   # CommongroundRegistratieComponent
   env(APP_COMMONGROUND_CGRC_LOCATION): "https://cgrc.%env(APP_DOMAIN)%"
   env(APP_COMMONGROUND_CGRC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-  # CommongroundRegistratieComponent
-  env(APP_COMMONGROUND_GRC_LOCATION): "https://cgrc.%env(APP_DOMAIN)%"
+  # GravenRegistratieComponent
+  env(APP_COMMONGROUND_GRC_LOCATION): "https://grc.%env(APP_DOMAIN)%"
   env(APP_COMMONGROUND_GRC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
   # TakenComponent
   env(APP_COMMONGROUND_TC_LOCATION): "https://tc.%env(APP_DOMAIN)%"

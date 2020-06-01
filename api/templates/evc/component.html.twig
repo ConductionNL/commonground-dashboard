@@ -12,7 +12,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a component',
+                'headerTitle': 'component',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -76,7 +76,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <textarea class="form-control summernote" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
@@ -183,6 +183,7 @@
         {% include 'footer.html.twig' %}
 
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -220,4 +221,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}
