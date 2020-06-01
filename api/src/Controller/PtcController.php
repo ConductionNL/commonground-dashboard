@@ -90,7 +90,12 @@ class PtcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'stage','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'stage']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ptc_stages', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -129,7 +134,7 @@ class PtcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_ptc_stages'));
+            return $this->redirect($this->generateUrl('app_ptc_procestypes'));
         }
 
         $variables['title'] = $translator->trans('proces type');
@@ -148,7 +153,12 @@ class PtcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'proces_type','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'proces_types']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ptc_procestypes', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -207,7 +217,12 @@ class PtcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'section','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'section']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ptc_sections', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

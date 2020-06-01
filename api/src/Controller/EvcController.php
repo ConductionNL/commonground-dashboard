@@ -175,6 +175,11 @@ class EvcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
     		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/health_logs/');
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ecv_healthlogs', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -287,6 +292,12 @@ class EvcController extends AbstractController
     		$resource['core'] = (bool)$resource['core'];
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'evc', 'type'=>'components']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ecv_components', ["id" =>  $variables['resource']['id']]));
+            }
+
     	}
 
     	return $variables;
@@ -391,8 +402,8 @@ class EvcController extends AbstractController
 //            var_dump($variables['resource']);
     		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
-    	if($request->query->get('action') == 'update'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/update', null, true);
+    	if($request->query->get('action') == 'upgrade'){
+    		$commonGroundService->getResource($variables['resource']['@id'].'/upgrade', null, true);
             //var_dump($variables['resource']);
     		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}

@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_pdc_taxs' %}
+{% set view = 'app_pdc_tax' %}
 
 {% block content %}
 
@@ -8,7 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'taxes',
+                'Title': 'taxes',
+                'Noun' : 'tax',
                 'name' : 'taxes'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
@@ -30,7 +31,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% set view = 'app_wrc_template' %}
                         {% for resource in resources %}
                         <tr>
                             <td>{{ resource.name }}</td>
