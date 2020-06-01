@@ -2,9 +2,9 @@
     <div class="card-header">
         <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
     </div>
-    {% if slugs is defined %}
+    {% if resource.slugs is defined %}
         <div class="card-list">
-            {% for slug in slugs %}
+            {% for slug in resource.slugs %}
                 <div class="item-list">
                     <div class="info-user ml-3">
                         <div class="username"><h4>{{ slug.name|capitalize }}</h4></div>
@@ -32,7 +32,7 @@
     </div> <!-- /.card-body -->
 
     <div class="card-action">
-        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSlug"  data-toggle="modal" data-target="#addSlug">{{ 'add slug'|trans|capitalize }}</a>
     </div><!-- /.card-action -->
 </div><!-- /.card -->
 

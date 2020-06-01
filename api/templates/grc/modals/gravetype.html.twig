@@ -1,0 +1,37 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit gravetype'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add gravetype'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="gravetype[reference]" name="gravetype[reference]" value="{% if item.reference is defined %}{{ item.reference }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="gravetype[description]" name="gravetype[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                </div><!-- /.form-group -->
+
+
+                {% if item['id'] is defined %}
+                <input type="hidden" id="gravetype[id]" name ="gravetype[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                <input type="hidden" id="gravetype[@id]" name ="gravetype[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item['id'] is defined %}{{ 'save'|trans|capitalize }}{% else %}{{ 'add'|trans|capitalize }}{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

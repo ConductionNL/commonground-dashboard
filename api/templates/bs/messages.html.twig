@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_bs_messages' %}
+{% set view = 'app_bs_message' %}
 
 {% block content %}
 
@@ -8,7 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'messages',
+                'Title': 'messages',
+                'Noun' : 'message',
                 'name' : 'messages'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {

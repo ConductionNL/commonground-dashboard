@@ -13,19 +13,17 @@
     {% set cgresource = commonground_resource(value) %}
 
     {% if property.iri == 'orc/order' %}
-        <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
+        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
     {% elseif property.iri == 'pdc/offer'  %}
-        <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.name }}</a>
-    {% elseif property.iri == 'irc/assent'  %}
-        <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ commonground_resource(cgresource.contact).name }} ({{ cgresource.status|trans }})</a>
+        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.name }}</a>
     {% elseif property.iri == 'vrc/request'  %}
-        <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
+        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': cgresource.id}) }}"> {{ cgresource.reference }}</a>
     {% endif %}
 
 {% elseif property.format == 'date' %}
-    <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash"></i></a> {{ value }}
+    <a class="btn btn-danger btn-sm" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-trash"></i></a> {{ value }}
 
 {% else %}
-    <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash"></i></a> {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}
+    <a class="btn btn-danger btn-sm" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-trash"></i></a> {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}
 
 {% endif %}

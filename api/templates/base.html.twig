@@ -31,18 +31,11 @@
     <!-- Font awesome -->
 
 
-	<!-- overwrites -->
-
+	<!-- Commonground Overwrites -->
 	<style>
-
-		.logo-header  {
-			background: #CC0000 !important;
-		}
-		.navbar-header{
-			background: #CC0000 !important;
-		}
-
-        {{ commonground_application()['style'] }}
+        {% if commonground_application()['style'] is defined and commonground_application()['style'] is not empty %}
+		{{ commonground_application()['style']['css'] }}
+        {% endif %}
 	</style>
 </head>
 <body>
@@ -128,9 +121,6 @@
     <!-- Summernote JS -->
     <script src="/assets/js/summernote-bs4.js"></script>
 
-
-
-
 	<script>
 	{% for label, messages in app.flashes(['warning', 'error', 'success']) %}
         {% for message in messages %}
@@ -150,18 +140,15 @@
         {% endfor %}
     {% endfor %}
 
-    $('#summernote').summernote({
-        placeholder: 'Hello Bootstrap 4',
-        tabsize: 2,
-        height: 100
+    $(document).ready(function() {
+        $('.summernote').summernote();
     });
+
 
     {% block javascript %}
 
     {% endblock %}
 
 	</script>
-
-
 </body>
 </html>

@@ -3,7 +3,7 @@
      aria-labelledby="{{ id }}Title" aria-hidden="true">
     <div class="modal-dialog model-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{% if item is defined %}{{ path( route , {id: resource.id}) }}{% else %}{{ path( route , {id: resource.id,'action':'delete'}) }}{% endif %}" method="post">
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'unset property '|trans|capitalize }}{{ property.title }}</b></h5>
                     <button type="button" class="close" data-dismiss="modal"
@@ -12,8 +12,7 @@
                     </button>
                 </div>
                 <div class="modal-dialog">
-                    {{ 'are you sure that you want to delete '|trans|capitalize }} <strong>
-                        {% if item is defined %}{{ item.name }}{% else %}{{ resource.id }}{% endif %}</strong>?
+                    <strong>{{ 'are you sure that you want to unset '|trans|capitalize }}  {{ property.title }}?</strong>
                 </div>
 
                 <div class="modal-footer">
@@ -21,14 +20,9 @@
                         {{ 'yes'|trans|capitalize }}
                     </button>
                     <button type="button" class="btn btn-secondary mx-auto" data-dismiss="modal">{{ 'no'|trans|capitalize }}</button>
-                    {% if item is defined %}
-                        <input type="hidden" id="{{ item['@type']|lower }}[action]" name ="{{ item['@type']|lower }}[action]" value="delete">
-                        <input type="hidden" id="{{ item['@type']|lower }}[id]" name ="{{ item['@type']|lower }}[id]" value="{{ item['id'] }}">
-                        <input type="hidden" id="{{ item['@type']|lower }}[@id]" name ="{{ item['@type']|lower }}[@id]" value="{{ item['@id'] }}">
-                    {% else %}
-                        <input type="hidden" id="id" name ="id" value="{{ resource['id'] }}">
-                        <input type="hidden" id="@id" name ="@id" value="{{ resource['@id'] }}">
-                    {% endif %}
+
+                    <input type="hidden" id="property" name ="property" value="{{ property.name }}">
+
                 </div>
             </form>
         </div>

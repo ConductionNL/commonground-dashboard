@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -92,7 +92,13 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'orders','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'orders']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_orc_orders', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
@@ -107,7 +113,7 @@ class OrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('persons');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('persons');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'],['orderItems.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'orc','type'=>'slugs'])["hydra:member"];
 
         return $variables;
     }
@@ -126,7 +132,7 @@ class OrcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'orderitems','id'=> $id]);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'orc','type'=>'order_items','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -150,7 +156,13 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'orderitems','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'order_items']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_orc_orderitems', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
@@ -208,7 +220,12 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'taxes','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'taxes']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_orc_taxes', ["id" =>  $variables['resource']['id']]));
+            }
 
         }
 
@@ -266,7 +283,13 @@ class OrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'organizations','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'orc','type'=>'organizations']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_orc_organizations', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;

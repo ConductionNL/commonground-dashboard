@@ -1,0 +1,22 @@
+<div class="modal fade" style="text-align: center" id="setProperty{{ id }}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'set property '|trans|capitalize }} {{ property.title }}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {{ 'set'|trans|capitalize }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -72,7 +71,7 @@ class DpsController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_dps_api_docs'));
+            return $this->redirect($this->generateUrl('app_dps_apidocs'));
         }
 
         $variables['title'] = $translator->trans('api doc');
@@ -92,6 +91,11 @@ class DpsController extends AbstractController
 
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'dps','type'=>'api_docs','id'=>$id]));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_dps_apidocs', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

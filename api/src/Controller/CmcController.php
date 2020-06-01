@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -72,12 +72,12 @@ class CmcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_cmc_contact_moments'));
+            return $this->redirect($this->generateUrl('app_cmc_contactmoments'));
         }
 
-        $variables['title'] = $translator->trans('contact_moment');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('contact_moment');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cmc','type'=>'organizations'])["hydra:member"];
+        $variables['title'] = $translator->trans('contact moment');
+    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('contact moment');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -91,7 +91,13 @@ class CmcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cmc','type'=>'contact_moment','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cmc','type'=>'contact_moment']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_cmc_contactmoments', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
 

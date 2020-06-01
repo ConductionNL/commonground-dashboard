@@ -1,8 +1,8 @@
-<div class="panel-header bg-primary-gradient" style="background: linear-gradient(-45deg, #2A5587, #2A5587) !important;">
+<div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">{% block headerTitle %}{% if headerTitle is defined %}{{ headerTitle|trans|capitalize }}{% endif %}{% endblock %}</h2>
+                <h2 class="text-white pb-2 fw-bold">{% block headerTitle %}{% if headerTitle is defined %}{{ 'save or create a'|trans|capitalize }} {{ headerTitle|trans }}{% elseif Title is defined %} {{ Title|trans|capitalize }}{% endif %}{% endblock %}</h2>
                 <nav class="op-7" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         {% block breadcrumbs %}
@@ -23,7 +23,7 @@
             <div class="ml-md-auto py-2 py-md-0">
 				{% block buttons %}
 {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
-                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ 'add'|trans|capitalize }} {{ headerTitle|trans }} {% endif %}</a>
+                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ Noun|trans|capitalize }} {{ 'add'|trans }}  {% endif %}</a>
 				{% endblock %}
             </div>
         </div>

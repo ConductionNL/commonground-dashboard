@@ -2,45 +2,6 @@
 <div class="sidebar sidebar-style-2">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
-{#            <div class="user">#}
-{#                <div class="avatar-sm float-left mr-2">#}
-{#                    <img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="..."#}
-{#                         class="avatar-img rounded-circle">#}
-{#                </div>#}
-{#                <div class="info">#}
-{#                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">#}
-{#								<span>#}
-{#									{{ app.user.username }}#}
-
-{#                                    {% if 'balie-medewerkers' in app.user.roles %}#}
-{#                                        <span class="user-level">Balie medewerker</span>#}
-{#                                    {% endif %}#}
-{#                                    {% if 'group.trouw-ambtenaar' in app.user.roles %}#}
-{#                                        <span class="user-level">Trouwambtenaar</span>#}
-{#                                    {% endif %}#}
-{#                                    {% if 'group.locatie-beheerders' in app.user.roles %}#}
-{#                                        <span class="user-level">Locatie beheerder</span>#}
-{#                                    {% endif %}#}
-{#                                    {% if 'group.beheerder' in app.user.roles %}#}
-{#                                        <span class="user-level">Beheerder</span>#}
-{#                                    {% endif %}#}
-
-{#									<span class="caret"></span>#}
-{#								</span>#}
-{#                    </a>#}
-{#                    <div class="clearfix"></div>#}
-
-{#                    <div class="collapse in" id="collapseExample">#}
-{#                        <ul class="nav">#}
-{#                            <li>#}
-{#                                <a href="{{ path('app_user_logout') }}">#}
-{#                                    <span class="link-collapse">Logout</span>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
             <ul class="nav nav-primary">
                 <li class="nav-section">
                     <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
@@ -54,7 +15,7 @@
                 {% endif %}
 
 
-                {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.create' in app.user.roles %}
+                {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.write' in app.user.roles %}
                     <a href="{{ path("app_wrc_applications") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'applications'|trans|capitalize }}</span>
@@ -137,6 +98,12 @@
                                     </a>
                                 </li>
                                 {% endif %}
+                                    <li>
+                                        <a href="{{ path("app_lc_properties") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'properties'|trans|capitalize }}</span>
+                                        </a>
+                                    </li>
                             </ul>
                         </div>
                     </li>
@@ -260,6 +227,26 @@
 
                 {% if 'group.beheerder' in app.user.roles %}
                     <li class="nav-item">
+                        <a data-toggle="collapse" href="#lc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'location'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="lc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_lc_places") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'location'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+
+                {% if 'group.beheerder' in app.user.roles %}
+                    <li class="nav-item">
                         <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
                             <span style="color: #575962" class="caret"></span>
@@ -316,14 +303,6 @@
                                               class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                                <!-- deze worden niet meer gebruikt
-                                <li>
-                                    <a href="{{ path("app_orc_organizations") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                -->
                             </ul>
                         </div>
                     </li>
@@ -347,6 +326,44 @@
                                     <a href="{{ path("app_bs_services") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'services'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+
+
+                {% if 'group.beheerder' in app.user.roles %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="graves">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_grc_graves") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'graves'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_grc_gravetypes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'gravetypes'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_grc_cemeteries") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'cemeteries'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_grc_gravecovers") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'grave covers'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -447,39 +464,39 @@
                         <h4 style="color: black" class="text-section">{{ 'cases'|trans|capitalize }}</h4>
                     </li>
 
-                    <li class="nav-item">
-                        <a data-toggle="collapse" href="#cases" class="" aria-expanded="false">
-                            <p style="color: #575962">{{ 'cases'|trans|capitalize }}</p>
-                            <span style="color: #575962" class="caret"></span>
-                        </a>
-                        <div class="collapse" id="cases">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ path("app_zgw_cases") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'cases'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_zgw_casetypes") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'types'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_zgw_documents") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'documents'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_zgw_verdicts") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'verdicts'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+{#                    <li class="nav-item">#}
+{#                        <a data-toggle="collapse" href="#cases" class="" aria-expanded="false">#}
+{#                            <p style="color: #575962">{{ 'cases'|trans|capitalize }}</p>#}
+{#                            <span style="color: #575962" class="caret"></span>#}
+{#                        </a>#}
+{#                        <div class="collapse" id="cases">#}
+{#                            <ul class="nav nav-collapse">#}
+{#                                <li>#}
+{#                                    <a href="{{ path("app_zgw_cases") }}">#}
+{#                                        <span style="color: #575962"#}
+{#                                              class="sub-item">{{ 'cases'|trans|capitalize }}</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="{{ path("app_zgw_casetypes") }}">#}
+{#                                        <span style="color: #575962"#}
+{#                                              class="sub-item">{{ 'types'|trans|capitalize }}</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="{{ path("app_zgw_documents") }}">#}
+{#                                        <span style="color: #575962"#}
+{#                                              class="sub-item">{{ 'documents'|trans|capitalize }}</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="{{ path("app_zgw_verdicts") }}">#}
+{#                                        <span style="color: #575962"#}
+{#                                              class="sub-item">{{ 'verdicts'|trans|capitalize }}</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </div>#}
                     </li>
                 {% endif %}
 
@@ -536,6 +553,12 @@
                                     <a href="{{ path("app_wrc_templates") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'templates'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_wrc_templategroups") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'template groups'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li>
@@ -610,7 +633,7 @@
                                 </li>
                                 {% if 'group.beheerder' in app.user.roles %}
                                     <li>
-                                        <a href="{{ path("app_pdc_offers") }}">
+                                        <a href="{{ path("app_pdc_taxes") }}">
                                             <span style="color: #575962"
                                                   class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
                                         </a>

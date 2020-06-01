@@ -6,7 +6,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a template',
+                'headerTitle': 'template',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -43,41 +43,66 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-6 col-sm-12">
+        								<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="name">{{ 'name'|trans|capitalize }}</label>
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
         									</div>
     									</div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
-                                                <select id="application" name="application" class="form-control form-control-lg" required>
-                                                    <option value="" {% if resource.application is defined and resource.application is empty %}selected=""{% endif %}>{{ 'none'|trans|capitalize }}</option>
-                                                    {% if applications is defined %}
-                                                    {% for application in applications %}
-                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and resource.application is not empty and application['@id'] == resource.application['@id']  %}selected=""{% endif %}>{{ application.name }}</option>
-                                                    {% endfor %}
-                                                {% endif%}
-                                                </select>
+                                                    <label for="name">{{ 'title'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="title" name ="title" value="{% if resource.title is defined %}{{ resource.title }}{% endif %}" required>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
-    									<div class="col-md-3 col-sm-12">
+    									<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="templateEngine">{{ 'template engine'|trans|capitalize }}</label>
         										<select id="templateEngine" name="templateEngine" class="form-control form-control-lg" required>
                                                		<option value="twig" {% if resource.templateEngine is defined and 'twig' == resource.templateEngine  %}selected=""{% endif %}>Twig</option>
                                                     <option value="md" {% if resource.templateEngine is defined and 'md' == resource.templateEngine  %}selected=""{% endif %}>Markdown</option>
-                                                    <option value="rts" {% if resource.templateEngine is defined and 'rts' == resource.templateEngine  %}selected=""{% endif %}>reStructuredText</option>
+                                                    <option value="rst" {% if resource.templateEngine is defined and 'rst' == resource.templateEngine  %}selected=""{% endif %}>reStructuredText</option>
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
     								</div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="organization" name="organization" class="form-control form-control-lg">
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                <select id="application" name="application" class="form-control form-control-lg">
+                                                    {% for application in applications %}
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'template groups'|trans|capitalize }}</label>
+                                                <select id="templateGroups[]" name="templateGroups[]" class="form-control form-control-lg">
+                                                    {% for templateGroup in templateGroups %}
+                                                        <option value="{{ templateGroup['@id'] }}" {% if resource.templateGroups is defined and templateGroup['@id'] == resource.templateGroups  %}selected=""{% endif %}>{{ templateGroup.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                    </div>
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="description">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="5" id="summernote" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control summernote" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -85,7 +110,7 @@
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="content">{{ 'content'|trans|capitalize }}</label>
-												<textarea class="form-control" rows="40" id="summernote" name="content" required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
+												<textarea class="form-control" rows="40" id="content" name="content" required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
@@ -98,13 +123,7 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'wrc/widgets/slugs.html.twig'
-                            with {
-                            'slugs': slugs } %}
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
+
             </div><!-- /.page-inner -->
         </div>
 
@@ -133,7 +152,11 @@
 
         </div>
     </div>
+    <script>
     {% block javascript %}
+    $(document).ready(function() {
+        $('.summernote').summernote();
+    });
     //audit_trails
     $.ajax({
         url: "/api/wrc/audit_trails",
@@ -170,4 +193,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

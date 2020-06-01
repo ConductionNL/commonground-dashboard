@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% set view = 'app_lc_accommodation' %}
+
 
     <style>
         th {
@@ -14,7 +14,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a accommodation',
+                'headerTitle': 'accommodation',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -33,7 +33,7 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_lc_accommodation', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -51,80 +51,143 @@
                                             <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                         </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
-                                            </div>
-                                        </div> <!-- /.col -->
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="name"
+                                                           name="name"
+                                                           value="{% if resource.name is defined %}{{ resource.name }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div> <!-- /.col -->
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'category'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="accommodationCategory"
+                                                           name="accommodationCategory"
+                                                           value="{% if resource.accommodationCategory is defined %}{{ resource.accommodationCategory }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div><!-- /.row -->
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'floor size'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="floorSize"
+                                                           name="floorSize"
+                                                           value="{% if resource.floorSize is defined %}{{ resource.floorSize }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div><!-- /.row -->
+                                        </div> <!-- /.card-body -->
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'bathrooms'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="numberOfBathroomsTotal"
+                                                           name="numberOfBathroomsTotal"
+                                                           value="{% if resource.numberOfBathroomsTotal is defined %}{{ resource.numberOfBathroomsTotal }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div> <!-- /.col -->
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'floor level'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="floorLevel"
+                                                           name="floorLevel"
+                                                           value="{% if resource.floorLevel is defined %}{{ resource.floorLevel }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div><!-- /.row -->
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'maximum attendees'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="maximumAttendeeCapacity"
+                                                           name="maximumAttendeeCapacity"
+                                                           value="{% if resource.maximumAttendeeCapacity is defined %}{{ resource.maximumAttendeeCapacity }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div><!-- /.row -->
                                         </div>
 
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
+                                                    <label for="largeInput">{{ 'product'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="product"
+                                                           name="product"
+                                                           value="{% if resource.product is defined %}{{ resource.product }}{% endif %}"
+                                                           required>
                                                 </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
-                                    </div><!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
-                                        </div>  <!-- /.col -->
-                                    </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'resources'|trans|capitalize }}</label>
+                                                    <input type="text" class="form-control form-control-lg" id="resources"
+                                                           name="resources"
+                                                           value="{% if resource.resources is defined %}{{ resource.resources }}{% endif %}"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'place'|trans|capitalize }}</label>
+                                                    <select name="place" id="place" class="form-control form-control-lg" required>
+                                                        {% for place in places %}
+                                                            <option value="{{ place['@id'] }}">{{ place.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-12">
+                                                <div class="form-group">
+
+                                                    <input class="" type="hidden" name="petsAllowed" value="false" />
+                                                    {% if resource.petsAllowed is defined %}
+                                                        {% if resource.petsAllowed == 'true' %}
+                                                            <input class="" type="checkbox" name="petsAllowed" value="true" checked/>
+                                                        {% else %}
+                                                            <input class="" type="checkbox" name="petsAllowed" value="true" />
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <input class="" type="checkbox" name="petsAllowed" value="true" />
+                                                    {% endif %}
+                                                    <label for="largeInput">{{ 'pets allowed'|trans|capitalize }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-12">
+                                                <div class="form-group">
+
+                                                    <input class="" type="hidden" name="wheelchairAccessible" value="false" />
+                                                    {% if resource.wheelchairAccessible is defined %}
+                                                        {% if resource.wheelchairAccessible == 'true' %}
+                                                            <input class="" type="checkbox" name="wheelchairAccessible" value="true" checked/>
+                                                        {% else %}
+                                                            <input class="" type="checkbox" name="wheelchairAccessible" value="true" />
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <input class="" type="checkbox" name="wheelchairAccessible" value="true" />
+                                                    {% endif %}
+                                                    <label for="largeInput">{{ 'wheelchair accessible'|trans|capitalize }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                    <textarea class="form-control summernote" rows="5" id="description"
+                                                              name="description"
+                                                              required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                </div>
+                                            </div>  <!-- /.col -->
+                                        </div> <!-- /.row -->
+                                    </div>
 
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
@@ -184,6 +247,7 @@
 
     </div>
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -208,7 +272,7 @@
         type: 'GET',
         dataType: 'json',
         success: function(result) {
-            console.log(result);
+
             for(let i = 0; i < result['hydra:member'].length; i++ ){
                 $('#changelog').append('<tr>')
                 $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
@@ -221,4 +285,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

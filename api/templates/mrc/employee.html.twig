@@ -13,7 +13,7 @@
         <div class="container">
             {% if resource.person is defined %}
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a employee',
+                'headerTitle': 'employee',
                 'name' : resource.person,
                 'breadcrumbs': [{
                     'home' : {
@@ -29,7 +29,7 @@
             %}
                 {% else %}
                     {% include 'widgets/babs/title_h1.html.twig' with {
-                        'headerTitle': 'save or create a employee',
+                        'headerTitle': 'employee',
                         'name' : 'new',
                         'breadcrumbs': [{
                             'home' : {
@@ -51,8 +51,10 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_mrc_employee', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    {% if resource.name is defined %}
-                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    {% if resource.person is defined %}
+                                    <h2 class="d-inline-block"> </h2>
+                                        {% else %}
+                                            <h2 class="d-inline-block">{{ 'employee'|trans|capitalize }} </h2>
                                     {% endif %}
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_mrc_employees')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
@@ -76,8 +78,9 @@
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
 
                                                 <select name="person" id="person" class="form-control form-control-lg" required>
+                                                    {
                                                     {% for person in people %}
-                                                        <option value="{{ person.name }}">{{ person.name }}</option>
+                                                        <option value="{{ person['@id']}} "{% if resource.person is defined and resource.person == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
                                                     {% endfor %}
                                                 </select>
 
@@ -90,7 +93,7 @@
 
                                                 <select name="organization" id="organization" class="form-control form-control-lg" required>
                                                     {% for organization in organizations %}
-                                                        <option value="{{ organization.name }}">{{ organization.name }}</option>
+                                                        <option value="{{ organization['@id'] }}"{% if resource.organization is defined and resource.organization == organization['@id']  %}selected{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -105,29 +108,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
@@ -155,6 +135,7 @@
 
     </div>
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -192,4 +173,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

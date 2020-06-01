@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -75,6 +75,8 @@ class BcController extends AbstractController
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'payments','id'=>$id]);
         }
+
+
 
 
         $variables['title'] = $translator->trans('payments');
@@ -244,13 +246,16 @@ class BcController extends AbstractController
             $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'invoices','id'=> $id]);        }
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'mrc','type'=>'employees','id'=> $id]);
+
+        }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
             return $this->redirect($this->generateUrl('app_bc_invoices'));
         }
+
 
         $variables['title'] = $translator->trans('invoices');
         $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('invoices');
@@ -266,7 +271,11 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'invoices','id'=>$id]));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'invoices']));
+
+        }
+
+        return $variables;
     }
 
     /**
@@ -279,7 +288,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
         $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'resource'],['invoice-itmes.id'=>$id])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'invoice_items'])["hydra:member"];
         return $variables;
     }
 
@@ -297,13 +306,13 @@ class BcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'invoice-item','id'=> $id]);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'invoiceitem','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_bc_invoices'));
+            return $this->redirect($this->generateUrl('app_bc_invoiceitems'));
         }
 
         $variables['title'] = $translator->trans('invoices');

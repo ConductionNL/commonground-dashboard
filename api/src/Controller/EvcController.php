@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -175,6 +175,11 @@ class EvcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
     		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/health_logs/');
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ecv_healthlogs', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -285,8 +290,14 @@ class EvcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
     		$resource['core'] = (bool)$resource['core'];
-        
+
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'evc', 'type'=>'components']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ecv_components', ["id" =>  $variables['resource']['id']]));
+            }
+
     	}
 
     	return $variables;
@@ -391,8 +402,8 @@ class EvcController extends AbstractController
 //            var_dump($variables['resource']);
     		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
-    	if($request->query->get('action') == 'update'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/update', null, true);
+    	if($request->query->get('action') == 'upgrade'){
+    		$commonGroundService->getResource($variables['resource']['@id'].'/upgrade', null, true);
             //var_dump($variables['resource']);
     		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
