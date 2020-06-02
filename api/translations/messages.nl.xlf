@@ -2405,6 +2405,62 @@
         <source>edit todo</source>
         <target>todo aanpassen</target>
       </trans-unit>
+      <trans-unit id="vHsEeml" resname="sku">
+        <source>sku</source>
+        <target>sku</target>
+      </trans-unit>
+      <trans-unit id="imujLJv" resname="movie">
+        <source>movie</source>
+        <target>filmpje</target>
+      </trans-unit>
+      <trans-unit id="p6ObcvK" resname="simple">
+        <source>simple</source>
+        <target>simpel</target>
+      </trans-unit>
+      <trans-unit id="4u.dfbk" resname="virtual">
+        <source>virtual</source>
+        <target>virtueel</target>
+      </trans-unit>
+      <trans-unit id="FAaUKRU" resname="ticket">
+        <source>ticket</source>
+        <target>__ticket</target>
+      </trans-unit>
+      <trans-unit id="OzJRCd6" resname="variable">
+        <source>variable</source>
+        <target>__variable</target>
+      </trans-unit>
+      <trans-unit id="qPp.1gi" resname="subscription">
+        <source>subscription</source>
+        <target>abonnement</target>
+      </trans-unit>
+      <trans-unit id="Rm5bnNV" resname="currency">
+        <source>currency</source>
+        <target>valuta</target>
+      </trans-unit>
+      <trans-unit id="IxZtajl" resname="tax percentage">
+        <source>tax percentage</source>
+        <target>percentage belasting</target>
+      </trans-unit>
+      <trans-unit id="PaBPyPD" resname="requires appointment">
+        <source>requires appointment</source>
+        <target>afspraak benodigd</target>
+      </trans-unit>
+      <trans-unit id="5r2GQUr" resname="external docs">
+        <source>external docs</source>
+        <target>externe documenten</target>
+      </trans-unit>
+      <trans-unit id="L2QrkHQ" resname="add document">
+        <source>add document</source>
+        <target>document toeveogen</target>
+      </trans-unit>
+      <trans-unit id="HrnsCcE" resname="add image">
+        <source>add image</source>
+        <target>afbeelding toevoegen</target>
+      </trans-unit>
+      <trans-unit id="2PEdPRr" resname="add external doc">
+        <source>add external doc</source>
+        <target>extern document toevoegen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
