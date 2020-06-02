@@ -2289,6 +2289,14 @@
         <source>grave cover</source>
         <target>graf bedekking</target>
       </trans-unit>
+      <trans-unit id="heUi12A" resname="not functional">
+        <source>not functional</source>
+        <target>niet functioneel</target>
+      </trans-unit>
+      <trans-unit id="We1G57b" resname="number of days requests of this type will be saved if they have not been submitted">
+        <source>number of days requests of this type will be saved if they have not been submitted</source>
+        <target>aantal dagen dat verzoeken van dit type worden opgeslagen als ze niet ingediend zijn</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
