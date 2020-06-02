@@ -159,7 +159,7 @@
                                                         <td>{{ grave.reference }}</td>
                                                         <td>{{ grave.graveType['reference'] }}</td>
                                                         <td>{{ grave.status }}</td>
-                                                        <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="#editGrave{{ grave.id }}"  data-toggle="modal" data-target="#editGrave{{ grave.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                        <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="{{ path('app_grc_grave',{'id': grave.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
                                                     </tr>
                                                 {% endif %}
                                             {% endfor %}
@@ -298,7 +298,7 @@
                                                     <td>{{ grave.reference }}</td>
                                                     <td>{{ grave.graveType['reference'] }}</td>
                                                     <td>{{ grave.status }}</td>
-                                                    <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="#editGrave{{ grave.id }}"  data-toggle="modal" data-target="#editGrave{{ grave.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                    <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="{{ path('app_grc_grave',{'id': grave.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
