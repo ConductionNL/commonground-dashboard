@@ -4,14 +4,13 @@
 
 namespace App\Controller;
 
-
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-use App\Service\CommonGroundService;
 
 /**
  * Class DashboardController
@@ -76,6 +75,7 @@ class WrcController extends AbstractController
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
         $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
+        $variables['templateGroups'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'template_groups'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -98,8 +98,85 @@ class WrcController extends AbstractController
                 // reload the slugs
                 $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['template.id'=>$id])["hydra:member"];
             }
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_templates', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
+    }
+
+    /**
+     * @Route("/template_groups")
+     * @Template
+     */
+    public function templateGroupsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+
+        $variables = [];
+        $variables['title'] = $translator->trans('template groups');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('template groups');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'template_groups'])["hydra:member"];
+
+        return $variables;
+
+    }
+
+    /**
+     * @Route("/template_groups/{id}")
+     * @Template
+     */
+    public function templateGroupAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'template_groups','id'=> $id]);
+            return $this->redirect($this->generateUrl('app_wrc_templategroups'));
+        }
+
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'template_groups','id'=> $id]);
+            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['templateGroups.id'=>$id])["hydra:member"];
+        }
+
+        $variables['title'] = $translator->trans('template groups');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template group');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
+
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            if(array_key_exists('template', $resource)){
+                $template = $resource['template'];
+                $template['templateGroups'] = $variables['resource']['@id'];
+                $template = $commonGroundService->saveResource($template, ['component'=>'wrc','type'=>'templates']);
+
+                // reload the slugs
+                $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'],['templateGroups.id'=>$id])["hydra:member"];
+            }
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc','type'=>'template_groups']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_templategroups', ["id" =>  $variables['resource']['id']]));
+            }
+
+            // Lets see if we also need to add an slug
+        }
+        return $variables;
     }
 
     /**
@@ -157,6 +234,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'slugs']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_slugs', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -203,6 +283,7 @@ class WrcController extends AbstractController
     	$variables['title'] = $translator->trans('organization');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organization');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['employees'] = $commonGroundService->getResourceList(['component'=>'mrc','type'=>'employees'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -216,12 +297,15 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'organizations']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_organizations', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
 
     /**
-     * @Route("/image")
+     * @Route("/images")
      * @Template
      */
     public function imagesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
@@ -244,8 +328,8 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'imgaes','id'=>$id]);
-            return $this->redirect($this->generateUrl('app_wrc_groups'));
+            $commonGroundService->deleteResource(['component'=>'wrc','type'=>'images','id'=>$id]);
+            return $this->redirect($this->generateUrl('app_wrc_images'));
         }
 
     	$variables = [];
@@ -255,7 +339,7 @@ class WrcController extends AbstractController
     		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
     	}
     	else{
-    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'imgaes','id'=>$id]);
+    		$variables['resource'] = $commonGroundService->getResource(['component'=>'wrc','type'=>'images','id'=>$id]);
     	}
 
     	$variables['title'] = $translator->trans('image');
@@ -274,6 +358,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'images']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_images', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -320,6 +407,7 @@ class WrcController extends AbstractController
     	$variables['title'] = $translator->trans('style');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('style');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['images'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'images'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -333,6 +421,9 @@ class WrcController extends AbstractController
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc','type'=>'styles']);
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_styles', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -378,9 +469,9 @@ class WrcController extends AbstractController
             $variables['menus'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'menus'],['application.id'=>$id])["hydra:member"];
     	}
 
-
-
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['defaultConfigurations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'configurations'])["hydra:member"];
+        $variables['styles'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'styles'])["hydra:member"];
 
         // Als we een organisatie hebben kunnen we ook de style ophalen @to engels!
         if(array_key_exists('organization', $variables['resource'])){
@@ -472,6 +563,11 @@ class WrcController extends AbstractController
 
             // If we do a reload here anyway? why dont we get the lates version of the resource
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'applications']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_applications', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -564,6 +660,11 @@ class WrcController extends AbstractController
             }
 
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'menus']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_menus', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }
@@ -608,6 +709,7 @@ class WrcController extends AbstractController
     	$variables['title'] = $translator->trans('configuration');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('configuration');
     	$variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'applications'])["hydra:member"];
 
     	// Lets see if there is a post to procces
     	if ($request->isMethod('POST')) {
@@ -617,10 +719,17 @@ class WrcController extends AbstractController
     		$resource['@id'] = $variables['resource']['@id'];
     		$resource['id'] = $variables['resource']['id'];
 
+
+
     		// If there are any sub data sources the need to be removed below in order to save the resource
     		// unset($resource['somedatasource'])
 
     		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'wrc','type'=>'configurations']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_wrc_configurations', ["id" =>  $variables['resource']['id']]));
+            }
     	}
     	return $variables;
     }

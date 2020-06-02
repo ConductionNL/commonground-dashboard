@@ -4,15 +4,14 @@
 
 namespace App\Controller;
 
-use App\Service\RequestService;
+use Conduction\CommonGroundBundle\Service\RequestService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-use App\Service\CommonGroundService;
-use App\Service\ZgwService;
 
 /**
  * Class DashboardController
@@ -63,7 +62,7 @@ class VrcController extends AbstractController
     /**
      * @Route("/requests/{id}")
      */
-    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, ZgwService $zgwService, TranslatorInterface $translator, $id)
+    public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
 
         // If it is a delete action we can stop right here
@@ -84,12 +83,12 @@ class VrcController extends AbstractController
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id], [],true);
             $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
-            //$variables['submitters'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'submitters'],['request'=> $variables['resource']['@id']])["hydra:member"];
+            $variables['submitters'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'submitters'],['request'=> $variables['resource']['@id']])["hydra:member"];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])["hydra:member"];
-            $variables['tasks'] = []; //$commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
-            $variables['messages'] = $commonGroundService->getResourceList(['component' => 'bs', 'type' => 'messages'])["hydra:member"];
-            $variables['memos'] = $commonGroundService->getResourceList(['component' => 'memo', 'type' => 'memos'])["hydra:member"];
-            $variables['queues'] = []; //$commonGroundService->getResourceList(['component' => 'qc', 'type' => 'memo'])["hydra:member"];
+           // $variables['tasks'] = []; //$commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
+            //$variables['messages'] = $commonGroundService->getResourceList(['component' => 'bs', 'type' => 'messages'])["hydra:member"];
+            //$variables['memos'] = $commonGroundService->getResourceList(['component' => 'memo', 'type' => 'memos'])["hydra:member"];
+            //$variables['queues'] = []; //$commonGroundService->getResourceList(['component' => 'qc', 'type' => 'memo'])["hydra:member"];
 
             if(array_key_exists('requestType',$variables['resource'])){
             $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
@@ -119,7 +118,7 @@ class VrcController extends AbstractController
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])["hydra:member"];
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])["hydra:member"];
 
-        $variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
+        //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
 
         if ($request->isMethod('POST')) {
 

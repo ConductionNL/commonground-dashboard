@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_cc_email' %}
+
 
 {% block content %}
 
@@ -14,7 +14,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a email',
+                'headerTitle': 'email',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -33,7 +33,7 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_cc_email', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -52,77 +52,23 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       name="name" placeholder=""
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
+                                                <label for="largeInput">{{ 'email'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="email"
+                                                       name="email" placeholder=""
+                                                       value="{% if resource.email is defined %}{{ resource.email }} {% endif %}">
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-                                            </div>
-                                        </div>  <!-- /.col -->
-                                    </div> <!-- /.row -->
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
@@ -133,31 +79,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
         {% include 'widgets/delete_modal.html.twig'
@@ -183,6 +105,7 @@
 
     </div>
     </div>
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -220,4 +143,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

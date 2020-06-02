@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_wrc_configurations' %}
+{% set view = 'app_wrc_configuration' %}
 
 {% block content %}
 
@@ -8,7 +8,8 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'configurations',
+                'Title': 'configurations',
+                'Noun' : 'configuration',
                 'name' : 'configurations'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {

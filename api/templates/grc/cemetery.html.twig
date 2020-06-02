@@ -1,0 +1,415 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% if resource.reference is defined %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'cemetery',
+                'name' : resource.reference,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'cemeteries' : {
+                        'name' : 'cemeteries',
+                        'path' : 'app_grc_cemeteries'
+                    }
+                }]
+            }
+            %}
+            {% else %}
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'cemetery',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'cemeteries' : {
+                        'name' : 'cemeteries',
+                        'path' : 'app_grc_cemeteries'
+                    }
+                }]
+            }
+            %}
+            {% endif %}
+
+            {% if graves is defined %}
+            <script>
+                var graves = [
+
+
+                    {% for grave in graves %}
+
+                    {
+                        reference: '{{ grave['reference'] }}',
+                        status: '{{ grave['status'] }}',
+                        cemetery: '{{ grave['cemetery']['reference'] }}',
+                        graveType: '{{ grave['graveType']['reference'] }}'
+                    },
+
+                    {% endfor %}
+                ];
+                {% endif %}
+
+            </script>
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_grc_cemetery', {'id': resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{% if resource.reference is defined%} {{ resource.reference}} {% else %} {{ 'cemetery'|trans|capitalize }} {% endif %} </h2>
+                                    <div class="float-right">
+                                        <a class="btn btn-primary" href="{{ path('app_grc_cemeteries')}}">
+                                            <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a href="#changeLog" class="btn btn-info"
+                                           data-toggle="modal"
+                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                        <a href="#auditTrial" class="btn btn-info"
+                                           data-toggle="modal"
+                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                        <a href="#delete" class="btn btn-danger"
+                                           data-toggle="modal"
+                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="reference" name ="reference" value="{% if resource.reference is defined %}{{ resource.reference }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                            <select id="organization" name="organization"
+                                                    class="form-control form-control-lg" required>
+                                                {% for organization in organizations %}
+                                                    <option value="{{ organization['@id'] }}"
+                                                            {% if resource.organization is defined and organization['@id'] == resource.organization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>  <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
+                                                <select id="location" name="location"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for place in places %}
+                                                        <option value="{{ place['@id'] }}"
+                                                                {% if resource.location is defined and place['@id'] == resource.location %}selected=""{% endif %}>{{ place.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+                {% if graves is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card p-4 full-height">
+                                <div class="card-header">
+                                    <h3 class="d-inline-block">{{ 'Beschikbare graven'|trans|capitalize }}</h3>
+                                    <div class="float-right">
+                                        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addGrave"  data-toggle="modal" data-target="#addGrave">{{ 'add grave'|trans|capitalize }}</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'Filter op grafsoort'|trans|capitalize }}</label>
+                                    <select onchange="ChangeTableContentAvailable()" id="graveTypeAvailable" name="graveTypeAvailable"
+                                            class="form-control form-control-lg" required>
+                                        {% for gravetype in gravetypes %}
+                                            <option value="{{ gravetype['reference'] }}"
+                                                    {% if resource.gravetype is defined and gravetype['@id'] == resource.gravetype %}selected=""{% endif %}>{{ gravetype.reference }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="card-body">
+                                    {% if graves is defined %}
+                                        <table id="availableGraves" class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                                                <th scope="col">{{ 'gravetype'|trans|capitalize }}</th>
+                                                <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for grave in graves %}
+                                                {% if grave.status == "Beschikbaar" %}
+                                                    <tr>
+                                                        <td>{{ grave.reference }}</td>
+                                                        <td>{{ grave.graveType['reference'] }}</td>
+                                                        <td>{{ grave.status }}</td>
+                                                        <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="{{ path('app_grc_grave',{'id': grave.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div> <!-- /.card-body -->
+                            </div><!-- /.card -->
+                        </div><!-- /.col -->
+
+                        <script>
+
+                            function ChangeTableContentAvailable() {
+
+                                var availableGravesTable = document.getElementById("availableGraves");
+                                for(var i = availableGravesTable.rows.length - 1; i > 0; i--) { availableGravesTable.deleteRow(i);}
+
+                                for (var i = 0; i < graves.length;i++) {
+
+                                    var reference = graves[i]['reference'];
+                                    var status = graves[i]['status'];
+                                    var cemetery = graves[i]['cemetery'];
+                                    var gravetype = graves[i]['graveType'];
+
+
+                                    if (document.getElementById('graveTypeAvailable').value == gravetype && status == "Beschikbaar") {
+
+                                        var row = availableGravesTable.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = gravetype;
+                                        var cell2 = row.insertCell(1);
+                                        cell2.innerHTML = status;
+                                        var cell3 = row.insertCell(0);
+                                        cell3.innerHTML = reference;
+                                        var cell4 = row.insertCell(3);
+                                        cell4.innerHTML = '<a class="btn btn-info btn-block" style="margin-right: 25px"  href="#editGrave"  data-toggle="modal" data-target="#editGrave">{{ 'edit'|trans|capitalize }}</a>';
+
+
+                                    }
+                                }
+
+
+                            }
+                            function ChangeTableContentAll() {
+
+                                var allGravesTable = document.getElementById("allGraves");
+                                for(var i = allGravesTable.rows.length - 1; i > 0; i--) { allGravesTable.deleteRow(i);}
+
+                                for (var i = 0; i < graves.length;i++) {
+
+                                    var reference = graves[i]['reference'];
+                                    var status = graves[i]['status'];
+                                    var cemetery = graves[i]['cemetery'];
+                                    var gravetype = graves[i]['graveType'];
+
+
+                                    if (document.getElementById('graveTypeAll').value == gravetype) {
+
+                                        var row = allGravesTable.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = gravetype;
+                                        var cell2 = row.insertCell(1);
+                                        cell2.innerHTML = status;
+                                        var cell3 = row.insertCell(0);
+                                        cell3.innerHTML = reference;
+                                        var cell4 = row.insertCell(3);
+                                        cell4.innerHTML = '<a class="btn btn-info btn-block" style="margin-right: 25px"  href="#editGrave"  data-toggle="modal" data-target="#editGrave">{{ 'edit'|trans|capitalize }}</a>';
+
+                                    }
+                                }
+
+
+                            }
+
+                        </script>
+                        <div class="modal fade" style="text-align: center" id="addGrave" tabindex="-1"
+                             role="dialog"
+                             aria-labelledby="addGraveTitle" aria-hidden="true">
+                            <div class="modal-dialog model-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addGraveTitle"><b>{{ 'add grave'|trans|capitalize }}</b></h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ path('app_grc_grave', {id: resource.id}) }}" method="post">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="grave[reference]" name="grave[reference]" value="" required>
+                                        </div><!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="grave[description]" name="grave[description]" value="" >
+                                        </div><!-- /.form-group -->
+                                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                                            {{ 'add'|trans|capitalize }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card p-4 full-height">
+                                <div class="card-header">
+                                    <h3 class="d-inline-block">{{ 'Alle graven'|trans|capitalize }}</h3>
+                                    <div class="float-right">
+                                        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addGrave"  data-toggle="modal" data-target="#addGrave">{{ 'add grave'|trans|capitalize }}</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="largeInput">{{ 'Filter op grafsoort'|trans|capitalize }}</label>
+                                    <select onchange="ChangeTableContentAll()"  id="graveTypeAll" name="graveTypeAll"
+                                            class="form-control form-control-lg" required>
+                                        {% for gravetype in gravetypes %}
+                                            <option value="{{ gravetype['reference'] }}"
+                                                    {% if resource.gravetype is defined and gravetype['@id'] == resource.gravetype %}selected=""{% endif %}>{{ gravetype.reference }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="card-body">
+                                    {% if graves is defined %}
+                                        <table id="allGraves" class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                                                <th scope="col">{{ 'gravetype'|trans|capitalize }}</th>
+                                                <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for grave in graves %}
+                                                <tr>
+                                                    <td>{{ grave.reference }}</td>
+                                                    <td>{{ grave.graveType['reference'] }}</td>
+                                                    <td>{{ grave.status }}</td>
+                                                    <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="{{ path('app_grc_grave',{'id': grave.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div> <!-- /.card-body -->
+                                <div class="card-action">
+                                </div><!-- /.card-action -->
+                            </div><!-- /.card -->
+                        </div><!-- /.col -->
+                        <script>
+
+
+
+                        </script>
+                        <div class="modal fade" style="text-align: center" id="addGrave" tabindex="-1"
+                             role="dialog"
+                             aria-labelledby="addGraveTitle" aria-hidden="true">
+                            <div class="modal-dialog model-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addGraveTitle"><b>{{ 'add grave'|trans|capitalize }}</b></h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ path('app_grc_grave', {id: resource.id}) }}" method="post">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'reference'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="grave[reference]" name="grave[reference]" value="" required>
+                                        </div><!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="grave[description]" name="grave[description]" value="" >
+                                        </div><!-- /.form-group -->
+                                        <button type="submit" class="btn btn-success m-3  mx-auto">
+                                            {{ 'add'|trans|capitalize }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    &nbsp;
+                    {% endif %}
+            </div><!-- /.page-inner -->
+
+
+
+
+                {% include 'widgets/delete_modal.html.twig'
+                    with {
+                    'route': 'app_grc_cemetery',
+                    'resource':resource,
+                    'id':'delete' } %}
+
+                {% include 'widgets/auditTrail_modal.html.twig'
+                    with {
+                    'route': 'app_grc_cemetery',
+                    'resource':resource,
+                    'id':'auditTrial' } %}
+
+                {% include 'widgets/changeLog_modal.html.twig'
+                    with {
+                    'route': 'app_grc_cemetery',
+                    'resource':resource,
+                    'id':'changeLog' } %}
+
+            {% include 'footer.html.twig' %}
+
+            </div>
+        </div>
+    </div>
+    <script>
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/grc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/grc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
+    </script>
+{% endblock %}

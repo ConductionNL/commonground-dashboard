@@ -19,7 +19,7 @@
                         <tbody>
                         {% for event in events %}
                             <tr>
-                                <td><a href="{{ path('app_vrc_request', {id: request.id}) }}">{{ (event.name)}}</a></td>
+                                <td>{{ (event.name)}}</td>
                                 <td>{{ event.status }}</td>
                                 <td>{{ event.description }}</td>
 

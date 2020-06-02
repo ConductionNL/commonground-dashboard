@@ -6,7 +6,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a case',
+                'headerTitle': 'case',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -367,6 +367,7 @@
         </div>
     </div>
     {% endif %}
+    <script>
     {% block javascript %}
     //audit_trails
     $.ajax({
@@ -404,4 +405,5 @@
         },
     });
     {% endblock %}
+    </script>
 {% endblock %}

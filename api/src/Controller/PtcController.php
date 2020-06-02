@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -91,7 +90,12 @@ class PtcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'stage','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'stage']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ptc_stages', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 
@@ -130,7 +134,7 @@ class PtcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_ptc_stages'));
+            return $this->redirect($this->generateUrl('app_ptc_procestypes'));
         }
 
         $variables['title'] = $translator->trans('proces type');
@@ -149,7 +153,76 @@ class PtcController extends AbstractController
             // unset($resource['somedatasource'])
 
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'proces_type','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'proces_types']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ptc_procestypes', ["id" =>  $variables['resource']['id']]));
+            }
+        }
+
+
+        return $variables;
+    }
+
+
+    /**
+     * @Route("/sections")
+     * @Template
+     */
+    public function SectionsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('stages');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('stages');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'ptc','type'=>'stages'])["hydra:member"];
+        return $variables;
+    }
+
+    /**
+     * @Route("/sections/{id}")
+     * @Template
+     */
+    public function SectionAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+
+        $variables = [];
+
+        // Lets see if we need to create
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        }
+        else{
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'ptc','type'=>'section','id'=> $id]);        }
+
+        // If it is a delete action we can stop right here
+        if($request->query->get('action') == 'delete'){
+            $commonGroundService->deleteResource($variables['resource']);
+            return $this->redirect($this->generateUrl('app_ptc_sections'));
+        }
+
+        $variables['title'] = $translator->trans('section');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('section');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            // If there are any sub data sources the need to be removed below in order to save the resource
+            // unset($resource['somedatasource'])
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'ptc','type'=>'section']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_ptc_sections', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
 

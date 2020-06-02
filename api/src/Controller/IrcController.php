@@ -2,6 +2,7 @@
 // src/Controller/DefaultController.php
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use App\Service\CommonGroundService;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use App\Security\User\CommongroundUser;
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -63,8 +63,8 @@ class IrcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new' && !$request->isMethod('POST')){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        if($id == 'new'){
+            $variables['resource'] = ['@id' => null,'id'=>'new', 'name'=>'new'];
         }
         else{
             $variables['resource'] = $commonGroundService->getResource(['component'=>'irc','type'=>'assents','id'=> $id]);
@@ -94,6 +94,10 @@ class IrcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'irc','type'=>'assents']));
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_irc_assents', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
         return $variables;
