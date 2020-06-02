@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="7MNm73z" resname="catalogues">
         <source>catalogues</source>
-        <target>catalogusen</target>
+        <target>catalogi</target>
       </trans-unit>
       <trans-unit id="wG3IzBc" resname="taxes">
         <source>taxes</source>
@@ -1011,7 +1011,7 @@
       </trans-unit>
       <trans-unit id="G9o1H6b" resname="kvk">
         <source>kvk</source>
-        <target>__kvk</target>
+        <target>kvk</target>
       </trans-unit>
       <trans-unit id="_SmBx8C" resname="adresses">
         <source>adresses</source>
@@ -1927,11 +1927,11 @@
       </trans-unit>
       <trans-unit id="MsHPSaL" resname="skills">
         <source>skills</source>
-        <target>__skills</target>
+        <target>vaardigheden</target>
       </trans-unit>
       <trans-unit id="nFPAdNe" resname="skill">
         <source>skill</source>
-        <target>__skill</target>
+        <target>vaardigheid</target>
       </trans-unit>
       <trans-unit id="P7RWI8s" resname="section">
         <source>section</source>
@@ -2019,11 +2019,11 @@
       </trans-unit>
       <trans-unit id="PXmor8y" resname="locality">
         <source>locality</source>
-        <target>__locality</target>
+        <target>plaats</target>
       </trans-unit>
       <trans-unit id="r.ZOT9U" resname="country">
         <source>country</source>
-        <target>__country</target>
+        <target>land</target>
       </trans-unit>
       <trans-unit id="JsqJ08M" resname="cementeries">
         <source>cementeries</source>
@@ -2103,7 +2103,7 @@
       </trans-unit>
       <trans-unit id="JZHGdOq" resname="requester">
         <source>requester</source>
-        <target>__requester</target>
+        <target>verzoeker</target>
       </trans-unit>
       <trans-unit id="7bLNO3T" resname="category">
         <source>category</source>
@@ -2119,11 +2119,11 @@
       </trans-unit>
       <trans-unit id="8Tfkq6J" resname="floor level">
         <source>floor level</source>
-        <target>__floor level</target>
+        <target>verdieping</target>
       </trans-unit>
       <trans-unit id="MBjNta0" resname="maximum attendees">
         <source>maximum attendees</source>
-        <target>__maximum attendees</target>
+        <target>maximale deelnemers</target>
       </trans-unit>
       <trans-unit id="aLexVR0" resname="pets allowed">
         <source>pets allowed</source>
@@ -2227,11 +2227,11 @@
       </trans-unit>
       <trans-unit id="U6nWXTY" resname="assignee">
         <source>assignee</source>
-        <target>__assignee</target>
+        <target>aangewezen persoon</target>
       </trans-unit>
       <trans-unit id="25S0DV2" resname="percentage done">
         <source>percentage done</source>
-        <target>__percentage done</target>
+        <target>percentage voltooid</target>
       </trans-unit>
       <trans-unit id="MJKl8Nu" resname="priority">
         <source>priority</source>
@@ -2319,7 +2319,7 @@
       </trans-unit>
       <trans-unit id="dht62K1" resname="summary">
         <source>summary</source>
-        <target>__summary</target>
+        <target>overzicht</target>
       </trans-unit>
       <trans-unit id="i0DaKNm" resname="transp">
         <source>transp</source>
@@ -2327,7 +2327,7 @@
       </trans-unit>
       <trans-unit id="yqea9Nt" resname="duration">
         <source>duration</source>
-        <target>__duration</target>
+        <target>looptijd</target>
       </trans-unit>
       <trans-unit id="T1Jg1xx" resname="seq">
         <source>seq</source>
@@ -2335,11 +2335,11 @@
       </trans-unit>
       <trans-unit id="QVZIynz" resname="attendees">
         <source>attendees</source>
-        <target>__attendees</target>
+        <target>aanwezigen</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
-        <target>__attachments</target>
+        <target>bijlagen</target>
       </trans-unit>
       <trans-unit id="piFuoD5" resname="categories">
         <source>categories</source>
@@ -2376,6 +2376,34 @@
       <trans-unit id="zZNHbpe" resname="repeat frequency">
         <source>repeat frequency</source>
         <target>__repeat frequency</target>
+      </trans-unit>
+      <trans-unit id="y2J3h.N" resname="edit alarm">
+        <source>edit alarm</source>
+        <target>alarm aanpassen</target>
+      </trans-unit>
+      <trans-unit id="aDJZ.qu" resname="trigger">
+        <source>trigger</source>
+        <target>trigger</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat">
+        <source>repeat</source>
+        <target>herhaal</target>
+      </trans-unit>
+      <trans-unit id="HrXk4qp" resname="edit freebusy">
+        <source>edit freebusy</source>
+        <target>__edit freebusy</target>
+      </trans-unit>
+      <trans-unit id="VkbJI2c" resname="freebusy">
+        <source>freebusy</source>
+        <target>__freebusy</target>
+      </trans-unit>
+      <trans-unit id="hvlxPen" resname="edit journal">
+        <source>edit journal</source>
+        <target>dagboek aanpassen</target>
+      </trans-unit>
+      <trans-unit id="DVKjqrA" resname="edit todo">
+        <source>edit todo</source>
+        <target>todo aanpassen</target>
       </trans-unit>
     </body>
   </file>
