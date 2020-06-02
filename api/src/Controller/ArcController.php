@@ -292,8 +292,13 @@ class ArcController extends AbstractController
             if(key_exists('schedule', $resource)){
                 $schedule = $resource['schedule'];
                 $schedule['calendar'] = $resource['@id'];
+                $schedule['repeatCount'] = (int)$schedule['repeatCount'];
+                $schedule['byDay'] = (int)$schedule['byDay'];
+                $schedule['byMonth'] = (int)$schedule['byMonth'];
+                $schedule['byMonthDay'] = (int)$schedule['byMonthDay'];
                 if(in_array('id',$schedule)){
                     $schedule['@id'] = $schedule['id'];
+
                 }
                 $schedule = $commonGroundService->saveResource($schedule, ['component'=>'arc','type'=>'schedules']);
             }

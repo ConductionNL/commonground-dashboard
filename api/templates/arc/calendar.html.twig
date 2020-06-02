@@ -20,7 +20,7 @@
                         'path' : 'app_default_index'
                     },
                     'calendars' : {
-                        'name' : 'applications',
+                        'name' : 'calendars',
                         'path' : 'app_arc_calendars'
                     }
                 }]
@@ -72,7 +72,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control" rows="5" id="summernote" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <textarea class="form-control summernote" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
@@ -288,7 +288,7 @@
             <div class="modal fade" style="text-align: center" id="addSchedule" tabindex="-1"
                  role="dialog"
                  aria-labelledby="addScheduleTitle" aria-hidden="true">
-                <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-dialog model-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add schedule'|trans|capitalize }}</b></h5>
@@ -297,19 +297,73 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
-                            <div class="form-group">
-                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="schedule[name]" name="schedule[name]" value="" required>
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="schedule[description]" name="schedule[description]" value="">
-                            </div><!-- /.form-group -->
-                            <button type="submit" class="btn btn-success m-3  mx-auto">
-                                {{ 'add'|trans|capitalize }}
-                            </button>
-                        </form>
+                        <div class="modal-body">
+                            <form action="{{ path('app_arc_calendar', {id: resource.id}) }}" method="post">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[name]" name="schedule[name]" value="" required>
+                                        </div><!-- /.form-group -->
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'by day'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[byDay]" name="schedule[byDay]" value="" required>
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'by month'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[byMonth]" name="schedule[byMonth]" value="">
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'by month day'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[byMonthDay]" name="schedule[byMonthDay]" value="" required>
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'except dates'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[exceptDates[]]" name="schedule[exceptDates[]]" value="">
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'repeat count'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[repeatCount]" name="schedule[repeatCount]" value="" required>
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'repeat frequency'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="schedule[repeatFrequency]" name="schedule[repeatFrequency]" value="">
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                            <input type="text" class="form-control form-control-lg summernote" id="schedule[description]" name="schedule[description]" value="">
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success m-3  mx-auto">
+                                    {{ 'add'|trans|capitalize }}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

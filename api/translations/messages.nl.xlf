@@ -1875,7 +1875,7 @@
       </trans-unit>
       <trans-unit id="Gp5UkMG" resname="cemetery">
         <source>cemetery</source>
-        <target>begraafplaat</target>
+        <target>begraafplaats</target>
       </trans-unit>
       <trans-unit id="WiEsFsx" resname="place property">
         <source>place property</source>
@@ -2279,7 +2279,7 @@
       </trans-unit>
       <trans-unit id="AyuSJi7" resname="new cemetery">
         <source>new cemetery</source>
-        <target>nieuwe begraafplaat</target>
+        <target>nieuwe begraafplaats</target>
       </trans-unit>
       <trans-unit id="PgFcb.6" resname="grave covers">
         <source>grave covers</source>

@@ -3,14 +3,14 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-06-01T16:27:58.573174615Z"
+    created: "2020-06-02T06:53:18.129149072Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: e9cf0879516d68774092a04aae8d8242ac9da9cb76e934518c7f175b3645ff76
+    digest: 4cee1a8e410efc649e686036d3c39bdb88d95c789a96c58898310539d965d08f
     home: db.westfriesland.commonground.nu
     icon: db.westfriesland.commonground.nu
     name: db
     urls:
     - db-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-01T16:27:58.530191515Z"
+generated: "2020-06-02T06:53:18.125249772Z"
