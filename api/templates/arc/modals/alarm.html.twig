@@ -1,0 +1,98 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit alarm'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add alarm'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="todo[name]" name="todo[name]" value="{% if todo.name is defined %} {{ todo.name }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'calendar'|trans|capitalize }}</label>
+                            <select id="todo[calendar]" name="todo[calendar]" class="form-control form-control-lg" required disabled>
+                                {% if resource.id is defined %}
+                                    <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'action'|trans|capitalize }}</label>
+                            <select id="status" name="action" class="form-control form-control-lg">
+                                <option value="AUDIO" {% if resource.action is defined and 'AUDIO' == resource.action  %}selected{% endif %}>{{ 'audio'|trans|capitalize }}</option>
+                                <option value="DISPLAY" {% if resource.action is defined and 'DISPLAY' == resource.action  %}selected{% endif %}>{{ 'display'|trans|capitalize }}</option>
+                                <option value="EMAIL" {% if resource.action is defined and 'EMAIL' == resource.action  %}selected{% endif %}>{{ 'email'|trans|capitalize }}</option>
+                                <option value="PROCEDURE" {% if resource.action is defined and 'PROCEDURE' == resource.action  %}selected{% endif %}>{{ 'procedure'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'trigger'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="todo[trigger]" name="todo[trigger]" value="{% if todo.trigger is defined %} {{ todo.trigger }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'duration'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="todo[duration]" name="todo[duration]" value="{% if todo.duration is defined %} {{ todo.duration }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'repeat'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="todo[repeat]" name="todo[repeat]" value="{% if todo.repeat is defined %} {{ todo.repeat }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'summary'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="todo[summary]" name="todo[summary]" value="{% if todo.summary is defined %} {{ todo.summary }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="todo[description]" name="todo[description]" value="{% if todo.description is defined %} {{ todo.description }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="todo[id]" name ="todo[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="todo[@id]" name ="todo[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

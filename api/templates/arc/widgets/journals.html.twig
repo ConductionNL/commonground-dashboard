@@ -1,0 +1,61 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'journals'|trans|capitalize }}</h3>
+    </div>
+    {% if journals is defined %}
+        <div class="card-list">
+            {% for journal in journals %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="eventName"><h4>{{ journal.name|trans|capitalize }}</h4></div>
+
+                    </div>
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                            style="margin-right: 5px"
+                            data-toggle="modal"
+                            data-target="#editJournal{{ journal.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteJournal{{ journal.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addJournal"
+           data-toggle="modal" data-target="#addJournal">{{ 'add journal'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the role modals #}
+{% include 'arc/modals/journal.html.twig'
+    with {
+    'route': 'app_arc_calendar',
+    'resource':resource,
+    'id':'addJournal' } %}
+
+{% if journals is defined %}
+    {% for journal in journals %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_arc_calendar',
+            'resource':resource,
+            'item': journal,
+            'id':'deleteJournal' } %}
+
+        {% include 'arc/modals/journal.html.twig'
+            with {
+            'route': 'app_arc_calendar',
+            'resource':resource,
+            'item':journal,
+            'id':'editJournal' } %}
+    {% endfor %}
+{% endif %}
