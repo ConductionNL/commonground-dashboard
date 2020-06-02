@@ -23,7 +23,7 @@
             %}
             {% else %}
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a grave',
+                'headerTitle': 'grave',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -44,7 +44,7 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_grc_grave', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{% if resource.reference is defined %}{{ resource.reference }} {% else%} {{ 'new grave'|trans|capitalize }} {% endif%} </h2>
+                                    <h2 class="d-inline-block">{% if resource.reference is defined %}{{ resource.reference }} {% else%} {{ 'grave'|trans|capitalize }} {% endif%} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary" href="{{ path('app_grc_graves')}}">
                                             <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
