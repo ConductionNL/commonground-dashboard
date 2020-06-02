@@ -23,7 +23,7 @@
             %}
             {% else %}
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'save or create a cemetery',
+                'headerTitle': 'cemetery',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -64,7 +64,7 @@
                         <div class="card p-4 full-height">
                             <form action="{{ path('app_grc_cemetery', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{% if resource.reference is defined%} {{ resource.reference}} {% else %} {{ 'new cemetery'|trans|capitalize }} {% endif %} </h2>
+                                    <h2 class="d-inline-block">{% if resource.reference is defined%} {{ resource.reference}} {% else %} {{ 'cemetery'|trans|capitalize }} {% endif %} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary" href="{{ path('app_grc_cemeteries')}}">
                                             <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
@@ -159,7 +159,7 @@
                                                         <td>{{ grave.reference }}</td>
                                                         <td>{{ grave.graveType['reference'] }}</td>
                                                         <td>{{ grave.status }}</td>
-                                                        <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="#editGrave{{ grave.id }}"  data-toggle="modal" data-target="#editGrave{{ grave.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                        <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="{{ path('app_grc_grave',{'id': grave.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
                                                     </tr>
                                                 {% endif %}
                                             {% endfor %}
@@ -298,7 +298,7 @@
                                                     <td>{{ grave.reference }}</td>
                                                     <td>{{ grave.graveType['reference'] }}</td>
                                                     <td>{{ grave.status }}</td>
-                                                    <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="#editGrave{{ grave.id }}"  data-toggle="modal" data-target="#editGrave{{ grave.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                    <td><a class="btn btn-info float-right" style="margin-right: 25px"  href="{{ path('app_grc_grave',{'id': grave.id}) }}">{{ 'edit'|trans|capitalize }}</a></td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>

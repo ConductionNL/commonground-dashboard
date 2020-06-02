@@ -1,0 +1,177 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit event'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add event'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[name]" name="event[name]" value="{% if event.name is defined %} {{ event.name }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'calendar'|trans|capitalize }}</label>
+                            <select id="event[calendar]" name="event[calendar]" class="form-control form-control-lg" required disabled>
+                                {% if resource.id is defined %}
+                                    <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'start date'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="event[startDate]" name="event[startDate]" value="{% if event.startDate is defined %} {{ event.startDate|date("Y-m-d\\TH:i")}} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'end date'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="event[endDate]" name="event[endDate]" value="{% if event.endDate is defined %} {{ event.endDate|date("Y-m-d\\TH:i")}} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[location]" name="event[location]" value="{% if event.location is defined %} {{ event.location }} {% endif %}" >
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'class'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[class]" name="event[class]" value="{% if event.class is defined %}{{ event.class }}{% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'geo'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[geo]" name="event[geo]" value="{% if event.geo is defined %} {{ event.geo }} {% endif %}" >
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'organizer'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[organizer]" name="event[organizer]" value="{% if event.organizer is defined %} {{ event.organizer }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[status]" name="event[status]" value="{% if event.status is defined %} {{ event.status }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'summary'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[summary]" name="event[summary]" value="{% if event.summary is defined %} {{ event.summary }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'transp'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[transp]" name="event[transp]" value="{% if event.transp is defined %} {{ event.transp }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'duration'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[duration]" name="event[duration]" value="{% if event.duration is defined %} {{ event.duration }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'contact'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[contact]" name="event[contact]" value="{% if event.contact is defined %} {{ event.contact }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'seq'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[seq]" name="event[seq]" value="{% if event.seq is defined %} {{ event.seq }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'priority'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[priority]" name="event[priority]" value="{% if event.priority is defined %} {{ event.priority }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'attendees'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[attendees[]]" name="event[attendees[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'attachments'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[attachments[]]" name="event[attachments[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'categories'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[categories[]]" name="event[categories[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'comments'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[comments[]]" name="event[comments[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="event[description]" name="event[description]" value="{% if event.description is defined %} {{ event.description }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="event[id]" name ="event[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="event[@id]" name ="event[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

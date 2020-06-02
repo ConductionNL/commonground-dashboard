@@ -1,0 +1,39 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'camunda tasks'|trans|capitalize }}</h3>
+    </div>
+    {% if camundaTasks is defined %}
+        <div class="card-list">
+            {% for task in camundaTasks %}
+                    <div class="item-list">
+                        <div class="info-user ml-3">
+                            <div class="name"><h4>{{ task.name|capitalize }}</h4></div>
+                            <div class="participant">{{ task.description }}</div>
+                        </div>
+                        <button class="btn btn-icon btn-primary btn-round btn-s"
+                                style="margin-right: 5px"
+                                data-toggle="modal"
+                                data-target="#editCamundaTask{{ task.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+</div><!-- /.card -->
+
+{% if camundaTasks is defined %}
+    {% for task in camundaTasks %}
+
+        {% include 'vrc/modals/camundaTask.html.twig'
+            with {
+            'route': 'app_vrc_request',
+            'resource':resource,
+            'item':task,
+            'id':'editCamundaTask' } %}
+    {% endfor %}
+{% endif %}

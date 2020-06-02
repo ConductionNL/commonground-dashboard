@@ -7,8 +7,6 @@
         {% if requestType.properties is defined %}
             <table class="table table-hover">
                 <tbody>
-
-
                 {% for property in requestType.properties %}
                     {% if property.type is defined and property.type is not empty %}
                     <tr>
@@ -23,7 +21,7 @@
                                 <i style="color: deepskyblue" class="fas fa-info" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
                             {% endif %}
                         </td>
-                        <td>{{ property.title }}</td>
+                        <td>{{ property.title|trans }}</td>
                         {#
                         <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td> #}
                         <td>{% if property.name in resource.properties|keys  %}

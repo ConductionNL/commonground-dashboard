@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-01 16:30:58'
+        example: '2020-06-02 06:53:37'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-01 16:30:58'
+        example: '2020-06-02 06:53:37'
     required: []
   AuditTrail-write:
     properties:
@@ -2414,12 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-01 16:30:58'
+        example: '2020-06-02 06:53:37'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-01 16:30:58'
+        example: '2020-06-02 06:53:37'
     required: []
   ChangeLog-write:
     properties:
@@ -2460,8 +2460,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: westfriesland.commonground.nu
-    url: db.dev.westfriesland.commonground.nu
+    name: huwelijksplanner.online
+    url: db.dev.huwelijksplanner.online
 externalDocs:
   -
     description: 'OAS Documentatie'

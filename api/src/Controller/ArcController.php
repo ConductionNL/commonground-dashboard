@@ -289,46 +289,95 @@ class ArcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            if(key_exists('schedule', $resource)){
+            if(array_key_exists('schedule', $resource)){
                 $schedule = $resource['schedule'];
                 $schedule['calendar'] = $resource['@id'];
-                if(in_array('id',$schedule)){
-                    $schedule['@id'] = $schedule['id'];
+                $schedule['byDay'] = (int)$schedule['byDay'];
+                $schedule['byMonth'] = (int)$schedule['byMonth'];
+                $schedule['byMonthDay'] = (int)$schedule['byMonthDay'];
+                $schedule['repeatCount'] = (int)$schedule['repeatCount'];
+
+                // The resource action section
+                if(key_exists("@id",$schedule) && key_exists("action",$schedule)){
+                    // The delete action
+                    if($schedule['action'] == 'delete'){
+                        $commonGroundService->deleteResource($schedule);
+                        return $this->redirect($this->generateUrl('app_arc_calendars',['id'=>$id]));
+                    }
                 }
                 $schedule = $commonGroundService->saveResource($schedule, ['component'=>'arc','type'=>'schedules']);
             }
-            if(key_exists('event', $resource)){
+
+            if(array_key_exists('event', $resource)){
                 $event = $resource['event'];
                 $event['calendar'] = $resource['@id'];
-                if(in_array('id',$event)){
-                    $event['@id'] = $event['id'];
+                $event['seq'] = (int)$event['seq'];
+                $event['priority'] = (int)$event['priority'];
+
+
+                // The resource action section
+                if(key_exists("@id",$event) && key_exists("action",$event)){
+                    // The delete action
+                    if($event['action'] == 'delete'){
+                        $commonGroundService->deleteResource($event);
+                        return $this->redirect($this->generateUrl('app_arc_calendars',['id'=>$id]));
+                    }
                 }
                 $event = $commonGroundService->saveResource($event, ['component'=>'arc','type'=>'events']);
             }
-            if(key_exists('todo', $resource)){
+
+            if(array_key_exists('todo', $resource)){
                 $todo = $resource['todo'];
                 $todo['calendar'] = $resource['@id'];
-                if(in_array('id',$todo)){
-                    $todo['@id'] = $todo['id'];
+                $todo['repeat'] = (int)$todo['repeat'];
+
+
+                // The resource action section
+                if(key_exists("@id",$todo) && key_exists("action",$todo)){
+                    // The delete action
+                    if($todo['action'] == 'delete'){
+                        $commonGroundService->deleteResource($todo);
+                        return $this->redirect($this->generateUrl('app_arc_calendars',['id'=>$id]));
+                    }
                 }
                 $todo = $commonGroundService->saveResource($todo, ['component'=>'arc','type'=>'todos']);
             }
-            if(key_exists('journal', $resource)){
+
+            if(array_key_exists('journal', $resource)){
                 $journal = $resource['journal'];
                 $journal['calendar'] = $resource['@id'];
-                if(in_array('id',$journal)){
-                    $alarm['@id'] = $journal['id'];
+                $journal['seq'] = (int)$journal['seq'];
+                $journal['priority'] = (int)$journal['priority'];
+
+
+                // The resource action section
+                if(key_exists("@id",$journal) && key_exists("action",$journal)){
+                    // The delete action
+                    if($journal['action'] == 'delete'){
+                        $commonGroundService->deleteResource($journal);
+                        return $this->redirect($this->generateUrl('app_arc_calendars',['id'=>$id]));
+                    }
                 }
                 $journal = $commonGroundService->saveResource($journal, ['component'=>'arc','type'=>'journals']);
             }
-            if(key_exists('freeBusy', $resource)){
-                $freeBusy = $resource['freeBusy'];
-                $freeBusy['calendar'] = $resource['@id'];
-                if(in_array('id',$freeBusy)){
-                    $alarm['@id'] = $freeBusy['id'];
+
+            if(array_key_exists('freebusy', $resource)){
+                $freebusy = $resource['freebusy'];
+                $freebusy['calendar'] = $resource['@id'];
+
+
+
+                // The resource action section
+                if(key_exists("@id",$freebusy) && key_exists("action",$freebusy)){
+                    // The delete action
+                    if($freebusy['action'] == 'delete'){
+                        $commonGroundService->deleteResource($freebusy);
+                        return $this->redirect($this->generateUrl('app_arc_calendars',['id'=>$id]));
+                    }
                 }
-                $freeBusy = $commonGroundService->saveResource($freeBusy, ['component'=>'arc','type'=>'freebusies']);
+                $freebusy = $commonGroundService->saveResource($freebusy, ['component'=>'arc','type'=>'freebusies']);
             }
+
             if(key_exists('alarm', $resource)){
                 $alarm = $resource['alarm'];
                 $alarm['calendar'] = $resource['@id'];

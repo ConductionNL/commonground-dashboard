@@ -85,6 +85,7 @@ class VrcController extends AbstractController
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
             $variables['submitters'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'submitters'],['request'=> $variables['resource']['@id']])["hydra:member"];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])["hydra:member"];
+
            // $variables['tasks'] = []; //$commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
             //$variables['messages'] = $commonGroundService->getResourceList(['component' => 'bs', 'type' => 'messages'])["hydra:member"];
             //$variables['memos'] = $commonGroundService->getResourceList(['component' => 'memo', 'type' => 'memos'])["hydra:member"];
@@ -113,6 +114,17 @@ class VrcController extends AbstractController
             $variables['changeLog'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/change_log')["hydra:member"];
             $variables['auditTrail'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/submitters/'.$id.'/audit_trail')["hydra:member"];
             */
+        }
+
+        $variables['camundaTasks'] = [];
+        if (array_key_exists('processes', $variables['resource'])) {
+            foreach ($variables['resource']['processes'] as $proces){
+                $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'],['processInstanceId'=>$commonGroundService->getUuidFromUrl($proces)]);
+                foreach($camundaTasks as $camundaTask){
+                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/'.$camundaTask['id'].'/rendered-form']);
+                    $variables['camundaTasks'][] = $camundaTask;
+                }
+            }
         }
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])["hydra:member"];
