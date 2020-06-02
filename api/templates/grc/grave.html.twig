@@ -114,8 +114,7 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'stakeholder'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="stakeholder" name ="stakeholder" value="" disabled>
-                                            </div>
+                                                <input type="text" class="form-control form-control-lg" id="stakeholder" name ="stakeholder" {% if resource.stakeholder is defined %}value="{{ resource.stakeholder }}"{% endif %}>                                            </div>
                                         </div> <!-- /.col -->
                                     </div><!-- /.row -->
                                     <div class="row">
