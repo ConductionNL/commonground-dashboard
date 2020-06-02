@@ -171,7 +171,7 @@
       </trans-unit>
       <trans-unit id="_KZlqXd" resname="organizations">
         <source>organizations</source>
-        <target>organisatie</target>
+        <target>organisaties</target>
       </trans-unit>
       <trans-unit id="rzobsxK" resname="organization">
         <source>organization</source>
@@ -1019,7 +1019,7 @@
       </trans-unit>
       <trans-unit id="yQImgPi" resname="people">
         <source>people</source>
-        <target>__people</target>
+        <target>personen</target>
       </trans-unit>
       <trans-unit id="b3x3cnK" resname="load excel">
         <source>load excel</source>
@@ -1223,7 +1223,7 @@
       </trans-unit>
       <trans-unit id="rfDgmZO" resname="audience">
         <source>audience</source>
-        <target>__audience</target>
+        <target>publiek</target>
       </trans-unit>
       <trans-unit id="76Hzddd" resname="public">
         <source>public</source>
@@ -1231,7 +1231,7 @@
       </trans-unit>
       <trans-unit id="O_0ss6O" resname="internal">
         <source>internal</source>
-        <target>__internal</target>
+        <target>intern</target>
       </trans-unit>
       <trans-unit id="ZhiEoHf" resname="formal recognitions">
         <source>formal recognitions</source>
