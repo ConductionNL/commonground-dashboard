@@ -41,10 +41,10 @@ class CcController extends AbstractController
 	}
 
     /**
-     * @Route("/persons")
+     * @Route("/people")
      * @Template
      */
-	public function personsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+	public function peopleAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
     	$variables = [];
     	$variables['title'] = $translator->trans('persons');
@@ -55,7 +55,7 @@ class CcController extends AbstractController
     }
 
     /**
-     * @Route("/persons/{id}")
+     * @Route("/people/{id}")
      * @Template
      */
     public function personAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
@@ -63,7 +63,7 @@ class CcController extends AbstractController
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource(['component'=>'cc','type'=>'people','id'=> $id]);
-            return $this->redirect($this->generateUrl('app_cc_persons'));
+            return $this->redirect($this->generateUrl('app_cc_people'));
         }
 
 
@@ -98,6 +98,11 @@ class CcController extends AbstractController
             $resource['id'] = $variables['resource']['id'];
 
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'cc','type'=>'people']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_cc_people', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
         return $variables;
@@ -156,6 +161,11 @@ class CcController extends AbstractController
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'addresses']));        }
 
+        /* @to this redirect is a hotfix */
+        if(array_key_exists('id', $variables['resource'])){
+            return $this->redirect($this->generateUrl('app_cc_addresses', ["id" =>  $variables['resource']['id']]));
+        }
+
         return $variables;
     }
 
@@ -212,6 +222,11 @@ class CcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'emails']));        }
+
+        /* @to this redirect is a hotfix */
+        if(array_key_exists('id', $variables['resource'])){
+            return $this->redirect($this->generateUrl('app_cc_emails', ["id" =>  $variables['resource']['id']]));
+        }
 
         return $variables;
     }
@@ -337,6 +352,11 @@ class CcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'organizations']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_cc_organizations', ["id" =>  $variables['resource']['id']]));
+            }
         }
 
         return $variables;
@@ -381,7 +401,9 @@ class CcController extends AbstractController
 
         $variables['title'] = $translator->trans('contact list');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('contact lists');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'organizations'])["hydra:member"];
+        $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
+
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -395,6 +417,11 @@ class CcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'contact_lists']));        }
+
+        /* @to this redirect is a hotfix */
+        if(array_key_exists('id', $variables['resource'])){
+            return $this->redirect($this->generateUrl('app_cc_contactlists', ["id" =>  $variables['resource']['id']]));
+        }
 
         return $variables;
     }

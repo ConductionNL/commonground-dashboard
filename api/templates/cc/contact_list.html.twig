@@ -29,11 +29,12 @@
             }
             %}
             <div class="page-inner">
+                <form action="{{ path('app_cc_contactlist', {'id': resource.id}) }}" method="post">
                 <div class="row">
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
+
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
@@ -52,67 +53,14 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
                                                        name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -128,37 +76,143 @@
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->
-                            </form>
+
                         </div><!-- /.card -->
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card p-4">
                             <div class="card-header">
-                                <h2>Groups</h2>
+                                <h2 class="d-inline-block">{{ 'people'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addPerson"  data-toggle="modal" data-target="#addPerson"><i class="fas fa-plus"></i></a>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="personBody">
+                                    {% if resource.persons is defined %}
+                                        {% set value = 0 %}
+                                        {% for person in resource.persons %}
+                                            <tr id="{{ value }}">
+                                                <td colspan="2" id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="persons[]" value="{{ person }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="personDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'organizations'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addOrganization"  data-toggle="modal" data-target="#addOrganization"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="personBody">
+                                    {% if resource.persons is defined %}
+                                        {% set value = 0 %}
+                                        {% for person in resource.persons %}
+                                            <tr id="{{ value }}">
+                                                <td colspan="2" id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="persons[]" value="{{ person }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="personDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                </form>
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
+
+
+        <div class="modal fade" style="text-align: center" id="addPerson" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addPerson" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add person'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                        <select name="name" id="personName" class="form-control form-control-lg" required>
+                            {
+                            {% for person in people %}
+                                <option value="{{ person['@id']}} ">{{ person.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div><!-- /.form-group -->
+                    <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="personButton();">{{ 'add'|trans|capitalize }}</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" style="text-align: center" id="addOrganization" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addOrganization" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add organization'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                        <select name="name" id="organizationName" class="form-control form-control-lg" required>
+                            {
+                            {% for organization in organizations %}
+                                <option value="{{ organization['@id']}} ">{{ organization.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div><!-- /.form-group -->
+                    <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="organizationButton();">{{ 'add'|trans|capitalize }}</button>
+                </div>
+            </div>
+        </div>
 
     {% include 'widgets/delete_modal.html.twig'
         with {
@@ -185,6 +239,112 @@
     </div>
     <script>
     {% block javascript %}
+
+    //logic for people
+    function organizationButton(){
+        let counts = document.getElementById("organizationBody").lastChild.id;
+        let parent = document.getElementById("organizationBody")
+        let name = document.getElementById("organizationName");
+        let newOrganization = document.createElement("input");
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        let tdButton = document.createElement("td")
+        let delButton = document.createElement("button")
+        let counter;
+
+        if(counts !== undefined){
+            counter = parseInt(counts) + 1;
+        } else {
+            counter = parent.children.length;
+        }
+
+        newOrganization.value = name.value;
+        newOrganization.name = "organizations[]";
+        newOrganization.className = "form-control form-control-lg"
+        newOrganization.readOnly = true;
+        newOrganization.id = counter.toString();
+        newOrganization.setAttribute("style", "height: fit-content !important;");
+
+        tdButton.id = counter.toString();
+
+        delButton.id = counter.toString();
+        delButton.innerHTML = "<i class='fas fa-minus'></i>";
+        delButton.addEventListener('click', function(){
+            propDelete(newOrganization, tr, td);
+        });
+        delButton.className = "btn btn-danger float-right";
+        delButton.type = "button";
+
+        tr.id = counter.toString();
+
+        td.id = counter.toString();
+        td.setAttribute("colspan", "2");
+
+        parent.appendChild(tr);
+        tr.appendChild(td);
+        td.appendChild(newOrganization);
+        tr.appendChild(tdButton);
+        tdButton.appendChild(delButton);
+
+        name.value = "";
+    }
+
+    //logic for people
+    function personButton(){
+        let counts = document.getElementById("personBody").lastChild.id;
+        let parent = document.getElementById("personBody")
+        let name = document.getElementById("personName");
+        let newPerson = document.createElement("input");
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        let tdButton = document.createElement("td")
+        let delButton = document.createElement("button")
+        let counter;
+
+        if(counts !== undefined){
+            counter = parseInt(counts) + 1;
+        } else {
+            counter = parent.children.length;
+        }
+
+        newPerson.value = name.value;
+        newPerson.name = "persons[]";
+        newPerson.className = "form-control form-control-lg"
+        newPerson.readOnly = true;
+        newPerson.id = counter.toString();
+        newPerson.setAttribute("style", "height: fit-content !important;");
+
+        tdButton.id = counter.toString();
+
+        delButton.id = counter.toString();
+        delButton.innerHTML = "<i class='fas fa-minus'></i>";
+        delButton.addEventListener('click', function(){
+            propDelete(newPerson, tr, td);
+        });
+        delButton.className = "btn btn-danger float-right";
+        delButton.type = "button";
+
+        tr.id = counter.toString();
+
+        td.id = counter.toString();
+        td.setAttribute("colspan", "2");
+
+        parent.appendChild(tr);
+        tr.appendChild(td);
+        td.appendChild(newPerson);
+        tr.appendChild(tdButton);
+        tdButton.appendChild(delButton);
+
+        name.value = "";
+    }
+
+    function propDelete(body, tr, td){
+        body.remove();
+        tr.remove();
+        td.remove();
+    }
+
+
     //audit_trails
     $.ajax({
         url: "/api/cc/audit_trails",

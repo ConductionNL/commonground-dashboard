@@ -3,14 +3,14 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-06-03T05:59:25.347249295Z"
+    created: "2020-06-03T08:37:31.44356446Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: 8fbddffeeb77227f0ec8b990ea74cded52b8eaaf7937ad6505fe61e5011d4c4e
+    digest: ed434382c7ce359401a4c6a98626df5965d56b08c397b9d60c6da659c122e09d
     home: huwelijksplanner.online
     icon: huwelijksplanner.online
     name: db
     urls:
     - db-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-03T05:59:25.342071095Z"
+generated: "2020-06-03T08:37:31.44070456Z"
