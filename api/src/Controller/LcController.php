@@ -221,7 +221,7 @@ class LcController extends AbstractController
         $variables['title'] = $translator->trans('property');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('property');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
-        $variables['labels'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'properties'])["hydra:member"];
+
 
 
 

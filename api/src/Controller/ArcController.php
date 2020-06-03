@@ -398,6 +398,12 @@ class ArcController extends AbstractController
                 $alarm = $commonGroundService->saveResource($alarm, ['component'=>'arc','type'=>'alarms']);
             }
             $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'arc','type'=>'calendars']);
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_arc_calendars', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
