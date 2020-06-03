@@ -9,23 +9,63 @@
                             {% if breadcrumbs is defined %}
                                 {% for breadcrumb in breadcrumbs %}
                                     {% for bread in breadcrumb %}
-                                        <li class="breadcrumb-item"><a href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize}} </a></li>
+                                        <li class="breadcrumb-item"><a
+                                                href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize }} </a>
+                                        </li>
                                     {% endfor %}
                                 {% endfor %}
                                 {% if name is defined %}
-                                <li class="breadcrumb-item active" aria-label="breadcrumb">{{ name|trans|capitalize }}</li>
-                                    {% endif %}
+                                    <li class="breadcrumb-item active"
+                                        aria-label="breadcrumb">{{ name|trans|capitalize }}</li>
+                                {% endif %}
                             {% endif %}
                         {% endblock %}
                     </ol>
                 </nav>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
-				{% block buttons %}
-{#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
-                 {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}" class="btn btn-secondary btn-round">{{ 'new'|trans|capitalize }} {{ 'add'|trans }}  {% endif %}</a>
-				{% endblock %}
+                {% block buttons %}
+                    <div id="myBtnContainer p-2" class="row">
+                        {% if statusFilter is defined and statusFilter == true %}
+                            <button class="mx-1 btn btn-secondary btn-round"
+                                    onclick="myFunction('all')">{{ 'show all'|trans|capitalize }}</button>
+                            <button class="mx-1 btn btn-secondary btn-round"
+                                    onclick="myFunction('ingediend')">{{ 'submitted'|trans|capitalize }}</button>
+                        {% endif %}
+                        {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
+                        {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}"
+                                                   class=" mx-1 btn btn-secondary btn-round">{{ 'new'|trans|capitalize }} {{ 'add'|trans }}  {% endif %}</a>
+                    </div>
+                {% endblock %}
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    filterSelection("all");
+    function filterSelection(c) {
+        var  filter, table, tr, td, i, txtValue, myFilterChoice;
+        if (c !== "all") myFilterChoice = c;
+
+        filter = myFilterChoice.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            statusDiv1 = td.getElementsByClassName("progress");
+            statusDiv2 = statusDiv1.getElementsByClassName("progress-bar");
+
+            if (statusDiv2) {
+                txtValue = statusDiv2.textContent || statusDiv2.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

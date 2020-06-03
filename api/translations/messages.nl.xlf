@@ -2469,6 +2469,14 @@
         <source>add external doc</source>
         <target>extern document toevoegen</target>
       </trans-unit>
+      <trans-unit id="oiJm75B" resname="search by reference">
+        <source>search by reference</source>
+        <target>zoek op kenmerk</target>
+      </trans-unit>
+      <trans-unit id="oWih8Bm" resname="show all">
+        <source>show all</source>
+        <target>toon alle</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
