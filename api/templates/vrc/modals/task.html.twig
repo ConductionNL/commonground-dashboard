@@ -32,16 +32,15 @@
                 <div class="form-group">
                     <label for="largeInput">{{ 'priority'|trans|capitalize }}</label>
                     <select id="memo[priority]" name="task[priority]" class="form-control form-control-lg" required>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-
+                        <option value="1" {% if item.priority is defined and '1' == item.priority  %}selected{% endif %}>{{ '1'|trans|capitalize }}</option>
+                        <option value="2" {% if item.priority is defined and '2' == item.priority  %}selected{% endif %}>{{ '2'|trans|capitalize }}</option>
+                        <option value="3" {% if item.priority is defined and '3' == item.priority  %}selected{% endif %}>{{ '3'|trans|capitalize }}</option>
+                        <option value="4" {% if item.priority is defined and '4' == item.priority  %}selected{% endif %}>{{ '4'|trans|capitalize }}</option>
+                        <option value="5" {% if item.priority is defined and '5' == item.priority  %}selected{% endif %}>{{ '5'|trans|capitalize }}</option>
+                        <option value="6" {% if item.priority is defined and '6' == item.priority  %}selected{% endif %}>{{ '6'|trans|capitalize }}</option>
+                        <option value="7" {% if item.priority is defined and '7' == item.priority  %}selected{% endif %}>{{ '7'|trans|capitalize }}</option>
+                        <option value="8" {% if item.priority is defined and '8' == item.priority  %}selected{% endif %}>{{ '8'|trans|capitalize }}</option>
+                        <option value="9" {% if item.priority is defined and '9' == item.priority  %}selected{% endif %}>{{ '9'|trans|capitalize }}</option>
                     </select>
                 </div><!-- /.form-group -->
                 <div class="form-group">

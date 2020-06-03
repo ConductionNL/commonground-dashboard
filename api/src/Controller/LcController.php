@@ -225,6 +225,7 @@ class LcController extends AbstractController
 
 
 
+
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
