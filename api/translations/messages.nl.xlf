@@ -2513,6 +2513,78 @@
         <source>authorization</source>
         <target>autorisatie</target>
       </trans-unit>
+      <trans-unit id="2l4R76N" resname="concept">
+        <source>concept</source>
+        <target>concept</target>
+      </trans-unit>
+      <trans-unit id="02vmSUJ" resname="queued">
+        <source>queued</source>
+        <target>in wachtrij</target>
+      </trans-unit>
+      <trans-unit id="hkdK5uq" resname="sending">
+        <source>sending</source>
+        <target>bezig met verzenden</target>
+      </trans-unit>
+      <trans-unit id="J84dG.Q" resname="send">
+        <source>send</source>
+        <target>verzonden</target>
+      </trans-unit>
+      <trans-unit id="Nz4HEsg" resname="delivered">
+        <source>delivered</source>
+        <target>geleverd</target>
+      </trans-unit>
+      <trans-unit id="XuOOXnr" resname="external Service Id">
+        <source>external Service Id</source>
+        <target>__external Service Id</target>
+      </trans-unit>
+      <trans-unit id="enQA9GZ" resname="not started">
+        <source>not started</source>
+        <target>niet gestart</target>
+      </trans-unit>
+      <trans-unit id="A0lK.UJ" resname="started">
+        <source>started</source>
+        <target>gestart</target>
+      </trans-unit>
+      <trans-unit id="a4ayc.8" resname="1">
+        <source>1</source>
+        <target>1</target>
+      </trans-unit>
+      <trans-unit id="1HNeOiZ" resname="2">
+        <source>2</source>
+        <target>2</target>
+      </trans-unit>
+      <trans-unit id="TgdAhWK" resname="3">
+        <source>3</source>
+        <target>3</target>
+      </trans-unit>
+      <trans-unit id="SyJ3d9T" resname="4">
+        <source>4</source>
+        <target>4</target>
+      </trans-unit>
+      <trans-unit id="7y0SfeN" resname="5">
+        <source>5</source>
+        <target>5</target>
+      </trans-unit>
+      <trans-unit id="5.bAEXd" resname="6">
+        <source>6</source>
+        <target>6</target>
+      </trans-unit>
+      <trans-unit id="eQJpm_Q" resname="7">
+        <source>7</source>
+        <target>7</target>
+      </trans-unit>
+      <trans-unit id="LGJCMs3" resname="8">
+        <source>8</source>
+        <target>8</target>
+      </trans-unit>
+      <trans-unit id="GVgeJ95" resname="9">
+        <source>9</source>
+        <target>9</target>
+      </trans-unit>
+      <trans-unit id="Tds_loA" resname="completed">
+        <source>completed</source>
+        <target>voltooid</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
