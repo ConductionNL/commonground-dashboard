@@ -1,0 +1,99 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit schedule'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add schedule'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[name]" name="schedule[name]" value="{% if schedule.name is defined %} {{ schedule.name }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'calendar'|trans|capitalize }}</label>
+                            <select id="schedule[calendar]" name="schedule[calendar]" class="form-control form-control-lg" required disabled>
+                                {% if resource.id is defined %}
+                                    <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'by day'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[byDay]" name="schedule[byDay]" value="{% if schedule.byDay is defined %} {{ schedule.byDay }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'by month'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[byMonth]" name="schedule[byMonth]" value="{% if schedule.byMonth is defined %} {{ schedule.byMonth }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'by month day'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[byMonthDay]" name="schedule[byMonthDay]" value="{% if schedule.byMonthDay is defined %} {{ schedule.byMonthDay }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'except dates'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[exceptDates[]]" name="schedule[exceptDates[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'repeat count'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[repeatCount]" name="schedule[repeatCount]" value="{% if schedule.repeatCount is defined %} {{ schedule.repeatCount }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'repeat frequency'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[repeatFrequency]" name="schedule[repeatFrequency]" value="{% if schedule.repeatFrequency is defined %} {{ schedule.repeatFrequency }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="schedule[description]" name="schedule[description]" value="{% if schedule.description is defined %} {{ schedule.description }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="schedule[id]" name ="schedule[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="schedule[@id]" name ="schedule[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
