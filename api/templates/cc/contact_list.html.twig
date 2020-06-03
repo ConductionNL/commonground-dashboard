@@ -105,7 +105,7 @@
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="persons[]" value="{{ person }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="propDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
                                                 </td>
                                             </tr>
                                             {% set value = value + 1 %}
@@ -142,7 +142,7 @@
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="persons[]" value="{{ person }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="propDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
                                                 </td>
                                             </tr>
                                             {% set value = value + 1 %}
@@ -342,6 +342,14 @@
         body.remove();
         tr.remove();
         td.remove();
+    }
+
+    function storedDelete(given){
+        let td = given.parentNode;
+        let tr = td.parentNode;
+        given.remove();
+        td.remove();
+        tr.remove();
     }
 
 
