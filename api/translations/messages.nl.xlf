@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="rzobsxK" resname="organization">
         <source>organization</source>
-        <target>organisaties</target>
+        <target>organisatie</target>
       </trans-unit>
       <trans-unit id="NSuEd32" resname="cases">
         <source>cases</source>
@@ -2468,6 +2468,22 @@
       <trans-unit id="EVB6Di9" resname="new">
         <source>new</source>
         <target>__new</target>
+      </trans-unit>
+      <trans-unit id="KOA5RR3" resname="add telephone">
+        <source>add telephone</source>
+        <target>telefoon toevoegen</target>
+      </trans-unit>
+      <trans-unit id="pYY7rS8" resname="add person">
+        <source>add person</source>
+        <target>persoon toevoegen</target>
+      </trans-unit>
+      <trans-unit id="a58Ek7l" resname="add address">
+        <source>add address</source>
+        <target>adres toevoegen</target>
+      </trans-unit>
+      <trans-unit id="zgdMJzB" resname="add email">
+        <source>add email</source>
+        <target>email toevoegen</target>
       </trans-unit>
     </body>
   </file>

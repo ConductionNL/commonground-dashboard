@@ -268,6 +268,12 @@ class CcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'telephones']));
+
+            /* @to this redirect is a hotfix */
+            if(array_key_exists('id', $variables['resource'])){
+                return $this->redirect($this->generateUrl('app_cc_telephones', ["id" =>  $variables['resource']['id']]));
+            }
+
         }
 
         return $variables;
@@ -330,7 +336,8 @@ class CcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'organizations'])["hydra:member"];        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'organizations']));
+        }
 
         return $variables;
     }
