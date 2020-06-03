@@ -1531,7 +1531,7 @@
       </trans-unit>
       <trans-unit id="W35r8tx" resname="method">
         <source>method</source>
-        <target>request</target>
+        <target>methode</target>
       </trans-unit>
       <trans-unit id="u5r10ZF" resname="ip">
         <source>ip</source>
@@ -2484,6 +2484,22 @@
       <trans-unit id="zgdMJzB" resname="add email">
         <source>add email</source>
         <target>email toevoegen</target>
+      </trans-unit>
+      <trans-unit id="Rt_JKGd" resname="add organization">
+        <source>add organization</source>
+        <target>organisatie toevoegen</target>
+      </trans-unit>
+      <trans-unit id="G4NthoB" resname="first name">
+        <source>first name</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="swL3um1" resname="additional name">
+        <source>additional name</source>
+        <target>tussenvoegsels</target>
+      </trans-unit>
+      <trans-unit id="t1ViRAm" resname="family name">
+        <source>family name</source>
+        <target>achternaam</target>
       </trans-unit>
     </body>
   </file>

@@ -31,10 +31,8 @@
             <div class="page-inner">
                 <form action="{{ path('app_cc_organization', {id: resource.id}) }}" method="post">
                 <div class="row">
-
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name|capitalize }} </h2>
                                     <div class="float-right">
@@ -116,7 +114,7 @@
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="telephones[]" value="{{ telephone }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="telephoneDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="propDelete(this.id)"><i class='fas fa-minus'></i></button>
                                                 </td>
                                             </tr>
                                             {% set value = value + 1 %}
@@ -153,7 +151,7 @@
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="persons[]" value="{{ person }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="personDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="propDelete(this.id)"><i class='fas fa-minus'></i></button>
                                                 </td>
                                             </tr>
                                             {% set value = value + 1 %}
@@ -190,7 +188,7 @@
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="adresses[]" value="{{ address }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="addressDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="propDelete(this.id)"><i class='fas fa-minus'></i></button>
                                                 </td>
                                             </tr>
                                             {% set value = value + 1 %}
@@ -227,7 +225,7 @@
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="emails[]" value="{{ email }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="emailDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="propDelete(this.id)"><i class='fas fa-minus'></i></button>
                                                 </td>
                                             </tr>
                                             {% set value = value + 1 %}

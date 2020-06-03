@@ -400,7 +400,7 @@
                     </li>
                 {% endif %}
 
-                {% if 'scope.vrc-request-write' in app.user.roles or 'scope.vtc-requesttypes-write' in app.user.roles  %}
+                {% if 'group.beheerder' in app.user.roles or 'group.balie-medewerkers' in app.user.roles  %}
                     <li class="nav-section">
                         <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
                     </li>
@@ -412,14 +412,14 @@
                         </a>
                         <div class="collapse" id="requests">
                             <ul class="nav nav-collapse">
-                                {% if 'scope.vrc-request-write' in app.user.roles %}
+
                                 <li>
                                     <a href="{{ path("app_vrc_requests") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'requests'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                                {% endif %}
+
                                 {# if 'scope.vtc-requesttypes-write' in app.user.roles #}
                                 <li>
                                     <a href="{{ path("app_vtc_requesttypes") }}">
