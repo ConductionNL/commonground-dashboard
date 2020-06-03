@@ -1995,7 +1995,7 @@
       </trans-unit>
       <trans-unit id="6rfBUqn" resname="post office box number">
         <source>post office box number</source>
-        <target>__post office box number</target>
+        <target>postbusnummer</target>
       </trans-unit>
       <trans-unit id="YAjCb0R" resname="street">
         <source>street</source>
@@ -2007,7 +2007,7 @@
       </trans-unit>
       <trans-unit id="v4p3Dn2" resname="house number suffix">
         <source>house number suffix</source>
-        <target>__house number suffix</target>
+        <target>huisnummertoevoeging</target>
       </trans-unit>
       <trans-unit id="C.lz6Ex" resname="postal code">
         <source>postal code</source>
@@ -2460,6 +2460,14 @@
       <trans-unit id="2PEdPRr" resname="add external doc">
         <source>add external doc</source>
         <target>extern document toevoegen</target>
+      </trans-unit>
+      <trans-unit id="DXG67Qp" resname="camunda tasks">
+        <source>camunda tasks</source>
+        <target>__camunda tasks</target>
+      </trans-unit>
+      <trans-unit id="EVB6Di9" resname="new">
+        <source>new</source>
+        <target>__new</target>
       </trans-unit>
     </body>
   </file>

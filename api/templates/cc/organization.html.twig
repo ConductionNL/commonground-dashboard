@@ -58,7 +58,7 @@
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
                                                        name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
 
@@ -68,61 +68,9 @@
                                                 <label for="largeInput">{{ 'kvk'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="kvk"
                                                        name="kvk" placeholder="Large Input"
-                                                       value="{{ resource.kvk }}">
+                                                       value="{% if resource.kvk is defined %}{{ resource.kvk }} {% endif %}">
                                             </div>
                                         </div>
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -143,29 +91,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->

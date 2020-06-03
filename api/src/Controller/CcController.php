@@ -312,6 +312,12 @@ class CcController extends AbstractController
         $variables['title'] = $translator->trans('organization');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organizations');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['telephones'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'telephones'])["hydra:member"];
+        $variables['addresses'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'addresses'])["hydra:member"];
+        $variables['emails'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'emails'])["hydra:member"];
+        $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
+
+
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
