@@ -359,7 +359,7 @@
       </trans-unit>
       <trans-unit id="nfawJqj" resname="service">
         <source>service</source>
-        <target>__service</target>
+        <target>dienst</target>
       </trans-unit>
       <trans-unit id="9czPtzd" resname="messages">
         <source>messages</source>
@@ -555,7 +555,7 @@
       </trans-unit>
       <trans-unit id="Wyd8tmh" resname="rsin">
         <source>rsin</source>
-        <target>__rsin</target>
+        <target>RSIN</target>
       </trans-unit>
       <trans-unit id="Ol1fOQr" resname="tabel32">
         <source>tabel32</source>
@@ -1003,7 +1003,7 @@
       </trans-unit>
       <trans-unit id="CjZ7ks8" resname="sender">
         <source>sender</source>
-        <target>__sender</target>
+        <target>afzender</target>
       </trans-unit>
       <trans-unit id="8dtMiWE" resname="Contact lists">
         <source>Contact lists</source>
@@ -2500,6 +2500,18 @@
       <trans-unit id="t1ViRAm" resname="family name">
         <source>family name</source>
         <target>achternaam</target>
+      </trans-unit>
+      <trans-unit id="LkMwuAZ" resname="mailer">
+        <source>mailer</source>
+        <target>mailer</target>
+      </trans-unit>
+      <trans-unit id="hYpWgDP" resname="messageBird">
+        <source>messageBird</source>
+        <target>messageBird</target>
+      </trans-unit>
+      <trans-unit id="y7guvsY" resname="authorization">
+        <source>authorization</source>
+        <target>autorisatie</target>
       </trans-unit>
     </body>
   </file>
