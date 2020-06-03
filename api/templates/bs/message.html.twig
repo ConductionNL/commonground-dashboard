@@ -50,28 +50,86 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                <label for="largeInput">{{ 'receiver'|trans|capitalize }}</label>
+                                                <select name="reciever" id="reciever" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person['@id']}} "{% if resource.reciever is defined and resource.reciever == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div> <!-- /.col -->
-
-
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'sender'|trans|capitalize }}</label>
+                                                <select name="sender" id="sender" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person['@id']}} "{% if resource.sender is defined and resource.sender == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'content'|trans|capitalize }}</label>
+                                                <select name="content" id="content" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for template in templates %}
+                                                        <option value="{{ template['@id']}} "{% if resource.content is defined and resource.content == template['@id']  %}selected{% endif %}>{{ template.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'service'|trans|capitalize }}</label>
+                                                <select name="content" id="content" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for service in services %}
+                                                        <option value="{{ service['@id']}} "{% if resource.service is defined and resource.service == service['@id']  %}selected{% endif %}>{{ service.type }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                                                <select id="status" name="status" class="form-control form-control-lg">
+                                                    <option value="concept" {% if resource.status is defined and 'concept' == resource.status  %}selected{% endif %}>{{ 'concept'|trans|capitalize }}</option>
+                                                    <option value="queued" {% if resource.status is defined and 'queued' == resource.status  %}selected{% endif %}>{{ 'queued'|trans|capitalize }}</option>
+                                                    <option value="sending" {% if resource.status is defined and 'sending' == resource.status  %}selected{% endif %}>{{ 'sending'|trans|capitalize }}</option>
+                                                    <option value="send" {% if resource.status is defined and 'send' == resource.status  %}selected{% endif %}>{{ 'send'|trans|capitalize }}</option>
+                                                    <option value="delivered" {% if resource.status is defined and 'delivered' == resource.status  %}selected{% endif %}>{{ 'delivered'|trans|capitalize }}</option>
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'external Service Id'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="externalServiceId" name ="externalServiceId" value="{% if resource.externalServiceId is defined %}{{ resource.externalServiceId }}{% endif %}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'send'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="send" name ="send" value="{% if resource.send is defined %}{{ resource.send }}{% endif %}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control summernote" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <label for="largeInput">{{ 'data'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5" id="data[]" name=data[]>{% if resource.data is defined %}{{ resource.data }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
                                 </div> <!-- /.card-body -->
-
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->
@@ -79,31 +137,6 @@
                         </div><!-- /.card -->
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h2>Groups</h2>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
 

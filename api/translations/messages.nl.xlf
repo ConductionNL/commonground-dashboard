@@ -1683,7 +1683,7 @@
       </trans-unit>
       <trans-unit id="gbrodrc" resname="receiver">
         <source>receiver</source>
-        <target>__receiver</target>
+        <target>ontvanger</target>
       </trans-unit>
       <trans-unit id="aeNlaM2" resname="channel">
         <source>channel</source>
