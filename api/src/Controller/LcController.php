@@ -151,7 +151,8 @@ class LcController extends AbstractController
         $variables['title'] = $translator->trans('place');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('place');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
-        $variables['labels'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'labels'])["hydra:member"];
+        $variables['properties'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'properties'])["hydra:member"];
+        $variables['placeProperties'] = $commonGroundService->getResourceList(['component'=>'lc','type'=>'place_properties'],['place'=> $variables['resource']['@id']])["hydra:member"];
 
 
 
@@ -160,6 +161,22 @@ class LcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
+
+            if(array_key_exists('placeProperty', $resource)){
+                $placeProperty = $resource['placeProperty'];
+
+
+                // The resource action section
+                if(key_exists("@id",$placeProperty) && key_exists("action",$placeProperty)){
+                    // The delete action
+                    if($placeProperty['action'] == 'delete'){
+                        $commonGroundService->deleteResource($placeProperty);
+                        return $this->redirect($this->generateUrl('app_lc_place',['id'=>$id]));
+                    }
+                }
+                $placeProperty = $commonGroundService->saveResource($placeProperty, ['component'=>'lc','type'=>'place_properties']);
+            }
 
             $resource['publicAccess']= $resource['publicAccess'] === 'true'? true: false;
             $resource['smokingAllowed']= $resource['smokingAllowed'] === 'true'? true: false;
