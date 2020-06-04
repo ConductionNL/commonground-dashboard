@@ -2289,6 +2289,14 @@
         <source>grave cover</source>
         <target>graf bedekking</target>
       </trans-unit>
+      <trans-unit id="heUi12A" resname="not functional">
+        <source>not functional</source>
+        <target>niet functioneel</target>
+      </trans-unit>
+      <trans-unit id="We1G57b" resname="number of days requests of this type will be saved if they have not been submitted">
+        <source>number of days requests of this type will be saved if they have not been submitted</source>
+        <target>aantal dagen dat verzoeken van dit type worden opgeslagen als ze niet ingediend zijn</target>
+      </trans-unit>
       <trans-unit id="mG1or5k" resname="time zone">
         <source>time zone</source>
         <target>tijdzone</target>
@@ -2460,6 +2468,14 @@
       <trans-unit id="2PEdPRr" resname="add external doc">
         <source>add external doc</source>
         <target>extern document toevoegen</target>
+      </trans-unit>
+      <trans-unit id="oiJm75B" resname="search by reference">
+        <source>search by reference</source>
+        <target>zoek op kenmerk</target>
+      </trans-unit>
+      <trans-unit id="oWih8Bm" resname="show all">
+        <source>show all</source>
+        <target>toon alle</target>
       </trans-unit>
     </body>
   </file>

@@ -133,6 +133,12 @@
                                                 <input type="datetime-local" class="form-control form-control-lg" id="availableUntil" name ="availableUntil" value="{% if resource.availableUntil is defined %}{{ resource.availableUntil }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'number of days requests of this type will be saved if they have not been submitted'|trans|capitalize }}<div style="color: gray">{{ 'not functional'|trans|capitalize }}!</div> </label>
+                                                <input type="number" class="form-control form-control-lg" id="availableUntil" >
+                                            </div>
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
