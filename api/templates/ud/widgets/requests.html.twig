@@ -22,7 +22,7 @@
                             <tr>
                                 <td>{{ request.reference }}</td>
                                 <td>{{ commonground_resource(request.requestType).name }}</td>
-                                <td>{{ request.status}}</td>
+                                <td>{{ request.status|trans|capitalize}}</td>
                                 <td >
                                         {% if request.status is same as('incomplete') %}
                                             <div class="progress" style="height: 25px;">

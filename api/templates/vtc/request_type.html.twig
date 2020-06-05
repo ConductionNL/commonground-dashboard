@@ -133,6 +133,12 @@
                                                 <input type="datetime-local" class="form-control form-control-lg" id="availableUntil" name ="availableUntil" value="{% if resource.availableUntil is defined %}{{ resource.availableUntil }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'number of days requests of this type will be saved if they have not been submitted'|trans|capitalize }}<div style="color: gray">{{ 'not functional'|trans|capitalize }}!</div> </label>
+                                                <input type="number" class="form-control form-control-lg" id="availableUntil" >
+                                            </div>
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
     								<div class="row">
         								<div class="col-md-12">
@@ -219,6 +225,35 @@
                             <div class="card-action  p-1">
                             </div><!-- /.card-action -->
                         </div><!-- /.card -->
+
+
+                        <div class="card p-1  full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'tasks'|trans|capitalize }}</h3>
+                            </div>
+
+                            {% if resource.tasks is defined %}
+                                <div class="card-list">
+                                    {% for task in resource.tasks %}
+                                        <div class="item-list">
+                                            <div class="info-user ml-3">
+                                                <div class="username"><h4>{{ tasks.name|capitalize }}</h4></div>
+                                                <div class="status">{{ tasks.description }}</div>
+                                            </div>
+                                            <a class="btn btn-icon btn-primary btn-round btn-s"
+                                               style="margin-right: 5px" >
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </div><!-- /.item-list -->
+                                    {% endfor %}
+                                </div><!-- /.card-list -->
+                            {% endif %}
+
+                            <div class="card-body">
+                            </div> <!-- /.card-body -->
+                            <div class="card-action  p-1">
+                            </div><!-- /.card-action -->
+                        </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
@@ -247,6 +282,7 @@
         </div>
     </div>
     {# the template modals #}
+
     {% include 'vtc/modals/property.html.twig'
         with {
         'route': 'app_vtc_requesttype',

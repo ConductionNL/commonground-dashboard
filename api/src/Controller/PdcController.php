@@ -93,38 +93,13 @@ class PdcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
+            $resource['taxPercentage'] = (int)$resource['taxPercentage'];
+            $resource['requiresAppointment'] = $resource['requiresAppointment'] == 'true'? true: false;
+
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'pdc', 'type' => 'products']);
-
-            if(key_exists('addgroup', $resource)){
-                foreach ($variables['resource']['groups'] as $group) {
-                    $resource['groups'][] = 'groups/' . $group['id'];
-                }
-
-                if ($resource['addgroup'] != "") {
-                    $resource['groups'][] = $resource['addgroup'];
-                }
-
-                if ($resource['removegroup'] != "") {
-                    foreach ($resource['groups'] as $key => $group) {
-                        if ($group == $resource['removegroup']) {
-                            unset($resource['groups'][$key]);
-                        }
-                    }
-                }
-            }
-            if(key_exists('offer', $resource)){
-                $offer = $resource['offer'];
-                $offer['products'][] = $resource['@id'];
-                if(key_exists('id',$offer)){
-                    $offer['@id'] = $offer['id'];
-                }
-                $offer['price'] = (string)(int)($offer['price']*100);
-
-                $offer = $commonGroundService->saveResource($offer,['component'=>'pdc','type'=>'offers']);
-            }
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 

@@ -23,6 +23,16 @@
                 {% endif %}
 
 
+                <li  class="nav-item">
+                    <a href="{{ path('app_vrc_requests', {'status': ["incomplete","complete"]}) }}">
+                        Niet ingediende verzoeken
+                    </a>
+                </li>
+                <li  class="nav-item">
+                    <a href="{{ path('app_vrc_requests', {'status': "submitted"}) }}">
+                        Niet verwerkte verzoeken
+                    </a>
+                </li>
                 {% if 'group.balie-medewerkers' in app.user.roles %}
                     <li  class="nav-item">
                         <a href="{{ path('app_vrc_requests', {'requestType': "4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3"}) }}">
@@ -334,7 +344,7 @@
                 {% endif %}
 
 
-                {% if 'group.beheerder' in app.user.roles %}
+                {# if 'group.beheerder' in app.user.roles %}
                     <li class="nav-item">
                         <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
                             <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
@@ -369,7 +379,7 @@
                             </ul>
                         </div>
                     </li>
-                {% endif %}
+                {% endif #}
 
                 {% if 'group.beheerder' in app.user.roles %}
                     <li class="nav-item">
@@ -664,8 +674,8 @@
 
 
             </ul>
-            <img style="margin-left: 25px;margin-top: 20px; width: 200px; "
-                 src="https://platform-duic.imgix.net/app/uploads/sites/2/2016/04/Logo_gemeente_Utrecht-4.jpg?auto=format%2Ccompress&ch=Width%2CDPR%2CSave-Data&dpr=2.63&fit=max&h=430&ixjsv=2.2.4&ixlib=php-1.2.1&q=38">
+            <img style="margin-left: 25px;margin-top: 20px; width: 200px; display:none;"
+                 src='https://svgshare.com/i/Liw.svg'>
         </div>
     </div>
 </div>

@@ -1,0 +1,177 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit todo'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add todo'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[name]" name="journal[name]" value="{% if journal.name is defined %} {{ journal.name }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'calendar'|trans|capitalize }}</label>
+                            <select id="journal[calendar]" name="journal[calendar]" class="form-control form-control-lg" required disabled>
+                                {% if resource.id is defined %}
+                                    <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'start date'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="journal[startDate]" name="journal[startDate]" value="{% if journal.startDate is defined %} {{ journal.startDate|date("Y-m-d\\TH:i")}} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'end date'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="journal[endDate]" name="journal[endDate]" value="{% if journal.endDate is defined %} {{ journal.endDate|date("Y-m-d\\TH:i")}} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'location'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[location]" name="journal[location]" value="{% if journal.location is defined %} {{ journal.location }} {% endif %}" >
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'class'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[class]" name="journal[class]" value="{% if journal.class is defined %}{{ journal.class }}{% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'geo'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[geo]" name="journal[geo]" value="{% if journal.geo is defined %} {{ journal.geo }} {% endif %}" >
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'organizer'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[organizer]" name="journal[organizer]" value="{% if journal.organizer is defined %} {{ journal.organizer }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[status]" name="journal[status]" value="{% if journal.status is defined %} {{ journal.status }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'summary'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[summary]" name="journal[summary]" value="{% if journal.summary is defined %} {{ journal.summary }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'percentage done'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[percentageDone]" name="journal[percentageDone]" value="{% if journal.percentageDone is defined %} {{ journal.percentageDone }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'duration'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[duration]" name="journal[duration]" value="{% if journal.duration is defined %} {{ journal.duration }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'contact'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[contact]" name="journal[contact]" value="{% if journal.contact is defined %} {{ journal.contact }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'seq'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[seq]" name="journal[seq]" value="{% if journal.seq is defined %} {{ journal.seq }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'priority'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[priority]" name="journal[priority]" value="{% if journal.priority is defined %} {{ journal.priority }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'attendees'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[attendees[]]" name="journal[attendees[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'attachments'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[attachments[]]" name="journal[attachments[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'categories'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[categories[]]" name="journal[categories[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'comments'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[comments[]]" name="journal[comments[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="journal[description]" name="journal[description]" value="{% if journal.description is defined %} {{ journal.description }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="journal[id]" name ="journal[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="journal[@id]" name ="journal[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

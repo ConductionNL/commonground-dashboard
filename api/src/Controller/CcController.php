@@ -330,7 +330,7 @@ class CcController extends AbstractController
     }
 
     /**
-     * @Route("/contact-lists")
+     * @Route("/contact_lists")
      * @Template
      */
 	public function contactListsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
@@ -338,13 +338,13 @@ class CcController extends AbstractController
     	$variables = [];
     	$variables['title'] = $translator->trans('contact lists');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('contact lists');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'contactLists'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'contact_lists'])["hydra:member"];
 
         return $variables;
     }
 
     /**
-     * @Route("/contact-lists/{id}")
+     * @Route("/contact_lists/{id}")
      * @Template
      */
     public function contactListAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
@@ -357,13 +357,13 @@ class CcController extends AbstractController
             $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
         }
         else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'contactLists','id'=> $id]);
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'cc','type'=>'contact_lists','id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
         if($request->query->get('action') == 'delete'){
             $commonGroundService->deleteResource($variables['resource']);
-            return $this->redirect($this->generateUrl('app_cc_contactLists'));
+            return $this->redirect($this->generateUrl('app_cc_contactlists'));
         }
 
         $variables['title'] = $translator->trans('contact list');
@@ -381,7 +381,7 @@ class CcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'contactLists']));        }
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'cc','type'=>'contact_lists']));        }
 
         return $variables;
     }

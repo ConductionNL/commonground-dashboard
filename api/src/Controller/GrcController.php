@@ -103,6 +103,12 @@ class GrcController extends AbstractController
 
             $resource['position'] = (int)$resource['position'];
 
+            foreach($resource as $key=>$value){
+                if($value == ""){
+                    unset($resource[$key]);
+                }
+            }
+
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'grc','type'=>'graves']);
 
             /* @to this redirect is a hotfix */
