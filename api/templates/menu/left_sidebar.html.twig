@@ -23,6 +23,16 @@
                 {% endif %}
 
 
+                <li  class="nav-item">
+                    <a href="{{ path('app_vrc_requests', {'status': ["incomplete","complete"]}) }}">
+                        Niet ingediende verzoeken
+                    </a>
+                </li>
+                <li  class="nav-item">
+                    <a href="{{ path('app_vrc_requests', {'status': "submitted"}) }}">
+                        Niet verwerkte verzoeken
+                    </a>
+                </li>
                 {% if 'group.balie-medewerkers' in app.user.roles %}
                     <li  class="nav-item">
                         <a href="{{ path('app_vrc_requests', {'requestType': "4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3"}) }}">
