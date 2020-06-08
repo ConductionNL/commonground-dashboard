@@ -63,9 +63,9 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'key'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="bagId"
-                                                       name="bagId"
-                                                       value="{% if resource.bagId is defined %}{{ resource.bagId }}{% endif %}"
+                                                <input type="text" class="form-control form-control-lg" id="key"
+                                                       name="key"
+                                                       value="{% if resource.key is defined %}{{ resource.key }}{% endif %}"
                                                        required>
                                             </div>
                                         </div><!-- /.row -->
@@ -95,19 +95,19 @@
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_lc_place',
+            'route': 'app_lc_property',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_lc_place',
+            'route': 'app_lc_property',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_lc_place',
+            'route': 'app_lc_property',
             'resource':resource,
             'id':'changeLog' } %}
 

@@ -54,8 +54,7 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name"
+                                                <input type="text" class="form-control form-control-lg" id="name" name="name"
                                                        value="{% if resource.name is defined %}{{ resource.name }}{% endif %}"
                                                        required>
                                             </div>
@@ -190,6 +189,13 @@
                             </form>
                         </div><!-- /.card -->
                     </div>
+                    <div class="col-md-4">
+                        {% include 'lc/widgets/placeProperties.html.twig'
+                            with {
+                            'place':resource,
+                            'placeProperties':placeProperties,
+                            'properties':properties} %}
+                    </div><!-- /.col -->
                 </div>
 
 

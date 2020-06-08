@@ -26,7 +26,7 @@
                         <div class="card p-4 full-height">
                         	<form action="{{ path('app_uc_user', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{% if resource.username is defined %} {{ resource.username }} {% endif %}</h2>
+                                    <h2 class="d-inline-block">{% if resource.username is defined %} {{ resource.username }} {%else%} {{ 'new user' }} {% endif %}</h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_uc_users')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
@@ -43,31 +43,40 @@
                                 </div>
 								<div class="card-body">
 									<div class="row">
-        								<div class="col-md-9 col-sm-12">
+        								<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'username'|trans|capitalize }}</label>
-        										<input type="text" class="form-control form-control-lg" id="username" name ="username" value="{% if resource.username is defined %}{{ resource.username }}{% endif %}">
+        										<input type="text" class="form-control form-control-lg" id="username" name="username" value="{% if resource.username is defined %}{{ resource.username }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+        										<select id="organization" name="organization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'person'|trans|capitalize }}</label>
+                                                <select name="person" id="person" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person['@id']}} "{% if resource.person is defined and resource.person == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'password'|trans|capitalize }}</label>
+                                                <input type="password" class="form-control form-control-lg" id="password" name="password" value="{% if resource.password is defined %}{{ resource.password }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
     								</div><!-- /.row -->
-    								<div class="row">
-        								<div class="col-md-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control summernote" rows="5" id="description" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-        									</div>
-        								</div>  <!-- /.col -->
-    								</div> <!-- /.row -->
 								</div> <!-- /.card-body -->
 
 								<div class="card-action">

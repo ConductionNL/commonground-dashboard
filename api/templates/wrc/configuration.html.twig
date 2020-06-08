@@ -98,32 +98,31 @@
                                     <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
-                            <div class="card-body" >
-                                    <table class="table">
-                                        <thead>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
                                         <tr>
                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
                                             <th></th>
                                         </tr>
-                                        </thead>
-                                        <tbody id="configBody">
-                                        {% if resource.configuration is defined %}
-                                            {% set value = 0 %}
-                                        {% for configuration in resource.configuration %}
-                                            <tr id="{{ value }}">
-                                                <td id="{{ value }}">
+                                    </thead>
+                                    <tbody id="configBody">
+                                    {% if resource.configuration is defined %}
+                                        {% set value = 0 %}
+                                            {% for configuration in resource.configuration %}
+                                                <tr id="{{ value }}">
+                                                    <td id="{{ value }}">
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[]" value="{{ configuration }}" readonly="readonly">
-                                                </td>
-                                                <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="configDelete(this.id)"><i class='fas fa-minus'></i></button>
-                                                </td>
-                                            </tr>
-                                            {% set value = value + 1 %}
-                                        {% endfor %}
-                                        {% endif %}
-                                        </tbody>
-                                    </table>
-
+                                                    </td>
+                                                    <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                    </td>
+                                                </tr>
+                                                {% set value = value + 1 %}
+                                            {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -217,9 +216,9 @@
                 delButton.id = counter.toString();
                 delButton.innerHTML = "<i class='fas fa-minus'></i>";
                 delButton.addEventListener('click', function(){
-                    configDelete(counter);
+                    propDelete(newConfig, tr, td);
                 });
-                delButton.className = "btn btn-danger";
+                delButton.className = "btn btn-danger float-right";
                 delButton.type = "button";
 
                 tr.id = counter.toString();
@@ -228,14 +227,25 @@
                 parent.appendChild(tr);
                 tr.appendChild(td);
                 td.appendChild(newConfig);
+                td.setAttribute("colspan", "2");
                 tr.appendChild(tdButton);
                 tdButton.appendChild(delButton);
 
                 name.value = "";
             }
 
-            function configDelete(selected){
-                document.getElementById(selected).remove();
+            function propDelete(body, tr, td){
+                body.remove();
+                tr.remove();
+                td.remove();
+            }
+
+            function storedDelete(given){
+                let td = given.parentNode;
+                let tr = td.parentNode;
+                given.remove();
+                td.remove();
+                tr.remove();
             }
 
 

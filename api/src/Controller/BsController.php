@@ -90,7 +90,7 @@ class BsController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bs','type'=>'resource']));
+            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bs','type'=>'services']));
         }
 
         return $variables;
@@ -134,6 +134,9 @@ class BsController extends AbstractController
         $variables['title'] = $translator->trans('message');
         $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('messages');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'templates'])["hydra:member"];
+        $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
+        $variables['services'] = $commonGroundService->getResourceList(['component'=>'bs','type'=>'services'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {

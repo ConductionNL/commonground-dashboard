@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class TcController
  * @package App\Controller
- * @Route("/task")
+ * @Route("/tc")
  */
 class TcController extends AbstractController
 {
@@ -50,6 +50,7 @@ class TcController extends AbstractController
     	$variables['title'] = $translator->trans('tasks');
     	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('tasks');
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'tc','type'=>'tasks'])["hydra:member"];
+
         return $variables;
     }
 
@@ -78,6 +79,8 @@ class TcController extends AbstractController
         $variables['title'] = $translator->trans('task');
     	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('task');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'])["hydra:member"];
+        $variables['people'] = $commonGroundService->getResourceList(['component'=>'cc','type'=>'people'])["hydra:member"];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -86,6 +89,9 @@ class TcController extends AbstractController
             $resource = $request->request->all();
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
+
+            $resource['priority'] = (int)$resource['priority'];
+            $resource['percentageDone'] = (int)$resource['percentageDone'];
 
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
