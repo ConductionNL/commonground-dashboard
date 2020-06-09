@@ -1,27 +1,23 @@
 <?php
+
 // src/Controller/DefaultController.php
+
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
-use GuzzleHttp\Client;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class UserController
- * @package App\Controller
- *
+ * Class UserController.
  */
 class UserController extends AbstractController
 {
@@ -29,7 +25,7 @@ class UserController extends AbstractController
      * @Route("/login")
      * @Template
      */
-    public function login(Request $request, CommonGroundService $commonGroundService,  ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         return $this->render('login/index.html.twig');
     }
@@ -38,7 +34,7 @@ class UserController extends AbstractController
      * @Route("/logout")
      * @Template
      */
-    public function logout(Request $request, CommonGroundService $commonGroundService,  ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         return [];
     }
@@ -53,35 +49,31 @@ class UserController extends AbstractController
         if ($request->isMethod('POST')) {
 
             // Lets check on required values
-            $requiredValues = ['givenName','familyName','password','password2','username'];
+            $requiredValues = ['givenName', 'familyName', 'password', 'password2', 'username'];
             $error = false;
-            foreach($requiredValues as $requiredValue){
-
-                if(!$request->request->get($requiredValue)|| $request->request->get($requiredValue) == null){
+            foreach ($requiredValues as $requiredValue) {
+                if (!$request->request->get($requiredValue) || $request->request->get($requiredValue) == null) {
                     $this->addFlash('danger', $requiredValue.' is a required value');
                     $error = true;
                 }
             }
 
-
-            if($request->request->get('password') != $request->request->get('password2')){
-                $this->addFlash('danger','Password and repeat password do not match');
+            if ($request->request->get('password') != $request->request->get('password2')) {
+                $this->addFlash('danger', 'Password and repeat password do not match');
                 $error = true;
             }
 
+            $users = $commonGroundService->getResourceList($params->get('auth_provider_user').'/users', ['username'=> $request->request->get('username')], true);
+            $users = $users['hydra:member'];
 
-            $users = $commonGroundService->getResourceList($params->get('auth_provider_user').'/users',["username"=> $request->request->get('username')], true);
-            $users = $users["hydra:member"];
-
-            if($users && count($users) >= 1){
-                $this->addFlash('danger','Username is already taken');
+            if ($users && count($users) >= 1) {
+                $this->addFlash('danger', 'Username is already taken');
                 $error = true;
             }
 
-            if($error){
+            if ($error) {
                 return [];
             }
-
 
             $application = $commonGroundService->getApplication();
 
@@ -89,27 +81,25 @@ class UserController extends AbstractController
             $contact['givenName'] = $request->request->get('givenName');
             $contact['familyName'] = $request->request->get('familyName');
             $contact['emails'] = [];
-            $contact['emails'][] = ["name" => "primary", "email" => $request->request->get('username')];
+            $contact['emails'][] = ['name' => 'primary', 'email' => $request->request->get('username')];
             //$contact['organization'] = 'https://wrc.larping.eu'.$application['organization']['@id'];
             $contact = $commonGroundService->createResource($contact, 'https://cc.larping.eu/people'); /*@todo awfulle specific */
 
             //  Create the uses
             $user = [];
-            $user['username'] =  $request->request->get('username');
-            $user['password'] =  $request->request->get('password');
+            $user['username'] = $request->request->get('username');
+            $user['password'] = $request->request->get('password');
             $user['organization'] = 'https://wrc.larping.eu'.$application['organization']['@id'];
             $user['person'] = 'https://cc.larping.eu'.$contact['@id'];
             //$contact['organization'] = 'https://wrc.larping.eu'.$application['organization']['@id'];
-            $user= $commonGroundService->createResource($user, 'https://uc.larping.eu/users'); /*@todo awfulle specific */
+            $user = $commonGroundService->createResource($user, 'https://uc.larping.eu/users'); /*@todo awfulle specific */
 
-
-            $user = new CommongroundUser($user['username'], $request->request->get('password'), null, ['user'] );
+            $user = new CommongroundUser($user['username'], $request->request->get('password'), null, ['user']);
 
             // Manually authenticate user in controller
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
-
 
             //  Fire the login event manually
             $event = new InteractiveLoginEvent($request, $token);
@@ -120,7 +110,6 @@ class UserController extends AbstractController
 
         return [];
     }
-
 
     /**
      * @Route("/register-confirm")
@@ -141,10 +130,10 @@ class UserController extends AbstractController
         if ($request->isMethod('POST')) {
 
             // Lets check on required values
-            $requiredValues = ['givenName','familyName','street','street','houseNumber','postalCode','locality','email'];
+            $requiredValues = ['givenName', 'familyName', 'street', 'street', 'houseNumber', 'postalCode', 'locality', 'email'];
             $error = false;
-            foreach($requiredValues as $requiredValue){
-                if(!$request->request->get($requiredValue)|| $request->request->get($requiredValue) == null){
+            foreach ($requiredValues as $requiredValue) {
+                if (!$request->request->get($requiredValue) || $request->request->get($requiredValue) == null) {
                     $this->addFlash('danger', $requiredValue.' is a required value');
                     $error = true;
                 }
@@ -216,5 +205,4 @@ class UserController extends AbstractController
     {
         return[];
     }
-
 }
