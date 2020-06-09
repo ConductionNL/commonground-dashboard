@@ -210,7 +210,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">properties</h4>
+                            <h4 class="modal-title">{{ 'properties'|trans|capitalize }}</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div><div class="container"></div>
                         <div class="modal-body">
@@ -241,7 +241,10 @@
                                         {% for configuration in resource.configurations %}
                                             <tr id="{{ value }}">
                                                 <td id="{{ value }}">
-                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[]" value="{{ configuration }}" readonly="readonly">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="" value="{{ configuration.name }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="" value="{{ configuration.value }}" readonly="readonly">
                                                 </td>
                                                 <td id="{{ value }}">
                                                     <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
@@ -255,7 +258,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn btn-primary">Save</a>
+                            <button href="#" data-dismiss="modal" onclick="createArray()" class="btn btn-primary">Save</button>
                         </div>
                     </div>
                 </div>
@@ -316,16 +319,14 @@
         }
 
         newValue.value = propValue.value;
-        newValue.name = "configuration[]";
-        newValue.className = "form-control form-control-lg";
+        newValue.className = "form-control form-control-lg propertyValue";
         newValue.readOnly = true;
         newValue.id = counter.toString();
         newValue.setAttribute("style", "height: fit-content !important;");
 
 
         newName.value = propName.value;
-        newName.name = "configuration[]";
-        newName.className = "form-control form-control-lg";
+        newName.className = "form-control form-control-lg propertyName";
         newName.readOnly = true;
         newName.id = counter.toString();
         newName.setAttribute("style", "height: fit-content !important;");
@@ -354,12 +355,11 @@
         let nameValue = propName.value;
         let valueValue = propValue.value;
 
-        propArray.push({ name: nameValue, value: valueValue})
 
 
         propName.value = "";
         propValue.value = "";
-        console.log(propArray);
+
     }
 
     function propDelete(body, tr, td){
@@ -378,6 +378,12 @@
 
     function createArray(){
 
+        let propValues = document.getElementsByClassName("propertyValue");
+        let propNames = document.getElementsByClassName("propertyName");
+
+        console.log(propNames.length);
+        console.log(propValues.length);
+        //propArray.push({ name: nameValue, value: valueValue})
     }
 
     //audit_trails
