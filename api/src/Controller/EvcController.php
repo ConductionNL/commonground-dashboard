@@ -408,6 +408,11 @@ class EvcController extends AbstractController
             //var_dump($variables['resource']);
     		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
     	}
+        if($request->query->get('action') == 'rollingupdate'){
+            $commonGroundService->getResource($variables['resource']['@id'].'/rollingupdate', null, true);
+            //var_dump($variables['resource']);
+            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+        }
     	if($request->query->get('action') == 'uninstall'){
     		$commonGroundService->getResource($variables['resource']['@id'].'/delete');
     		var_dump($variables['resource']);
