@@ -111,7 +111,7 @@ class EvcController extends AbstractController
                     $environment['@id'] = $environment['id'];
                 }
                 $environment['debug'] = (int)$environment['debug'];
-                $domain = $commonGroundService->saveResource($environment,['component'=>'evc','type'=>'environments']);
+                $environment = $commonGroundService->saveResource($environment,['component'=>'evc','type'=>'environments']);
             }
             if(key_exists('installation', $resource)){
                 $installation = $resource['installation'];
@@ -119,9 +119,10 @@ class EvcController extends AbstractController
                 if(key_exists('id',$installation)){
                     $installation['@id'] = $installation['id'];
                 }
-                $domain = $commonGroundService->saveResource($installation,['component'=>'evc','type'=>'installations']);
+                $installation = $commonGroundService->saveResource($installation,['component'=>'evc','type'=>'installations']);
             }
             $variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/clusters/');
+            return $this->redirect($this->generateUrl('app_evc_cluster',['id'=>$variables['resource']['id']]));
         }
         return $variables;
     }
