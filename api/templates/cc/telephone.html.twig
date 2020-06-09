@@ -285,15 +285,18 @@
     </div>
     </div>
     <script>
+
     {% block javascript %}
 
     //logic for configurations
 
+    let propArray = [];
+
     function configButton(){
         let counts = document.getElementById("configBody").lastChild.id;
         let parent = document.getElementById("configBody");
-        let name = document.getElementById("configName");
-        let value = document.getElementById("configValue");
+        let propName = document.getElementById("configName");
+        let propValue = document.getElementById("configValue");
         let newName = document.createElement("input");
         let newValue = document.createElement("input");
         let tr = document.createElement("tr");
@@ -303,13 +306,16 @@
         let delButton = document.createElement("button");
         let counter;
 
+
+
+
         if(counts !== undefined){
             counter = parseInt(counts) + 1;
         } else {
             counter = parent.children.length;
         }
 
-        newValue.value = value.value;
+        newValue.value = propValue.value;
         newValue.name = "configuration[]";
         newValue.className = "form-control form-control-lg";
         newValue.readOnly = true;
@@ -317,7 +323,7 @@
         newValue.setAttribute("style", "height: fit-content !important;");
 
 
-        newName.value = name.value;
+        newName.value = propName.value;
         newName.name = "configuration[]";
         newName.className = "form-control form-control-lg";
         newName.readOnly = true;
@@ -345,8 +351,15 @@
         tr.appendChild(tdButton);
         tdButton.appendChild(delButton);
 
-        name.value = "";
-        value.value = "";
+        let nameValue = propName.value;
+        let valueValue = propValue.value;
+
+        propArray.push({ name: nameValue, value: valueValue})
+
+
+        propName.value = "";
+        propValue.value = "";
+        console.log(propArray);
     }
 
     function propDelete(body, tr, td){
@@ -361,6 +374,10 @@
         given.remove();
         td.remove();
         tr.remove();
+    }
+
+    function createArray(){
+
     }
 
     //audit_trails
