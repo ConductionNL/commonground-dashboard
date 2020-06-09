@@ -4,26 +4,19 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-use Conduction\CommonGroundBundle\Service\CommonGroundService;
-
 /**
- * Class DefaultController
- * @package App\Controller
+ * Class DefaultController.
  */
 class DefaultController extends AbstractController
 {
-
     /**
      * @Route("/")
      */
-	public function indexAction()
+    public function indexAction()
     {
-    	return $this->redirect($this->generateUrl('app_ud_index'));
+        return $this->redirect($this->generateUrl('app_ud_index'));
     }
 }

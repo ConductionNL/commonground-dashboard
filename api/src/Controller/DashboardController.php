@@ -11,23 +11,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
- * Class DashboardController
- * @package App\Controller
+ * Class DashboardController.
+ *
  * @Route("/dashboard")
  */
 class DashboardController extends AbstractController
 {
-
     /**
      * @Route("/")
      * @Template
      */
-	public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-    	$requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
+        $requests = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests');
 
-    	return ["requests"=>$requests];
+        return ['requests'=>$requests];
     }
 }

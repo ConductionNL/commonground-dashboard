@@ -11,28 +11,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
- * Class TestController
- * @package App\Controller
+ * Class TestController.
+ *
  * @Route("/test")
  */
 class TestController extends AbstractController
 {
-
     /**
      * @Route("/")
      * @Template
      */
-	public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
+    public function indexAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
-        $babsschets = "";
+        $babsschets = '';
 
-        $h1 = "test";
+        $h1 = 'test';
 
-        $functie = "functie";
+        $functie = 'functie';
 
-    	return ["babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ['babsschets'=>$babsschets, 'h1'=>$h1, 'functie'=>$functie];
     }
 
     /**
@@ -41,12 +39,12 @@ class TestController extends AbstractController
      */
     public function subpageAction()
     {
-        $babsschets = "";
+        $babsschets = '';
 
-        $h1 = "test";
+        $h1 = 'test';
 
-        $functie = "functie";
+        $functie = 'functie';
 
-        return ["babsschets"=>$babsschets, "h1"=>$h1, "functie"=>$functie];
+        return ['babsschets'=>$babsschets, 'h1'=>$h1, 'functie'=>$functie];
     }
 }
