@@ -112,6 +112,8 @@ class EvcController extends AbstractController
                     $environment['@id'] = $environment['id'];
                 }
                 $environment['debug'] = (int)$environment['debug'];
+                $environment['cache'] = (int)$environment['cache'];
+
                 $environment = $commonGroundService->saveResource($environment,['component'=>'evc','type'=>'environments']);
             }
             if(key_exists('installation', $resource)){

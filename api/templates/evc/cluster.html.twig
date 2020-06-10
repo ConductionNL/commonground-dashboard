@@ -296,6 +296,11 @@
                                 <input type="radio" class="form-control form-control-lg" id="environment[debug] on" name="environment[debug]" value=1 ><label for="environment[debug] on">{{ 'yes'|trans|capitalize }}</label>
                             </div><!-- /.form-group -->
                             <div class="form-group">
+                                <label for="largeInput">{{ 'cache'|trans|capitalize }}</label>
+                                <input type="radio" class="form-control form-control-lg" id="environment[cache] off" name="environment[cache]" value=0 checked><label for="environment[cache] off">{{ 'no'|trans|capitalize }}</label>
+                                <input type="radio" class="form-control form-control-lg" id="environment[cache] on" name="environment[cache]" value=1 ><label for="environment[cache] on">{{ 'yes'|trans|capitalize }}</label>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
                                 <label for="largeInput">{{ 'authorization key'|trans|capitalize }}</label>
                                 <input type="text" class="form-control form-control-lg" id="environment[authorization]" name="environment[authorization]" value="" required>
                             </div><!-- /.form-group -->
