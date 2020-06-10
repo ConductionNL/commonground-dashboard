@@ -115,8 +115,8 @@ class VrcController extends AbstractController
         }
 
         $variables['camundaTasks'] = [];
-        if (key_exists('resource',$variables) && array_key_exists('processes', $variables['resource'])) {
-            foreach ($variables['resource']['processes'] as $proces){
+        if (array_key_exists('resource', $variables) && array_key_exists('processes', $variables['resource'])) {
+            foreach ($variables['resource']['processes'] as $proces) {
                 $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'], ['processInstanceId'=>$commonGroundService->getUuidFromUrl($proces)]);
                 foreach ($camundaTasks as $camundaTask) {
                     $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/'.$camundaTask['id'].'/rendered-form']);
