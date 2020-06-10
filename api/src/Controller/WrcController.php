@@ -63,6 +63,7 @@ class WrcController extends AbstractController
         // Lets see if we need to create
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+            $variables['slugs'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'templates', 'id'=> $id]);
             $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'slugs'], ['template.id'=>$id])['hydra:member'];
@@ -87,12 +88,18 @@ class WrcController extends AbstractController
             // Lets see if we also need to add an slug
             if (array_key_exists('slug', $resource)) {
                 $slug = $resource['slug'];
-                $slug['template'] = $variables['resource']['@id'];
-                $slug['name'] = $variables['resource']['name'];
-                $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc', 'type'=>'slugs']);
+                $slug['template'] = $resource['@id'];
 
-                // reload the slugs
-                $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'slugs'], ['template.id'=>$id])['hydra:member'];
+                // The resource action section
+                if (array_key_exists('@id', $slug) && array_key_exists('action', $slug)) {
+                    // The delete action
+                    if ($slug['action'] == 'delete') {
+                        $commonGroundService->deleteResource($slug);
+
+                        return $this->redirect($this->generateUrl('app_vrc_request', ['id'=>$id]));
+                    }
+                }
+                $slug = $commonGroundService->saveResource($slug, ['component'=>'wrc', 'type'=>'slugs']);
             }
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {

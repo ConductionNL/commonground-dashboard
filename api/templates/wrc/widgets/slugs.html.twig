@@ -39,7 +39,7 @@
 {# the slugs modals #}
 {% include 'wrc/modals/slug.html.twig'
     with {
-    'route': 'app_wrc_application',
+    'route': 'app_wrc_template',
     'resource':resource,
     'id':'addSlug' } %}
 
@@ -47,14 +47,14 @@
     {% for slug in slugs %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_wrc_application',
+            'route': 'app_wrc_template',
             'resource':resource,
             'item':slug,
             'id':'deleteSlug' } %}
 
         {% include 'wrc/modals/slug.html.twig'
             with {
-            'route': 'app_wrc_application',
+            'route': 'app_wrc_template',
             'resource':resource,
             'item':slug,
             'id':'editSlug' } %}

@@ -23,11 +23,9 @@
                 <div class="form-group">
                     <label for="slug[template]">{{ 'template'|trans|capitalize }}</label>
                     <select id="slug[template]" name="slug[template]" class="form-control form-control-lg" required>
-                    {% if templates is defined %}
-                        {% for template in templates %}
-                            <option value="{{ template['@id'] }}" {% if item.template  is defined and template['@id'] == item.template['@id'] %}selected=""{% endif %} >{{ template.name }}</option>
-                        {% endfor %}
-                    {% endif %}
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                        {% endif %}
                     </select>
                 </div><!-- /.form-group -->
                 <div class="form-group">
