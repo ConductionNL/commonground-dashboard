@@ -115,8 +115,8 @@ class VrcController extends AbstractController
         }
 
         $variables['camundaTasks'] = [];
-        if (array_key_exists('processes', $variables['resource'])) {
-            foreach ($variables['resource']['processes'] as $proces) {
+        if (key_exists('resource',$variables) && array_key_exists('processes', $variables['resource'])) {
+            foreach ($variables['resource']['processes'] as $proces){
                 $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'], ['processInstanceId'=>$commonGroundService->getUuidFromUrl($proces)]);
                 foreach ($camundaTasks as $camundaTask) {
                     $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/'.$camundaTask['id'].'/rendered-form']);
@@ -127,8 +127,6 @@ class VrcController extends AbstractController
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
-
-        //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
 
         if ($request->isMethod('POST')) {
 
@@ -210,6 +208,7 @@ class VrcController extends AbstractController
                 return $this->redirect($this->generateUrl('app_vrc_request', ['id' =>  $variables['resource']['id']]));
             }
         }
+        //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
 
         /* If we have specific view for this request type use that instead */
         if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')) {
