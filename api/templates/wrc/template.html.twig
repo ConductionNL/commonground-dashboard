@@ -52,7 +52,7 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                     <label for="name">{{ 'title'|trans|capitalize }}</label>
-                                                    <input type="text" class="form-control form-control-lg" id="title" name ="title" value="{% if resource.title is defined %}{{ resource.title }}{% endif %}" required>
+                                                    <input type="text" class="form-control form-control-lg" id="title" name ="title" value="{% if resource.title is defined %}{{ resource.title }}{% endif %}">
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
     									<div class="col-md-4 col-sm-12">
@@ -102,7 +102,7 @@
         								<div class="col-md-12">
         									<div class="form-group">
         										<label for="description">{{ 'description'|trans|capitalize }}</label>
-												<textarea class="form-control summernote" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+												<textarea class="form-control summernote" rows="5" id="description" name="description" required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
