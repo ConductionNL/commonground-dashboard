@@ -1,32 +1,23 @@
 <?php
+
 // src/Controller/DefaultController.php
+
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
-use GuzzleHttp\Client;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PdcController
- * @package App\Controller
+ * Class PdcController.
+ *
  * @Route("/bc")
  */
 class BcController extends AbstractController
 {
-
     /**
      * @Route("/")
      * @Template
@@ -48,8 +39,8 @@ class BcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('payments');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('payments');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'payments'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('payments');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'payments'])['hydra:member'];
 
         return $variables;
     }
@@ -63,25 +54,22 @@ class BcController extends AbstractController
         $variables = [];
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_bc_payments'));
         }
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'payments', 'id'=>$id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'payments','id'=>$id]);
-        }
-
-
-
 
         $variables['title'] = $translator->trans('payments');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('payments');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'organizations'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('payments');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -94,7 +82,7 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'bc','type'=>'slugs']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'bc', 'type'=>'slugs']);
         }
 
         return $variables;
@@ -106,14 +94,12 @@ class BcController extends AbstractController
      */
     public function servicesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
         $variables = [];
         $variables['title'] = $translator->trans('places');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('services');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'services'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('services');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'services'])['hydra:member'];
 
         return $variables;
-
     }
 
     /**
@@ -125,22 +111,22 @@ class BcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
-        }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'services','id'=>$id]);
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'services', 'id'=>$id]);
         }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_bc_services'));
         }
 
         $variables['title'] = $translator->trans('payments');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('payments');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'organizations'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('payments');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -153,10 +139,8 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'resource','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'bc', 'type'=>'resource', 'id'=>$id]));
         }
-
-
 
         return $variables;
     }
@@ -167,11 +151,10 @@ class BcController extends AbstractController
      */
     public function organizationsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
         $variables = [];
         $variables['title'] = $translator->trans('organizations');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('organizations');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'organizations'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('organizations');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'organizations'])['hydra:member'];
 
         return $variables;
     }
@@ -182,27 +165,24 @@ class BcController extends AbstractController
      */
     public function organizationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
-// If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'bc','type'=>'organization','id'=> $id]);
+        // If it is a delete action we can stop right here
+        if ($request->query->get('action') == 'delete') {
+            $commonGroundService->deleteResource(['component'=>'bc', 'type'=>'organization', 'id'=> $id]);
+
             return $this->redirect($this->generateUrl('app_bc_organizations'));
         }
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'organizations', 'id'=> $id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'organizations','id'=> $id]);
-        }
-
-
 
         $variables['title'] = $translator->trans('organizations');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('organizations');
-        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organizations');
+        $variables['slugs'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
@@ -214,7 +194,7 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'resource','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'bc', 'type'=>'resource', 'id'=>$id]));
         }
     }
 
@@ -224,11 +204,11 @@ class BcController extends AbstractController
      */
     public function invoicesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'invoices'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('invoice');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'invoices'])['hydra:member'];
+
         return $variables;
     }
 
@@ -238,28 +218,25 @@ class BcController extends AbstractController
      */
     public function invoiceAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-        }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'mrc','type'=>'employees','id'=> $id]);
-
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'mrc', 'type'=>'employees', 'id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_bc_invoices'));
         }
 
-
         $variables['title'] = $translator->trans('invoices');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('invoices');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('invoices');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
 
@@ -271,8 +248,7 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'invoices']));
-
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'bc', 'type'=>'invoices']));
         }
 
         return $variables;
@@ -284,11 +260,11 @@ class BcController extends AbstractController
      */
     public function invoiceitemsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
         $variables = [];
         $variables['title'] = $translator->trans('invoice');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('invoice');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'invoice_items'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('invoice');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'invoice_items'])['hydra:member'];
+
         return $variables;
     }
 
@@ -298,27 +274,25 @@ class BcController extends AbstractController
      */
     public function invoiceitemAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
-        }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'invoiceitem','id'=> $id]);
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'invoiceitem', 'id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_bc_invoiceitems'));
         }
 
         $variables['title'] = $translator->trans('invoices');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('invoices');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'slugs'],['invoice-item.id'=>$id])["hydra:member"];
-
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('invoices');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'slugs'], ['invoice-item.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -331,8 +305,7 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'resource','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'bc', 'type'=>'resource', 'id'=>$id]));
         }
     }
 
@@ -342,11 +315,11 @@ class BcController extends AbstractController
      */
     public function taxesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
         $variables = [];
         $variables['title'] = $translator->trans('tax');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('tax');
-        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc','type'=>'taxes']);
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('tax');
+        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'taxes']);
+
         return $variables;
     }
 
@@ -356,26 +329,25 @@ class BcController extends AbstractController
      */
     public function taxAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
-        }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc','type'=>'taxes','id'=> $id]);
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'taxes', 'id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_bc_taxes'));
         }
 
         $variables['title'] = $translator->trans('taxes');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('taxes');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc','type'=>'organizations'])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('taxes');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'bc', 'type'=>'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -388,7 +360,7 @@ class BcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'bc','type'=>'resource','id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'bc', 'type'=>'resource', 'id'=>$id]));
         }
     }
 }

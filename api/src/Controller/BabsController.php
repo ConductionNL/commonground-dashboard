@@ -5,17 +5,15 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class BabsController
- * @package App\Controller
+ * Class BabsController.
+ *
  * @Route("/mock")
  */
 class BabsController extends AbstractController
@@ -67,7 +65,7 @@ class BabsController extends AbstractController
     {
         $variables = [];
 
-        $variables['request'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id);
+        $variables['request'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/'.$id);
 
         return $variables;
     }
@@ -78,13 +76,12 @@ class BabsController extends AbstractController
      */
     public function agendaAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Uw agenda waar u uw afpsraken in kan terug vinden';
+        $functie = 'Trouwambtenaar';
 
-        $h1 = "Uw agenda waar u uw afpsraken in kan terug vinden";
-        $functie = "Trouwambtenaar";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
@@ -93,7 +90,7 @@ class BabsController extends AbstractController
      */
     public function medewerkerVerzoekenAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests')['hydra:member'];
 
         return $variables;
     }
@@ -104,14 +101,15 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkenAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['properties.type' => 'huwelijk'])["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['properties.type' => 'huwelijk'])['hydra:member'];
 
         $variables['huwelijken'] = [];
         foreach ($variables['requests'] as $request) {
-            if (isset($request['properties']['type']) and $request['properties']['type'] == "huwelijk" or isset($request['properties']['type']) and $request['properties']['type'] == "partnerschap") {
+            if (isset($request['properties']['type']) and $request['properties']['type'] == 'huwelijk' or isset($request['properties']['type']) and $request['properties']['type'] == 'partnerschap') {
                 $variables['huwelijken'][] = $request;
             }
         }
+
         return $variables;
     }
 
@@ -121,18 +119,17 @@ class BabsController extends AbstractController
      */
     public function medewerkerHuwelijkViewAction(Request $request, CommonGroundService $commonGroundService, $id)
     {
-        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/' . $id, [], true);
+        $variables['huwelijk'] = $commonGroundService->getResource('https://vrc.huwelijksplanner.online/requests/'.$id, [], true);
 
-        $variables['plechtigheden'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])["hydra:member"];
-        $variables['locaties'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])["hydra:member"];
-        $variables['ambtenaren'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])["hydra:member"];
-        $variables['extras'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])["hydra:member"];
+        $variables['plechtigheden'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '1cad775c-c2d0-48af-858f-a12029af24b3'])['hydra:member'];
+        $variables['locaties'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '170788e7-b238-4c28-8efc-97bdada02c2e'])['hydra:member'];
+        $variables['ambtenaren'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => '7f4ff7ae-ed1b-45c9-9a73-3ed06a36b9cc'])['hydra:member'];
+        $variables['extras'] = $commonGroundService->getResourceList('https://pdc.huwelijksplanner.online/products', ['groups.id' => 'f8298a12-91eb-46d0-b8a9-e7095f81be6f'])['hydra:member'];
 
         $assent1 = $commonGroundService->getResource($variables['huwelijk']['properties']['partners'][0]);
         $contact1 = $commonGroundService->getResource($assent1['contact']);
 
-        if(isset($variables['huwelijk']['properties']['partners'][1])) {
-
+        if (isset($variables['huwelijk']['properties']['partners'][1])) {
             $assent2 = $commonGroundService->getResource($variables['huwelijk']['properties']['partners'][1]);
             $contact2 = $commonGroundService->getResource($assent2['contact']);
         }
@@ -161,12 +158,11 @@ class BabsController extends AbstractController
         if (isset($variables['huwelijk']['properties']['getuigen']) && !empty($variables['huwelijk']['properties']['getuigen']) && count($variables['huwelijk']['properties']['getuigen']) > 1) {
             $variables['confirmedChecks']++;
         }
-        if ($variables['huwelijk']['status'] == "processed" or $variables['huwelijk']['status'] == "completed") {
+        if ($variables['huwelijk']['status'] == 'processed' or $variables['huwelijk']['status'] == 'completed') {
             $variables['confirmedChecks']++;
         }
 
         if ($request->isMethod('POST')) {
-
             $resource['properties'] = $request->request->all();
             $resource['properties'] = $variables['huwelijk']['properties'];
 
@@ -194,7 +190,6 @@ class BabsController extends AbstractController
             }
 
             if ($request->request->has('telephone2')) {
-
                 $contact2['telephones'][0]['id'] = $contact2['telephones'][0]['@id'];
                 $contact2['telephones'][0]['telephone'] = $request->request->get('telephone2');
 
@@ -225,21 +220,20 @@ class BabsController extends AbstractController
 
 //        var_dump($contact1);
 //        die;
-        return ["variables" => $variables];
+        return ['variables' => $variables];
     }
 
     /**
      * @Route("/medewerker/omzetten")
      * @Template
      */
-    public
-    function medewerkerOmzettenAction(Request $request, CommonGroundService $commonGroundService)
+    public function medewerkerOmzettenAction(Request $request, CommonGroundService $commonGroundService)
     {
-        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['properties.type' => 'omzetten'])["hydra:member"];
+        $variables['requests'] = $commonGroundService->getResourceList('https://vrc.huwelijksplanner.online/requests', ['properties.type' => 'omzetten'])['hydra:member'];
 
         $variables['omzetten'] = [];
         foreach ($variables['requests'] as $request) {
-            if (isset($request['properties']['type']) and $request['properties']['type'] == "omzetten") {
+            if (isset($request['properties']['type']) and $request['properties']['type'] == 'omzetten') {
                 $variables['omzetten'][] = $request;
             }
         }
@@ -251,194 +245,168 @@ class BabsController extends AbstractController
      * @Route("/medewerker/huwelijk")
      * @Template
      */
-    public
-    function medewerkerHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
+    public function medewerkerHuwelijkAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Het huwelijksoverzicht van Martin Timmers en Anita Henrika de Kieft';
+        $functie = 'Medewerker';
 
-        $h1 = "Het huwelijksoverzicht van Martin Timmers en Anita Henrika de Kieft";
-        $functie = "Medewerker";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/melding/tijdstip-wijzigen")
      * @Template
      */
-    public
-    function tijdstipAction(Request $request, CommonGroundService $commonGroundService)
+    public function tijdstipAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Het tijdstip van het huwelijk van Martin Timmers en Anita Henrika de Kieft';
+        $functie = 'Medewerker';
 
-        $h1 = "Het tijdstip van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
-        $functie = "Medewerker";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/melding/babs-wijzigen")
      * @Template
      */
-    public
-    function babsAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'De toegewezen babs van het huwelijk van Martin Timmers en Anita Henrika de Kieft';
+        $functie = 'Medewerker';
 
-        $h1 = "De toegewezen babs van het huwelijk van Martin Timmers en Anita Henrika de Kieft";
-        $functie = "Medewerker";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/medewerker/locatieagenda")
      * @Template
      */
-    public
-    function locatieagendaAction(Request $request, CommonGroundService $commonGroundService)
+    public function locatieagendaAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Planning Locaties';
+        $functie = 'Medewerker';
 
-        $h1 = "Planning Locaties";
-        $functie = "Medewerker";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/medewerker/babsagenda")
      * @Template
      */
-    public
-    function babsagendaAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsagendaAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Planning Trouwambtenaren';
+        $functie = 'Medewerker';
 
-        $h1 = "Planning Trouwambtenaren";
-        $functie = "Medewerker";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/beheerder/gebruikersbeheer")
      * @Template
      */
-    public
-    function gebruikersbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public function gebruikersbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Uw overzicht van alle gebruikers en hun rollen';
+        $functie = 'Beheerder';
 
-        $h1 = "Uw overzicht van alle gebruikers en hun rollen";
-        $functie = "Beheerder";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/beheerder/configuratie")
      * @Template
      */
-    public
-    function configuratieAction(Request $request, CommonGroundService $commonGroundService)
+    public function configuratieAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'De configuratie van de huwelijksplanner';
+        $functie = 'Beheerder';
 
-        $h1 = "De configuratie van de huwelijksplanner";
-        $functie = "Beheerder";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/beheerder/ceremonies")
      * @Template
      */
-    public
-    function ceremoniebeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public function ceremoniebeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Beheer van de ceremonies';
+        $functie = 'Beheerder';
 
-        $h1 = "Beheer van de ceremonies";
-        $functie = "Beheerder";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/beheerder/plechtigheden")
      * @Template
      */
-    public
-    function plechtigheidbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public function plechtigheidbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Beheer van de plechtigheden';
+        $functie = 'Beheerder';
 
-        $h1 = "Beheer van de plechtigheden";
-        $functie = "Beheerder";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/beheerder/trouwambtenaren")
      * @Template
      */
-    public
-    function babsbeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public function babsbeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Beheer van de trouwambtenaren';
+        $functie = 'Beheerder';
 
-        $h1 = "Beheer van de trouwambtenaren";
-        $functie = "Beheerder";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
-
 
     /**
      * @Route("/beheerder/locatiebeheer")
      * @Template
      */
-    public
-    function locatiebeheerAction(Request $request, CommonGroundService $commonGroundService)
-
+    public function locatiebeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
+        $babsschets = '';
 
-        $babsschets = "";
+        $h1 = 'Hier ziet u alle beschikbare locaties';
+        $functie = 'Beheerder';
 
-        $h1 = "Hier ziet u alle beschikbare locaties";
-        $functie = "Beheerder";
-
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
      * @Route("/beheerder/extras")
      * @Template
      */
-    public
-    function extrabeheerAction(Request $request, CommonGroundService $commonGroundService)
+    public function extrabeheerAction(Request $request, CommonGroundService $commonGroundService)
     {
-
-        $babsschets = "";
+        $babsschets = '';
 
         $h1 = "Beheer van de extra's";
-        $functie = "Beheerder";
+        $functie = 'Beheerder';
 
-        return ["babsschets" => $babsschets, "h1" => $h1, "functie" => $functie];
+        return ['babsschets' => $babsschets, 'h1' => $h1, 'functie' => $functie];
     }
 
     /**
@@ -450,7 +418,7 @@ class BabsController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('aanvragen naamwijziging');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen naamwijziging');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3'])['hydra:member'];
 
         return $variables;
     }
@@ -464,7 +432,7 @@ class BabsController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('aanvragen beedigd babs');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen beedigd babs');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/5b10c1d6-7121-4be2-b479-7523f1b625f1'])['hydra:member'];
 
         return $variables;
     }
@@ -478,7 +446,7 @@ class BabsController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('aanvragen niet beedigd babs');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen niet beedigd babs');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/cdd7e88b-1890-425d-a158-7f9ec92c9508'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/cdd7e88b-1890-425d-a158-7f9ec92c9508'])['hydra:member'];
 
         return $variables;
     }
@@ -492,11 +460,8 @@ class BabsController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('aanvragen eigen locatie');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('aanvragen eigen locatie');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/c8704ea6-4962-4b7e-8d4e-69a257aa9577'])["hydra:member"];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['request_type'=>'http://vtc.dev.huwelijksplanner.online/request_types/c8704ea6-4962-4b7e-8d4e-69a257aa9577'])['hydra:member'];
 
         return $variables;
     }
 }
-
-
-

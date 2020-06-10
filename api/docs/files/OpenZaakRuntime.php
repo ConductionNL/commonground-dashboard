@@ -9,35 +9,35 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 class OpenZaakRuntime implements RuntimeExtensionInterface
 {
-	private $openZaakService;
+    private $openZaakService;
 
     public function __construct(OpenZaakService $openZaakService)
     {
-    	$this->openZaakService = $openZaakService;
+        $this->openZaakService = $openZaakService;
     }
 
     public function getResource($resource)
     {
-    	return $this->openZaakService->getResource($resource);
+        return $this->openZaakService->getResource($resource);
     }
 
     public function getResourceList($query)
     {
-    	return $this->openZaakService->getResourceList($query);
+        return $this->openZaakService->getResourceList($query);
     }
 
     public function getComponentList()
     {
-    	return $this->openZaakService->getComponentList();
+        return $this->openZaakService->getComponentList();
     }
 
     public function getComponentHealth($component)
     {
-    	return $this->openZaakService->getComponentHealth($component);
+        return $this->openZaakService->getComponentHealth($component);
     }
 
     public function getComponentResources($component)
     {
-    	return $this->openZaakService->getComponentResources($component);
+        return $this->openZaakService->getComponentResources($component);
     }
 }
