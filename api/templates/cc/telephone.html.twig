@@ -191,6 +191,7 @@
                                         <option value="2.16.6">2.16.6</option>
                                     </select>
                                 </div><!-- /.form-group -->
+                                <input type="hidden" id="installation[propertyArray]" value="" name="installation[propertyArray]">
                                 <div class="row">
                                     <div class="col-6">
                                         <a data-toggle="modal" href="#propertyModal" class="btn btn-success m-3  mx-auto">properties</a>
@@ -373,15 +374,16 @@
     }
 
     function createArray(){
-
         let propValues = document.getElementsByClassName("propertyValue");
         let propNames = document.getElementsByClassName("propertyName");
         let propArray = [];
+        let arrayContainer = document.getElementById("installation[propertyArray]");
 
         for(let i = 0; i < propValues.length; i ++){
             propArray.push({name: propNames[i].value, value: propValues[i].value  });
         }
-        console.log(propArray);
+        arrayContainer.value = JSON.stringify(propArray);
+        console.log(arrayContainer.value);
     }
 
     //audit_trails

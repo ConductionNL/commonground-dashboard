@@ -423,11 +423,11 @@
       </trans-unit>
       <trans-unit id="zlTw4i2" resname="Component">
         <source>Component</source>
-        <target>__Component</target>
+        <target>Component</target>
       </trans-unit>
       <trans-unit id="aYXKH02" resname="component">
         <source>component</source>
-        <target>__component</target>
+        <target>component</target>
       </trans-unit>
       <trans-unit id="ijst3hn" resname="apis">
         <source>apis</source>
@@ -443,27 +443,27 @@
       </trans-unit>
       <trans-unit id="A1vsHJJ" resname="component files">
         <source>component files</source>
-        <target>__component files</target>
+        <target>component bestanden</target>
       </trans-unit>
       <trans-unit id="QIoz.6." resname="Component file">
         <source>Component file</source>
-        <target>__Component file</target>
+        <target>Component bestand</target>
       </trans-unit>
       <trans-unit id="ZUVPL8B" resname="component file">
         <source>component file</source>
-        <target>__component file</target>
+        <target>component bestand</target>
       </trans-unit>
       <trans-unit id="12TUJZL" resname="Organization">
         <source>Organization</source>
-        <target>__Organization</target>
+        <target>ogranizatie</target>
       </trans-unit>
       <trans-unit id="8zJVw1z" resname="Challenge Component">
         <source>Challenge Component</source>
-        <target>__Challenge Component</target>
+        <target>uitdaging Component</target>
       </trans-unit>
       <trans-unit id="8jtbFNl" resname="Component for adding challenges">
         <source>Component for adding challenges</source>
-        <target>__Component for adding challenges</target>
+        <target>component om uitdagingen toe te voegen</target>
       </trans-unit>
       <trans-unit id="IjZUFsW" resname="pitches">
         <source>pitches</source>

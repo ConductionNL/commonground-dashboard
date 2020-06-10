@@ -81,6 +81,7 @@ class EvcController extends AbstractController
             $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'environments'],['cluster.id'=>$id])['hydra:member'];
             $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'installations'],['environment.cluster.id'=>$id])['hydra:member'];
             $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'components'])['hydra:member'];
+            $variables['properties'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'properties'])['hydra:member'];
         }
 
 
@@ -115,6 +116,18 @@ class EvcController extends AbstractController
             }
             if(key_exists('installation', $resource)){
                 $installation = $resource['installation'];
+
+                if($installation['propertyArray'] != ''){
+                    $properties = json_decode($installation['propertyArray']);
+                    foreach($properties as $name => $value){
+                        $property = [];
+                        $property['name'] = $name;
+                        $property['value'] = $value;
+                        $property = $commonGroundService->saveResource($property, ['component' => 'evc', 'type' => 'properties']);
+                        array_push($installation['properties'], $property['@id']);
+                    }
+                }
+
                 $installation['cluster'] = $resource['@id'];
                 if(key_exists('id',$installation)){
                     $installation['@id'] = $installation['id'];
