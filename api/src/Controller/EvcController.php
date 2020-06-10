@@ -105,16 +105,7 @@ class EvcController extends AbstractController
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
 
-                if($installation['propertyArray'] != ''){
-                    $properties = json_decode($installation['propertyArray']);
-                    foreach($properties as $name => $value){
-                        $property = [];
-                        $property['name'] = $name;
-                        $property['value'] = $value;
-                        $property = $commonGroundService->saveResource($property, ['component' => 'evc', 'type' => 'properties']);
-                        array_push($installation['properties'], $property['@id']);
-                    }
-                }
+
 
                 $installation['cluster'] = $resource['@id'];
                 if (array_key_exists('id', $installation)) {
