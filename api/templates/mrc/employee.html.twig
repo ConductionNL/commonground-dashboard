@@ -76,14 +76,12 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-
                                                 <select name="person" id="person" class="form-control form-control-lg" required>
                                                     {
                                                     {% for person in people %}
                                                         <option value="{{ person['@id']}} "{% if resource.person is defined and resource.person == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
                                                     {% endfor %}
                                                 </select>
-
                                             </div>
                                         </div> <!-- /.col -->
 

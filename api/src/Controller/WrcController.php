@@ -137,7 +137,7 @@ class WrcController extends AbstractController
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'template_groups', 'id'=> $id]);
-            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], ['templateGroups.id'=>$id])['hydra:member'];
+            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], ['templateGroups'=> $variables['resource']['@id']])['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('template groups');

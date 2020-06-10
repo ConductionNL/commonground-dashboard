@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_cc_organization' %}
+
 
 {% block content %}
 
@@ -29,13 +29,12 @@
             }
             %}
             <div class="page-inner">
+                <form action="{{ path('app_cc_organization', {id: resource.id}) }}" method="post">
                 <div class="row">
-
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <h2 class="d-inline-block">{{ resource.name|capitalize }} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_cc_organizations')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
@@ -58,7 +57,7 @@
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
                                                        name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
 
@@ -67,62 +66,10 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'kvk'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="kvk"
-                                                       name="kvk" placeholder="Large Input"
-                                                       value="{{ resource.kvk }}">
+                                                       name="kvk" placeholder=""
+                                                       value="{% if resource.kvk is defined %}{{ resource.kvk }} {% endif %}">
                                             </div>
                                         </div>
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -138,39 +85,277 @@
                                 <div class="card-action">
                                     {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->
-                            </form>
+
                         </div><!-- /.card -->
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card p-4">
                             <div class="card-header">
-                                <h2>Groups</h2>
+                                <h2 class="d-inline-block">{{ 'telephones'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTelephone"  data-toggle="modal" data-target="#addTelephone"><i class="fas fa-plus"></i></a>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="telephoneBody">
+                                    {% if resource.telephones is defined %}
+                                        {% set value = 0 %}
+                                        {% for telephone in resource.telephones %}
+                                            <tr id="{{ value }}">
+                                                <td colspan="2" id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="telephones[]" value="{{ telephone }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'people'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addPerson"  data-toggle="modal" data-target="#addPerson"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="personBody">
+                                    {% if resource.persons is defined %}
+                                        {% set value = 0 %}
+                                        {% for person in resource.persons %}
+                                            <tr id="{{ value }}">
+                                                <td colspan="2" id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="persons[]" value="{{ person }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'addresses'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addAddress"  data-toggle="modal" data-target="#addAddress"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="addressBody">
+                                    {% if resource.adresses is defined %}
+                                        {% set value = 0 %}
+                                        {% for address in resource.adresses %}
+                                            <tr id="{{ value }}">
+                                                <td colspan="2" id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="adresses[]" value="{{ address }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xl-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'emails'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addEmail"  data-toggle="modal" data-target="#addEmail"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="emailBody">
+                                    {% if resource.emails is defined %}
+                                        {% set value = 0 %}
+                                        {% for email in resource.emails %}
+                                            <tr id="{{ value }}">
+                                                <td colspan="2" id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg float-right" id="{{ value }}" name ="emails[]" value="{{ email }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-            </div><!-- /.row -->
+                </div>
+                </form>
+                </div><!-- /.row -->
+
         </div><!-- /.page-inner -->
 
-    {% include 'widgets/delete_modal.html.twig'
+
+
+
+        <div class="modal fade" style="text-align: center" id="addTelephone" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addTelephone" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add telephone'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                        <select name="name" id="telephoneName" class="form-control form-control-lg" required>
+                            {
+                            {% for telephone in telephones %}
+                                <option value="{{ telephone['@id']}} ">{{ telephone.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div><!-- /.form-group -->
+                    <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="telephoneButton();">{{ 'add'|trans|capitalize }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" style="text-align: center" id="addPerson" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addPerson" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add person'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                        <select name="name" id="personName" class="form-control form-control-lg" required>
+                            {
+                            {% for person in people %}
+                                <option value="{{ person['@id']}} ">{{ person.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div><!-- /.form-group -->
+                    <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="personButton();">{{ 'add'|trans|capitalize }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" style="text-align: center" id="addAddress" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addAddress" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add address'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                        <select name="name" id="addressName" class="form-control form-control-lg" required>
+                            {
+                            {% for address in addresses %}
+                                <option value="{{ address['@id']}} ">{{ address.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div><!-- /.form-group -->
+                    <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="addressButton();">{{ 'add'|trans|capitalize }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" style="text-align: center" id="addEmail" tabindex="-1"
+             role="dialog"
+             aria-labelledby="addEmail" aria-hidden="true">
+            <div class="modal-dialog model-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add email'|trans|capitalize }}</b></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                        <select name="name" id="emailName" class="form-control form-control-lg" required>
+                            {
+                            {% for email in emails %}
+                                <option value="{{ email['@id']}} ">{{ email.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div><!-- /.form-group -->
+                    <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="emailButton();">{{ 'add'|trans|capitalize }}</button>
+                </div>
+            </div>
+        </div>
+
+
+        {% include 'widgets/delete_modal.html.twig'
         with {
         'route': 'app_cc_organization',
         'resource':resource,
@@ -195,6 +380,222 @@
     </div>
     <script>
     {% block javascript %}
+
+    //logic for addresses
+    function addressButton(){
+        let counts = document.getElementById("addressBody").lastChild.id;
+        let parent = document.getElementById("addressBody")
+        let name = document.getElementById("addressName");
+        let newAddress = document.createElement("input");
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        let tdButton = document.createElement("td")
+        let delButton = document.createElement("button")
+        let counter;
+
+        if(counts !== undefined){
+            counter = parseInt(counts) + 1;
+        } else {
+            counter = parent.children.length;
+        }
+
+        newAddress.value = name.value;
+        newAddress.name = "adresses[]";
+        newAddress.className = "form-control form-control-lg"
+        newAddress.readOnly = true;
+        newAddress.id = counter.toString();
+        newAddress.setAttribute("style", "height: fit-content !important;");
+
+        tdButton.id = counter.toString();
+
+        delButton.id = counter.toString();
+        delButton.innerHTML = "<i class='fas fa-minus'></i>";
+        delButton.addEventListener('click', function(){
+            propDelete(newAddress, tr, td);
+        });
+        delButton.className = "btn btn-danger float-right";
+        delButton.type = "button";
+
+        tr.id = counter.toString();
+        tr.className = "address"
+
+        td.id = counter.toString();
+        td.setAttribute("colspan", "2");
+        td.className = "address"
+
+        parent.appendChild(tr);
+        tr.appendChild(td);
+        td.appendChild(newAddress);
+        tr.appendChild(tdButton);
+        tdButton.appendChild(delButton);
+
+        name.value = "";
+    }
+
+
+    //logic for people
+    function personButton(){
+        let counts = document.getElementById("personBody").lastChild.id;
+        let parent = document.getElementById("personBody")
+        let name = document.getElementById("personName");
+        let newPerson = document.createElement("input");
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        let tdButton = document.createElement("td")
+        let delButton = document.createElement("button")
+        let counter;
+
+        if(counts !== undefined){
+            counter = parseInt(counts) + 1;
+        } else {
+            counter = parent.children.length;
+        }
+
+        newPerson.value = name.value;
+        newPerson.name = "persons[]";
+        newPerson.className = "form-control form-control-lg"
+        newPerson.readOnly = true;
+        newPerson.id = counter.toString();
+        newPerson.setAttribute("style", "height: fit-content !important;");
+
+        tdButton.id = counter.toString();
+
+        delButton.id = counter.toString();
+        delButton.innerHTML = "<i class='fas fa-minus'></i>";
+        delButton.addEventListener('click', function(){
+            propDelete(newPerson, tr, td);
+        });
+        delButton.className = "btn btn-danger float-right";
+        delButton.type = "button";
+
+        tr.id = counter.toString();
+
+        td.id = counter.toString();
+        td.setAttribute("colspan", "2");
+
+        parent.appendChild(tr);
+        tr.appendChild(td);
+        td.appendChild(newPerson);
+        tr.appendChild(tdButton);
+        tdButton.appendChild(delButton);
+
+        name.value = "";
+    }
+
+    //logic for emails
+    function emailButton(){
+        let counts = document.getElementById("emailBody").lastChild.id;
+        let parent = document.getElementById("emailBody")
+        let name = document.getElementById("emailName");
+        let newEmail = document.createElement("input");
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        let tdButton = document.createElement("td")
+        let delButton = document.createElement("button")
+        let counter;
+
+        if(counts !== undefined){
+            counter = parseInt(counts) + 1;
+        } else {
+            counter = parent.children.length;
+        }
+
+        newEmail.value = name.value;
+        newEmail.name = "emails[]";
+        newEmail.className = "form-control form-control-lg"
+        newEmail.readOnly = true;
+        newEmail.id = counter.toString();
+        newEmail.setAttribute("style", "height: fit-content !important;");
+
+        tdButton.id = counter.toString();
+
+        delButton.id = counter.toString();
+        delButton.innerHTML = "<i class='fas fa-minus'></i>";
+        delButton.addEventListener('click', function(){
+            propDelete(newEmail, tr, td);
+        });
+        delButton.className = "btn btn-danger float-right";
+        delButton.type = "button";
+
+        tr.id = counter.toString();
+
+        td.id = counter.toString();
+        td.setAttribute("colspan", "2");
+
+        parent.appendChild(tr);
+        tr.appendChild(td);
+        td.appendChild(newEmail);
+        tr.appendChild(tdButton);
+        tdButton.appendChild(delButton);
+
+        name.value = "";
+    }
+
+
+    //logic for telephones
+    function telephoneButton(){
+        let counts = document.getElementById("telephoneBody").lastChild.id;
+        let parent = document.getElementById("telephoneBody")
+        let name = document.getElementById("telephoneName");
+        let newTelephone = document.createElement("input");
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        let tdButton = document.createElement("td")
+        let delButton = document.createElement("button")
+        let counter;
+
+        if(counts !== undefined){
+            counter = parseInt(counts) + 1;
+        } else {
+            counter = parent.children.length;
+        }
+
+        newTelephone.value = name.value;
+        newTelephone.name = "telephones[]";
+        newTelephone.className = "form-control form-control-lg"
+        newTelephone.readOnly = true;
+        newTelephone.id = counter.toString();
+        newTelephone.setAttribute("style", "height: fit-content !important;");
+
+        tdButton.id = counter.toString();
+
+        delButton.id = counter.toString();
+        delButton.innerHTML = "<i class='fas fa-minus'></i>";
+        delButton.addEventListener('click', function(){
+            propDelete(newTelephone, tr, td);
+        });
+        delButton.className = "btn btn-danger float-right";
+        delButton.type = "button";
+
+        tr.id = counter.toString();
+
+        td.id = counter.toString();
+        td.setAttribute("colspan", "2");
+
+        parent.appendChild(tr);
+        tr.appendChild(td);
+        td.appendChild(newTelephone);
+        tr.appendChild(tdButton);
+        tdButton.appendChild(delButton);
+
+        name.value = "";
+    }
+
+    function propDelete(body, tr, td){
+        body.remove();
+        tr.remove();
+        td.remove();
+    }
+
+    function storedDelete(given){
+        let td = given.parentNode;
+        let tr = td.parentNode;
+        given.remove();
+        td.remove();
+        tr.remove();
+    }
+
+
     //audit_trails
     $.ajax({
         url: "/api/cc/audit_trails",

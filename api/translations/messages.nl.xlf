@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="rzobsxK" resname="organization">
         <source>organization</source>
-        <target>organisaties</target>
+        <target>organisatie</target>
       </trans-unit>
       <trans-unit id="NSuEd32" resname="cases">
         <source>cases</source>
@@ -359,7 +359,7 @@
       </trans-unit>
       <trans-unit id="nfawJqj" resname="service">
         <source>service</source>
-        <target>__service</target>
+        <target>dienst</target>
       </trans-unit>
       <trans-unit id="9czPtzd" resname="messages">
         <source>messages</source>
@@ -555,7 +555,7 @@
       </trans-unit>
       <trans-unit id="Wyd8tmh" resname="rsin">
         <source>rsin</source>
-        <target>__rsin</target>
+        <target>RSIN</target>
       </trans-unit>
       <trans-unit id="Ol1fOQr" resname="tabel32">
         <source>tabel32</source>
@@ -1003,7 +1003,7 @@
       </trans-unit>
       <trans-unit id="CjZ7ks8" resname="sender">
         <source>sender</source>
-        <target>__sender</target>
+        <target>afzender</target>
       </trans-unit>
       <trans-unit id="8dtMiWE" resname="Contact lists">
         <source>Contact lists</source>
@@ -1531,7 +1531,7 @@
       </trans-unit>
       <trans-unit id="W35r8tx" resname="method">
         <source>method</source>
-        <target>request</target>
+        <target>methode</target>
       </trans-unit>
       <trans-unit id="u5r10ZF" resname="ip">
         <source>ip</source>
@@ -1671,11 +1671,11 @@
       </trans-unit>
       <trans-unit id="ygw5xxn" resname="edit contact moment">
         <source>edit contact moment</source>
-        <target>__edit contact moment</target>
+        <target>contactmoment aanpassen</target>
       </trans-unit>
       <trans-unit id="euKuALZ" resname="add contact moment">
         <source>add contact moment</source>
-        <target>__add contact moment</target>
+        <target>contactmoment toevoegen</target>
       </trans-unit>
       <trans-unit id="I9YRpvb" resname="topic">
         <source>topic</source>
@@ -1683,11 +1683,11 @@
       </trans-unit>
       <trans-unit id="gbrodrc" resname="receiver">
         <source>receiver</source>
-        <target>__receiver</target>
+        <target>ontvanger</target>
       </trans-unit>
       <trans-unit id="aeNlaM2" resname="channel">
         <source>channel</source>
-        <target>__channel</target>
+        <target>kanaal</target>
       </trans-unit>
       <trans-unit id="An4bkHO" resname="dateInteraction">
         <source>dateInteraction</source>
@@ -1703,15 +1703,15 @@
       </trans-unit>
       <trans-unit id="8TOCIha" resname="template engine">
         <source>template engine</source>
-        <target>__template engine</target>
+        <target>sjabloon engine</target>
       </trans-unit>
       <trans-unit id="O2tJ6OI" resname="twig">
         <source>twig</source>
-        <target>__twig</target>
+        <target>twig</target>
       </trans-unit>
       <trans-unit id="riyv1sA" resname="generate slug">
         <source>generate slug</source>
-        <target>__generate slug</target>
+        <target>genereer slug</target>
       </trans-unit>
       <trans-unit id="PcRxASq" resname="edit memo">
         <source>edit memo</source>
@@ -1727,11 +1727,11 @@
       </trans-unit>
       <trans-unit id="ovdQxYy" resname="edit menu item">
         <source>edit menu item</source>
-        <target>__edit menu item</target>
+        <target>menu item aanpassen</target>
       </trans-unit>
       <trans-unit id="BuAfBCF" resname="add menu item">
         <source>add menu item</source>
-        <target>__add menu item</target>
+        <target>menu item toevoegen</target>
       </trans-unit>
       <trans-unit id="KOXrq9n" resname="url">
         <source>url</source>
@@ -1759,19 +1759,19 @@
       </trans-unit>
       <trans-unit id="cQL1gyD" resname="omschrijving">
         <source>omschrijving</source>
-        <target>__omschrijving</target>
+        <target>omschrijving</target>
       </trans-unit>
       <trans-unit id="kUCc2Pe" resname="responsible organization">
         <source>responsible organization</source>
-        <target>__responsible organization</target>
+        <target>verantwoordelijke organisatie</target>
       </trans-unit>
       <trans-unit id="8yID20Y" resname="source organization">
         <source>source organization</source>
-        <target>__source organization</target>
+        <target>bronorganisatie</target>
       </trans-unit>
       <trans-unit id="FFohHa5" resname="statuses">
         <source>statuses</source>
-        <target>__statuses</target>
+        <target>statussen</target>
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
@@ -1779,7 +1779,7 @@
       </trans-unit>
       <trans-unit id="_8xMZAl" resname="set status">
         <source>set status</source>
-        <target>__set status</target>
+        <target>status instellen</target>
       </trans-unit>
       <trans-unit id="94.K5n1" resname="explanation">
         <source>explanation</source>
@@ -1787,11 +1787,11 @@
       </trans-unit>
       <trans-unit id="88s3ftC" resname="set results">
         <source>set results</source>
-        <target>__set results</target>
+        <target>resultaten instellen</target>
       </trans-unit>
       <trans-unit id="buDrSQ." resname="set">
         <source>set</source>
-        <target>__set</target>
+        <target>instellen</target>
       </trans-unit>
       <trans-unit id="cNyDbYl" resname="add verdict">
         <source>add verdict</source>
@@ -1803,7 +1803,7 @@
       </trans-unit>
       <trans-unit id="vOkFVHo" resname="betrokkeneType">
         <source>betrokkeneType</source>
-        <target>__betrokkeneType</target>
+        <target>betrokkeneType</target>
       </trans-unit>
       <trans-unit id="Lwrcg49" resname="natural person">
         <source>natural person</source>
@@ -1835,11 +1835,11 @@
       </trans-unit>
       <trans-unit id="JvMM2SJ" resname="Betaal Component">
         <source>Betaal Component</source>
-        <target>__Betaal Component</target>
+        <target>Betaal Component</target>
       </trans-unit>
       <trans-unit id="9GZik2y" resname="contact moment">
         <source>contact moment</source>
-        <target>__contact moment</target>
+        <target>contact moment</target>
       </trans-unit>
       <trans-unit id="pH1P5xi" resname="health log">
         <source>health log</source>
@@ -1879,51 +1879,51 @@
       </trans-unit>
       <trans-unit id="WiEsFsx" resname="place property">
         <source>place property</source>
-        <target>__place property</target>
+        <target>plaats eigenschap</target>
       </trans-unit>
       <trans-unit id="zMZtiBk" resname="accommodation property">
         <source>accommodation property</source>
-        <target>__accommodation property</target>
+        <target>accommodatie eigenschap</target>
       </trans-unit>
       <trans-unit id="08xPTQ1" resname="competences">
         <source>competences</source>
-        <target>__competences</target>
+        <target>competenties</target>
       </trans-unit>
       <trans-unit id="XI7SxbY" resname="competence">
         <source>competence</source>
-        <target>__competence</target>
+        <target>competentie</target>
       </trans-unit>
       <trans-unit id="sJTbfOL" resname="contracts">
         <source>contracts</source>
-        <target>__contracts</target>
+        <target>contracten</target>
       </trans-unit>
       <trans-unit id="zIMh1jd" resname="contract">
         <source>contract</source>
-        <target>__contract</target>
+        <target>contract</target>
       </trans-unit>
       <trans-unit id="i0w8kGN" resname="interests">
         <source>interests</source>
-        <target>__interests</target>
+        <target>interesseren</target>
       </trans-unit>
       <trans-unit id="goQI5A1" resname="interest">
         <source>interest</source>
-        <target>__interest</target>
+        <target>interesseren</target>
       </trans-unit>
       <trans-unit id="eDvptp7" resname="job functions">
         <source>job functions</source>
-        <target>__job functions</target>
+        <target>functies</target>
       </trans-unit>
       <trans-unit id="xjAr7ci" resname="job function">
         <source>job function</source>
-        <target>__job function</target>
+        <target>functie</target>
       </trans-unit>
       <trans-unit id="LtX3OR7" resname="job postings">
         <source>job postings</source>
-        <target>__job postings</target>
+        <target>vactures</target>
       </trans-unit>
       <trans-unit id="ZSm9Xvg" resname="job Posting">
         <source>job Posting</source>
-        <target>__job Posting</target>
+        <target>vacature</target>
       </trans-unit>
       <trans-unit id="MsHPSaL" resname="skills">
         <source>skills</source>
@@ -1935,7 +1935,7 @@
       </trans-unit>
       <trans-unit id="P7RWI8s" resname="section">
         <source>section</source>
-        <target>__section</target>
+        <target>sectie</target>
       </trans-unit>
       <trans-unit id="drrSXDS" resname="the queue component holds queues">
         <source>the queue component holds queues</source>
@@ -1963,15 +1963,15 @@
       </trans-unit>
       <trans-unit id="JZt8uW5" resname="user configuration">
         <source>user configuration</source>
-        <target>__user configuration</target>
+        <target>gebruikersconfiguratie</target>
       </trans-unit>
       <trans-unit id="Hhm6spv" resname="providers">
         <source>providers</source>
-        <target>__providers</target>
+        <target>aanbieders</target>
       </trans-unit>
       <trans-unit id="XEwZZDQ" resname="provider">
         <source>provider</source>
-        <target>__provider</target>
+        <target>aanbieder</target>
       </trans-unit>
       <trans-unit id="xR5FW0H" resname="tokens">
         <source>tokens</source>
@@ -1995,7 +1995,7 @@
       </trans-unit>
       <trans-unit id="6rfBUqn" resname="post office box number">
         <source>post office box number</source>
-        <target>__post office box number</target>
+        <target>postbusnummer</target>
       </trans-unit>
       <trans-unit id="YAjCb0R" resname="street">
         <source>street</source>
@@ -2007,7 +2007,7 @@
       </trans-unit>
       <trans-unit id="v4p3Dn2" resname="house number suffix">
         <source>house number suffix</source>
-        <target>__house number suffix</target>
+        <target>huisnummertoevoeging</target>
       </trans-unit>
       <trans-unit id="C.lz6Ex" resname="postal code">
         <source>postal code</source>
@@ -2091,7 +2091,7 @@
       </trans-unit>
       <trans-unit id=".WDEWdA" resname="withdrawn">
         <source>withdrawn</source>
-        <target>__withdrawn</target>
+        <target>ingetrokken</target>
       </trans-unit>
       <trans-unit id="sJNgL3x" resname="forward url">
         <source>forward url</source>
@@ -2163,7 +2163,7 @@
       </trans-unit>
       <trans-unit id="LHDhK3o" resname="key">
         <source>key</source>
-        <target>__key</target>
+        <target>sleutel</target>
       </trans-unit>
       <trans-unit id="hCpGl.0" resname="Deployments">
         <source>Deployments</source>
@@ -2172,14 +2172,6 @@
       <trans-unit id="9Aksmzw" resname="Grave registration">
         <source>Grave registration</source>
         <target>graf registratie</target>
-      </trans-unit>
-      <trans-unit id="e38iIUq" resname="commonground_resource">
-        <source>commonground_resource</source>
-        <target>__commonground_resource</target>
-      </trans-unit>
-      <trans-unit id="ZKsvEax" resname="resource.person">
-        <source>resource.person</source>
-        <target>__resource.person</target>
       </trans-unit>
       <trans-unit id="Zs2WiKK" resname="dashboard">
         <source>dashboard</source>
@@ -2215,7 +2207,7 @@
       </trans-unit>
       <trans-unit id="DvnB2hg" resname="set property">
         <source>set property</source>
-        <target>__set property</target>
+        <target>eigenschap instellen</target>
       </trans-unit>
       <trans-unit id="mCeW2P5" resname="edit task">
         <source>edit task</source>
@@ -2255,7 +2247,7 @@
       </trans-unit>
       <trans-unit id="ALEJzxE" resname="queue">
         <source>queue</source>
-        <target>__queue</target>
+        <target>wachtrij</target>
       </trans-unit>
       <trans-unit id="TUj7ps9" resname="alt">
         <source>alt</source>
@@ -2265,13 +2257,9 @@
         <source>href</source>
         <target>href</target>
       </trans-unit>
-      <trans-unit id="u2RxDuf" resname="chamber of comerce">
-        <source>chamber of comerce</source>
-        <target>__chamber of comerce</target>
-      </trans-unit>
       <trans-unit id="uUZyGxC" resname="Favorite icon">
         <source>Favorite icon</source>
-        <target>__Favorite icon</target>
+        <target>favoriete icoon</target>
       </trans-unit>
       <trans-unit id="NuZPGfV" resname="css">
         <source>css</source>
@@ -2355,7 +2343,7 @@
       </trans-unit>
       <trans-unit id="K0JE_yZ" resname="comments">
         <source>comments</source>
-        <target>__comments</target>
+        <target>opmerkingen</target>
       </trans-unit>
       <trans-unit id="flFnT3P" resname="edit schedule">
         <source>edit schedule</source>
@@ -2399,11 +2387,11 @@
       </trans-unit>
       <trans-unit id="HrXk4qp" resname="edit freebusy">
         <source>edit freebusy</source>
-        <target>__edit freebusy</target>
+        <target>freebusy aanpassen</target>
       </trans-unit>
       <trans-unit id="VkbJI2c" resname="freebusy">
         <source>freebusy</source>
-        <target>__freebusy</target>
+        <target>freebusy</target>
       </trans-unit>
       <trans-unit id="hvlxPen" resname="edit journal">
         <source>edit journal</source>
@@ -2431,11 +2419,11 @@
       </trans-unit>
       <trans-unit id="FAaUKRU" resname="ticket">
         <source>ticket</source>
-        <target>__ticket</target>
+        <target>ticket</target>
       </trans-unit>
       <trans-unit id="OzJRCd6" resname="variable">
         <source>variable</source>
-        <target>__variable</target>
+        <target>variabel</target>
       </trans-unit>
       <trans-unit id="qPp.1gi" resname="subscription">
         <source>subscription</source>
@@ -2469,13 +2457,145 @@
         <source>add external doc</source>
         <target>extern document toevoegen</target>
       </trans-unit>
-      <trans-unit id="oiJm75B" resname="search by reference">
-        <source>search by reference</source>
-        <target>zoek op kenmerk</target>
+      <trans-unit id="DXG67Qp" resname="camunda tasks">
+        <source>camunda tasks</source>
+        <target>camunda taak</target>
       </trans-unit>
-      <trans-unit id="oWih8Bm" resname="show all">
-        <source>show all</source>
-        <target>toon alle</target>
+      <trans-unit id="EVB6Di9" resname="new">
+        <source>new</source>
+        <target>nieuwe</target>
+      </trans-unit>
+      <trans-unit id="KOA5RR3" resname="add telephone">
+        <source>add telephone</source>
+        <target>telefoon toevoegen</target>
+      </trans-unit>
+      <trans-unit id="pYY7rS8" resname="add person">
+        <source>add person</source>
+        <target>persoon toevoegen</target>
+      </trans-unit>
+      <trans-unit id="a58Ek7l" resname="add address">
+        <source>add address</source>
+        <target>adres toevoegen</target>
+      </trans-unit>
+      <trans-unit id="zgdMJzB" resname="add email">
+        <source>add email</source>
+        <target>email toevoegen</target>
+      </trans-unit>
+      <trans-unit id="Rt_JKGd" resname="add organization">
+        <source>add organization</source>
+        <target>organisatie toevoegen</target>
+      </trans-unit>
+      <trans-unit id="G4NthoB" resname="first name">
+        <source>first name</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="swL3um1" resname="additional name">
+        <source>additional name</source>
+        <target>tussenvoegsels</target>
+      </trans-unit>
+      <trans-unit id="t1ViRAm" resname="family name">
+        <source>family name</source>
+        <target>achternaam</target>
+      </trans-unit>
+      <trans-unit id="LkMwuAZ" resname="mailer">
+        <source>mailer</source>
+        <target>mailer</target>
+      </trans-unit>
+      <trans-unit id="hYpWgDP" resname="messageBird">
+        <source>messageBird</source>
+        <target>messageBird</target>
+      </trans-unit>
+      <trans-unit id="y7guvsY" resname="authorization">
+        <source>authorization</source>
+        <target>autorisatie</target>
+      </trans-unit>
+      <trans-unit id="2l4R76N" resname="concept">
+        <source>concept</source>
+        <target>concept</target>
+      </trans-unit>
+      <trans-unit id="02vmSUJ" resname="queued">
+        <source>queued</source>
+        <target>in wachtrij</target>
+      </trans-unit>
+      <trans-unit id="hkdK5uq" resname="sending">
+        <source>sending</source>
+        <target>bezig met verzenden</target>
+      </trans-unit>
+      <trans-unit id="J84dG.Q" resname="send">
+        <source>send</source>
+        <target>verzonden</target>
+      </trans-unit>
+      <trans-unit id="Nz4HEsg" resname="delivered">
+        <source>delivered</source>
+        <target>geleverd</target>
+      </trans-unit>
+      <trans-unit id="XuOOXnr" resname="external Service Id">
+        <source>external Service Id</source>
+        <target>__external Service Id</target>
+      </trans-unit>
+      <trans-unit id="enQA9GZ" resname="not started">
+        <source>not started</source>
+        <target>niet gestart</target>
+      </trans-unit>
+      <trans-unit id="A0lK.UJ" resname="started">
+        <source>started</source>
+        <target>gestart</target>
+      </trans-unit>
+      <trans-unit id="a4ayc.8" resname="1">
+        <source>1</source>
+        <target>1</target>
+      </trans-unit>
+      <trans-unit id="1HNeOiZ" resname="2">
+        <source>2</source>
+        <target>2</target>
+      </trans-unit>
+      <trans-unit id="TgdAhWK" resname="3">
+        <source>3</source>
+        <target>3</target>
+      </trans-unit>
+      <trans-unit id="SyJ3d9T" resname="4">
+        <source>4</source>
+        <target>4</target>
+      </trans-unit>
+      <trans-unit id="7y0SfeN" resname="5">
+        <source>5</source>
+        <target>5</target>
+      </trans-unit>
+      <trans-unit id="5.bAEXd" resname="6">
+        <source>6</source>
+        <target>6</target>
+      </trans-unit>
+      <trans-unit id="eQJpm_Q" resname="7">
+        <source>7</source>
+        <target>7</target>
+      </trans-unit>
+      <trans-unit id="LGJCMs3" resname="8">
+        <source>8</source>
+        <target>8</target>
+      </trans-unit>
+      <trans-unit id="GVgeJ95" resname="9">
+        <source>9</source>
+        <target>9</target>
+      </trans-unit>
+      <trans-unit id="Tds_loA" resname="completed">
+        <source>completed</source>
+        <target>voltooid</target>
+      </trans-unit>
+      <trans-unit id="S4xRttV" resname="edit place property">
+        <source>edit place property</source>
+        <target>plaats eigenschap aanpassen</target>
+      </trans-unit>
+      <trans-unit id="lA8JteS" resname="add place property">
+        <source>add place property</source>
+        <target>plaats eigenschap toevoegen</target>
+      </trans-unit>
+      <trans-unit id="kPA56rN" resname="place properties">
+        <source>place properties</source>
+        <target>plaats eigenschappen</target>
+      </trans-unit>
+      <trans-unit id="j1QQj1Y" resname="chamber of commerce">
+        <source>chamber of commerce</source>
+        <target>kamer van koophandel</target>
       </trans-unit>
     </body>
   </file>
