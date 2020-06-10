@@ -293,8 +293,6 @@
 
     //logic for configurations
 
-    let propArray = [];
-
     function configButton(){
         let counts = document.getElementById("configBody").lastChild.id;
         let parent = document.getElementById("configBody");
@@ -308,8 +306,6 @@
         let tdButton = document.createElement("td");
         let delButton = document.createElement("button");
         let counter;
-
-
 
 
         if(counts !== undefined){
@@ -380,10 +376,12 @@
 
         let propValues = document.getElementsByClassName("propertyValue");
         let propNames = document.getElementsByClassName("propertyName");
+        let propArray = [];
 
-        console.log(propNames.length);
-        console.log(propValues.length);
-        //propArray.push({ name: nameValue, value: valueValue})
+        for(let i = 0; i < propValues.length; i ++){
+            propArray.push({name: propNames[i].value, value: propValues[i].value  });
+        }
+        console.log(propArray);
     }
 
     //audit_trails
