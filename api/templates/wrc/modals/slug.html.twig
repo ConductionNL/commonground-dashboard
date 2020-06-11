@@ -14,35 +14,37 @@
             <form action="{{ path(route, {id: resource.id}) }}" method="post">
                 <div class="form-group">
                     <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="slug[name]" name="slug[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
+                    <input type="text" class="form-control form-control-lg" id="slugs[name]" name="slugs[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="slug[description]" name="slug[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="slugs[description]" name="slugs[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
-                    <label for="slug[template]">{{ 'template'|trans|capitalize }}</label>
-                    <select id="slug[template]" name="slug[template]" class="form-control form-control-lg" required>
-                    {% if templates is defined %}
-                        {% for template in templates %}
-                            <option value="{{ template['@id'] }}" {% if item.template  is defined and template['@id'] == item.template['@id'] %}selected=""{% endif %} >{{ template.name }}</option>
-                        {% endfor %}
-                    {% endif %}
+                    <label for="slugs[template]">{{ 'template'|trans|capitalize }}</label>
+                    <select id="slugs[template]" name="slugs[template]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                        {% endif %}
                     </select>
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="{% if item.slug is defined %}{{ item.slug }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="slugs[slug]" name="slugs[slug]" value="{% if item.slug is defined %}{{ item.slug }}{% endif %}">
                 </div><!-- /.form-group -->
 
                 {% if item['id'] is defined %}
-                    <input type="hidden" id="slug[id]" name ="slug[id]" value="{{ item['id'] }}">
+                    <input type="hidden" id="slugs[id]" name ="slugs[id]" value="{{ item['id'] }}">
                 {% endif %}
                 {% if item['@id'] is defined %}
-                    <input type="hidden" id="slug[@id]" name ="slug[@id]" value="{{ item['@id'] }}">
+                    <input type="hidden" id="slugs[@id]" name ="slugs[@id]" value="{{ item['@id'] }}">
                 {% endif %}
                 <button type="submit" class="btn btn-success m-3  mx-auto">
-                    {{ 'add'|trans|capitalize }}
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
                 </button>
             </form>
         </div>

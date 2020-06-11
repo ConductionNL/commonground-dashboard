@@ -2,13 +2,13 @@
     <div class="card-header">
         <h3 class="d-inline-block">{{ 'slugs'|trans|capitalize }}</h3>
     </div>
-    {% if resource.slugs is defined %}
+    {% if slugs is defined %}
         <div class="card-list">
-            {% for slug in resource.slugs %}
+            {% for slug in slugs %}
                 <div class="item-list">
                     <div class="info-user ml-3">
                         <div class="username"><h4>{{ slug.name|capitalize }}</h4></div>
-                        <div class="status">{{ slug.application.name }}</div>
+                        <div class="status">{{ slug.slug }}</div>
                     </div>
                     <button class="btn btn-icon btn-primary btn-round btn-s"
                        style="margin-right: 5px"
@@ -39,7 +39,7 @@
 {# the slugs modals #}
 {% include 'wrc/modals/slug.html.twig'
     with {
-    'route': 'app_wrc_application',
+    'route': 'app_wrc_template',
     'resource':resource,
     'id':'addSlug' } %}
 
@@ -47,14 +47,14 @@
     {% for slug in slugs %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_wrc_application',
+            'route': 'app_wrc_slug',
             'resource':resource,
             'item':slug,
             'id':'deleteSlug' } %}
 
         {% include 'wrc/modals/slug.html.twig'
             with {
-            'route': 'app_wrc_application',
+            'route': 'app_wrc_template',
             'resource':resource,
             'item':slug,
             'id':'editSlug' } %}

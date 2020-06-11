@@ -148,7 +148,7 @@
                             <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                             <input type="text" class="form-control form-control-lg" id="configName" name="name" value="">
                         </div><!-- /.form-group -->
-                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="configButton();">{{ 'add'|trans|capitalize }}</button>
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal"  onclick="configButton();">{{ 'add'|trans|capitalize }}</button>
                     </div>
                 </div>
             </div>
@@ -161,19 +161,19 @@
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'delete' } %}
 
             {% include 'widgets/auditTrail_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'auditTrial' } %}
 
             {% include 'widgets/changeLog_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'changeLog' } %}
 
