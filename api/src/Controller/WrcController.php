@@ -40,7 +40,7 @@ class WrcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('templates');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('templates');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'],['limit=90'])['hydra:member'];
 
         return $variables;
     }
