@@ -36,7 +36,9 @@
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
                                         {% if resource.status is defined %}
-                                            <button href="#" class="btn btn-dark mr-4" disabled>{{ resource.status|trans|capitalize }}</button>
+                                            <a href="#statusLog" class="btn btn-info" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#statusLog">{{ resource.status }}</a>
                                         {% endif %}
                                         <a class="btn btn-primary mr-4" href="{{ path('app_evc_clusters')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
@@ -523,6 +525,12 @@
                 'route': 'app_evc_cluster',
                 'resource':resource,
                 'id':'changeLog' } %}
+
+            {% include 'widgets/statusLog_modal.html.twig'
+                with {
+                'route': 'app_cc_cluster',
+                'resource':resource,
+                'id':'statusLog' } %}
 
 
             {% include 'footer.html.twig' %}
