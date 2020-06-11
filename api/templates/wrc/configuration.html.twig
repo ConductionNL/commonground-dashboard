@@ -161,19 +161,19 @@
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'delete' } %}
 
             {% include 'widgets/auditTrail_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'auditTrial' } %}
 
             {% include 'widgets/changeLog_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'changeLog' } %}
 

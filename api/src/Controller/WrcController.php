@@ -53,7 +53,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'templates', 'id'=> $id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'templates', 'id'=> $id]);
 
             return $this->redirect($this->generateUrl('app_wrc_templates'));
         }
@@ -134,7 +134,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'template_groups', 'id'=> $id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'template_groups', 'id'=> $id]);
 
             return $this->redirect($this->generateUrl('app_wrc_templategroups'));
         }
@@ -146,7 +146,7 @@ class WrcController extends AbstractController
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'template_groups', 'id'=> $id]);
-            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], ['templateGroups'=> $variables['resource']['@id']])['hydra:member'];
+            $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], ['templateGroups.id'=>$id])['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('template groups');
@@ -205,7 +205,7 @@ class WrcController extends AbstractController
 
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'slugs', 'id'=>$id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'slugs', 'id'=>$id]);
 
             return $this->redirect($this->generateUrl('app_wrc_slugs'));
         }
@@ -265,7 +265,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'organizations', 'id'=>$id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'organizations', 'id'=>$id]);
 
             return $this->redirect($this->generateUrl('app_wrc_organizations'));
         }
@@ -327,7 +327,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'images', 'id'=>$id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'images', 'id'=>$id]);
 
             return $this->redirect($this->generateUrl('app_wrc_images'));
         }
@@ -387,7 +387,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'styles', 'id'=>$id]);
+            $commonGroundService->deleteResource(null, ['component'=>'wrc', 'type'=>'styles', 'id'=>$id]);
 
             return $this->redirect($this->generateUrl('app_wrc_styles'));
         }
@@ -595,7 +595,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'menus', 'id'=>$id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'menus', 'id'=>$id]);
 
             return $this->redirect($this->generateUrl('app_wrc_menus'));
         }
@@ -605,8 +605,10 @@ class WrcController extends AbstractController
         // Lets see if we need to create
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+            $variables['menuItems'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'menus', 'id'=>$id]);
+            $variables['menuItems'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'menu_items'], ['menu.id'=>$id])['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('menu');
@@ -687,7 +689,7 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource(['component'=>'wrc', 'type'=>'configurations', 'id'=>$id]);
+            $commonGroundService->deleteResource(null,['component'=>'wrc', 'type'=>'configurations', 'id'=>$id]);
 
             return $this->redirect($this->generateUrl('app_wrc_configurations'));
         }

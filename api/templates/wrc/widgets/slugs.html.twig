@@ -47,7 +47,7 @@
     {% for slug in slugs %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_wrc_template',
+            'route': 'app_wrc_slug',
             'resource':resource,
             'item':slug,
             'id':'deleteSlug' } %}
