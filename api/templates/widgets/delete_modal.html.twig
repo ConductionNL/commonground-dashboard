@@ -5,7 +5,7 @@
         <div class="modal-content">
             <form action="{% if item is defined %}{{ path( route , {id: item.id,'action':'delete'})}}{% else %}{{ path( route , {id: resource.id,'action':'delete'}) }}{% endif %}" method="post">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'delete'|trans|capitalize }}{% if item is defined%}{{ item.name}} {% elseif resource.name is defined %}{{ resource.name }}{% elseif resource.reference is defined %} {{ resource.reference}}{% elseif resource is defined %}{{ resource.id }}{% else %}{{ 'item' }}{% endif %}</b></h5>
+                    <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'delete'|trans|capitalize }} {% if item is defined%}{{ item.name}} {% elseif resource.name is defined %}{{ resource.name }}{% elseif resource.reference is defined %} {{ resource.reference}}{% elseif resource is defined %}{{ resource.id }}{% else %}{{ 'item' }}{% endif %}</b></h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>

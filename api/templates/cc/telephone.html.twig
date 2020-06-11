@@ -37,6 +37,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
+
                                         <a class="btn btn-primary mr-4" href="{{ path('app_cc_telephones')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
                                            data-toggle="modal"
@@ -78,7 +79,12 @@
                         </div><!-- /.card -->
                     </div>
                 </div>
+
         </div><!-- /.page-inner -->
+
+
+
+
 
         {% include 'widgets/delete_modal.html.twig'
             with {
@@ -104,7 +110,11 @@
     </div>
     </div>
     <script>
+
     {% block javascript %}
+
+
+
     //audit_trails
     $.ajax({
         url: "/api/cc/audit_trails",

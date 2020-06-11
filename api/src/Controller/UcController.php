@@ -142,18 +142,8 @@ class UcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            // Lets see if we also need to add an configuration
-            if (array_key_exists('scope', $resource)) {
-                $scope = $resource['scope'];
-
-                // The resource action section
-                if (array_key_exists('@id', $scope) && array_key_exists('action', $scope)) {
-                }
-
-                $scope = $commonGroundService->saveResource($scope, ['component'=>'wrc', 'type'=>'scope']);
-                $variables['templates'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], ['application.id'=>$id])['hydra:member'];
-            }
-
+            // Lets see if we also need to add an configurati
+            var_dump($resource);
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */
