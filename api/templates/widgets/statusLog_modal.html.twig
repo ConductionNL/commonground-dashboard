@@ -12,7 +12,7 @@
                 </button>
             </div><!-- /.header -->
             <div>
-                <h3>Status: {{ resource.status }}</h3>
+                <h3>Status: {% if resource.status is defined %}{{ resource.status }}{% endif %}</h3>
                 <h4>Configuration status:</h4>
                 {% if resource.configurations is defined and resource.configurations is not empty %}
                     {% for configuration in resource.configurations %}
