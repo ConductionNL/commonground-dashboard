@@ -57,12 +57,23 @@
                                 <div class="card-body">
                                     <div class="row">
 
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-md-4 col-sm-4">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
                                                        name="name" placeholder="Large Input"
                                                        value="{{ resource.name }}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'provider'|trans|capitalize }}</label>
+                                                <select type="text" class="form-control form-control-lg" id="name"
+                                                       name="provider" placeholder="Large Input">
+                                                    <option value="">{{ 'none'|trans|capitalize }}</option>
+                                                    <option value="Digital Ocean">Digital Ocean</option>
+                                                    <option value="CYSO">CYSO</option>
+                                                </select>
                                             </div>
                                         </div> <!-- /.col -->
 
@@ -73,6 +84,15 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
                                                 <textarea class="form-control summernote" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+                                <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'kubeconfig'|trans|capitalize }}</label>
+                                                <textarea class="form-control" rows="5" id="description" name=kubeconfig></textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
