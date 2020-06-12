@@ -96,16 +96,17 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
+                            </form>
+                            <div class="card-action">
+                                {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                            </div><!-- /.card-action -->
                                 </div> <!-- /.card-body -->
 
-                                <div class="card-action">
-                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-                                </div><!-- /.card-action -->
-                            </form>
-                        </div><!-- /.card -->
-                    </div>
-                </div>
 
+
+                        </div><!-- /.card -->
+
+                    </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card p-4 full-height">
@@ -195,35 +196,35 @@
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 {% if domains is defined %}
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                                        <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
-                                                        <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {% for installation in installations %}
-                                                        {% if installation.environment.name == "dev" %}
-                                                            <tr>
-                                                                <td>{{ installation.name }}</td>
-                                                                <td>{{ installation.deploymentName }}</td>
-                                                                <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
-                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
-                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
-                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
-                                                                <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
-                                                            </tr>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    </tbody>
-                                                </table>
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                                            <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
+                                                            <th scope="col">{{ 'environment'|trans|capitalize }}</th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for installation in installations %}
+                                                            {% if installation.environment.name == "dev" %}
+                                                                <tr>
+                                                                    <td>{{ installation.name }}</td>
+                                                                    <td>{{ installation.deploymentName }}</td>
+                                                                    <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                                </tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -239,35 +240,35 @@
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 {% if domains is defined %}
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                                        <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
-                                                        <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {% for installation in installations %}
-                                                        {% if installation.environment.name == "prod" %}
+                                                    <table class="table table-hover">
+                                                        <thead>
                                                         <tr>
-                                                            <td>{{ installation.name }}</td>
-                                                            <td>{{ installation.deploymentName }}</td>
-                                                            <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
-                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
-                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
-                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
-                                                            <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                                            <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
+                                                            <th scope="col">{{ 'environment'|trans|capitalize }}</th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"></th>
                                                         </tr>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    </tbody>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for installation in installations %}
+                                                            {% if installation.environment.name == "prod" %}
+                                                                <tr>
+                                                                    <td>{{ installation.name }}</td>
+                                                                    <td>{{ installation.deploymentName }}</td>
+                                                                    <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
+                                                                    <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                                </tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -277,6 +278,9 @@
                         </div>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                </div>
+
+
             </div><!-- /.page-inner -->
 
             <div class="modal fade" style="text-align: center" id="addDomain" tabindex="-1"
