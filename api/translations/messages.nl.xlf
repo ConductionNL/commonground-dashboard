@@ -2603,7 +2603,7 @@
       </trans-unit>
       <trans-unit id="d2tXShw" resname="rolling update">
         <source>rolling update</source>
-        <target>doorlopende update</target>
+        <target>bijwerken</target>
       </trans-unit>
       <trans-unit id="zY3g3xa" resname="search by reference">
         <source>search by reference</source>
