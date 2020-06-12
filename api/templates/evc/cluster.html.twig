@@ -264,6 +264,7 @@
                                                             <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
                                                             <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
                                                         </tr>
+                                                        {% endif %}
                                                     {% endfor %}
                                                     </tbody>
                                                 </table>
