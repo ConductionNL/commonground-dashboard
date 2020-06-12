@@ -253,7 +253,7 @@
                                                     </thead>
                                                     <tbody>
                                                     {% for installation in installations %}
-                                                        {% if installation.environment.name = "dev" %}
+                                                        {% if installation.environment.name == "prod" %}
                                                         <tr>
                                                             <td>{{ installation.name }}</td>
                                                             <td>{{ installation.deploymentName }}</td>
