@@ -140,8 +140,6 @@ class VtcController extends AbstractController
                 }
 
                 $property = $commonGroundService->saveResource($property, ['component'=>'vtc', 'type'=>'properties']);
-
-                return $this->redirect($this->generateUrl('app_vtc_requesttype', ['id'=>$id]));
             }
 
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'vtc', 'type'=>'request_types']);

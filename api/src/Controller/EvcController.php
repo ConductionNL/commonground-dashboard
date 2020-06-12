@@ -245,7 +245,7 @@ class EvcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('components');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('components');
-        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components')['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components',['limit'=>90])['hydra:member'];
 
         return $variables;
     }
