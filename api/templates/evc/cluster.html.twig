@@ -162,39 +162,98 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {% if domains is defined %}
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
-                                            <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for installation in installations %}
-                                            <tr>
-                                                <td>{{ installation.name }}</td>
-                                                <td>{{ installation.deploymentName }}</td>
-                                                <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
-                                                <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% endif %}
-                            </div> <!-- /.card-body -->
-                            <div class="card-action">
-                            </div><!-- /.card-action -->
-                        </div><!-- /.card -->
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card" style="background-color: white !important;">
+                                        <div class="card-header" id="headingOne">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    {{ 'dev omgeving'|trans|capitalize }}
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <{% if domains is defined %}
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                                        <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
+                                                        <th scope="col">{{ 'environment'|trans|capitalize }}</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for installation in installations %}
+                                                        {% if installation.environment.name == "dev" %}
+                                                            <tr>
+                                                                <td>{{ installation.name }}</td>
+                                                                <td>{{ installation.deploymentName }}</td>
+                                                                <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
+                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
+                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
+                                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
+                                                                <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" style="background-color: white !important;">
+                                        <div class="card-header" id="headingTwo">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    {{ 'prod omgeving'|trans|capitalize }}
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <{% if domains is defined %}
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                                        <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
+                                                        <th scope="col">{{ 'environment'|trans|capitalize }}</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for installation in installations %}
+                                                        {% if installation.environment.name = "dev" %}
+                                                        <tr>
+                                                            <td>{{ installation.name }}</td>
+                                                            <td>{{ installation.deploymentName }}</td>
+                                                            <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
+                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
+                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
+                                                            <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
+                                                            <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
