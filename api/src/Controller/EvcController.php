@@ -97,15 +97,13 @@ class EvcController extends AbstractController
                 if (array_key_exists('id', $environment)) {
                     $environment['@id'] = $environment['id'];
                 }
-                $environment['debug'] = (int)$environment['debug'];
-                $environment['cache'] = (int)$environment['cache'];
+                $environment['debug'] = (int) $environment['debug'];
+                $environment['cache'] = (int) $environment['cache'];
 
-                $environment = $commonGroundService->saveResource($environment,['component'=>'evc','type'=>'environments']);
+                $environment = $commonGroundService->saveResource($environment, ['component'=>'evc', 'type'=>'environments']);
             }
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
-
-
 
                 $installation['cluster'] = $resource['@id'];
                 if (array_key_exists('id', $installation)) {
@@ -245,7 +243,7 @@ class EvcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('components');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('components');
-        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components',['limit'=>90])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components', ['limit'=>90])['hydra:member'];
 
         return $variables;
     }
@@ -400,16 +398,17 @@ class EvcController extends AbstractController
         if ($request->query->get('action') == 'upgrade') {
             $commonGroundService->getResource($variables['resource']['@id'].'/upgrade', null, true);
             //var_dump($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
-    	}
-        if($request->query->get('action') == 'rollingupdate'){
+            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+        }
+        if ($request->query->get('action') == 'rollingupdate') {
             $commonGroundService->getResource($variables['resource']['@id'].'/rollingupdate', null, true);
             //var_dump($variables['resource']);
             return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
         }
-    	if($request->query->get('action') == 'uninstall'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/delete');
-    		var_dump($variables['resource']);
+        if ($request->query->get('action') == 'uninstall') {
+            $commonGroundService->getResource($variables['resource']['@id'].'/delete');
+            var_dump($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
         }
         if ($request->query->get('action') == 'uninstall') {
