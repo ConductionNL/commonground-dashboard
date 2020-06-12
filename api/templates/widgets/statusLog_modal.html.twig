@@ -12,7 +12,16 @@
                 </button>
             </div><!-- /.header -->
             <div>
-                Hallo ik ben status informatie!
+                <h3>Status: {{ resource.status }}</h3>
+                <h4>Configuration status:</h4>
+                {% if resource.configurations is defined and resource.configurations is not empty %}
+                    {% for configuration in resource.configurations %}
+                        {{ configuration }} installed <br>
+                    {% endfor %}
+                {% endif %}
+                <h4>Configuration date</h4>
+                {% if resource.dateConfigured is defined and resource.dateConfigured is not empty %}
+                {{ resource.dateConfigured }}
             </div>
         </div><!-- /.content -->
     </div><!-- /.modal-dialog -->
