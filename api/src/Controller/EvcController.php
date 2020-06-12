@@ -213,12 +213,12 @@ class EvcController extends AbstractController
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
         } else {
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'components', 'id'=>$id]);
-            $variables['installations'] = $commonGroundService->getResourceList(['component' => 'evc', 'type' => 'installations'], ['component.id' => $id])['hydra:member'];
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'environments', 'id'=>$id]);
+
         }
 
-        $variables['title'] = $translator->trans('component');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('component');
+        $variables['title'] = $translator->trans('environment');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -227,13 +227,12 @@ class EvcController extends AbstractController
             $resource = $request->request->all();
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
-            $resource['core'] = (bool) $resource['core'];
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'components']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'environments']);
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_ecv_components', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_ecv_environments', ['id' =>  $variables['resource']['id']]));
             }
         }
 
