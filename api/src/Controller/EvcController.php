@@ -105,7 +105,7 @@ class EvcController extends AbstractController
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
 
-                if($installation['deploymentName'] == ""){
+                if ($installation['deploymentName'] == '') {
                     unset($installation['deploymentName']);
                 }
 
@@ -214,7 +214,6 @@ class EvcController extends AbstractController
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'environments', 'id'=>$id]);
-
         }
 
         $variables['title'] = $translator->trans('environment');
