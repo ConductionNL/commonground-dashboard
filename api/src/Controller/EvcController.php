@@ -218,6 +218,9 @@ class EvcController extends AbstractController
 
         $variables['title'] = $translator->trans('environment');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
+        $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'])['hydra:member'];
+        $variables['clusters'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
+        $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {

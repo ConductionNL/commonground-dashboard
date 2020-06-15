@@ -145,7 +145,7 @@
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'environments'|trans|capitalize }}</h3>
                                 <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addEnvironment"  data-toggle="modal" data-target="#addEnvironment">{{ 'add environment'|trans|capitalize }}</a>
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: 'new'}) }}"  data-target="#addEnvironment">{{ 'add environment'|trans|capitalize }}</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -161,7 +161,7 @@
                                         {% for environment in environments %}
                                             <tr>
                                                 <td>{{ environment.name }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editEnvironment{{ environment.id }}"  data-toggle="modal" data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: environment.id}) }}"  data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
