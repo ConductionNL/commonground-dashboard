@@ -254,7 +254,7 @@ class EvcController extends AbstractController
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_evc_environments', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['cluster']['id']]));
             }
         }
 
