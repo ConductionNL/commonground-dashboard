@@ -38,7 +38,6 @@
                                         {% if resource.cluster is defined %}
                                             <a class="btn btn-primary mr-4" href="{{ path('app_evc_cluster', {id:resource.cluster.id})}}"><i class="fas fa-long-arrow-alt-left"></i> {{ 'cluster'|trans|capitalize }}</a>
                                         {% endif %}
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_evc_environments')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
