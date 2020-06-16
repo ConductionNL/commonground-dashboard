@@ -180,11 +180,15 @@
                                                             <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'edit'|trans|capitalize }}</button>
                                                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                 <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
-                                                                <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
-                                                                <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
-                                                                <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
+                                                                {% if installation.dateInstalled != null %}
+                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
+                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
+                                                                {% else %}
+                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
+                                                                {% endif %}
                                                                 <div role="separator" class="dropdown-divider"></div>
                                                                 <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
+
                                                             </div>
                                                         </td>
                                                     </tr>
