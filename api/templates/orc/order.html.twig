@@ -36,15 +36,19 @@
                                     <h2 class="d-inline-block">{% if resource.name is defined %}{{ resource.name }}{% endif %} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_orc_orders')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
