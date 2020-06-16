@@ -156,8 +156,16 @@ class UserController extends AbstractController
      * @Route("user/dashboard")
      * @Template
      */
-    public function dashboardAction(Request $request)
+    public function dashboardAction(Request $request, CommonGroundService $commonGroundService)
     {
+
+        $user = $commonGroundService->getResource(['component'=>'uc', 'type'=>'users', 'id'=> 'b3b8c8b7-d4ec-4efd-a2dc-efecb11f3e8e']);
+
+
+        if($user['id'] = 'b3b8c8b7-d4ec-4efd-a2dc-efecb11f3e8e'){
+            return $this->redirect($this->generateUrl('app_vrc_requests', ['requestType'=>'5b10c1d6-7121-4be2-b479-7523f1b625f1']));
+        }
+
         return $this->redirect($this->generateUrl('app_wrc_templates'));
     }
 
