@@ -145,7 +145,7 @@
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'environments'|trans|capitalize }}</h3>
                                 <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addEnvironment"  data-toggle="modal" data-target="#addEnvironment">{{ 'add environment'|trans|capitalize }}</a>
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: 'new'}) }}"  data-target="#addEnvironment">{{ 'add environment'|trans|capitalize }}</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -161,7 +161,7 @@
                                         {% for environment in environments %}
                                             <tr>
                                                 <td>{{ environment.name }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editEnvironment{{ environment.id }}"  data-toggle="modal" data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: environment.id}) }}"  data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -505,7 +505,7 @@
                             <div class="form-group">
                                 <label for="">{{ 'helm version'|trans|capitalize }}</label>
                                 <select id="installation[helmVersion]" name="installation[helmVersion]" class="form-control form-control-lg">
-                                    <option value="">{{ 'none'|trans|capitalize }}</option>
+                                    <option value="">{{ 'default'|trans|capitalize }}</option>
                                             <option value="2.12.3">2.12.3</option>
                                             <option value="2.14.3">2.14.3</option>
                                             <option value="2.16.6">2.16.6</option>

@@ -173,7 +173,7 @@ class EvcController extends AbstractController
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_ecv_healthlogs', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_evc_healthlogs', ['id' =>  $variables['resource']['id']]));
             }
         }
 
@@ -218,6 +218,9 @@ class EvcController extends AbstractController
 
         $variables['title'] = $translator->trans('environment');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
+        $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'])['hydra:member'];
+        $variables['clusters'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
+        $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -231,7 +234,7 @@ class EvcController extends AbstractController
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_ecv_environments', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_evc_environments', ['id' =>  $variables['resource']['id']]));
             }
         }
 
@@ -291,7 +294,7 @@ class EvcController extends AbstractController
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_ecv_components', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_evc_components', ['id' =>  $variables['resource']['id']]));
             }
         }
 
