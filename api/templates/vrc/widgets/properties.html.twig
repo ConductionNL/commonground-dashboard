@@ -8,11 +8,14 @@
             <table class="table table-hover">
                 <tbody>
                 {% for property in requestType.properties %}
-                    {% if property.type is defined and property.type is not empty %}
+                    {% if property.type is defined and property.type is not empty and property.title != 'Order'
+                        and property.title != 'Type'
+                        and property.title != 'Extras'
+                        and property.title != 'Overig'%}
                     <tr>
                         <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                             {% if property.required is defined and property.required  %}
-                                {% if property.name in resource.properties|keys  %}
+                                {% if property.name in resource.properties|keys%}
                                     <i style="color: limegreen;" class="fas fa-check" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
                                 {% else %}
                                     <i style="color: red" class="fas fa-times" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
