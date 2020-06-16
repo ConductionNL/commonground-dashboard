@@ -38,7 +38,7 @@
                                         {% if resource.status is defined %}
                                             <a href="#statusLog" class="btn btn-info" style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#statusLog">{{ resource.status }}</a>
+                                               data-target="#statusLog">{{ 'status'|trans|capitalize }}</a>
                                         {% endif %}
                                         <a class="btn btn-primary mr-4" href="{{ path('app_evc_clusters')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
@@ -76,8 +76,6 @@
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
-
-
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -87,8 +85,7 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
-                                <div class="row">
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'kubeconfig'|trans|capitalize }}</label>
@@ -96,17 +93,14 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                            </form>
-                            <div class="card-action">
-                                {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-                            </div><!-- /.card-action -->
                                 </div> <!-- /.card-body -->
-
-
-
-                        </div><!-- /.card -->
-
-                    </div>
+                            <div class="card-action">
+                            {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                            </div><!-- /.card-action -->
+                            </form>
+                        </div> <!-- /.card-body -->
+                    </div><!-- /.card -->
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card p-4 full-height">
