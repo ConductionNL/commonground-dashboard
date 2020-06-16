@@ -35,23 +35,29 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        {% if resource.status is defined %}
-                                            <a href="#statusLog" class="btn btn-info" style="margin-right: 25px"
-                                               data-toggle="modal"
-                                               data-target="#statusLog">{{ resource.status }}</a>
-                                        {% endif %}
                                         <a class="btn btn-primary mr-4" href="{{ path('app_evc_clusters')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            {% if resource.status is defined %}
+                                                <a href="#statusLog" class="dropdown-item text" style="margin-right: 25px"
+                                                   data-toggle="modal"
+                                                   data-target="#statusLog"><i class="far fa-question-circle mr-2"></i>{{ 'status'|trans|capitalize }}</a>
+                                            {% endif %}
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <a href="{{ path('app_evc_cluster', {'id': resource.id, 'action':'load'}) }}" class="dropdown-item text"><i class="far fa-file-excel mr-2"></i>{{ 'load excel'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
-                                        <a href="{{ path('app_evc_cluster', {'id': resource.id, 'action':'load'}) }}" class="btn btn-info">{{ 'load excel'|trans|capitalize }}</a>
+
+
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -76,8 +82,6 @@
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
-
-
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
@@ -87,8 +91,7 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                                </div> <!-- /.card-body -->
-                                <div class="row">
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'kubeconfig'|trans|capitalize }}</label>
@@ -96,17 +99,14 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-                            </form>
-                            <div class="card-action">
-                                {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-                            </div><!-- /.card-action -->
                                 </div> <!-- /.card-body -->
-
-
-
-                        </div><!-- /.card -->
-
-                    </div>
+                            <div class="card-action">
+                            {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                            </div><!-- /.card-action -->
+                            </form>
+                        </div> <!-- /.card-body -->
+                    </div><!-- /.card -->
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card p-4 full-height">
@@ -145,7 +145,7 @@
                             <div class="card-header">
                                 <h3 class="d-inline-block">{{ 'environments'|trans|capitalize }}</h3>
                                 <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addEnvironment"  data-toggle="modal" data-target="#addEnvironment">{{ 'add environment'|trans|capitalize }}</a>
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: 'new'}) }}"  data-target="#addEnvironment">{{ 'add environment'|trans|capitalize }}</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -161,7 +161,7 @@
                                         {% for environment in environments %}
                                             <tr>
                                                 <td>{{ environment.name }}</td>
-                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editEnvironment{{ environment.id }}"  data-toggle="modal" data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
+                                                <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: environment.id}) }}"  data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -173,137 +173,7 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!--/.row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card p-4 full-height">
-                            <div class="card-header">
-                                <h3 class="d-inline-block">{{ 'installations'|trans|capitalize }}</h3>
-                                <div class="float-right">
-                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addInstallation"  data-toggle="modal" data-target="#addInstallation">{{ 'add installation'|trans|capitalize }}</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="accordion" id="accordionExample">
-                                    <div class="card" style="background-color: white !important;">
-                                        <div class="card-header" id="headingOne">
-                                            <h2 class="mb-0">
-                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    {{ 'dev omgeving'|trans|capitalize }}
-                                                </button>
-                                            </h2>
-                                        </div>
 
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                {% if domains is defined %}
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'dateCreated'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'dateInstalled'|trans|capitalize }}</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {% for installation in installations %}
-                                                            {% if installation.environment.name == "dev" %}
-                                                                <tr>
-                                                                    <td>{{ installation.name }}</td>
-                                                                    <td>{{ installation.deploymentName }}</td>
-                                                                    <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
-                                                                    <td>{{ installation.dateCreated }}</td>
-                                                                    <td>{% if installation.environment is defined %}{{ installation.dateInstalled }}{% else %}{{ 'pending'|trans|capitalize }}{% endif %}</td>
-                                                                    <td>
-                                                                        <div class="dropdown">
-                                                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                                                <span class="btn-label"><i class="fas fa-cog"></i></span> {{ 'edit'|trans|capitalize }}
-                                                                            </button>
-                                                                            <ul class="dropdown-menu" role="menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
-                                                                                    <div role="separator" class="dropdown-divider"></div>
-                                                                                    <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card" style="background-color: white !important;">
-                                        <div class="card-header" id="headingTwo">
-                                            <h2 class="mb-0">
-                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    {{ 'prod omgeving'|trans|capitalize }}
-                                                </button>
-                                            </h2>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                {% if domains is defined %}
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'dateCreated'|trans|capitalize }}</th>
-                                                            <th scope="col">{{ 'dateInstalled'|trans|capitalize }}</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {% for installation in installations %}
-                                                            {% if installation.environment.name == "prod" %}
-                                                                <tr>
-                                                                    <td>{{ installation.name }}</td>
-                                                                    <td>{{ installation.deploymentName }}</td>
-                                                                    <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
-                                                                    <td>{{ installation.dateCreated }}</td>
-                                                                    <td>{% if installation.environment is defined %}{{ installation.dateInstalled }}{% else %}{{ 'pending'|trans|capitalize }}{% endif %}</td>
-                                                                    <td>
-                                                                        <div class="dropdown">
-                                                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                                                <span class="btn-label"><i class="fas fa-cog"></i></span> {{ 'edit'|trans|capitalize }}
-                                                                            </button>
-                                                                            <ul class="dropdown-menu" role="menu">
-                                                                                <li>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
-                                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
-                                                                                    <div role="separator" class="dropdown-divider"></div>
-                                                                                    <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        </tbody>
-                                                    </table>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
                 </div>
 
 
@@ -485,153 +355,7 @@
                 {% endfor %}
             {% endif %}
 
-            <div class="modal fade" style="text-align: center" id="addInstallation" tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="addInstallationTitle" aria-hidden="true">
-                <div class="modal-dialog model-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addInstallationTitle"><b>{{ 'add schedule'|trans|capitalize }}</b></h5>
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="{{ path('app_evc_cluster', {id: resource.id}) }}" method="post">
-                            <div class="form-group">
-                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="installation[name]" name="installation[name]" value="" required>
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="largeInput">{{ 'deployment name'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="installation[deploymentName]" name="installation[deploymentName]" value="">
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                <input type="text" class="form-control form-control-lg" id="installation[description]" name="installation[description]" value="">
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="">{{ 'domain'|trans|capitalize }}</label>
-                                <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
-                                    <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% if domains is defined %}
-                                        {% for domain in domains %}
-                                            <option value="{{ domain['@id'] }}">{{ domain.name }}</option>
-                                        {% endfor %}
-                                    {% endif %}
-                                </select>
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="">{{ 'environment'|trans|capitalize }}</label>
-                                <select id="installation[environment]" name="installation[environment]" class="form-control form-control-lg">
-                                    <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% if environments is defined %}
-                                        {% for environment in environments %}
-                                            <option value="{{ environment['@id'] }}">{{ environment.name }}</option>
-                                        {% endfor %}
-                                    {% endif %}
-                                </select>
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="">{{ 'component'|trans|capitalize }}</label>
-                                <select id="installation[component]" name="installation[component]" class="form-control form-control-lg">
-                                    <option value="">{{ 'none'|trans|capitalize }}</option>
-                                    {% if components is defined %}
-                                        {% for component in components %}
-                                            <option value="{{ component['@id'] }}">{{ component.name }}</option>
-                                        {% endfor %}
-                                    {% endif %}
-                                </select>
-                            </div><!-- /.form-group -->
-                            <div class="form-group">
-                                <label for="">{{ 'helm version'|trans|capitalize }}</label>
-                                <select id="installation[helmVersion]" name="installation[helmVersion]" class="form-control form-control-lg">
-                                    <option value="">{{ 'none'|trans|capitalize }}</option>
-                                            <option value="2.12.3">2.12.3</option>
-                                            <option value="2.14.3">2.14.3</option>
-                                            <option value="2.16.6">2.16.6</option>
-                                </select>
-                            </div><!-- /.form-group -->
-                            <button type="submit" class="btn btn-success m-3  mx-auto">
-                                {{ 'add'|trans|capitalize }}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
-            {% if installations is defined %}
-                {% for installation in installations %}
-                    <div class="modal fade" style="text-align: center" id="editInstallation{{ installation.id }}" tabindex="-1"
-                         role="dialog"
-                         aria-labelledby="editInstallationTitle" aria-hidden="true">
-                        <div class="modal-dialog model-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editInstallationTitle"><b>{{ 'edit installation'|trans|capitalize }}</b></h5>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-{#                                {{ dump(installation) }}#}
-                                <form action="{{ path('app_evc_cluster', {id: resource.id}) }}" method="post">
-                                    <div class="form-group">
-                                        <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="installation[name]" name="installation[name]" value="{{ installation.name }}" required>
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="largeInput">{{ 'deployment name'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="installation[deploymentName]" name="installation[deploymentName]" value="{{ installation.deploymentName }}">
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="installation[description]" name="installation[description]" value="{{ installation.description }}">
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="">{{ 'domain'|trans|capitalize }}</label>
-                                        <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
-                                            <option value="">{{ 'none'|trans|capitalize }}</option>
-                                            {% if domains is defined %}
-                                                {% for domain in domains %}
-                                                    <option value="{{ domain['@id'] }}" {% if installation.domain is defined and domain['@id'] == installation.domain['@id'] %} selected=""{% endif %}>{{ domain.name }}</option>
-                                                {% endfor %}
-                                            {% endif %}
-                                        </select>
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="">{{ 'environment'|trans|capitalize }}</label>
-                                        <select id="installation[environment]" name="installation[environment]" class="form-control form-control-lg">
-                                            <option value="">{{ 'none'|trans|capitalize }}</option>
-                                            {% if environments is defined %}
-                                                {% for environment in environments %}
-                                                    <option value="{{ environment['@id'] }}" {% if installation.environment is defined and environment['@id'] == installation.environment['@id'] %} selected=""{% endif %}>{{ environment.name }}</option>
-                                                {% endfor %}
-                                            {% endif %}
-                                        </select>
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="">{{ 'component'|trans|capitalize }}</label>
-                                        <select id="installation[component]" name="installation[component]" class="form-control form-control-lg">
-                                            <option value="">{{ 'none'|trans|capitalize }}</option>
-                                            {% if components is defined %}
-                                                {% for component in components %}
-                                                    <option value="{{ component['@id'] }}" {% if installation.component is defined and component['@id'] == installation.component['@id'] %} selected=""{% endif %}>{{ component.name }}</option>
-                                                {% endfor %}
-                                            {% endif %}
-                                        </select>
-                                    </div><!-- /.form-group -->
-                                    <input type="hidden" id="installation[@id]" name ="installation[id]" value="{{ installation['@id'] }}">
-                                    <input type="hidden" id="installation[cluster]" name ="installation[cluster]" value="{{ resource['@id'] }}">
-                                    <button type="submit" class="btn btn-success m-3  mx-auto">
-                                        {{ 'edit'|trans|capitalize }}
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
