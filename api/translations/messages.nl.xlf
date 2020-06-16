@@ -2669,6 +2669,10 @@
         <source>community</source>
         <target>gemeente</target>
       </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target>meldingen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

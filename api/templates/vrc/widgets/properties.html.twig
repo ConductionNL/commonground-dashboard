@@ -9,7 +9,6 @@
                 <tbody>
                 {% for property in requestType.properties %}
                     {% if property.type is defined and property.type is not empty and property.title != 'Order'
-                        and property.title != 'Type'
                         and property.title != 'Extras'
                         and property.title != 'Overig'%}
                     <tr>
@@ -29,9 +28,9 @@
                         <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td> #}
                         <td>{% if property.name in resource.properties|keys  %}
                                 {% if resource.properties[property.name] is iterable %}
-                                    <ul style="padding-left: 0px;">
+                                    <ul style="padding-left: 0px; list-style-type:none;">
                                     {% for value in resource.properties[property.name] %}
-                                        <li class="m-2 ml-0">
+                                        <li class=" mt-3">
                                         {% include 'vrc/widgets/property.html.twig'
                                             with {
                                             'property':property,
