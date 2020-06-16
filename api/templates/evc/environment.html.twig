@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -64,7 +64,7 @@
                                                        value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'cluster'|trans|capitalize }}</label>
                                                 <select name="cluster" id="cluster" class="form-control form-control-lg" required>
@@ -73,6 +73,15 @@
                                                         <option value="{{ cluster['@id']}} "{% if resource.cluster is defined and resource.cluster['@id'] == cluster['@id']  %}selected{% endif %}>{{ cluster.name }}</option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'authorization'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="authorization"
+                                                       name="authorization" placeholder=""
+                                                       {% if resource.id != 'new' %}readonly{% endif %}
+                                                       value="{% if resource.authorization is defined %}{{ resource.authorization }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
                                     </div><!-- /.row -->
@@ -211,7 +220,7 @@
                         <div class="form-group">
                             <label for="largeInput">{{ 'deployment name'|trans|capitalize }}</label>
                             <input type="text" class="form-control form-control-lg" id="installation[deploymentName]" name="installation[deploymentName]" value="" placeholder="">
-                            <small class="form-text text-muted">{{ 'only fill in this form if you want another instance of an installed component. if you enter for example: \'db-test\'.'|trans|capitalize}} <br> {{' the url will become: \'db-test.domain\'.'|trans|capitalize }}</small>
+                            <small class="form-text text-muted">{{ 'only fill in this form if you want another instance of an installed component. if you enter for example: \'db-test\'.'|trans|capitalize}} <br> {{ 'the url will become: \'db-test.domain\'.'|trans }}</small>
                         </div><!-- /.form-group -->
                         <div class="form-group">
                             <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
