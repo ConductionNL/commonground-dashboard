@@ -191,7 +191,7 @@
       </trans-unit>
       <trans-unit id="YZdZVQP" resname="delete">
         <source>delete</source>
-        <target>verwijder</target>
+        <target>verwijderen</target>
       </trans-unit>
       <trans-unit id="FX3KkuQ" resname="save">
         <source>save</source>

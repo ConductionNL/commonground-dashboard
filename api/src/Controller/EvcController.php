@@ -230,6 +230,26 @@ class EvcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
+            if (array_key_exists('installation', $resource)) {
+                $installation = $resource['installation'];
+
+                if ($installation['deploymentName'] == '') {
+                    unset($installation['deploymentName']);
+                }
+
+                if (array_key_exists('id', $installation)) {
+                    $installation['@id'] = $installation['id'];
+                }
+                $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
+
+            }
+
+            //$resource['debug'] = (int)$resource['debug'];
+            //$resource['cache'] = (int)$resource['cache'];
+            //$resource['web'] = (int)$resource['web'];
+
+
+
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'environments']);
 
             /* @to this redirect is a hotfix */
@@ -400,29 +420,29 @@ class EvcController extends AbstractController
         if ($request->query->get('action') == 'install') {
             $commonGroundService->getResource($variables['resource']['@id'].'/install', null, true);
 //            var_dump($variables['resource']);
-            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
         if ($request->query->get('action') == 'upgrade') {
             $commonGroundService->getResource($variables['resource']['@id'].'/upgrade', null, true);
             //var_dump($variables['resource']);
-            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
         if ($request->query->get('action') == 'rollingupdate') {
             $commonGroundService->getResource($variables['resource']['@id'].'/rollingupdate', null, true);
             //var_dump($variables['resource']);
-            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
         if ($request->query->get('action') == 'uninstall') {
             $commonGroundService->getResource($variables['resource']['@id'].'/delete');
             var_dump($variables['resource']);
 
-            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
         if ($request->query->get('action') == 'uninstall') {
             $commonGroundService->getResource($variables['resource']['@id'].'/delete');
             var_dump($variables['resource']);
 
-            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
     }
 }
