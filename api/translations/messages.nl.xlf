@@ -2665,6 +2665,10 @@
         <source>status log</source>
         <target>status log</target>
       </trans-unit>
+      <trans-unit id="81TumeK" resname="community">
+        <source>community</source>
+        <target>gemeente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
