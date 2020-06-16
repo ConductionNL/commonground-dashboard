@@ -221,9 +221,8 @@
                         <div class="form-group">
                             <label for="">{{ 'domain'|trans|capitalize }}</label>
                             <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
-                                <option value="">{{ 'none'|trans|capitalize }}</option>
-                                {% if domains is defined %}
-                                    {% for domain in domains %}
+                                {% if resource.cluster.domains is defined %}
+                                    {% for domain in resource.cluster.domains %}
                                         <option value="{{ domain['@id'] }}">{{ domain.name }}</option>
                                     {% endfor %}
                                 {% endif %}
@@ -294,10 +293,9 @@
                                 <div class="form-group">
                                     <label for="">{{ 'domain'|trans|capitalize }}</label>
                                     <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
-                                        <option value="">{{ 'none'|trans|capitalize }}</option>
-                                        {% if domains is defined %}
-                                            {% for domain in domains %}
-                                                <option value="{{ domain['@id'] }}" {% if installation.domain is defined and domain['@id'] == installation.domain['@id'] %} selected=""{% endif %}>{{ domain.name }}</option>
+                                        {% if resource.cluster.domains is defined %}
+                                            {% for domain in resource.cluster.domains %}
+                                                <option value="{{ domain['@id'] }}">{{ domain.name }}</option>
                                             {% endfor %}
                                         {% endif %}
                                     </select>
