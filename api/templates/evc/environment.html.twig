@@ -35,22 +35,28 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_evc_environments')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        {% if resource.cluster is defined %}
+                                            <a class="btn btn-primary mr-4" href="{{ path('app_evc_cluster', {id:resource.cluster.id})}}"><i class="fas fa-long-arrow-alt-left"></i> {{ 'cluster'|trans|capitalize }}</a>
+                                        {% endif %}
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -58,7 +64,7 @@
                                                        value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'cluster'|trans|capitalize }}</label>
                                                 <select name="cluster" id="cluster" class="form-control form-control-lg" required>
@@ -69,31 +75,54 @@
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'authorization'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="authorization"
+                                                       name="authorization" placeholder=""
+                                                       {% if resource.id != 'new' %}readonly{% endif %}
+                                                       value="{% if resource.authorization is defined %}{{ resource.authorization }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
                                     </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'debug'|trans|capitalize }}</label>
-                                                <div class="form-check">
+                                                <div class="ml-2 form-check">
                                                     <input class="form-check-input" type="radio" name="debug" id="debug off" value="0" {% if resource.debug is defined and resource.debug == 0 %}checked{% endif %}>
                                                     <label class="form-check-label" for="debug off">{{ 'no'|trans|capitalize }}</label>
                                                 </div>
-                                                <div class="form-check">
+                                                <div class="ml-2 form-check">
                                                     <input class="form-check-input" type="radio" name="debug" id="debug on" value="1"{% if resource.debug is defined and resource.debug == 1 %}checked{% endif %}>
                                                     <label class="form-check-label" for="debug on">{{ 'yes'|trans|capitalize }}</label>
                                                 </div>
                                             </div><!-- /.form-group -->
                                         </div>
                                         <div class="col-md-3 col-sm-12">
-
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'cache'|trans|capitalize }}</label>
-                                                <div class="form-check">
+                                                <div class="form-check-label">
+                                                    <label  for="largeInput">{{ 'cache'|trans|capitalize }}</label>
+                                                </div>
+                                                <div class="ml-2 form-check">
                                                     <input class="form-check-input" type="radio" name="cache" id="cache off" value="0" {% if resource.cache is defined and resource.cache == 0 %}checked{% endif %}>
                                                     <label class="form-check-label" for="cache off">{{ 'no'|trans|capitalize }}</label>
                                                 </div>
-                                                <div class="form-check">
+                                                <div class="ml-2 form-check">
                                                     <input class="form-check-input" type="radio" name="cache" id="cache on" value="1" {% if resource.cache is defined and resource.cache == 1 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="cache on">{{ 'yes'|trans|capitalize }}</label>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'exposed backend'|trans|capitalize }}</label>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="web" id="web off" value="0" {% if resource.web is defined and resource.web == 0 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="cache off">{{ 'no'|trans|capitalize }}</label>
+                                                </div>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="web" id="web on" value="1" {% if resource.web is defined and resource.web == 1 %}checked{% endif %}>
                                                     <label class="form-check-label" for="cache on">{{ 'yes'|trans|capitalize }}</label>
                                                 </div>
                                             </div><!-- /.form-group -->
@@ -126,7 +155,7 @@
                                     <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addInstallation"  data-toggle="modal" data-target="#addInstallation">{{ 'add installation'|trans|capitalize }}</a>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body mb-5">
                                 {% if resource.installations is defined %}
                                     <table class="table table-hover">
                                         <thead>
@@ -134,9 +163,8 @@
                                                 <th scope="col">{{ 'name'|trans|capitalize }}</th>
                                                 <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
                                                 <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                                <th scope="col"></th>
-                                                <th scope="col"></th>
-                                                <th scope="col"></th>
+                                                <th scope="col">{{ 'dateCreated'|trans|capitalize }}</th>
+                                                <th scope="col">{{ 'dateInstalled'|trans|capitalize }}</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
@@ -146,11 +174,23 @@
                                                         <td>{{ installation.name }}</td>
                                                         <td>{{ installation.deploymentName }}</td>
                                                         <td>{% if installation.environment is defined %}{{ resource.name }}{% endif %}</td>
-                                                        <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                                        <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
-                                                        <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
-                                                        <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
-                                                        <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                        <td>{% if installation.environment is defined %}{{ installation.dateCreated }} {% endif %}</td>
+                                                        <td>{% if installation.environment is defined %}{{ installation.dateInstalled }}{% else %}{{ 'pending'|trans|capitalize }}{% endif %}</td>
+                                                        <td>
+                                                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'edit'|trans|capitalize }}</button>
+                                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
+                                                                {% if installation.dateInstalled != null %}
+                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
+                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
+                                                                {% else %}
+                                                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
+                                                                {% endif %}
+                                                                <div role="separator" class="dropdown-divider"></div>
+                                                                <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
+
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                             {% endfor %}
                                             </tbody>
@@ -170,7 +210,7 @@
             <div class="modal-dialog model-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addInstallationTitle"><b>{{ 'add schedule'|trans|capitalize }}</b></h5>
+                        <h5 class="modal-title" id="addInstallationTitle"><b>{{ 'add installation'|trans|capitalize }}</b></h5>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -183,7 +223,8 @@
                         </div><!-- /.form-group -->
                         <div class="form-group">
                             <label for="largeInput">{{ 'deployment name'|trans|capitalize }}</label>
-                            <input type="text" class="form-control form-control-lg" id="installation[deploymentName]" name="installation[deploymentName]" value="">
+                            <input type="text" class="form-control form-control-lg" id="installation[deploymentName]" name="installation[deploymentName]" value="" placeholder="">
+                            <small class="form-text text-muted">{{ 'only fill in this form if you want another instance of an installed component. if you enter for example: \'db-test\'.'|trans|capitalize}} <br> {{ 'the url will become: \'db-test.domain\'.'|trans }}</small>
                         </div><!-- /.form-group -->
                         <div class="form-group">
                             <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
@@ -192,9 +233,8 @@
                         <div class="form-group">
                             <label for="">{{ 'domain'|trans|capitalize }}</label>
                             <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
-                                <option value="">{{ 'none'|trans|capitalize }}</option>
-                                {% if domains is defined %}
-                                    {% for domain in domains %}
+                                {% if resource.cluster.domains is defined %}
+                                    {% for domain in resource.cluster.domains %}
                                         <option value="{{ domain['@id'] }}">{{ domain.name }}</option>
                                     {% endfor %}
                                 {% endif %}
@@ -265,10 +305,9 @@
                                 <div class="form-group">
                                     <label for="">{{ 'domain'|trans|capitalize }}</label>
                                     <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
-                                        <option value="">{{ 'none'|trans|capitalize }}</option>
-                                        {% if domains is defined %}
-                                            {% for domain in domains %}
-                                                <option value="{{ domain['@id'] }}" {% if installation.domain is defined and domain['@id'] == installation.domain['@id'] %} selected=""{% endif %}>{{ domain.name }}</option>
+                                        {% if resource.cluster.domains is defined %}
+                                            {% for domain in resource.cluster.domains %}
+                                                <option value="{{ domain['@id'] }}">{{ domain.name }}</option>
                                             {% endfor %}
                                         {% endif %}
                                     </select>

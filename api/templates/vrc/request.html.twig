@@ -27,17 +27,21 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{% if resource.reference is defined %}{{ 'reference'|trans|capitalize }} {{ resource.reference }} {% else %} {{ 'new request'|trans|capitalize }} {% endif%} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary" href="{{ path('app_vrc_requests')}}">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_vrc_requests')}}">
                                             <i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info"
-                                           data-toggle="modal"
-                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info"
-                                           data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger"
-                                           data-toggle="modal"
-                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -51,19 +55,9 @@
                                         </div>
                                     </div> <!-- /.col -->
 									<div class="row">
-        								<div class="col-md-3 col-sm-12">
-        									<div class="form-group">
-        										<label for="largeInput">{{ 'case'|trans|capitalize }}</label>
-                                                {% if resource.cases is defined and resource.cases|length >0  %}
-        										    <input type="text" class="form-control form-control-lg"  value="{% if resource.cases is defined %}{{ resource.cases[0] }}{% endif %}" disabled="">
-                                                {% else %}
-                                                    {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
-                                                {% endif %}
-        									</div>
-    									</div> <!-- /.col -->
     									<div class="col-md-3 col-sm-12">
         									<div class="form-group">
-        										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+        										<label for="largeInput">{{ 'community'|trans|capitalize }}</label>
                                                 {% if resource.organization is defined and resource.organization is not empty %}
                                                     <a class="btn btn-info btn-block" href="{{ path('app_wrc_organization',{'id': commonground_resource(resource.organization).id}) }}" >{{ commonground_resource(resource.organization).name }}</a>
                                                 {% else %}
@@ -145,11 +139,14 @@
                             with {
                             'resource': resource } %}
                     </div><!-- /.col -->
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/children.html.twig'
-                            with {
-                            'children':resource.children } %}
-                    </div><!-- /.col -->
+                    {% if queues is defined %}
+                        <div class="col-md-4">
+                            {% include 'vrc/widgets/queue.html.twig'
+                                with {
+                                'resource':resource,
+                                'queues':queues } %}
+                        </div><!-- /.col -->
+                    {% endif %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/submitters.html.twig'
                             with {
@@ -170,39 +167,12 @@
                             'tasks':tasks} %}
                     </div><!-- /.col -->
                     {% endif %}
-                    {% if memos is defined %}
                     <div class="col-md-4">
-                        {% include 'vrc/widgets/memos.html.twig'
+                        {% include 'vrc/widgets/children.html.twig'
                             with {
-                            'resource':resource,
-                            'memos':memos,
-                            'employees':employees} %}
+                            'children':resource.children } %}
                     </div><!-- /.col -->
-                    {% endif %}
-                    {% if messages is defined %}
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/messages.html.twig'
-                            with {
-                            'resource':resource,
-                            'messages':messages } %}
-                    </div><!-- /.col -->
-                    {% endif %}
-                    {% if queues is defined %}
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/queue.html.twig'
-                            with {
-                            'resource':resource,
-                            'queues':queues } %}
-                    </div><!-- /.col -->
-                    {% endif %}
-                    {% if camundaTasks is defined %}
-                        <div class="col-md-4">
-                            {% include 'vrc/widgets/camundaTasks.html.twig'
-                                with {
-                                'resource':resource,
-                                'camundaTasks':camundaTasks } %}
-                        </div><!-- /.col -->
-                    {% endif %}
+
                 </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->
