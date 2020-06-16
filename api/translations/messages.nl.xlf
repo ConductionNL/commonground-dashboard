@@ -2617,6 +2617,54 @@
         <source>show all</source>
         <target>toon alles</target>
       </trans-unit>
+      <trans-unit id="drrSXDS" resname="the queue component holds queues">
+        <source>the queue component holds queues</source>
+        <target>het queue component bevat queues</target>
+      </trans-unit>
+      <trans-unit id="p5Orj8w" resname="options">
+        <source>options</source>
+        <target>opties</target>
+      </trans-unit>
+      <trans-unit id="e_2HWR2" resname="kubeconfig">
+        <source>kubeconfig</source>
+        <target>kubeconfig</target>
+      </trans-unit>
+      <trans-unit id="Xh7O4Gp" resname="cache">
+        <source>cache</source>
+        <target>cache</target>
+      </trans-unit>
+      <trans-unit id="__ry8Sk" resname="exposed backend">
+        <source>exposed backend</source>
+        <target>__exposed backend</target>
+      </trans-unit>
+      <trans-unit id="VaHuPp6" resname="dateCreated">
+        <source>dateCreated</source>
+        <target>aanmaak datum</target>
+      </trans-unit>
+      <trans-unit id="2FvoTSG" resname="dateInstalled">
+        <source>dateInstalled</source>
+        <target>installatie datum</target>
+      </trans-unit>
+      <trans-unit id="YqL_09b" resname="pending">
+        <source>pending</source>
+        <target>in afwachting</target>
+      </trans-unit>
+      <trans-unit id="TWKYOW7" resname="only fill in this form if you want another instance of an installed component. if you enter for example: 'db-test'.">
+        <source>only fill in this form if you want another instance of an installed component. if you enter for example: 'db-test'.</source>
+        <target>dit alleen invullen als je hetzelfde component nog een keer wilt installeren. als je bijvoorbeeld: 'db-test' invuld.</target>
+      </trans-unit>
+      <trans-unit id="sPLTvax" resname="the url will become: 'db-test.domain'.">
+        <source>the url will become: 'db-test.domain'.</source>
+        <target>dan word de url: 'db-test.domain'.</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target>standaard</target>
+      </trans-unit>
+      <trans-unit id="V7Pziv5" resname="status log">
+        <source>status log</source>
+        <target>status log</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
