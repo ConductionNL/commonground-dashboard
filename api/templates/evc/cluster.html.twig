@@ -246,9 +246,8 @@
                                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
                                                             <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
                                                             <th scope="col">{{ 'environment'|trans|capitalize }}</th>
-                                                            <th scope="col"></th>
-                                                            <th scope="col"></th>
-                                                            <th scope="col"></th>
+                                                            <th scope="col">{{ 'dateCreated'|trans|capitalize }}</th>
+                                                            <th scope="col">{{ 'dateInstalled'|trans|capitalize }}</th>
                                                             <th scope="col"></th>
                                                         </tr>
                                                         </thead>
@@ -259,11 +258,19 @@
                                                                     <td>{{ installation.name }}</td>
                                                                     <td>{{ installation.deploymentName }}</td>
                                                                     <td>{% if installation.environment is defined %}{{ installation.environment.name }}{% endif %}</td>
-                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a></td>
-                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a></td>
-                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a></td>
-                                                                    <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a></td>
-                                                                    <td><a class="btn btn-info btn-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a></td>
+                                                                    <td>{{ installation.dateCreated }}</td>
+                                                                    <td>{% if installation.environment is defined %}{{ installation.dateInstalled }}{% else %}{{ 'pending'|trans|capitalize }}{% endif %}</td>
+                                                                    <td>
+                                                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog"></i></span>{{ 'edit'|trans|capitalize }}</button>
+                                                                        <div class="dropdown-menu show" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                            <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
+                                                                            <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
+                                                                            <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
+                                                                            <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
+                                                                            <div role="separator" class="dropdown-divider"></div>
+                                                                            <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
+                                                                        </div>
+                                                                    </td>
                                                                 </tr>
                                                             {% endif %}
                                                         {% endfor %}
