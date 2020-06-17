@@ -71,20 +71,6 @@
         								</div> <!-- /.col -->
                                         <div class="col-md-3 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'type'|trans|capitalize }}</label>
-                                                {% if resource.requestType is defined and resource.requestType is not empty %}
-                                                    <a class="btn btn-info btn-block" href="{{ path('app_vtc_requesttype',{'id': requestType.id}) }}">{{ requestType.name }}</a>
-                                                {% else %}
-                                                <select id="requestType" name="requestType" class="form-control form-control-lg" >
-                                                    {% for value in requestTypes %}
-                                                        <option value="{{ value['@id'] }}" {% if resource.requestType is defined and value['@id'] == resource.requestType  %}selected{% endif %}>{{ value.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                                {% endif %}
-                                            </div><!-- /.form-group -->
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
-                                            <div class="form-group">
                                                 <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
                                                 <select id="status" name="status" class="form-control form-control-lg">
                                                     <option value="incomplete" {% if resource.status is defined and 'incomplete' == resource.status  %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
