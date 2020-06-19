@@ -125,8 +125,10 @@ class UcController extends AbstractController
         // Lets see if we need to create
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+            $variables['users'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'uc', 'type'=>'groups', 'id'=>$id]);
+            $variables['users'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['group.id'=>$id])['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('group');
