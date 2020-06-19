@@ -222,7 +222,7 @@
                             <div class="col-6">
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                        <input type="text" class="form-control form-control-lg" id="installation[name]" name="installation[name]" value="" required>
+                                        <input type="text" class="form-control form-control-lg" id="installation[name]" name="installation[deploymentName]" value="{{ resource.name }}" required>
                                     </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'deployment name'|trans|capitalize }}</label>
@@ -285,10 +285,10 @@
                                     <tr>
                                         <th scope="col">{{ 'name'|trans|capitalize }}</th>
                                         <th scope="col">{{ 'value'|trans|capitalize }}</th>
-                                        <th><button class="btn btn-primary m-3  mx-auto"  type="button" onclick="configButton();"><i class="fas fa-plus"></i></button></th>
+                                        <th><button class="btn btn-primary m-3  mx-auto"  type="button" onclick="configButton('configBody-{{ installation.id  }}');"><i class="fas fa-plus"></i></button></th>
                                     </tr>
                                     </thead>
-                                    <tbody id="configBody">
+                                    <tbody id="configBody-{{ installation.id  }}">
                                     {% if installation.configurations is defined %}
                                         {% set value = 0 %}
                                         {% for configuration in installation.configurations %}
@@ -400,14 +400,15 @@
                                                     {% set value = 0 %}
                                                     {% for configuration in installation.configurations %}
                                                         <tr id="{{ value }}">
+                                                            <input type="hidden" id="installation[properties][{{ value }}][id]" name ="installation[properties][{{ value }}][id]" value="{{ configuration.id }}">
                                                             <td id="{{ value }}">
-                                                                <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="resource[installation][name]" value="{{ configuration.name }}">
+                                                                <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="installation[properties][{{ value }}][name]" name ="installation[properties][{{ value }}][name]" value="{{ configuration.name }}">
                                                             </td>
                                                             <td id="{{ value }}">
-                                                                <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="resource[installation][value]" value="{{ configuration.value }}">
+                                                                <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{installation[properties][{{ value }}][value]" name ="installation[properties][{{ value }}][value]" value="{{ configuration.value }}">
                                                             </td>
                                                             <td id="{{ value }}">
-                                                                <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                                <button class="btn btn-danger" id="{installation[properties][{{ value }}][value]" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
                                                             </td>
                                                         </tr>
                                                         {% set value = value + 1 %}
