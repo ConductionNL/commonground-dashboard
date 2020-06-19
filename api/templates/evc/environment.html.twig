@@ -207,8 +207,8 @@
         <div class="modal fade" style="text-align: center" id="addInstallation" tabindex="-1"
              role="dialog"
              aria-labelledby="addInstallationTitle" aria-hidden="true">
-            <div class="modal-dialog model-dialog-centered modal-lg" style="width: 100% !important;" role="document">
-                <div class="modal-content">
+            <div class="modal-dialog model-dialog-centered modal-lg" style="min-width: 95% !important;" role="document">
+                <div class="modal-content" style="min-height: 100vh;">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addInstallationTitle"><b>{{ 'add installation'|trans|capitalize }}</b></h5>
                         <button type="button" class="close" data-dismiss="modal"
@@ -279,6 +279,7 @@
                                     </div>
                                 </div>
                             <div class="col-6">
+                                <h3>{{ 'properties'|trans|capitalize }}</h3>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -322,8 +323,8 @@
                 <div class="modal fade" style="text-align: center" id="editInstallation{{ installation.id }}" tabindex="-1"
                      role="dialog"
                      aria-labelledby="editInstallationTitle" aria-hidden="true">
-                    <div class="modal-dialog model-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
+                    <div class="modal-dialog model-dialog-centered modal-lg" style="min-width: 95% !important;" role="document">
+                        <div class="modal-content" style="min-height: 100vh;">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="editInstallationTitle"><b>{{ 'edit installation'|trans|capitalize }}</b></h5>
                                 <button type="button" class="close" data-dismiss="modal"
@@ -386,6 +387,7 @@
                                         </div>
                                         <div class="col-6">
                                             <table class="table">
+                                                <h3>{{ 'properties'|trans|capitalize }}</h3>
                                                 <thead>
                                                 <tr>
                                                     <th scope="col">{{ 'name'|trans|capitalize }}</th>
@@ -507,14 +509,6 @@
         tr.appendChild(tdButton);
         tdButton.appendChild(delButton);
 
-        let nameValue = propName.value;
-        let valueValue = propValue.value;
-
-
-
-        propName.value = "";
-        propValue.value = "";
-
     }
 
     function propDelete(body, tr, td){
@@ -529,19 +523,6 @@
         given.remove();
         td.remove();
         tr.remove();
-    }
-
-    function createArray(){
-        let propValues = document.getElementsByClassName("propertyValue");
-        let propNames = document.getElementsByClassName("propertyName");
-        let propArray = [];
-        let arrayContainer = document.getElementById("installation[propertyArray]");
-
-        for(let i = 0; i < propValues.length; i ++){
-            propArray.push({name: propNames[i].value, value: propValues[i].value  });
-        }
-        arrayContainer.value = JSON.stringify(propArray);
-        console.log(arrayContainer.value);
     }
 
     //audit_trails
