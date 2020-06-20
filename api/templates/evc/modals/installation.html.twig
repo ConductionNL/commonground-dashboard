@@ -1,0 +1,191 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="editInstallationTitle" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered modal-lg" style="min-width: 80% !important;" role="document">
+        <div class="modal-content" style="">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}"><b>{% if item.id is defined %}{{ 'edit installation'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add installation'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="installation[name]" name="installation[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'deployment name'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="installation[deploymentName]" name="installation[deploymentName]" value="{% if item.deploymentName is defined %}{{ item.deploymentName }}{% endif %}">
+                                <small class="form-text text-muted">{{ 'only fill in this form if you want another instance of an installed component. if you enter for example: \'db-test\'.'|trans|capitalize}} <br> {{ 'the url will become: \'db-test.domain\'.'|trans }}</small>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                <input type="text" class="form-control form-control-lg" id="installation[description]" name="installation[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="">{{ 'domain'|trans|capitalize }}</label>
+                                <select id="installation[domain]" name="installation[domain]" class="form-control form-control-lg">
+                                    {% if resource.cluster.domains is defined %}
+                                        {% for domain in resource.cluster.domains %}
+                                            <option value="{{ domain['@id'] }}">{{ domain.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="">{{ 'environment'|trans|capitalize }}</label>
+                                <select id="installation[environment]" name="installation[environment]" class="form-control form-control-lg">
+                                    <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="">{{ 'component'|trans|capitalize }}</label>
+                                <select id="installation[component]" name="installation[component]" class="form-control form-control-lg">
+                                    <option value="">{{ 'none'|trans|capitalize }}</option>
+                                    {% if components is defined %}
+                                        {% for component in components %}
+                                            <option value="{{ component['@id'] }}" {% if item.component is defined and component['@id'] == item.component['@id'] %} selected=""{% endif %}>{{ component.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div><!-- /.form-group -->
+                            {% if item['id'] is defined %}
+                                <input type="hidden" id="installation[id]" name ="installation[id]" value="{{ item['id'] }}">
+                            {% endif %}
+                            {% if item['@id'] is defined %}
+                                <input type="hidden" id="installation[@id]" name ="installation[@id]" value="{{ item['@id'] }}">
+                            {% endif %}
+                            <input type="hidden" id="installation[cluster]" name ="installation[cluster]" value="{{ resource['@id'] }}">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-success m-3  mx-auto">
+                                        {% if item.id is defined %}
+                                            {{ 'modify'|trans|capitalize }}
+                                        {% else %}
+                                            {{ 'add'|trans|capitalize }}
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <table class="table">
+                                <h3>{{ 'properties'|trans|capitalize }}</h3>
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                    <th scope="col">{{ 'value'|trans|capitalize }}</th>
+                                    <th><button class="btn btn-primary m-3  mx-auto"  type="button" onclick="configButton('configBody-{% if item.id is defined %}{{ item.id }}{% endif %}');"><i class="fas fa-plus"></i></button></th>
+                                </tr>
+                                </thead>
+                                <tbody id="configBody-{% if item.id is defined %}{{ item.id }}{% endif %}">
+                                {% set value = 0 %}
+                                {% if item.properties is defined %}
+                                    {% for property in item.properties %}
+
+                                        <tr id="{{ value }}">
+                                            <input type="hidden" id="installation[properties][{{ value }}][id]" name ="installation[properties][{{ value }}][id]" value="{{ property.id }}">
+                                            <td id="{{ value }}">
+                                                <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="installation[properties][{{ value }}][name]" name ="installation[properties][{{ value }}][name]" value="{{ property.name }}">
+                                            </td>
+                                            <td id="{{ value }}">
+                                                <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="installation[properties][{{ value }}][value]" name ="installation[properties][{{ value }}][value]" value="">
+                                            </td>
+                                            <td id="{{ value }}">
+                                                <button class="btn btn-danger" id="installation[properties][{{ value }}][value]" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                            </td>
+                                        </tr>
+                                        {% set value = value + 1 %}
+                                    {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+{% block javascript %}
+//logic for configurations
+
+
+
+function configButton(givenId){
+    let test = document.getElementById('test');
+
+    console.log(test);
+    let counts = document.getElementById(givenId).lastChild.id;
+    let parent = document.getElementById(givenId);
+    let newName = document.createElement("input");
+    let newValue = document.createElement("input");
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    let td2 = document.createElement("td");
+    let tdButton = document.createElement("td");
+    let delButton = document.createElement("button");
+    let counter;
+
+
+    if(counts !== undefined){
+        counter = parseInt(counts) + 1;
+    } else {
+        counter = parent.children.length;
+    }
+
+    newValue.className = "form-control form-control-lg propertyValue";
+    newValue.id = "installation[properties]["+givenId+"][value]"
+    newValue.setAttribute("style", "height: fit-content !important;");
+    newValue.name = "installation[properties]["+givenId+"][value]"
+
+
+    newName.className = "form-control form-control-lg propertyName";
+    newName.id = "installation[properties]["+givenId+"][name]";
+    newName.setAttribute("style", "height: fit-content !important;");
+    newName.name = "installation[properties]["+givenId+"][name]"
+
+    tdButton.id = counter.toString();
+
+    delButton.id = counter.toString();
+    delButton.innerHTML = "<i class='fas fa-minus'></i>";
+    delButton.addEventListener('click', function(){
+        propDelete(newName, tr, td);
+    });
+    delButton.className = "btn btn-danger";
+    delButton.type = "button";
+
+    tr.id = counter.toString();
+    td.id = counter.toString();
+    td2.id = counter.toString();
+
+    parent.appendChild(tr);
+    tr.appendChild(td);
+    td.appendChild(newName);
+    tr.append(td2);
+    td2.appendChild(newValue);
+    tr.appendChild(tdButton);
+    tdButton.appendChild(delButton);
+
+}
+
+function propDelete(body, tr, td){
+
+    tr.remove();
+
+}
+
+function storedDelete(given){
+    let td = given.parentNode;
+    let tr = td.parentNode;
+    tr.remove();
+}
+
+{% endblock %}
+</script>
