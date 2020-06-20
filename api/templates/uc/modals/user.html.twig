@@ -1,0 +1,52 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit slug'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add slug'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="slugs[name]" name="slugs[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="slugs[description]" name="slugs[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="slugs[template]">{{ 'template'|trans|capitalize }}</label>
+                    <select id="slugs[template]" name="slugs[template]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="slugs[slug]" name="slugs[slug]" value="{% if item.slug is defined %}{{ item.slug }}{% endif %}">
+                </div><!-- /.form-group -->
+
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="slugs[id]" name ="slugs[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="slugs[@id]" name ="slugs[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

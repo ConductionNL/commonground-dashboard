@@ -307,7 +307,7 @@
       </trans-unit>
       <trans-unit id=".zvbgqH" resname="Calendars and schedule">
         <source>Calendars and schedule</source>
-        <target>__Calendars and schedule</target>
+        <target>kalenders en planning</target>
       </trans-unit>
       <trans-unit id="WOunN1H" resname="These dashboards allows the administration of calendar entities, with schedules, resources, events, todos, journals, freebusies and alarms">
         <source>These dashboards allows the administration of calendar entities, with schedules, resources, events, todos, journals, freebusies and alarms</source>
@@ -351,11 +351,11 @@
       </trans-unit>
       <trans-unit id="WUz7B.i" resname="Basis Registratie Personen">
         <source>Basis Registratie Personen</source>
-        <target>__Basis Registratie Personen</target>
+        <target>Basis Registratie Personen</target>
       </trans-unit>
       <trans-unit id="9U0QEwb" resname="Berichten Service">
         <source>Berichten Service</source>
-        <target>__Berichten Service</target>
+        <target>Berichten Service</target>
       </trans-unit>
       <trans-unit id="nfawJqj" resname="service">
         <source>service</source>
@@ -415,7 +415,7 @@
       </trans-unit>
       <trans-unit id="hWe.pvn" resname="Common ground Registratie">
         <source>Common ground Registratie</source>
-        <target>__Common ground Registratie</target>
+        <target>Common ground Registratie</target>
       </trans-unit>
       <trans-unit id="n8t6LeX" resname="Holds common ground registrations">
         <source>Holds common ground registrations</source>
@@ -431,15 +431,15 @@
       </trans-unit>
       <trans-unit id="ijst3hn" resname="apis">
         <source>apis</source>
-        <target>__apis</target>
+        <target>apis</target>
       </trans-unit>
       <trans-unit id="zhEXCfV" resname="Api">
         <source>Api</source>
-        <target>__Api</target>
+        <target>Api</target>
       </trans-unit>
       <trans-unit id="FMJSnrR" resname="api">
         <source>api</source>
-        <target>__api</target>
+        <target>api</target>
       </trans-unit>
       <trans-unit id="A1vsHJJ" resname="component files">
         <source>component files</source>
@@ -499,7 +499,7 @@
       </trans-unit>
       <trans-unit id="ewjRLRM" resname="doc parsers">
         <source>doc parsers</source>
-        <target>__doc parsers</target>
+        <target>doc parsers</target>
       </trans-unit>
       <trans-unit id="uwVFrzM" resname="The doc parser holds doc parsers">
         <source>The doc parser holds doc parsers</source>
@@ -507,15 +507,15 @@
       </trans-unit>
       <trans-unit id="s0Evdtf" resname="api docs">
         <source>api docs</source>
-        <target>__api docs</target>
+        <target>api docs</target>
       </trans-unit>
       <trans-unit id="14eCy.X" resname="api doc">
         <source>api doc</source>
-        <target>__api doc</target>
+        <target>api doc</target>
       </trans-unit>
       <trans-unit id="FK8OlEj" resname="Deployments and Enviroments">
         <source>Deployments and Enviroments</source>
-        <target>__Deployments and Enviroments</target>
+        <target>implementaties en omgevingen</target>
       </trans-unit>
       <trans-unit id="hXfUeu." resname="this dashboards alows the administations of kubernetes clusters, enviroment and components">
         <source>this dashboards alows the administations of kubernetes clusters, enviroment and components</source>
@@ -547,11 +547,11 @@
       </trans-unit>
       <trans-unit id="4FYBqY2" resname="Landelijke tabellen catalogus">
         <source>Landelijke tabellen catalogus</source>
-        <target>__Landelijke tabellen catalogus</target>
+        <target>Landelijke tabellen catalogus</target>
       </trans-unit>
       <trans-unit id="OmMpFnq" resname="catalogus van de landelijke tabellen">
         <source>catalogus van de landelijke tabellen</source>
-        <target>__catalogus van de landelijke tabellen</target>
+        <target>catalogus van de landelijke tabellen</target>
       </trans-unit>
       <trans-unit id="Wyd8tmh" resname="rsin">
         <source>rsin</source>
@@ -559,51 +559,51 @@
       </trans-unit>
       <trans-unit id="Ol1fOQr" resname="tabel32">
         <source>tabel32</source>
-        <target>__tabel32</target>
+        <target>tabel32</target>
       </trans-unit>
       <trans-unit id="Lc126dq" resname="tabel33">
         <source>tabel33</source>
-        <target>__tabel33</target>
+        <target>tabel33</target>
       </trans-unit>
       <trans-unit id="ZMaM8Oj" resname="tabel34">
         <source>tabel34</source>
-        <target>__tabel34</target>
+        <target>tabel34</target>
       </trans-unit>
       <trans-unit id="9FxUP2u" resname="tabel36">
         <source>tabel36</source>
-        <target>__tabel36</target>
+        <target>tabel36</target>
       </trans-unit>
       <trans-unit id="6J_QMia" resname="tabel37">
         <source>tabel37</source>
-        <target>__tabel37</target>
+        <target>tabel37</target>
       </trans-unit>
       <trans-unit id="y1qgXt0" resname="tabel38">
         <source>tabel38</source>
-        <target>__tabel38</target>
+        <target>tabel38</target>
       </trans-unit>
       <trans-unit id="KJiRs2R" resname="tabel39">
         <source>tabel39</source>
-        <target>__tabel39</target>
+        <target>tabel39</target>
       </trans-unit>
       <trans-unit id="4kn1u0U" resname="tabel41">
         <source>tabel41</source>
-        <target>__tabel41</target>
+        <target>tabel41</target>
       </trans-unit>
       <trans-unit id="Yk.kyBc" resname="tabel48">
         <source>tabel48</source>
-        <target>__tabel48</target>
+        <target>tabel48</target>
       </trans-unit>
       <trans-unit id="1S_WgKN" resname="tabel49">
         <source>tabel49</source>
-        <target>__tabel49</target>
+        <target>tabel49</target>
       </trans-unit>
       <trans-unit id="oJqJxBE" resname="tabel55">
         <source>tabel55</source>
-        <target>__tabel55</target>
+        <target>tabel55</target>
       </trans-unit>
       <trans-unit id="3MlQUsV" resname="tabel56">
         <source>tabel56</source>
-        <target>__tabel56</target>
+        <target>tabel56</target>
       </trans-unit>
       <trans-unit id="K42N_Bn" resname="memos">
         <source>memos</source>
@@ -643,7 +643,7 @@
       </trans-unit>
       <trans-unit id="irRGS3D" resname="Portfolio Component">
         <source>Portfolio Component</source>
-        <target>__Portfolio Component</target>
+        <target>Portfolio Component</target>
       </trans-unit>
       <trans-unit id="vwKL_dV" resname="The Portfolio Components hold Portfolios">
         <source>The Portfolio Components hold Portfolios</source>
@@ -667,19 +667,19 @@
       </trans-unit>
       <trans-unit id="L6.C0ji" resname="formalRecognitions">
         <source>formalRecognitions</source>
-        <target>__formalRecognitions</target>
+        <target>formele erkenningen</target>
       </trans-unit>
       <trans-unit id="AzKY.Mm" resname="formalRecognition">
         <source>formalRecognition</source>
-        <target>__formalRecognition</target>
+        <target>formele erkenning</target>
       </trans-unit>
       <trans-unit id="Ru6pqwQ" resname="reflections">
         <source>reflections</source>
-        <target>__reflections</target>
+        <target>reflecties</target>
       </trans-unit>
       <trans-unit id="8wQJxRp" resname="reflection">
         <source>reflection</source>
-        <target>__reflection</target>
+        <target>reflectie</target>
       </trans-unit>
       <trans-unit id="wJkUK8M" resname="results">
         <source>results</source>

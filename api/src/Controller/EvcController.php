@@ -233,12 +233,9 @@ class EvcController extends AbstractController
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
 
+
                 if ($installation['deploymentName'] == '') {
                     unset($installation['deploymentName']);
-                }
-
-                if (array_key_exists('id', $installation)) {
-                    $installation['@id'] = $installation['id'];
                 }
                 $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
 

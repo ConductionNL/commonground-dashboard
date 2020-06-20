@@ -87,6 +87,15 @@
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'uc/widgets/users.html.twig'
+                            with{
+                            'users': users,
+                            'resource':resource
+                        } %}
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.page-inner -->
 
             {% include 'widgets/delete_modal.html.twig'
