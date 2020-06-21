@@ -1,0 +1,73 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'installations'|trans|capitalize }}</h3>
+        <a class="btn btn-info float-right" style="margin-right: 25px" href="#addInstallation"  data-toggle="modal" data-target="#addInstallation">{{ 'add installation'|trans|capitalize }}</a>
+    </div>
+    <div class="card-body mb-5">
+        {% if resource.installations is defined %}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'environment'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'dateCreated'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'dateInstalled'|trans|capitalize }}</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for installation in resource.installations %}
+                    <tr>
+                        <td>{{ installation.name }}</td>
+                        <td>{{ installation.deploymentName }}</td>
+                        <td>{% if installation.environment is defined %}{{ resource.name }}{% endif %}</td>
+                        <td>{% if installation.environment is defined %}{{ installation.dateCreated }} {% endif %}</td>
+                        <td>{% if installation.environment is defined %}{{ installation.dateInstalled }}{% else %}{{ 'pending'|trans|capitalize }}{% endif %}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'edit'|trans|capitalize }}</button>
+                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
+                                {% if installation.dateInstalled != null %}
+                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
+                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
+                                {% else %}
+                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
+                                {% endif %}
+                                <div role="separator" class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
+
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div><!-- /.card -->
+
+{# the installations modals #}
+{% include 'evc/modals/installation.html.twig'
+    with {
+    'route': 'app_evc_environment',
+    'resource':resource,
+    'id':'addInstallation' } %}
+
+{% if installations is defined %}
+    {% for installation in installations %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_evc_environment',
+            'resource':resource,
+            'item':installation,
+            'id':'deleteInstallation' } %}
+
+        {% include 'evc/modals/installation.html.twig'
+            with {
+            'route': 'app_evc_environment',
+            'resource':resource,
+            'item':installation,
+            'id':'editInstallation' } %}
+    {% endfor %}
+{% endif %}

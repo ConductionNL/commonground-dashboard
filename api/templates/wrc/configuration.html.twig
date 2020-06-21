@@ -30,15 +30,19 @@
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_wrc_configurations')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
@@ -98,32 +102,31 @@
                                     <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addConfiguration"  data-toggle="modal" data-target="#addConfiguration"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
-                            <div class="card-body" >
-                                    <table class="table">
-                                        <thead>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
                                         <tr>
                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
                                             <th></th>
                                         </tr>
-                                        </thead>
-                                        <tbody id="configBody">
-                                        {% if resource.configuration is defined %}
-                                            {% set value = 0 %}
-                                        {% for configuration in resource.configuration %}
-                                            <tr id="{{ value }}">
-                                                <td id="{{ value }}">
+                                    </thead>
+                                    <tbody id="configBody">
+                                    {% if resource.configuration is defined %}
+                                        {% set value = 0 %}
+                                            {% for configuration in resource.configuration %}
+                                                <tr id="{{ value }}">
+                                                    <td id="{{ value }}">
                                                     <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[]" value="{{ configuration }}" readonly="readonly">
-                                                </td>
-                                                <td id="{{ value }}">
-                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="configDelete(this.id)"><i class='fas fa-minus'></i></button>
-                                                </td>
-                                            </tr>
-                                            {% set value = value + 1 %}
-                                        {% endfor %}
-                                        {% endif %}
-                                        </tbody>
-                                    </table>
-
+                                                    </td>
+                                                    <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>
+                                                    </td>
+                                                </tr>
+                                                {% set value = value + 1 %}
+                                            {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -149,7 +152,7 @@
                             <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                             <input type="text" class="form-control form-control-lg" id="configName" name="name" value="">
                         </div><!-- /.form-group -->
-                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="configButton();">{{ 'add'|trans|capitalize }}</button>
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal"  onclick="configButton();">{{ 'add'|trans|capitalize }}</button>
                     </div>
                 </div>
             </div>
@@ -162,19 +165,19 @@
 
             {% include 'widgets/delete_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'delete' } %}
 
             {% include 'widgets/auditTrail_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'auditTrial' } %}
 
             {% include 'widgets/changeLog_modal.html.twig'
                 with {
-                'route': 'app_wrc_configurations',
+                'route': 'app_wrc_configuration',
                 'resource':resource,
                 'id':'changeLog' } %}
 
@@ -217,9 +220,9 @@
                 delButton.id = counter.toString();
                 delButton.innerHTML = "<i class='fas fa-minus'></i>";
                 delButton.addEventListener('click', function(){
-                    configDelete(counter);
+                    propDelete(newConfig, tr, td);
                 });
-                delButton.className = "btn btn-danger";
+                delButton.className = "btn btn-danger float-right";
                 delButton.type = "button";
 
                 tr.id = counter.toString();
@@ -228,14 +231,25 @@
                 parent.appendChild(tr);
                 tr.appendChild(td);
                 td.appendChild(newConfig);
+                td.setAttribute("colspan", "2");
                 tr.appendChild(tdButton);
                 tdButton.appendChild(delButton);
 
                 name.value = "";
             }
 
-            function configDelete(selected){
-                document.getElementById(selected).remove();
+            function propDelete(body, tr, td){
+                body.remove();
+                tr.remove();
+                td.remove();
+            }
+
+            function storedDelete(given){
+                let td = given.parentNode;
+                let tr = td.parentNode;
+                given.remove();
+                td.remove();
+                tr.remove();
             }
 
 

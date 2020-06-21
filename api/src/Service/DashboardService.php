@@ -1,4 +1,5 @@
 <?php
+
 // Conduction/CommonGroundBundle/Service/RequestTypeService.php
 
 /*
@@ -10,25 +11,20 @@
  * file that was distributed with this source code.
  */
 
-
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use GuzzleHttp\Client;
-
-use App\Entity\Request;
 
 class DashboardService
 {
-	private $em;
+    private $em;
 
-	public function __construct(EntityManagerInterface $em)
-	{
-		$this->em = $em;
-	}
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
-	public function getAll()
-	{
-
-	}
+    public function getAll()
+    {
+    }
 }

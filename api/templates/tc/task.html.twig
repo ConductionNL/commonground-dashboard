@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% set view = 'app_task_task' %}
+
 
     <style>
         th {
@@ -33,93 +33,106 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
-                            <form action="{{ path(view, {id: resource.id}) }}" method="post">
+                            <form action="{{ path('app_tc_task', {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_tc_tasks')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <a href="#changeLog" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
-                                        <a href="#auditTrial" class="btn btn-info" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
-                                        <a href="#delete" class="btn btn-danger" style="margin-right: 25px"
-                                           data-toggle="modal"
-                                           data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
                                         <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" placeholder="Large Input"
-                                                       value="{{ resource.name }}">
+                                                <input type="text" class="form-control form-control-lg" id="name" name="name"
+                                                       value="{% if resource.name is defined %}{{ resource.name }}{% endif %}" required>
                                             </div>
                                         </div> <!-- /.col -->
-
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
+                                                <label for="largeInput">{{ 'assignee'|trans|capitalize }}</label>
+                                                <select name="assignee" id="assignee" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person['@id']}} "{% if resource.assignee is defined and resource.assignee == person['@id']  %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'topic'|trans|capitalize }}</label>
+                                                <select name="topic" id="topic" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for request in requests %}
+                                                        <option value="{{ request['@id']}} "{% if resource.topic is defined and resource.topic == request['@id']  %}selected{% endif %}>{{ request.reference }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+                                                <select id="status" name="status" class="form-control form-control-lg">
+                                                    <option value="not started" {% if resource.status is defined and 'not started' == resource.status  %}selected{% endif %}>{{ 'not started'|trans|capitalize }}</option>
+                                                    <option value="started" {% if resource.status is defined and 'started' == resource.status  %}selected{% endif %}>{{ 'started'|trans|capitalize }}</option>
+                                                    <option value="complete" {% if resource.status is defined and 'complete' == resource.status  %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'percentage done'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="percentageDone" name="percentageDone"
+                                                       value="{% if resource.percentageDone is defined %}{{ resource.percentageDone }}{% endif %}" required>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'priority'|trans|capitalize }}</label>
+                                                <select id="priority" name="priority" class="form-control form-control-lg">
+                                                    <option value="1" {% if resource.priority is defined and '1' == resource.priority  %}selected{% endif %}>{{ '1'|trans|capitalize }}</option>
+                                                    <option value="2" {% if resource.priority is defined and '2' == resource.priority  %}selected{% endif %}>{{ '2'|trans|capitalize }}</option>
+                                                    <option value="3" {% if resource.priority is defined and '3' == resource.priority  %}selected{% endif %}>{{ '3'|trans|capitalize }}</option>
+                                                    <option value="4" {% if resource.priority is defined and '4' == resource.priority  %}selected{% endif %}>{{ '4'|trans|capitalize }}</option>
+                                                    <option value="5" {% if resource.priority is defined and '5' == resource.priority  %}selected{% endif %}>{{ '5'|trans|capitalize }}</option>
+                                                    <option value="6" {% if resource.priority is defined and '6' == resource.priority  %}selected{% endif %}>{{ '6'|trans|capitalize }}</option>
+                                                    <option value="7" {% if resource.priority is defined and '7' == resource.priority  %}selected{% endif %}>{{ '7'|trans|capitalize }}</option>
+                                                    <option value="8" {% if resource.priority is defined and '8' == resource.priority  %}selected{% endif %}>{{ '8'|trans|capitalize }}</option>
+                                                    <option value="9" {% if resource.priority is defined and '9' == resource.priority  %}selected{% endif %}>{{ '9'|trans|capitalize }}</option>
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'completed'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="completed" name ="completed" value="{% if resource.send is defined %}{{ resource.send }}{% endif %}" disabled>
                                             </div>
                                         </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
-                                    </div><!-- /.row -->
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
                                                 <textarea class="form-control summernote" rows="5" id="description"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                          name=description required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->

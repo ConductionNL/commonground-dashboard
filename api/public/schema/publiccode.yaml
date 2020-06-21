@@ -6,8 +6,8 @@ url: "https://github.com/ConductionNL/Commonground-dashboard"
 landingURL: "https://db.huwelijksplanner.online" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-releaseDate: "2020-03-06"
-logo: db.westfriesland.commonground.nu 
+releaseDate: "2020-19-06"
+logo: huwelijksplanner.online 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:

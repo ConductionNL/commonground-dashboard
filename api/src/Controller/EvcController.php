@@ -1,55 +1,46 @@
 <?php
+
 // src/Controller/DefaultController.php
+
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
-use GuzzleHttp\Client;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PdcController
- * @package App\Controller
+ * Class PdcController.
+ *
  * @Route("/evc")
  */
 class EvcController extends AbstractController
 {
+    /**
+     * @Route("/")
+     * @Template
+     */
+    public function indexAction(TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('Deployments and Enviroments');
+        $variables['subtitle'] = $translator->trans('this dashboards alows the administations of kubernetes clusters, enviroment and components');
 
-	/**
-	 * @Route("/")
-	 * @Template
-	 */
-	public function indexAction(TranslatorInterface $translator)
-	{
-		$variables = [];
-		$variables['title'] = $translator->trans('Deployments and Enviroments');
-		$variables['subtitle'] = $translator->trans('this dashboards alows the administations of kubernetes clusters, enviroment and components');
-
-		return $variables;
-	}
+        return $variables;
+    }
 
     /**
      * @Route("/clusters")
      * @Template
      */
-	public function clustersAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function clustersAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-    	$variables = [];
-    	$variables['title'] = $translator->trans('clusters');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('clusters');
-    	$variables['resources'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])["hydra:member"];
+        $variables = [];
+        $variables['title'] = $translator->trans('clusters');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('clusters');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
 
         return $variables;
     }
@@ -60,30 +51,26 @@ class EvcController extends AbstractController
      */
     public function clusterAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
 
-
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'evc','type'=>'clusters','id'=>$id]);
-            $commonGroundService->deleteResource('',['component'=>'evc','type'=>'clusters','id'=>$id]);
+        if ($request->query->get('action') == 'delete') {
+            $commonGroundService->deleteResource(['component'=>'evc', 'type'=>'clusters', 'id'=>$id]);
+            $commonGroundService->deleteResource('', ['component'=>'evc', 'type'=>'clusters', 'id'=>$id]);
+
             return $this->redirect($this->generateUrl('app_evc_clusters'));
         }
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'clusters', 'id'=>$id]);
+            $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'], ['cluster.id'=>$id])['hydra:member'];
+            $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'environments'], ['cluster.id'=>$id])['hydra:member'];
+            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'installations'], ['environment.cluster.id'=>$id])['hydra:member'];
+            $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'])['hydra:member'];
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'clusters','id'=>$id]);
-            $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'domains'],['cluster.id'=>$id])['hydra:member'];
-            $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'environments'],['cluster.id'=>$id])['hydra:member'];
-            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'installations'],['environment.cluster.id'=>$id])['hydra:member'];
-            $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc','type'=>'components'])['hydra:member'];
-        }
-
-
 
         $variables['title'] = $translator->trans('cluster');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('cluster');
@@ -96,33 +83,43 @@ class EvcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            if(key_exists('domain', $resource)){
+            if (array_key_exists('domain', $resource)) {
                 $domain = $resource['domain'];
                 $domain['cluster'] = $resource['@id'];
-                if(key_exists('id',$domain)){
+                if (array_key_exists('id', $domain)) {
                     $domain['@id'] = $domain['id'];
                 }
-                $domain = $commonGroundService->saveResource($domain,['component'=>'evc','type'=>'domains']);
+                $domain = $commonGroundService->saveResource($domain, ['component'=>'evc', 'type'=>'domains']);
             }
-            if(key_exists('environment', $resource)){
+            if (array_key_exists('environment', $resource)) {
                 $environment = $resource['environment'];
                 $environment['cluster'] = $resource['@id'];
-                if(key_exists('id',$environment)){
+                if (array_key_exists('id', $environment)) {
                     $environment['@id'] = $environment['id'];
                 }
-                $environment['debug'] = (int)$environment['debug'];
-                $domain = $commonGroundService->saveResource($environment,['component'=>'evc','type'=>'environments']);
+                $environment['debug'] = (int) $environment['debug'];
+                $environment['cache'] = (int) $environment['cache'];
+
+                $environment = $commonGroundService->saveResource($environment, ['component'=>'evc', 'type'=>'environments']);
             }
-            if(key_exists('installation', $resource)){
+            if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
+
+                if ($installation['deploymentName'] == '') {
+                    unset($installation['deploymentName']);
+                }
+
                 $installation['cluster'] = $resource['@id'];
-                if(key_exists('id',$installation)){
+                if (array_key_exists('id', $installation)) {
                     $installation['@id'] = $installation['id'];
                 }
-                $domain = $commonGroundService->saveResource($installation,['component'=>'evc','type'=>'installations']);
+                $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
             }
-            $variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/clusters/');
+            $variables['resource'] = $commonGroundService->saveResource($resource, 'https://evc.conduction.nl/clusters/');
+
+            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['id']]));
         }
+
         return $variables;
     }
 
@@ -132,14 +129,12 @@ class EvcController extends AbstractController
      */
     public function healthLogsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('health logs');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('health logs');
+        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/health_logs')['hydra:member'];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('health logs');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('health logs');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/health_logs')["hydra:member"];
-
-    	return $variables;
-
+        return $variables;
     }
 
     /**
@@ -148,112 +143,133 @@ class EvcController extends AbstractController
      */
     public function healthLogAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
+        $variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/health_logs/'.$id);
-    	}
+        // Lets see if we need to create
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/health_logs/'.$id);
+        }
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_healthlogs'));
-    	}
+        // If it is a delete action we can stop right here
+        if ($request->query->get('action') == 'delete') {
+            $commonGroundService->deleteResource($variables['resource']);
 
-    	$variables['title'] = $translator->trans('health log');
-    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('health log');
+            return $this->redirect($this->generateUrl('app_evc_healthlogs'));
+        }
 
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
+        $variables['title'] = $translator->trans('health log');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('health log');
 
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/health_logs/');
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+            $variables['resource'] = $commonGroundService->saveResource($resource, 'https://evc.conduction.nl/health_logs/');
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_ecv_healthlogs', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_evc_healthlogs', ['id' =>  $variables['resource']['id']]));
             }
-    	}
-    	return $variables;
+        }
+
+        return $variables;
     }
 
-//    /**
-//     * @Route("/environments")
-//     * @Template
-//     */
-//    public function environmentsAction( CommonGroundService $commonGroundService, TranslatorInterface $translator)
-//    {
-//
-//    	$variables = [];
-//    	$variables['title'] = $translator->trans('environments');
-//    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('environments');
-//    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/environments')["hydra:member"];
-//
-//    	return $variables;
-//    }
-//
-//    /**
-//     * @Route("/environments/{id}")
-//     * @Template
-//     */
-//    public function environmentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-//    {
-//    	$variables = [];
-//
-//    	// Lets see if we need to create
-//    	if($id == 'new'){
-//    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-//    	}
-//    	else{
-//    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/environments/'.$id);
-//    	}
-//
-//    	// If it is a delete action we can stop right here
-//    	if($request->query->get('action') == 'delete'){
-//    		$commonGroundService->deleteResource($variables['resource']);
-//    		return $this->redirect($this->generateUrl('app_evc_environments'));
-//    	}
-//
-//    	$variables['title'] = $translator->trans('environment');
-//    	$variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
-//
-//    	// Lets see if there is a post to procces
-//    	if ($request->isMethod('POST')) {
-//
-//    		// Passing the variables to the resource
-//    		$resource = $request->request->all();
-//    		$resource['@id'] = $variables['resource']['@id'];
-//    		$resource['id'] = $variables['resource']['id'];
-//
-//    		// If there are any sub data sources the need to be removed below in order to save the resource
-//    		// unset($resource['somedatasource'])
-//
-//    		$variables['resource'] = $commonGroundService->saveResource($resource,'https://evc.conduction.nl/environments/');
-//    	}
-//
-//    	return $variables;
-//    }
-//
+    /**
+     * @Route("/environments")
+     * @Template
+     */
+    public function environmentsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('environments');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('environments');
+        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/environments')['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/environments/{id}")
+     * @Template
+     */
+    public function environmentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+        $variables = [];
+
+        // If it is a delete action we can stop right here
+        if ($request->query->get('action') == 'delete') {
+            $commonGroundService->deleteResource(['component'=>'evc', 'type'=>'environments', 'id'=>$id]);
+
+            return $this->redirect($this->generateUrl('app_evc_components'));
+        }
+
+        // Lets see if we need to create
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'environments', 'id'=>$id]);
+        }
+
+        $variables['title'] = $translator->trans('environment');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
+        $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'],['limit'=>90])['hydra:member'];
+        $variables['clusters'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
+        $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'])['hydra:member'];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+
+            if (array_key_exists('installation', $resource)) {
+                $installation = $resource['installation'];
+
+
+                if ($installation['deploymentName'] == '') {
+                    unset($installation['deploymentName']);
+                }
+                $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
+
+            }
+
+            //$resource['debug'] = (int)$resource['debug'];
+            //$resource['cache'] = (int)$resource['cache'];
+            //$resource['web'] = (int)$resource['web'];
+
+
+
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'environments']);
+
+            /* @to this redirect is a hotfix */
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['cluster']['id']]));
+            }
+        }
+
+        return $variables;
+    }
+
     /**
      * @Route("/components")
      * @Template
      */
     public function componentsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('components');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('components');
+        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components', ['limit'=>90])['hydra:member'];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('components');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('components');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/components')["hydra:member"];
-
-    	return $variables;
+        return $variables;
     }
 
     /**
@@ -262,45 +278,44 @@ class EvcController extends AbstractController
      */
     public function componentAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
+        $variables = [];
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
-            $commonGroundService->deleteResource(['component'=>'evc','type'=>'components','id'=>$id]);
+        if ($request->query->get('action') == 'delete') {
+            $commonGroundService->deleteResource(['component'=>'evc', 'type'=>'components', 'id'=>$id]);
+
             return $this->redirect($this->generateUrl('app_evc_components'));
         }
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'components', 'id'=>$id]);
+        // Lets see if we need to create
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'components', 'id'=>$id]);
             $variables['installations'] = $commonGroundService->getResourceList(['component' => 'evc', 'type' => 'installations'], ['component.id' => $id])['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('component');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('component');
 
-    	// Lets see if there is a post to procces
-    	if ($request->isMethod('POST')) {
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
 
-    		// Passing the variables to the resource
-    		$resource = $request->request->all();
-    		$resource['@id'] = $variables['resource']['@id'];
-    		$resource['id'] = $variables['resource']['id'];
-    		$resource['core'] = (bool)$resource['core'];
+            // Passing the variables to the resource
+            $resource = $request->request->all();
+            $resource['@id'] = $variables['resource']['@id'];
+            $resource['id'] = $variables['resource']['id'];
+            $resource['core'] = (bool) $resource['core'];
 
-    		$variables['resource'] = $commonGroundService->saveResource($resource,['component'=>'evc', 'type'=>'components']);
+            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'components']);
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_ecv_components', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_evc_components', ['id' =>  $variables['resource']['id']]));
             }
+        }
 
-    	}
-
-    	return $variables;
+        return $variables;
     }
 
 //    /**
@@ -361,57 +376,70 @@ class EvcController extends AbstractController
 //    	return $variables;
 //    }
 //
+
     /**
      * @Route("/installations")
      * @Template
      */
-    public function installationsAction( CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function installationsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
+        $variables = [];
+        $variables['title'] = $translator->trans('installation');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('installation');
+        $variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/installations')['hydra:member'];
 
-    	$variables = [];
-    	$variables['title'] = $translator->trans('installation');
-    	$variables['subtitle'] = $translator->trans('all').' '.$translator->trans('installation');
-    	$variables['resources'] = $commonGroundService->getResourceList('https://evc.conduction.nl/installations')["hydra:member"];
-
-    	return $variables;
+        return $variables;
     }
+
 //
+
     /**
      * @Route("/installations/{id}")
      * @Template
      */
     public function installationAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-    	$variables = [];
+        $variables = [];
 
-    	// Lets see if we need to create
-    	if($id == 'new'){
-    		$variables['resource'] = ['@id' => null,'name'=>'new','id'=>'new'];
-    	}
-    	else{
-    		$variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/installations/'.$id);
-    	}
+        // Lets see if we need to create
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource('https://evc.conduction.nl/installations/'.$id);
+        }
 
-    	// If it is a delete action we can stop right here
-    	if($request->query->get('action') == 'delete'){
-    		$commonGroundService->deleteResource($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_installations'));
-    	}
-    	if($request->query->get('action') == 'install'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/install',null,true);
+        // If it is a delete action we can stop right here
+        if ($request->query->get('action') == 'delete') {
+            $commonGroundService->deleteResource($variables['resource']);
+
+            return $this->redirect($this->generateUrl('app_evc_installations'));
+        }
+        if ($request->query->get('action') == 'install') {
+            $commonGroundService->getResource($variables['resource']['@id'].'/install', null, true);
 //            var_dump($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
-    	}
-    	if($request->query->get('action') == 'upgrade'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/upgrade', null, true);
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
+        }
+        if ($request->query->get('action') == 'upgrade') {
+            $commonGroundService->getResource($variables['resource']['@id'].'/upgrade', null, true);
             //var_dump($variables['resource']);
-    		return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
-    	}
-    	if($request->query->get('action') == 'uninstall'){
-    		$commonGroundService->getResource($variables['resource']['@id'].'/delete');
-    		var_dump($variables['resource']);
-            return $this->redirect($this->generateUrl('app_evc_cluster', ['id'=>$variables['resource']['environment']['cluster']['id']]));
-    	}
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
+        }
+        if ($request->query->get('action') == 'rollingupdate') {
+            $commonGroundService->getResource($variables['resource']['@id'].'/rollingupdate', null, true);
+            //var_dump($variables['resource']);
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
+        }
+        if ($request->query->get('action') == 'uninstall') {
+            $commonGroundService->getResource($variables['resource']['@id'].'/delete');
+            var_dump($variables['resource']);
 
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
+        }
+        if ($request->query->get('action') == 'uninstall') {
+            $commonGroundService->getResource($variables['resource']['@id'].'/delete');
+            var_dump($variables['resource']);
+
+            return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
+        }
     }
 }

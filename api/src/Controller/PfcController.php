@@ -1,43 +1,35 @@
 <?php
+
 // src/Controller/DefaultController.php
+
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
-use GuzzleHttp\Client;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class PfcController
- * @package App\Controller
+ * Class PfcController.
+ *
  * @Route("/pfc")
  */
 class PfcController extends AbstractController
 {
-	/**
-	 * @Route("/")
-	 * @Template
-	 */
-	public function indexAction(TranslatorInterface $translator)
-	{
-		$variables = [];
-		$variables['title'] = $translator->trans('Portfolio Component');
-		$variables['subtitle'] = $translator->trans('The Portfolio Components hold Portfolios');
+    /**
+     * @Route("/")
+     * @Template
+     */
+    public function indexAction(TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['title'] = $translator->trans('Portfolio Component');
+        $variables['subtitle'] = $translator->trans('The Portfolio Components hold Portfolios');
 
-		return $variables;
-	}
+        return $variables;
+    }
 
     /**
      * @Route("/activities")
@@ -47,8 +39,9 @@ class PfcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('activities');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('activities');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'activities']);
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('activities');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'activities']);
+
         return $variables;
     }
 
@@ -58,26 +51,25 @@ class PfcController extends AbstractController
      */
     public function activityAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
-
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
-        }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'activities','id'=> $id]);
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc', 'type'=>'activities', 'id'=> $id]);
         }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_pfc_activities'));
         }
 
         $variables['title'] = $translator->trans('activity');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('activities');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('activities');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -90,11 +82,11 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'activities']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pfc', 'type'=>'activities']));
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_pfc_activities', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_pfc_activities', ['id' =>  $variables['resource']['id']]));
             }
         }
 
@@ -109,10 +101,10 @@ class PfcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('evaluations');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('evaluations');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'evaluations'])["hydra:member"];
-        return $variables;
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('evaluations');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'evaluations'])['hydra:member'];
 
+        return $variables;
     }
 
     /**
@@ -124,21 +116,22 @@ class PfcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc', 'type'=>'evaluations', 'id'=> $id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'evaluations','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_pfc_evaluations'));
         }
 
         $variables['title'] = $translator->trans('evaluation');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('evaluations');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('evaluations');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -151,13 +144,12 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'evaluations']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pfc', 'type'=>'evaluations']));
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_pfc_evaluations', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_pfc_evaluations', ['id' =>  $variables['resource']['id']]));
             }
-
         }
 
         return $variables;
@@ -171,10 +163,10 @@ class PfcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('formalRecognitions');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('formalRecognitions');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'formalRecognitions'])["hydra:member"];
-        return $variables;
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('formalRecognitions');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'formalRecognitions'])['hydra:member'];
 
+        return $variables;
     }
 
     /**
@@ -186,21 +178,22 @@ class PfcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc', 'type'=>'formalRecognitions', 'id'=> $id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'formalRecognitions','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_pfc_formalrecognitions'));
         }
 
         $variables['title'] = $translator->trans('formalRecognition');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('formalRecognitions');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('formalRecognitions');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -213,13 +206,12 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'formalRecognitions']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pfc', 'type'=>'formalRecognitions']));
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_pfc_formalrecognitions', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_pfc_formalrecognitions', ['id' =>  $variables['resource']['id']]));
             }
-
         }
 
         return $variables;
@@ -233,10 +225,10 @@ class PfcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('products');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('products');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'products'])["hydra:member"];
-        return $variables;
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('products');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'products'])['hydra:member'];
 
+        return $variables;
     }
 
     /**
@@ -248,21 +240,22 @@ class PfcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc', 'type'=>'products', 'id'=> $id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'products','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_pfc_products'));
         }
 
         $variables['title'] = $translator->trans('product');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('products');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('products');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -275,13 +268,12 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'products']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pfc', 'type'=>'products']));
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_pfc_products', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_pfc_products', ['id' =>  $variables['resource']['id']]));
             }
-
         }
 
         return $variables;
@@ -295,10 +287,10 @@ class PfcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('reflections');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('reflections');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'reflections'])["hydra:member"];
-        return $variables;
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('reflections');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'reflections'])['hydra:member'];
 
+        return $variables;
     }
 
     /**
@@ -310,21 +302,22 @@ class PfcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc', 'type'=>'reflections', 'id'=> $id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'reflections','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_pfc_reflections'));
         }
 
         $variables['title'] = $translator->trans('reflection');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('reflections');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('reflections');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -337,13 +330,12 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'reflections']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pfc', 'type'=>'reflections']));
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_pfc_reflections', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_pfc_reflections', ['id' =>  $variables['resource']['id']]));
             }
-
         }
 
         return $variables;
@@ -357,10 +349,10 @@ class PfcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('results');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('results');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'results'])["hydra:member"];
-        return $variables;
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('results');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'results'])['hydra:member'];
 
+        return $variables;
     }
 
     /**
@@ -372,21 +364,22 @@ class PfcController extends AbstractController
         $variables = [];
 
         // Lets see if we need to create
-        if($id == 'new'){
-            $variables['resource'] = ['@id' => null,'id'=>'new','name'=>'new'];
+        if ($id == 'new') {
+            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'new'];
+        } else {
+            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc', 'type'=>'results', 'id'=> $id]);
         }
-        else{
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'pfc','type'=>'results','id'=> $id]);        }
 
         // If it is a delete action we can stop right here
-        if($request->query->get('action') == 'delete'){
+        if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
+
             return $this->redirect($this->generateUrl('app_pfc_results'));
         }
 
         $variables['title'] = $translator->trans('result');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('results');
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc','type'=>'slugs'],['organization.id'=>$id])["hydra:member"];
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('results');
+        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'pfc', 'type'=>'slugs'], ['organization.id'=>$id])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -399,21 +392,14 @@ class PfcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource,(['component'=>'pfc','type'=>'results']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'pfc', 'type'=>'results']));
 
             /* @to this redirect is a hotfix */
-            if(array_key_exists('id', $variables['resource'])){
-                return $this->redirect($this->generateUrl('app_pfc_results', ["id" =>  $variables['resource']['id']]));
+            if (array_key_exists('id', $variables['resource'])) {
+                return $this->redirect($this->generateUrl('app_pfc_results', ['id' =>  $variables['resource']['id']]));
             }
-
         }
 
         return $variables;
     }
 }
-
-
-
-
-
-
