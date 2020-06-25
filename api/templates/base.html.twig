@@ -5,7 +5,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{% if application is defined %}{{ application.name }}{% else %}Dashboard{% endif %}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
+    {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
+        <link rel="icon" href="{{ application['style']['favicon']['base64']|raw }}">
+    {% else %}
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
+    {% endif %}
+
 
 	<!-- Fonts and icons -->
     <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
