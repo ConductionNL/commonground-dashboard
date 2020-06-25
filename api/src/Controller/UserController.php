@@ -158,12 +158,10 @@ class UserController extends AbstractController
      */
     public function dashboardAction(Request $request, CommonGroundService $commonGroundService)
     {
-
         $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'])['hydra:member'];
 
-
-        foreach($users as $user){
-            if($user['username'] == 'balie@utrecht.nl'){
+        foreach ($users as $user) {
+            if ($user['username'] == 'balie@utrecht.nl') {
                 return $this->redirect($this->generateUrl('app_vrc_requests', ['requestType'=>'5b10c1d6-7121-4be2-b479-7523f1b625f1']));
             }
         }
