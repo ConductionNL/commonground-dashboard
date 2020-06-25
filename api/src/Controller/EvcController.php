@@ -99,6 +99,7 @@ class EvcController extends AbstractController
                 }
                 $environment['debug'] = (int) $environment['debug'];
                 $environment['cache'] = (int) $environment['cache'];
+                $environment['web'] = (int) $environment['web'];
 
                 $environment = $commonGroundService->saveResource($environment, ['component'=>'evc', 'type'=>'environments']);
             }
@@ -430,7 +431,6 @@ class EvcController extends AbstractController
         }
         if ($request->query->get('action') == 'uninstall') {
             $commonGroundService->getResource($variables['resource']['@id'].'/delete');
-            var_dump($variables['resource']);
 
             return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
