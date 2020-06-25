@@ -50,8 +50,8 @@ security:
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.conduction.nl
-  authorisationProviderApplication: https://uc.conduction.nl
+  authorisationProviderUser: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://uc.zuid-drecht.nl
 
 
 php:
