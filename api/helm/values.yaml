@@ -23,6 +23,8 @@ settings:
   locality: Zuid Drecht
   unit: Common-Ground
   env: dev
+  web: false
+  internal: 
   debug: 1
   cache: 1
   replicaCount: 1

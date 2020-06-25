@@ -1,8 +1,9 @@
+{% set application = commonground_resource({'component':'wrc','type':'applications','id': app_id }) %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>{{ commonground_application()['name'] }}</title>
+    <title>{% if application is defined %}{{ application.name }}{% else %}Dashboard{% endif %}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
         <link rel="icon" href="{{ application['style']['favicon']['base64']|raw }}">
@@ -34,15 +35,12 @@
 	<!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
 
-    <!-- Font awesome -->
-
-
-	<!-- Commonground Overwrites -->
-	<style>
-        {% if commonground_application()['style'] is defined and commonground_application()['style'] is not empty %}
-		{{ commonground_application()['style']['css'] }}
-        {% endif %}
+    {% if application.style is defined %}
+    <!-- Commonground Overwrites -->
+    <style>
+        {{  application.style.css }}
     </style>
+    {% endif %}
 </head>
 <body>
 
