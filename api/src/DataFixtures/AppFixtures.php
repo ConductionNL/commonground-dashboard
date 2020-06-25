@@ -2,11 +2,10 @@
 
 namespace App\DataFixtures;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
@@ -18,7 +17,6 @@ class AppFixtures extends Fixture
         $this->commonGroundService = $commonGroundService;
         $this->params = $params;
     }
-
 
     public function load(ObjectManager $manager)
     {
