@@ -3,14 +3,14 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-06-25T12:16:55.2671852Z"
+    created: "2020-06-25T13:43:13.7476815Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: eb67129e8cd21c6f97968aaf4b981e4d6944092925a363b9c660c5b86ff4478c
+    digest: 5b4426aef95b4ef0ab768e1db98e37eb1fe58edf2e3f0a5133c168ab323db438
     home: zuid-drecht.nl
     icon: zuid-drecht.nl
     name: db
     urls:
     - db-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-25T12:16:55.260345Z"
+generated: "2020-06-25T13:43:13.7408412Z"
