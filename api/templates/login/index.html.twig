@@ -1,9 +1,8 @@
-{% set application = commonground_resource({'component':'wrc','type':'applications','id': app_id }) %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>{% if application is defined %}{{ application.name }}{% else %}Dashboard{% endif %}</title>
+	<title>{{ commonground_application()['name'] }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="https://via.placeholder.com/50" type="image/x-icon"/>
 
@@ -23,13 +22,12 @@
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/assets/css/atlantis.css">
 
-    {% if application.style is defined %}
     <!-- Commonground Overwrites -->
     <style>
-        {{  application.style.css }}
+        {% if commonground_application()['style'] is defined and commonground_application()['style'] is not empty %}
+        {{ commonground_application()['style']['css'] }}
+        {% endif %}
     </style>
-    {% endif %}
-
 </head>
 <body class="login">
 	<div class="wrapper wrapper-login">

@@ -70,7 +70,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('template');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('template');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
         $variables['applications'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'applications'])['hydra:member'];
         $variables['templateGroups'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'template_groups'])['hydra:member'];
@@ -118,7 +118,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('template groups');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('template groups');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('template groups');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'template_groups'])['hydra:member'];
 
         return $variables;
@@ -148,7 +148,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('template groups');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('template group');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('template group');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
         $variables['applications'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'applications'])['hydra:member'];
 
@@ -188,7 +188,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('slugs');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('slugs');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('slugs');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'slugs'])['hydra:member'];
 
         return $variables;
@@ -218,7 +218,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('slug');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('slug');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('slug');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
@@ -249,7 +249,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('organizations');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('organizations');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('organizations');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
 
         return $variables;
@@ -279,7 +279,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('organization');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('organization');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('organization');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
         $variables['employees'] = $commonGroundService->getResourceList(['component' => 'mrc', 'type' => 'employees'])['hydra:member'];
 
@@ -311,7 +311,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('images');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('images');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('images');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'images'])['hydra:member'];
 
         return $variables;
@@ -340,7 +340,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('image');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('image');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('image');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
@@ -355,7 +355,7 @@ class WrcController extends AbstractController
                 $path = $_FILES['base64']['tmp_name'];
                 $type = filetype($_FILES['base64']['tmp_name']);
                 $data = file_get_contents($path);
-                $resource['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $resource['base64'] = 'data:image/' . $type . ';base64,' . base64_encode($data);
             }
 
             // If there are any sub data sources the need to be removed below in order to save the resource
@@ -378,7 +378,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('styles');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('styles');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('styles');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'styles'])['hydra:member'];
 
         return $variables;
@@ -407,7 +407,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('style');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('style');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('style');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
         $variables['images'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'images'])['hydra:member'];
 
@@ -439,7 +439,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('applications');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('applications');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('applications');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'applications'])['hydra:member'];
 
         return $variables;
@@ -586,7 +586,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('menus');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('menus');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('menus');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'menus'])['hydra:member'];
 
         return $variables;
@@ -617,7 +617,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('menu');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('menu');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('menu');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
         $variables['applications'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'applications'])['hydra:member'];
         $variables['slugs'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'slugs'])['hydra:member'];
@@ -680,7 +680,7 @@ class WrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('configurations');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('configurations');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('configurations');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'configurations'])['hydra:member'];
 
         return $variables;
@@ -709,7 +709,7 @@ class WrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('configuration');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('configuration');
+        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('configuration');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
         $variables['applications'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'applications'])['hydra:member'];
 

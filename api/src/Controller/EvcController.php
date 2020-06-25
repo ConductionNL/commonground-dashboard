@@ -66,9 +66,9 @@ class EvcController extends AbstractController
             $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'evc', 'type'=>'clusters', 'id'=>$id]);
-            $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'], ['cluster.id'=>$id, 'limit'=>100])['hydra:member'];
-            $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'environments'], ['cluster.id'=>$id, 'limit'=>100])['hydra:member'];
-            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'installations'], ['environment.cluster.id'=>$id, 'limit'=>100])['hydra:member'];
+            $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'], ['cluster.id'=>$id,'limit'=>100])['hydra:member'];
+            $variables['environments'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'environments'], ['cluster.id'=>$id,'limit'=>100])['hydra:member'];
+            $variables['installations'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'installations'], ['environment.cluster.id'=>$id,'limit'=>100])['hydra:member'];
             $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'], ['limit'=>100])['hydra:member'];
         }
 
@@ -99,7 +99,6 @@ class EvcController extends AbstractController
                 }
                 $environment['debug'] = (int) $environment['debug'];
                 $environment['cache'] = (int) $environment['cache'];
-                $environment['web'] = (int) $environment['web'];
 
                 $environment = $commonGroundService->saveResource($environment, ['component'=>'evc', 'type'=>'environments']);
             }
@@ -219,7 +218,7 @@ class EvcController extends AbstractController
 
         $variables['title'] = $translator->trans('environment');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('environment');
-        $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'], ['limit'=>90])['hydra:member'];
+        $variables['components'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'components'],['limit'=>90])['hydra:member'];
         $variables['clusters'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
         $variables['domains'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'domains'])['hydra:member'];
 
@@ -231,13 +230,16 @@ class EvcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
+
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
+
 
                 if ($installation['deploymentName'] == '') {
                     unset($installation['deploymentName']);
                 }
                 $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
+
             }
 
             //$resource['debug'] = (int)$resource['debug'];
@@ -428,6 +430,7 @@ class EvcController extends AbstractController
         }
         if ($request->query->get('action') == 'uninstall') {
             $commonGroundService->getResource($variables['resource']['@id'].'/delete');
+            var_dump($variables['resource']);
 
             return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$variables['resource']['environment']['id']]));
         }
