@@ -38,13 +38,14 @@ class VrcController extends AbstractController
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
 
         $variables['requestType'] = $request->query->get('requestType');
+        $query = $request->query->all();
 
         if (isset($variables['requestType'])) {
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc', 'type'=>'request_types', 'id'=>$variables['requestType']]);
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['requestType'=> $variables['requestType']['@id']])['hydra:member'];
         } else {
-            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'])['hydra:member'];
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], $query)['hydra:member'];
         }
 
         /* If we have specific view for this request type use that instead */
