@@ -107,8 +107,6 @@ class EvcController extends AbstractController
                 $installation = $resource['installation'];
                 $installation['cluster'] = $resource['@id'];
 
-
-
                 if (array_key_exists('id', $installation)) {
                     $installation['@id'] = $installation['id'];
                 }
@@ -116,8 +114,6 @@ class EvcController extends AbstractController
                 if ($installation['deploymentName'] == '') {
                     unset($installation['deploymentName']);
                 }
-
-
 
                 $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
             }
@@ -244,8 +240,8 @@ class EvcController extends AbstractController
                     if ($installation['action'] == 'delete') {
                         $commonGroundService->deleteResource($installation);
 
-
                         $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'environments']);
+
                         return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$id]));
                     }
                 }
