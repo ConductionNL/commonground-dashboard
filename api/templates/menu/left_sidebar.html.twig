@@ -6,6 +6,32 @@
                 <li class="nav-section">
                     <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'status': "incomplete"}) }}">
+                        {{ 'incomplete'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'status': "complete"}) }}">
+                        {{ 'complete'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'status': "submitted"}) }}">
+                        {{ 'submitted'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'status': "processed"}) }}">
+                        {{ 'processed'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'status': ""","cancelled""}) }}">
+                        {{ '"","cancelled"'|trans|capitalize }}
+                    </a>
+                </li>
+
                 {% if 'group.balie-medewerkers' in app.user.roles %}
                     <li  class="nav-item">
                         <a href="{{ path('app_vrc_requests') }}">
