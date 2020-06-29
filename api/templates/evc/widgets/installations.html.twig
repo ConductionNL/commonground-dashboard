@@ -27,15 +27,15 @@
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
                                 <a class="dropdown-item" style="margin-right: 25px" href="#editInstallation{{ installation.id }}"  data-toggle="modal" data-target="#editInstallation{{ installation.id }}">{{ 'edit'|trans|capitalize }}</a>
                                 {% if installation.dateInstalled != null %}
-                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'upgrade'}) }}">{{ 'upgrade'|trans|capitalize }}</a>
-                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'rollingupdate'}) }}">{{ 'rolling update'|trans|capitalize }}</a>
+                                    <button class="dropdown-item "style="margin-right: 25px" data-toggle="modal" data-target="#upgradeInstallation{{ installation.id }}">{{ 'upgrade'|trans|capitalize }}</button>
+                                    <button class="dropdown-item "style="margin-right: 25px" data-toggle="modal" data-target="#rollingupdateInstallation{{ installation.id }}">{{ 'rolling update'|trans|capitalize }}</button>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
+                                    <button class="dropdown-item text-danger"style="margin-right: 25px" data-toggle="modal" data-target="#uninstallInstallation{{ installation.id }}">{{ 'uninstall'|trans|capitalize }}</button>
                                     <button class="dropdown-item text-danger" disabled style="margin-right: 25px; color: grey !important;" data-toggle="modal" data-target="#deleteInstallation{{ installation.id }}"> {{ 'delete'|trans|capitalize }}</button>
                                 {% else %}
-                                    <a class="dropdown-item" style="margin-right: 25px" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'install'}) }}">{{ 'install'|trans|capitalize }}</a>
+                                    <button class="dropdown-item" style="margin-right: 25px" data-toggle="modal" data-target="#installInstallation{{ installation.id }}"> {{ 'install'|trans|capitalize }}</button>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger disabled"style="margin-right: 25px; color: grey !important;" href="{{ path('app_evc_installation', {'id': installation.id, 'action':'uninstall'}) }}">{{ 'uninstall'|trans|capitalize }}</a>
+                                    <button class="dropdown-item text-danger" disabled style="margin-right: 25px; color: grey !important;" data-toggle="modal" data-target="#uninstallInstallation{{ installation.id }}"> {{ 'uninstall'|trans|capitalize }}</button>
                                     <button class="dropdown-item text-danger"style="margin-right: 25px" data-toggle="modal" data-target="#deleteInstallation{{ installation.id }}"> {{ 'delete'|trans|capitalize }}</button>
                                 {% endif %}
                             </div>
@@ -70,5 +70,35 @@
             'resource':resource,
             'item':installation,
             'id':'editInstallation' } %}
+
+        {% include 'evc/widgets/container_action.html.twig'
+            with {
+            'route': 'app_evc_installation',
+            'resource':resource,
+            'item':installation,
+            'action':'upgrade',
+            'id':'upgradeInstallation' } %}
+
+        {% include 'evc/widgets/container_action.html.twig'
+            with {
+            'route': 'app_evc_installation',
+            'item':installation,
+            'action':'rollingupdate',
+            'id':'rollingupdateInstallation' } %}
+
+        {% include 'evc/widgets/container_action.html.twig'
+            with {
+            'route': 'app_evc_installation',
+            'item':installation,
+            'action':'uninstall',
+            'id':'uninstallInstallation' } %}
+
+        {% include 'evc/widgets/container_action.html.twig'
+            with {
+            'route': 'app_evc_installation',
+            'item':installation,
+            'action':'install',
+            'id':'installInstallation' } %}
+
     {% endfor %}
 {% endif %}
