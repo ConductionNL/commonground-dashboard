@@ -27,6 +27,8 @@ class UserController extends AbstractController
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
+        var_dump($request->getPathInfo());
+        die;
         return $this->render('login/index.html.twig');
     }
 
