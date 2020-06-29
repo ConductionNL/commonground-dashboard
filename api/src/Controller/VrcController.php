@@ -9,8 +9,17 @@ use Conduction\CommonGroundBundle\Service\RequestService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\File\MimeType\FileinfoMimeTypeGuesser;
+
 
 /**
  * Class DashboardController.
@@ -40,12 +49,33 @@ class VrcController extends AbstractController
         $variables['requestType'] = $request->query->get('requestType');
         $query = $request->query->all();
 
+        if($request->query->get('status')){
+            $variables['status']= $query['status'];
+        }
+
         if (isset($variables['requestType'])) {
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc', 'type'=>'request_types', 'id'=>$variables['requestType']]);
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['requestType'=> $variables['requestType']['@id']])['hydra:member'];
         } else {
             $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], $query)['hydra:member'];
+        }
+
+        // Tadaa a very simple download function
+        if($request->query->get('download')){
+
+            $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+
+            $response = new Response();
+
+            $filename = date("YmdHis").'_requests';
+            //set headers
+            $response->headers->set('Content-Type', 'text/csv');
+            $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename.'.csv');
+
+            $response->setContent($serializer->encode( $variables['resources'], 'csv'));
+            return $response;
+
         }
 
         /* If we have specific view for this request type use that instead */
