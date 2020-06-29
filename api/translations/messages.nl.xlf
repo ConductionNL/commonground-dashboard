@@ -2673,6 +2673,26 @@
         <source>notifications</source>
         <target>meldingen</target>
       </trans-unit>
+      <trans-unit id="JMjWMrR" resname="all requests">
+        <source>all requests</source>
+        <target>alle verzoeken</target>
+      </trans-unit>
+      <trans-unit id="NxoobVh" resname="base64">
+        <source>base64</source>
+        <target>base64</target>
+      </trans-unit>
+      <trans-unit id="RvX6nmX" resname="Huidige base64">
+        <source>Huidige base64</source>
+        <target>Huidige base64</target>
+      </trans-unit>
+      <trans-unit id="piRCNEf" resname="are you sure you want to perform the action">
+        <source>are you sure you want to perform the action</source>
+        <target>weet je zeker dat je deze actie wilt uitvoeren</target>
+      </trans-unit>
+      <trans-unit id="8hbTLvS" resname="rollingupdate">
+        <source>rollingupdate</source>
+        <target>bijwerken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
