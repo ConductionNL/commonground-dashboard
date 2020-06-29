@@ -105,15 +105,16 @@ class EvcController extends AbstractController
             }
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
+                $installation['cluster'] = $resource['@id'];
+
+                if (array_key_exists('id', $installation)) {
+                    $installation['@id'] = $installation['id'];
+                }
 
                 if ($installation['deploymentName'] == '') {
                     unset($installation['deploymentName']);
                 }
 
-                $installation['cluster'] = $resource['@id'];
-                if (array_key_exists('id', $installation)) {
-                    $installation['@id'] = $installation['id'];
-                }
                 $installation = $commonGroundService->saveResource($installation, ['component'=>'evc', 'type'=>'installations']);
             }
             $variables['resource'] = $commonGroundService->saveResource($resource, 'https://evc.conduction.nl/clusters/');
@@ -233,6 +234,17 @@ class EvcController extends AbstractController
 
             if (array_key_exists('installation', $resource)) {
                 $installation = $resource['installation'];
+
+                if (array_key_exists('@id', $installation) && array_key_exists('action', $installation)) {
+                    // The delete action
+                    if ($installation['action'] == 'delete') {
+                        $commonGroundService->deleteResource($installation);
+
+                        $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'evc', 'type'=>'environments']);
+
+                        return $this->redirect($this->generateUrl('app_evc_environment', ['id'=>$id]));
+                    }
+                }
 
                 if ($installation['deploymentName'] == '') {
                     unset($installation['deploymentName']);
