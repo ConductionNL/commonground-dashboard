@@ -23,6 +23,7 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/login")
+     * @Route("/dashboard/login", name="app_user_login2")
      * @Template
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -32,6 +33,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/logout")
+     * @Route("/dashboard/logout", name="app_user_logout2")
      * @Template
      */
     public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
