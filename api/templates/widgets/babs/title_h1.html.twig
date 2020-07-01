@@ -27,14 +27,19 @@
                 {% block buttons %}
                     <div id="myBtnContainer p-2" class="row">
                         {% if statusFilter is defined and statusFilter == true %}
-                            <button class="mx-1 btn btn-secondary btn-round"
-                                    onclick="myFunction('all')">{{ 'show all'|trans|capitalize }}</button>
-                            <button class="mx-1 btn btn-secondary btn-round"
-                                    onclick="myFunction('ingediend')">{{ 'submitted'|trans|capitalize }}</button>
+                        <a href="{{ path('app_vrc_requests') }}" class=" mx-1 btn btn-secondary btn-round">{{ 'all'|trans|capitalize }}</a>
+                        <a href="{{ path('app_vrc_requests',{'status': "incomplete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'incomplete'|trans|capitalize }}</a>
+                        <a href="{{ path('app_vrc_requests',{'status': "complete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'complete'|trans|capitalize }}</a>
+                        <a href="{{ path('app_vrc_requests',{'status': "submitted"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'submitted'|trans|capitalize }}</a>
+                        <a href="{{ path('app_vrc_requests',{'status': "processed"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'processed'|trans|capitalize }}</a>
+                        <a href="{{ path('app_vrc_requests',{'status': "cancelled"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'cancelled'|trans|capitalize }}</a>
+
+
+
                         {% endif %}
                         {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
                         {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}"
-                                                   class=" mx-1 btn btn-secondary btn-round">{{ 'new'|trans|capitalize }} {{ 'add'|trans }}  {% endif %}</a>
+                                                   class=" mx-1 btn btn-secondary btn-round">{{ 'new'|trans|capitalize }} {{ 'add'|trans }} </a> {% endif %}
                     </div>
                 {% endblock %}
             </div>
@@ -42,30 +47,4 @@
     </div>
 </div>
 
-<script>
-    filterSelection("all");
-    function filterSelection(c) {
-        var  filter, table, tr, td, i, txtValue, myFilterChoice;
-        if (c !== "all") myFilterChoice = c;
-
-        filter = myFilterChoice.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[4];
-            statusDiv1 = td.getElementsByClassName("progress");
-            statusDiv2 = statusDiv1.getElementsByClassName("progress-bar");
-
-            if (statusDiv2) {
-                txtValue = statusDiv2.textContent || statusDiv2.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
 </script>
