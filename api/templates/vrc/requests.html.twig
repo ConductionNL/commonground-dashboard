@@ -71,8 +71,10 @@
                     </div> <!-- /.card-body -->
 
                     <div class="card-action">
-                        {% if status %}
+                        {% if status is defined %}
                         <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_requests',{'status': status,'download':'csv'}) }}" target="_blank"><i class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }} CSV</b></a>
+                        {% else %}
+                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_requests',{'download':'csv'}) }}" target="_blank"><i class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }} CSV</b></a>
                         {% endif %}
                     </div><!-- /.card-action -->
 
