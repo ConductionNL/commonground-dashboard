@@ -20,16 +20,22 @@
             <div class="page-inner">
                 <div class="row">
                     <div class="col-md-12">
+                        {% if requests is defined and requests is not empty %}
                         {% include 'ud/widgets/requests.html.twig'
                             with {'requests': requests} %}
+                        {% endif %}
                     </div>
                     <div class="col-md-6 ml-auto">
+                        {% if tasks is defined and tasks is not empty %}
                         {% include 'ud/widgets/tasks.html.twig'
                             with {'tasks': tasks} %}
+                        {% endif %}
                     </div><!-- /.col -->
                     <div class="col-md-6 ml-auto">
+                        {% if events is defined and events is not empty %}
                         {% include 'ud/widgets/events.html.twig'
                             with {'events': events} %}
+                        {% endif %}
                     </div><!-- /.col -->
                 </div>
             </div>
