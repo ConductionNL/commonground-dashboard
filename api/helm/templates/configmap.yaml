@@ -50,5 +50,5 @@ data:
   mercure-publish-url: {{ .Values.mercure.publishUrl | quote }}
   mercure-subscribe-url: {{ .Values.mercure.subscribeUrl | quote }}
   
-  redis-host: {{ .Values.settings.name }}-cache
-  redis-port: {{ .Values.redis.port }}
+  redis-host: '{{ .Values.settings.name }}-cache'
+  redis-port: {{ .Values.redis.port | toString | quote }}
