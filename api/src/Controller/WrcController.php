@@ -143,6 +143,7 @@ class WrcController extends AbstractController
         // Lets see if we need to create
         if ($id == 'new') {
             $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
+            $variables['templates'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'template_groups', 'id' => $id]);
             $variables['templates'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'templates'], ['templateGroups.id' => $id])['hydra:member'];
