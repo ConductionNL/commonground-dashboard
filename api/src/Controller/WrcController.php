@@ -611,7 +611,7 @@ class WrcController extends AbstractController
 
         // Lets see if we need to create
         if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new'];
+            $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new', 'menuItems'=>[]];
             $variables['menuItems'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'menus', 'id' => $id]);
@@ -635,11 +635,6 @@ class WrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            /* @todo dit vervangen door https://twig.symfony.com/doc/2.x/filters/u.html */
-            // Hacky
-            if (array_key_exists('menuitem', $resource)) {
-                $resource['menuItem'] = $resource['menuitem'];
-            }
 
             // Lets see if we also need to add an slug
             if (array_key_exists('menuItem', $resource)) {
@@ -655,6 +650,8 @@ class WrcController extends AbstractController
                     // The delete action
                     if ($menuItem['action'] == 'delete') {
                         $commonGroundService->deleteResource($menuItem);
+
+                        $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc', 'type'=>'menus']);
 
                         return $this->redirect($this->generateUrl('app_wrc_menu', ['id' => $id]));
                     }
