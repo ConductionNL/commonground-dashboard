@@ -318,7 +318,7 @@ class BcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('tax');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('tax');
-        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'taxes']);
+        $variables['resources'] = $commonGroundService->getResource(['component'=>'bc', 'type'=>'taxes'])['hydra:member'];
 
         return $variables;
     }
