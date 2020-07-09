@@ -25,7 +25,7 @@ class EvcController extends AbstractController
     public function indexAction(CommonGroundService $commonGroundService)
     {
         $variables = [];
-        //$variables['resources'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
 
         return $variables;
     }
