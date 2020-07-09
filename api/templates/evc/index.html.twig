@@ -1,0 +1,42 @@
+{% extends "body.html.twig" %}
+
+
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+
+            <div class="page-inner">
+                <h4 class="page-title">Omgevingen</h4>
+                <div class="row">
+                    {% for resource in resources %}
+                    <div class="col-md-4 col-lg-3 col-xl-2">
+                        <div class="card card-dark card-success">
+                            <div class="card-body skew-shadow">
+                                <h2 class="py-4 mb-0"><a href="{{ path('app_evc_cluster', {id: resource.id}) }}">Naam kluster</a></h2>
+                                <div class="row">
+                                    <div class="col-8 pr-0">
+                                        <h3 class="fw-bold mb-1">{% for domain in resource.domains %}<a href="{{ path('app_evc_domain', {id: domain.id}) }}">{{ domain.location }}</a>{% endfor %}</h3>
+                                        <div class="text-small text-uppercase fw-bold op-8">{% for environment in resource.environments %}<a href="{{ path('app_evc_environment', {id: environment.id}) }}">{{ environment.name }}</a>{% endfor %}</div>
+                                    </div>
+                                    <div class="col-4 pl-0 text-right">
+                                        <h3 class="fw-bold mb-1">{{ resource.health }}/{{ resource.installations|length }}</h3>
+                                        <div class="text-small text-uppercase fw-bold op-8">Installaties</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+{% endblock %}

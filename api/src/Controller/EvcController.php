@@ -22,11 +22,10 @@ class EvcController extends AbstractController
      * @Route("/")
      * @Template
      */
-    public function indexAction(TranslatorInterface $translator)
+    public function indexAction(CommonGroundService $commonGroundService)
     {
         $variables = [];
-        $variables['title'] = $translator->trans('Deployments and Enviroments');
-        $variables['subtitle'] = $translator->trans('this dashboards alows the administations of kubernetes clusters, enviroment and components');
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'evc', 'type'=>'clusters'])['hydra:member'];
 
         return $variables;
     }
