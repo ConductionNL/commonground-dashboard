@@ -83,24 +83,25 @@ class WrcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            // Lets see if we also need to add an slug
-            if (array_key_exists('slugs', $resource)) {
-                $slugs = $resource['slugs'];
-                $slugs['template'] = $resource['@id'];
-
+            // Lets see if we also need t add an slug
+            if (array_key_exists('slug', $resource)) {
+                $slug = $resource['slug'];
                 // The resource action section
-                if (array_key_exists('@id', $slugs) && array_key_exists('action', $slugs)) {
+                if (array_key_exists('@id', $slug) && array_key_exists('action', $slug)) {
                     // The delete action
-                    if ($slugs['action'] == 'delete') {
-                        $commonGroundService->deleteResource($slugs);
+                    if ($slug['action'] == 'delete') {
+                        $commonGroundService->deleteResource($slug);
+
+                        $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'wrc', 'type'=>'templates']);
 
                         return $this->redirect($this->generateUrl('app_wrc_template', ['id' => $id]));
                     }
                 }
-                $slugs = $commonGroundService->saveResource($slugs, ['component' => 'wrc', 'type' => 'slugs']);
+                $slug = $commonGroundService->saveResource($slug, ['component' => 'wrc', 'type' => 'slugs']);
             }
 
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'wrc', 'type' => 'templates']);
+
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
                 return $this->redirect($this->generateUrl('app_wrc_templates', ['id' => $variables['resource']['id']]));

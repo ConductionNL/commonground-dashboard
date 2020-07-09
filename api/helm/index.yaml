@@ -3,7 +3,7 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-07-06T10:30:07.739006Z"
+    created: "2020-07-09T18:11:56.231554378Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
     digest: 19391e3a5347ea562c475d4c0d0baa84029408f05182709194adb5130f7dd1bd
@@ -13,4 +13,4 @@ entries:
     urls:
     - db-0.1.0.tgz
     version: 0.1.0
-generated: "2020-07-06T10:30:07.7330097Z"
+generated: "2020-07-09T18:11:55.967864874Z"
