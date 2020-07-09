@@ -12,6 +12,7 @@
                     <th scope="col">{{ 'deployment name'|trans|capitalize }}</th>
                     <th scope="col">{{ 'dateCreated'|trans|capitalize }}</th>
                     <th scope="col">{{ 'dateInstalled'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'health'|trans|capitalize }}</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -22,6 +23,7 @@
                         <td>{{ installation.deploymentName }}</td>
                         <td>{% if installation.environment is defined %}{{ installation.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} {% endif %}</td>
                         <td>{% if installation.environment is defined %}{{ installation.dateInstalled|date("d-m-Y H:i:s", "Europe/Paris") }}{% else %}{{ 'pending'|trans|capitalize }}{% endif %}</td>
+                        <td>{{ installation.status }}</td>
                         <td>
                             <button style="float: right" class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'edit'|trans|capitalize }}</button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
