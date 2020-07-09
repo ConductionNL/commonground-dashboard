@@ -9,7 +9,11 @@ use Conduction\CommonGroundBundle\Service\RequestService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -38,13 +42,34 @@ class VrcController extends AbstractController
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
 
         $variables['requestType'] = $request->query->get('requestType');
+        $query = $request->query->all();
+
+        if ($request->query->get('status')) {
+            $variables['status'] = $query['status'];
+        }
 
         if (isset($variables['requestType'])) {
             $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc', 'type'=>'request_types', 'id'=>$variables['requestType']]);
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['requestType'=> $variables['requestType']['@id']])['hydra:member'];
         } else {
-            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'])['hydra:member'];
+            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], $query)['hydra:member'];
+        }
+
+        // Tadaa a very simple download function
+        if ($request->query->get('download')) {
+            $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+
+            $response = new Response();
+
+            $filename = date('YmdHis').'_requests';
+            //set headers
+            $response->headers->set('Content-Type', 'text/csv');
+            $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename.'.csv');
+
+            $response->setContent($serializer->encode($variables['resources'], 'csv'));
+
+            return $response;
         }
 
         /* If we have specific view for this request type use that instead */
@@ -84,6 +109,7 @@ class VrcController extends AbstractController
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
             $variables['submitters'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'submitters'], ['request'=> $variables['resource']['@id']])['hydra:member'];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
+            $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
 
             // $variables['tasks'] = []; //$commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
             // $variables['messages'] = $commonGroundService->getResourceList(['component' => 'bs', 'type' => 'messages'])["hydra:member"];

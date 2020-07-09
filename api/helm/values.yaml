@@ -6,23 +6,25 @@ settings:
   registryBase: docker.io/conduction
   projectName: db
   name: db
-  title: CommonGround DashBoard
+  title: Zuid Drecht DashBboard
   version: V.0.1
-  id: 9f4db8c6-7eb3-4cc2-b481-9280aae99679
+  id: 1163e443-5f9c-4aa6-802c-c619a14986c9
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
   repro: https://github.com/ConductionNL/Commonground-dashboard
-  demo: https://db.huwelijksplanner.online
+  demo: https://db.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: huwelijksplanner.online
+  domain: zuid-drecht.nl
   subdomain: db
-  organisationName: Conduction
-  email: info@westfriesland.commonground.nu
+  organisationName: Gemeente Zuid Drecht
+  email: info@zuid-drecht.nl
   country: Netherlands
   state: Noord-Holland
-  locality: Amsterdam
+  locality: Zuid Drecht
   unit: Common-Ground
   env: dev
+  web: false
+  internal: false
   debug: 1
   cache: 1
   replicaCount: 1
@@ -46,12 +48,12 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "9f4db8c6-7eb3-4cc2-b481-9280aae99679"
+  commongroundId: "1163e443-5f9c-4aa6-802c-c619a14986c9"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.huwelijksplanner.online
-  authorisationProviderApplication: https://uc.huwelijksplanner.online
+  authorisationProviderUser: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://uc.zuid-drecht.nl
 
 
 php:
@@ -104,6 +106,15 @@ mercure:
   service:
     type: NodePort
     port: 80
+
+redis:
+  port: 6379
+  version: 5.0
+  memory: 100Mi
+  cpu: 100m
+  limits:
+    memory: 200Mi
+    cpu: 250m
 
 ingress:
   annotations:

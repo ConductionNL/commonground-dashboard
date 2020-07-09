@@ -80,6 +80,16 @@ spec:
                   configMapKeyRef:
                       name: {{ template "fullname" . }}
                       key: app-type
+            - name: APP_WEB
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-web
+            - name: APP_INTERNAL
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-internal
             {{ if .Values.settings.id }}
             - name: APP_ID
               valueFrom:
@@ -92,12 +102,6 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-demo
-            - name: APP_DOMAINS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-domains-json
-
             - name: APP_REPRO
               valueFrom:
                   configMapKeyRef:
@@ -239,6 +243,18 @@ spec:
                 secretKeyRef:
                   name: {{ template "fullname" . }}
                   key: auth_provider_application
+            #Redis
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: redis-host
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: redis-port
+
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

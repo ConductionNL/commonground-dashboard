@@ -154,6 +154,7 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'health'|trans|capitalize }}</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -161,6 +162,7 @@
                                         {% for environment in environments %}
                                             <tr>
                                                 <td>{{ environment.name }}</td>
+                                                <td>{{ environment.health }}/{{ environment.installations|length }} </td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: environment.id}) }}"  data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
@@ -283,6 +285,11 @@
                                 <input type="radio" class="form-control form-control-lg" id="environment[cache] on" name="environment[cache]" value=1 ><label for="environment[cache] on">{{ 'yes'|trans|capitalize }}</label>
                             </div><!-- /.form-group -->
                             <div class="form-group">
+                                <label for="largeInput">{{ 'exposed backend'|trans|capitalize }}</label>
+                                <input type="radio" class="form-control form-control-lg" id="environment[web] off" name="environment[web]" value=0 checked><label for="environment[web] off">{{ 'no'|trans|capitalize }}</label>
+                                <input type="radio" class="form-control form-control-lg" id="environment[web] on" name="environment[web]" value=1 ><label for="environment[web] on">{{ 'yes'|trans|capitalize }}</label>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
                                 <label for="largeInput">{{ 'authorization key'|trans|capitalize }}</label>
                                 <input type="text" class="form-control form-control-lg" id="environment[authorization]" name="environment[authorization]" value="" required>
                             </div><!-- /.form-group -->
@@ -326,6 +333,16 @@
                                     <div class="form-group">
                                         <label for="largeInput">{{ 'authorization key'|trans|capitalize }}</label>
                                         <input type="text" class="form-control form-control-lg" id="environment[authorization]" name="environment[authorization]" value="">
+                                    </div><!-- /.form-group -->
+                                    <div class="form-group">
+                                        <label for="largeInput">{{ 'cache'|trans|capitalize }}</label>
+                                        <input type="radio" class="form-control form-control-lg" id="environment[cache] off" name="environment[cache]" value=0 {% if environment.cache == 0 %} checked {% endif %}><label for="environment[cache] off">{{ 'no'|trans|capitalize }}</label>
+                                        <input type="radio" class="form-control form-control-lg" id="environment[cache] on" name="environment[cache]" value=1 {% if environment.cache == 1 %} checked {% endif %}><label for="environment[cache] on">{{ 'yes'|trans|capitalize }}</label>
+                                    </div><!-- /.form-group -->
+                                    <div class="form-group">
+                                        <label for="largeInput">{{ 'exposed backend'|trans|capitalize }}</label>
+                                        <input type="radio" class="form-control form-control-lg" id="environment[web] off" name="environment[web]" value=0 {% if environment.web == 0 %} checked {% endif %}><label for="environment[web] off">{{ 'no'|trans|capitalize }}</label>
+                                        <input type="radio" class="form-control form-control-lg" id="environment[web] on" name="environment[web]" value=1 {% if environment.web == 0 %} checked {% endif %}><label for="environment[web] on">{{ 'yes'|trans|capitalize }}</label>
                                     </div><!-- /.form-group -->
 
                                     <input type="hidden" id="environment[@id]" name ="environment[id]" value="{{ environment['@id'] }}">

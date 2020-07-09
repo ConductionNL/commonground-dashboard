@@ -21,9 +21,10 @@ data:
   app-demo: {{ .Values.settings.demo | quote }}
   app-container: {{ .Values.settings.container | quote }}
   app-domain: {{ .Values.settings.domain | quote }} 
-  app-domains-json: {{ .Values.settings.domainsJson | toJson | quote }}
   app-description: {{ .Values.settings.description | quote }}
   app-type: {{ .Values.settings.type | quote }}
+  app-web: {{ .Values.settings.web | quote }}
+  app-internal: {{ .Values.settings.internal | quote }}
   
   app-auth: {{ .Values.settings.authorisationEnabled | quote }}
   app-audittrail: {{ .Values.settings.audittrailEnabled | quote }}
@@ -48,3 +49,6 @@ data:
   varnish-url: {{ if .Values.varnish.enabled }}http://varnish{{ else }}{{ .Values.varnish.url | quote }}{{ end }}
   mercure-publish-url: {{ .Values.mercure.publishUrl | quote }}
   mercure-subscribe-url: {{ .Values.mercure.subscribeUrl | quote }}
+  
+  redis-host: '{{ .Values.settings.name }}-cache'
+  redis-port: {{ .Values.redis.port | toString | quote }}

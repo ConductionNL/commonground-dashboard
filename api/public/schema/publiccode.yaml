@@ -3,11 +3,11 @@ publiccodeYmlVersion: "0.2"
 name: db
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/Commonground-dashboard"
-landingURL: "https://db.huwelijksplanner.online" 
+landingURL: "https://db.zuid-drecht.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-releaseDate: "2020-21-06"
-logo: huwelijksplanner.online 
+releaseDate: "2020-06-07"
+logo: zuid-drecht.nl 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -67,7 +67,7 @@ description:
 #          is and why one should need it.
 
     documentation: "https://github.com/ConductionNL/Commonground-dashboard/blob/master/README.md"
-    apiDocumentation: "https://db.huwelijksplanner.online"
+    apiDocumentation: "https://db.zuid-drecht.nl"
 #
 #    features:
 #       - Very important feature

@@ -23,6 +23,7 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/login")
+     * @Route("/dashboard/login", name="app_user_login2")
      * @Template
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -32,7 +33,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/logout")
-     * @Template
+     * @Route("/dashboard/logout", name="app_user_logout2")
      */
     public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
@@ -158,12 +159,10 @@ class UserController extends AbstractController
      */
     public function dashboardAction(Request $request, CommonGroundService $commonGroundService)
     {
-
         $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'])['hydra:member'];
 
-
-        foreach($users as $user){
-            if($user['username'] == 'balie@utrecht.nl'){
+        foreach ($users as $user) {
+            if ($user['username'] == 'balie@utrecht.nl') {
                 return $this->redirect($this->generateUrl('app_vrc_requests', ['requestType'=>'5b10c1d6-7121-4be2-b479-7523f1b625f1']));
             }
         }
