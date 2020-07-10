@@ -86,6 +86,7 @@ class WrcController extends AbstractController
             // Lets see if we also need t add an slug
             if (array_key_exists('slug', $resource)) {
                 $slug = $resource['slug'];
+                $slug['template'] = $resource['@id'];
                 // The resource action section
                 if (array_key_exists('@id', $slug) && array_key_exists('action', $slug)) {
                     // The delete action
