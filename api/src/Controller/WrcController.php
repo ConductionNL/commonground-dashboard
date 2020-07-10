@@ -635,7 +635,6 @@ class WrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-
             // Lets see if we also need to add an slug
             if (array_key_exists('menuItem', $resource)) {
                 $menuItem = $resource['menuItem'];
