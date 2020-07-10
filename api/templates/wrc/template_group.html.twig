@@ -28,7 +28,7 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_wrc_templates')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_wrc_templategroups')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
@@ -58,7 +58,7 @@
                                                 <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                                 <select id="organization" name="organization" class="form-control form-control-lg">
                                                     {% for organization in organizations %}
-                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                        <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization['@id']  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -68,7 +68,7 @@
                                                 <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
                                                 <select id="application" name="application" class="form-control form-control-lg">
                                                     {% for application in applications %}
-                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application['@id']  %}selected=""{% endif %}>{{ application.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -81,43 +81,45 @@
 												<textarea class="form-control summernote" rows="5" id="description" name="description">{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
         									</div>
         								</div>  <!-- /.col -->
-								</div> <!-- /.card-body -->
+                                    </div>
+                                        <div class="card-action">
+                                            {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                        </div><!-- /.card-action -->
+								    </div> <!-- /.card-body -->
 
-								<div class="card-action">
-                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->
                             </form>
+
                         </div><!-- /.card -->
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                {% if resource['@id'] is defined and  resource['@id'] is not empty  %}
-                    <div class="row">
-                        <div class="col-md-8">
-                            {% include 'wrc/widgets/templates.html.twig'
-                                with {
-                                'templates': templates } %}
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% include 'wrc/widgets/templates.html.twig'
+                            with {
+                            'templates': templates } %}
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.page-inner -->
+
         </div>
 
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_wrc_template',
+            'route': 'app_wrc_templategroup',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_wrc_template',
+            'route': 'app_wrc_templategroup',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_wrc_template',
+            'route': 'app_wrc_templategroup',
             'resource':resource,
             'id':'changeLog' } %}
 

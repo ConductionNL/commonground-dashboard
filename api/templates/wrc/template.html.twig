@@ -71,7 +71,7 @@
         								</div> <!-- /.col -->
     								</div><!-- /.row -->
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
                                                 <select id="organization" name="organization" class="form-control form-control-lg">
@@ -81,27 +81,38 @@
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
-                                                <select id="application" name="application" class="form-control form-control-lg">
-                                                    {% for application in applications %}
-                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application  %}selected=""{% endif %}>{{ application.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div><!-- /.form-group -->
-                                        </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'template groups'|trans|capitalize }}</label>
                                                 <select id="templateGroups[]" name="templateGroups[]" class="form-control form-control-lg">
                                                     {% for templateGroup in templateGroups %}
-                                                        <option value="{{ templateGroup['@id'] }}" {% if resource.templateGroups is defined and templateGroup['@id'] == resource.templateGroups  %}selected=""{% endif %}>{{ templateGroup.name }}</option>
+                                                        <option value="{{ templateGroup['@id'] }}" {% if resource.templateGroups is defined and templateGroup['@id'] == resource.templateGroups[0]['@id']  %}selected=""{% endif %}>{{ templateGroup.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="">{{ 'create slug'|trans|capitalize }}</label>
+                                                <div>
+                                                    {% if resource.content is defined and resource.content is not empty %}
+                                                    <input type="radio" id="yes" name="createSlug" disabled>
+                                                    <label id="yes" for="yes">{{ 'yes'|trans|capitalize }}</label></div>
+                                                    <input type="radio" id="no" name="createSlug" disabled>
+                                                    <label id="no" for="no">{{ 'no'|trans|capitalize }}</label></div>
+                                                    {% else %}
+                                                    <input type="radio" id="yes" name="createSlug" value="true" checked="checked">
+                                                    <label id="yes" for="yes">{{ 'yes'|trans|capitalize }}</label></div>
+                                                    <input type="radio" id="no" name="createSlug" value="false">
+                                                    <label id="no" for="no">{{ 'no'|trans|capitalize }}</label></div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- /.col -->
+
     								<div class="row">
         								<div class="col-md-12">
         									<div class="form-group">
@@ -118,24 +129,35 @@
         									</div>
         								</div>  <!-- /.col -->
     								</div> <!-- /.row -->
+                            </form>
+                            <div class="card-action">
+                                {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                            </div><!-- /.card-action -->
 								</div> <!-- /.card-body -->
 
-								<div class="card-action">
-                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-								</div><!-- /.card-action -->
-                            </form>
+
+
                         </div><!-- /.card -->
                     </div><!-- /.col -->
-                </div><!-- /.row -->
                 <div class="row">
                     <div class="col-md-12">
+                        {% if resource.slugs is defined and resource.slugs is not empty %}
                         {% include 'wrc/widgets/slugs.html.twig'
                             with{
-                            'slugs': slugs,
+                            'slugs': resource.slugs,
                             'resource':resource
+                        } %}
+                        {% else %}
+                            {% include 'wrc/widgets/slugs.html.twig'
+                                with{
+                                'slugs': slugs,
+                                'resource':resource
                             } %}
+                        {% endif %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                </div><!-- /.row -->
+
             </div><!-- /.page-inner -->
         </div>
 
