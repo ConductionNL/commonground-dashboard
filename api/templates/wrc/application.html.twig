@@ -85,8 +85,9 @@
                                                 <label
                                                     for="defaultConfiguration">{{ 'default configuration'|trans|capitalize }}</label>
                                                 <select id="defaultConfiguration" name="defaultConfiguration" class="form-control form-control-lg">
+                                                    <option value="">Geen</option>
                                                     {% for defaultConfiguration in defaultConfigurations %}
-                                                        <option value="{{ defaultConfiguration['@id'] }}" {% if resource.defaultConfiguration['@id'] is defined and defaultConfiguration['@id'] == resource.defaultConfiguration  %}selected=""{% endif %}>{{ defaultConfiguration.name }}</option>
+                                                        <option value="{{ defaultConfiguration['@id'] }}" {% if resource.defaultConfiguration['@id'] is defined and defaultConfiguration['@id'] == resource.defaultConfiguration['@id']  %}selected=""{% endif %}>{{ defaultConfiguration.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>

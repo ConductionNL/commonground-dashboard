@@ -58,7 +58,7 @@
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
         										<select id="organization" name="organization" class="form-control form-control-lg">
         										 {% for organization in organizations %}
-                                                     <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                     <option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization['@id'] %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
@@ -68,7 +68,7 @@
                                                 <label for="largeInput">{{ 'Favorite icon'|trans|capitalize }}</label>
                                                 <select id="favicon" name="favicon" class="form-control form-control-lg">
                                                     {% for image in images %}
-                                                        <option value="{{ image['@id'] }}" {% if resource.favicon is defined and image['@id'] == resource.favicon %}selected{% endif %}>{{ image.name }}</option>
+                                                        <option value="{{ image['@id'] }}" {% if resource.favicon is defined and image['@id'] == resource.favicon['@id'] %}selected{% endif %}>{{ image.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
