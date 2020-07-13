@@ -13,7 +13,7 @@
                 <div class="row">
                     {% for resource in resources %}
                     <div class="col-md-4 col-lg-3 col-xl-2">
-                        <div class="card card-dark {% id resource.health >= resource.installations|length %}card-success{% else %}card-danger{% endif %}">
+                        <div class="card card-dark {% if resource.health >= resource.installations|length %}card-success{% else %}card-danger{% endif %}">
                             <div class="card-body skew-shadow">
                                 <h2 class="py-4 mb-0">{% for domain in resource.domains %}<a href="{{ path('app_evc_cluster', {id: resource.id}) }}">{{ domain.location }}</a>{% endfor %}</h2>
                                 <div class="row">
