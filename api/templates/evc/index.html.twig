@@ -39,4 +39,12 @@
         {% include 'footer.html.twig' %}
 
     </div>
+
+    <script type="text/javascript">
+        var timeout = setTimeout("location.reload(true);",300000);
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout("location.reload(true);",300000);
+        }
+    </script>
 {% endblock %}
