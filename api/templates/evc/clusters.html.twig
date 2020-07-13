@@ -27,6 +27,7 @@
                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'health'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -36,6 +37,7 @@
                             <td>{{ resource.name }}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td>{{ resource.health }}/{{ resource.installations|length }}</td>
                             <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                         </tr>
                         {% endfor %}

@@ -154,6 +154,7 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'health'|trans|capitalize }}</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -161,6 +162,7 @@
                                         {% for environment in environments %}
                                             <tr>
                                                 <td>{{ environment.name }}</td>
+                                                <td>{{ environment.health }}/{{ environment.installations|length }} </td>
                                                 <td><a class="btn btn-info btn-block" style="margin-right: 25px" href="{{ path('app_evc_environment', {id: environment.id}) }}"  data-target="#editEnvironment{{ environment.id }}">{{ 'edit'|trans|capitalize }}</a></td>
                                             </tr>
                                         {% endfor %}
