@@ -52,7 +52,7 @@
                         </td>
                         <td>
                             {% if property.name not in resource.properties|keys or property.type == 'array' %}
-                                <a class="btn btn-success" data-toggle="modal"  data-target="#setProperty{{ property.id }}" href="#setProperty{{ property.id }}"><i class="fa fa-plus"></i></a>
+                                <a style="float: right" class="btn btn-success" data-toggle="modal"  data-target="#setProperty{{ property.id }}" href="#setProperty{{ property.id }}"><i class="fa fa-plus"></i></a>
                             {% endif %}
                         </td>
                     </tr>
@@ -88,6 +88,8 @@
         'property':property,
         'resource':resource,
         'id':property.id }%}
+
+
 
 {% endfor %}
 

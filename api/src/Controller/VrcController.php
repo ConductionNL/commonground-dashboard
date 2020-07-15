@@ -214,6 +214,16 @@ class VrcController extends AbstractController
                 $task = $commonGroundService->saveResource($task, ['component'=>'tc', 'type'=>'tasks']);
             }
 
+            if (array_key_exists('newProp', $resource)) {
+                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                foreach($item['properties'] as $key => &$value){
+                    if($key == $resource['newPropName']){
+                        $value = $resource['newProp'];
+                    }
+                }
+                $resource['properties'] = $item['properties'];
+            }
+
             // Fix for properties not being nullabe @todo long term fix should be implemented
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = [];
@@ -223,9 +233,15 @@ class VrcController extends AbstractController
 
             // Lets see if we also need to add an slug
             if (array_key_exists('unsetProperty', $resource) && is_array($resource['unsetProperty'])) {
+//                foreach($resource['properties'] as $property => $value){
+//
+//                }
+                echo var_dump($resource);
+
             }
             if (array_key_exists('setProperty', $resource) && is_array($resource['setProperty'])) {
             }
+
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'vrc', 'type'=>'requests']));
 
