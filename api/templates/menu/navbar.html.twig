@@ -28,6 +28,7 @@
                                 <div class="avatar-lg"><img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="image profile" class="avatar-img rounded"></div>
                                 <div class="u-text">
                                     <h4>{{ app.user.username }}</h4>
+                                    <span>{{ commonground_resource(app.user.organization).name }}</span>
 {#                                    <p class="text-muted">hello@example.com</p>#}
                                     <a style="margin-top: 8px" href="{{ path('app_ud_index') }}" class="btn btn-xs btn-secondary btn-sm">Dashboard</a>
                                 </div>

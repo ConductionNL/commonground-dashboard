@@ -57,9 +57,14 @@
     									<div class="col-md-4 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-        										<select id="organization" name="organization" class="form-control form-control-lg">
+                                                {% if resource.name is defined and resource.name != 'new' %}
+                                                <select id="organization" name="organization" class="form-control form-control-lg" disabled>
+                                                    <option></option>
+                                                    {% else %}
+                                                    <select id="organization" name="organization" class="form-control form-control-lg">
+                                                        {% endif %}
         										 {% for organization in organizations %}
-                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization.id == resource.organization.id  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                               		<option value="{{ organization['@id'] }}" {% if resource.organization is defined and organization['@id'] == resource.organization['@id']  %}selected=""{% endif %}>{{ organization.name }}</option>
                                                 {% endfor %}
                                                 </select>
         									</div><!-- /.form-group -->
@@ -67,9 +72,15 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'application'|trans|capitalize }}</label>
+                                                {% if resource.name is defined and resource.name != 'new' %}
+
+                                                <select id="application" name="application" class="form-control form-control-lg" disabled>
+                                                    <option></option>
+                                                {% else %}
                                                 <select id="application" name="application" class="form-control form-control-lg">
+                                                    {% endif %}
                                                     {% for application in applications %}
-                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application.id == resource.application.id  %}selected=""{% endif %}>{{ application.name }}</option>
+                                                        <option value="{{ application['@id'] }}" {% if resource.application is defined and application['@id'] == resource.application['@id']  %}selected=""{% endif %}>{{ application.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -107,6 +118,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                            <th scope="col">{{ 'value'|trans|capitalize }}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -116,7 +128,11 @@
                                             {% for configuration in resource.configuration %}
                                                 <tr id="{{ value }}">
                                                     <td id="{{ value }}">
-                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[]" value="{{ configuration }}" readonly="readonly">
+                                                        <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[name]" readonly="readonly">
+                                                    </td>
+                                                    <td id="{{ value }}">
+                                                        <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="configuration[value]" value="{{ configuration }}" readonly="readonly">
+
                                                     </td>
                                                     <td id="{{ value }}">
                                                     <button class="btn btn-danger" id="{{ value }}" type="button" onclick="storedDelete(this)"><i class='fas fa-minus'></i></button>

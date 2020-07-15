@@ -76,7 +76,7 @@
                                                         class="form-control form-control-lg">
                                                     {% for organization in organizations %}
                                                         <option value="{{ organization['@id'] }}"
-                                                                {% if resource.organization is defined and organization['@id'] == resource.organization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                                {% if resource.organization is defined and organization['@id'] == resource.organization['@id'] %}selected=""{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -116,7 +116,12 @@
                                                 <i class="fas fa-upload ml-2"></i>
                                                 <input style="border-radius: 1px" type="file" class="form-control-file"
                                                        id="base64"
-                                                       name="base64">
+                                                       name="base64"
+                                                    {% if resource.base64 is defined %}
+                                                        value="{{ resource.base64 }}"
+                                                    {% endif %}
+                                                >
+
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
