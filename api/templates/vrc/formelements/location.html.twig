@@ -1,25 +1,32 @@
-<br>
-<label class="input__label" for="voornaam">Adres</label>
-<div style="display: flex; margin-bottom: 20px;">
-    {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
-        <input class="input__control input__control--text" style="" id="locationProperty" type="text" name="request[properties][{{ property.name }}]"
-               value="{{ request.properties[property.name] }}">
-    {% else %}
-        <input class="input__control input__control--text" style="" id="locationProperty" type="text" name="request[properties][{{ property.name }}]">
-    {% endif %}
-    <button style="min-width: 50px; width: 50px !important;" type="button" class="btn btn-primary" onclick="showPosition();"><i class="fas fa-map-marker-alt"></i></button>
+<div class="form-group">
+    <label class="input__label" for="voornaam">Adres</label>
+    <div style="display: flex; margin-bottom: 20px;">
+        {% if value is defined and value is not empty %}
+            <input class="form-control" style="" id="locationProperty" type="text" name="newProp"
+                   value="{{ value }}">
+            <input class="form-control" style="" id="hiddenProperty" type="hidden" name="newProp"
+                   value="{{ value }}">
+        {% else %}
+            <input class="form-control" style="" id="locationProperty" type="text" name="newProp">
+            <input class="form-control" style="" id="hiddenProperty" type="text" name="newProp">
+        {% endif %}
+        <button style="min-width: 50px; width: 50px !important;" type="button" class="btn btn-primary" onclick="showPosition();"><i class="fas fa-map-marker-alt"></i></button>
+        <input type="hidden" value="{{ property.name }}" name="newPropName">
+    </div>
+
+    <div id="map" style="width: 100%; height: 480px; margin-bottom: 20px; margin-top: 20px;">
+
+    </div>
 </div>
 
-<div id="map" style="width: 100%; height: 480px; margin-bottom: 20px; margin-top: 20px;">
-
-</div>
 
 <script>
-
-    $('#map').hide();
     let map;
     let latitude;
     let longitude;
+    {% block javascript %}
+
+
 
     function initMap(lat, long) {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -48,6 +55,9 @@
         let input = document.getElementById('locationProperty');
         let address = document.getElementById('locationProperty').value;
         let geocoder = new google.maps.Geocoder();
+        let hidden = document.getElementById('hiddenProperty');
+
+        input.value = '';
 
         if(address !== ''){
             getLocation(address);
@@ -64,7 +74,7 @@
 
                         geocoder.geocode({ 'latLng': latLng}, function (results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
-                                input.value = results[0].formatted_address
+                                hidden.value = results[0].formatted_address
                             }
                         });
                         latitude = undefined;
@@ -75,7 +85,7 @@
                         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                         geocoder.geocode({ 'latLng': latLng}, function (results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
-                                input.value = results[0].formatted_address
+                                hidden.value = results[0].formatted_address
                             }
                         });
                     }
@@ -85,4 +95,6 @@
             }
         }, 400);
     }
+
+    {% endblock %}
 </script>

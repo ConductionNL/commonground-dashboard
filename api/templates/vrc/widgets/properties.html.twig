@@ -52,7 +52,7 @@
                         </td>
                         <td>
                             {% if property.name not in resource.properties|keys or property.type == 'array' %}
-                                <a style="float: right" class="btn btn-success" data-toggle="modal"  data-target="#setProperty{{ property.id }}" href="#setProperty{{ property.id }}"><i class="fa fa-plus"></i></a>
+                                <a style="float: right" class="btn btn-success" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="fa fa-plus"></i></a>
                             {% endif %}
                         </td>
                     </tr>
@@ -83,6 +83,13 @@
         'id':property.id } %}
 
     {%  include 'vrc/modals/setProperty.html.twig'
+        with {
+        'route': 'app_vrc_request',
+        'property':property,
+        'resource':resource,
+        'id':property.id }%}
+
+    {%  include 'vrc/modals/updateProperty.html.twig'
         with {
         'route': 'app_vrc_request',
         'property':property,

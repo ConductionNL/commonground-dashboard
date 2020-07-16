@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <form action="{{ path(route, {id: resource.id}) }}" enctype="multipart/form-data" method="post">
 
                     {% if property.type == 'array' and property.format == 'bsn' %}
                         {% include 'vrc/formelements/person.html.twig' %}
@@ -62,8 +62,6 @@
                         {# Generic HTML 5 input types #}
                     {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
                         {% include 'vrc/formelements/generic.html.twig'  with {'type': property.format} %}
-                    {% else %}
-                        {{ value }}
                     {% endif %}
                     <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                 </form>
