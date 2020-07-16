@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% set view = 'app_chrc_pitch' %}
+    {% set view = 'app_chrc_tender' %}
 
     <style>
         th {
@@ -14,16 +14,16 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'pitch',
+                'headerTitle': 'tender',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
                         'path' : 'app_default_index'
                     },
-                    'pitches' : {
-                        'name' : 'pitches',
-                        'path' : 'app_chrc_pitches'
+                    'tenders' : {
+                        'name' : 'tenders',
+                        'path' : 'app_chrc_tenders'
                     }
                 }]
             } %}
@@ -110,11 +110,38 @@
 
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="requiredBudget">{{ 'required budget'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="requiredBudget"
-                                                       name="requiredBudget" placeholder="50000"
-                                                    {% if resource.requiredBudget is defined and resource.requiredBudget is not empty %}
-                                                        value="{{ resource.requiredBudget }}"
+                                                <label for="budget">{{ 'budget'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="budget"
+                                                       name="budget" placeholder="50000"
+                                                    {% if resource.budget is defined and resource.budget is not empty %}
+                                                        value="{{ resource.budget }}"
+                                                    {% endif %}
+                                                >
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="selectionCriteria">{{ 'selection criteria'|trans|capitalize }}</label>
+                                                <textarea class="form-control" rows="3" id="selectionCritera"
+                                                          name="selectionCritera"
+                                                          required>{% if resource.selectionCritera is defined %}{{ resource.selectionCritera }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="document">{{ 'kind'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="document"
+                                                       name="document" placeholder="Product"
+                                                    {% if resource.kind is defined and resource.kind is not empty %}
+                                                        value="{{ resource.kind }}"
                                                     {% endif %}
                                                 >
                                             </div>
@@ -126,12 +153,12 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label
-                                                    for="dateSubmitted">{{ 'date'|trans|capitalize }} {{ 'submitted'|trans|capitalize }}</label>
-                                                <input type="date" class="form-control form-control-lg" id="dateSubmitted"
-                                                       name="dateSubmitted"
-                                                    {% if resource.dateSubmitted is defined and resource.dateSubmitted is not empty %}
-                                                        value="{{ resource.dateSubmitted }}"
-                                                        placeholder="{{ resource.dateSubmitted }}"
+                                                    for="dateClose">{{ 'date'|trans|capitalize }} {{ 'deadline'|trans|capitalize }}</label>
+                                                <input type="date" class="form-control form-control-lg" id="document"
+                                                       name="document"
+                                                    {% if resource.dateClose is defined and resource.dateClose is not empty %}
+                                                        value="{{ resource.dateClose }}"
+                                                        placeholder="{{ resource.dateClose }}"
                                                     {% endif %}
                                                 >
                                             </div>
@@ -208,20 +235,41 @@
 
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        {% if resource.entry is defined and resource.entry is not empty %}
-                            {% include 'chrc/widgets/entries.html.twig'
+                        {% if resource.groups is defined and resource.groups is not empty %}
+                            {% include 'chrc/widgets/groups.html.twig'
                                 with{
-                                'resources': resource.entries,
-                                'resource':resource.entry,
-                                'path': 'app_chrc_entry'
+                                'groups': resource.groups,
+                                'resource':resource
                             } %}
                         {% endif %}
-                        {% if resource.pitchStages is defined and resource.pitchStages is not empty %}
-                            {% include 'chrc/widgets/pitch_stages.html.twig'
+                    </div><!-- /.col -->
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.tenderStages is defined and resource.tenderStages is not empty %}
+                            {% include 'chrc/widgets/tender_stages.html.twig'
                                 with{
-                                'resources': resource.pitchStages,
-                                'resource':resource,
-                                'path': 'app_chrc_pitchstage'
+                                'tenderStages': resource.tenderStages,
+                                'resource':resource
+                            } %}
+                        {% endif %}
+                    </div>
+                </div><!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.entries is defined and resource.entries is not empty %}
+                        {% include 'chrc/widgets/entries.html.twig'
+                            with{
+                            'entries': resource.entries,
+                            'resource':resource
+                        } %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.questions is defined and resource.questions is not empty %}
+                            {% include 'chrc/widgets/questions.html.twig'
+                                with{
+                                'questions': resource.questions,
+                                'resource':resource
                             } %}
                         {% endif %}
                     </div>
@@ -229,11 +277,12 @@
 
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        {% if resource.tender is defined and resource.tender is not empty %}
-                            {% include 'chrc/widgets/tenders.html.twig'
+                        {% if resource.pitches is defined and resource.pitches is not empty %}
+                            {% include 'chrc/widgets/pitches.html.twig'
                                 with{
-                                'path': 'app_chrc_tender',
-                                'resource': resource.tender
+                                'path': 'app_chrc_pitch',
+                                'resources': resource.pitches,
+                                'resource': resource
                             } %}
                         {% endif %}
                     </div><!-- /.col -->
@@ -242,6 +291,18 @@
                             {% include 'chrc/widgets/proposals.html.twig'
                                 with{
                                 'proposals': resource.proposals,
+                                'resource':resource
+                            } %}
+                        {% endif %}
+                    </div><!-- /.col -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.deal is defined and resource.deal is not empty %}
+                            {% include 'chrc/widgets/deal.html.twig'
+                                with{
+                                'deal': resource.deal,
                                 'resource':resource
                             } %}
                         {% endif %}

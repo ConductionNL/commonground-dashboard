@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% set view = 'app_chrc_pitch' %}
+    {% set view = 'app_chrc_tenderstage' %}
 
     <style>
         th {
@@ -14,16 +14,16 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'pitch',
+                'headerTitle': 'pitch stage',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
                         'path' : 'app_default_index'
                     },
-                    'pitches' : {
-                        'name' : 'pitches',
-                        'path' : 'app_chrc_pitches'
+                    'tender stages' : {
+                        'name' : 'tender stages',
+                        'path' : 'app_chrc_tenderstages'
                     }
                 }]
             } %}
@@ -92,52 +92,6 @@
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
-
-                                    <div class="row">
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="submitter">{{ 'submitter'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="submitter"
-                                                       name="submitter"
-                                                       placeholder="https://brp.zuid-drecht.nl/ingeschrevenpersonen/uuid/..."
-                                                    {% if resource.submitter is defined and resource.submitter is not empty %}
-                                                        value="{{ resource.submitter }}"
-                                                    {% endif %}
-                                                >
-                                            </div>
-                                        </div> <!-- /.col -->
-
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="requiredBudget">{{ 'required budget'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="requiredBudget"
-                                                       name="requiredBudget" placeholder="50000"
-                                                    {% if resource.requiredBudget is defined and resource.requiredBudget is not empty %}
-                                                        value="{{ resource.requiredBudget }}"
-                                                    {% endif %}
-                                                >
-                                            </div>
-                                        </div> <!-- /.col -->
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="dateSubmitted">{{ 'date'|trans|capitalize }} {{ 'submitted'|trans|capitalize }}</label>
-                                                <input type="date" class="form-control form-control-lg" id="dateSubmitted"
-                                                       name="dateSubmitted"
-                                                    {% if resource.dateSubmitted is defined and resource.dateSubmitted is not empty %}
-                                                        value="{{ resource.dateSubmitted }}"
-                                                        placeholder="{{ resource.dateSubmitted }}"
-                                                    {% endif %}
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
@@ -153,7 +107,7 @@
                     <div class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2>Documenten</h2>
+                                <h2>Requirements to be completed</h2>
                             </div>
                             <div class="card-body">
 
@@ -161,11 +115,11 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label
-                                                for="largeInput">{{ 'documents'|trans|capitalize }}</label>
+                                                for="largeInput">{{ 'requirements'|trans|capitalize }}</label>
                                             <ul>
-                                                {% if resource.tendergroups is defined and resource.tendergroups is not empty %}
-                                                    {% for group in resource.tendergroups %}
-                                                        <li>{{ group.name }}</li>
+                                                {% if resource.requirements is defined and resource.requirements is not empty %}
+                                                    {% for item in resource.requirements %}
+                                                        <li>{{ item.name }}</li>
                                                     {% endfor %}
                                                 {% endif %}
                                             </ul>
@@ -179,7 +133,7 @@
                                             <label
                                                 for="document">{{ 'add'|trans|capitalize }} {{ 'document'|trans }}</label>
                                             <input type="text" class="form-control form-control-lg" id="document"
-                                                   name="document" placeholder="https://drive.google.com/.."
+                                                   name="document" placeholder=""
                                                    value="">
                                         </div>
                                     </div> <!-- /.col -->
@@ -191,10 +145,10 @@
                                             <select class="form-control form-control-lg" id="removedocument"
                                                     name="removedocument">
                                                 <option value="">-</option>
-                                                {% if resource.documents is defined and resource.documents is not empty %}
-                                                    {% for document in resource.documents %}
+                                                {% if resource.requirements is defined and resource.requirements is not empty %}
+                                                    {% for item in resource.requirements %}
                                                         <option
-                                                            value="{{ document }}">{{ document }}</option>
+                                                            value="{{ item }}">{{ item }}</option>
                                                     {% endfor %}
                                                 {% endif %}
                                             </select>
@@ -204,48 +158,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        {% if resource.entry is defined and resource.entry is not empty %}
-                            {% include 'chrc/widgets/entries.html.twig'
-                                with{
-                                'resources': resource.entries,
-                                'resource':resource.entry,
-                                'path': 'app_chrc_entry'
-                            } %}
-                        {% endif %}
-                        {% if resource.pitchStages is defined and resource.pitchStages is not empty %}
-                            {% include 'chrc/widgets/pitch_stages.html.twig'
-                                with{
-                                'resources': resource.pitchStages,
-                                'resource':resource,
-                                'path': 'app_chrc_pitchstage'
-                            } %}
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        {% if resource.tender is defined and resource.tender is not empty %}
-                            {% include 'chrc/widgets/tenders.html.twig'
-                                with{
-                                'path': 'app_chrc_tender',
-                                'resource': resource.tender
-                            } %}
-                        {% endif %}
-                    </div><!-- /.col -->
-                    <div class="col-md-6 col-sm-12">
-                        {% if resource.proposals is defined and resource.proposals is not empty %}
-                            {% include 'chrc/widgets/proposals.html.twig'
-                                with{
-                                'proposals': resource.proposals,
-                                'resource':resource
-                            } %}
-                        {% endif %}
-                    </div><!-- /.col -->
                 </div>
 
 

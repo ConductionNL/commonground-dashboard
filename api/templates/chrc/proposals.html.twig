@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_chrc_challenge' %}
+{% set view = 'app_chrc_proposal' %}
 
 {% block content %}
 
@@ -8,9 +8,9 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'Title': 'challenges',
-                'Noun' : 'challenge',
-                'name' : 'challenges'|trans|capitalize,
+                'Title': 'proposals',
+                'Noun' : 'proposal',
+                'name' : 'proposals'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',
@@ -34,8 +34,8 @@
                         {% for resource in resources %}
                             <tr>
                                 <td>{{ resource.name }}</td>
-                                <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                                <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td>{{ resource.created|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                <td>{{ resource.modified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path(view, {id: resource.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                             </tr>
                         {% endfor %}

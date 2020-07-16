@@ -2693,6 +2693,18 @@
         <source>rollingupdate</source>
         <target>bijwerken</target>
       </trans-unit>
+      <trans-unit id="aJ7g9lm" resname="tender">
+        <source>tender</source>
+        <target>aanbesteding</target>
+      </trans-unit>
+      <trans-unit id="h2Bn2mA" resname="tenders">
+        <source>tenders</source>
+        <target>aanbestedingen</target>
+      </trans-unit>
+      <trans-unit id="2g5T6Ad" resname="home">
+        <source>home</source>
+        <target>home</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

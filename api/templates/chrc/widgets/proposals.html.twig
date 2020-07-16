@@ -1,0 +1,62 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        {% if proposals is defined %}
+            <h3 class="d-inline-block">{{ 'proposals'|trans|capitalize }}</h3>
+        {% else %}
+            <h3 class="d-inline-block">{{ 'proposal'|trans|capitalize }}</h3>
+        {% endif %}
+
+    </div>
+    {% if proposals is defined %}
+        <div class="card-list">
+            {% for proposal in proposals %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ proposal.name|capitalize }}</h4></div>
+                        <div class="status">{{ proposal.description }}</div>
+                    </div>
+                    <a class="btn btn-icon btn-primary btn-round btn-s"
+                       style="margin-right: 5px"
+                       href="{{ path('app_chrc_proposal', {id: proposal.id}) }}">
+                        <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                    </a>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteCase{{ proposal.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% elseif proposal is defined %}
+        <div class="card-list">
+            <div class="item-list">
+                <div class="info-user ml-3">
+                    <div class="username"><h4>{{ proposal.name|capitalize }}</h4></div>
+                    <div class="status">{{ proposal.description }}</div>
+                </div>
+                <a class="btn btn-icon btn-primary btn-round btn-s"
+                   style="margin-right: 5px"
+                   href="{{ path('app_chrc_proposal', {id: proposal.id}) }}">
+                    <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                </a>
+                <button class="btn btn-icon btn-danger btn-round btn-s"
+                        style="margin-right: 15px" data-toggle="modal"
+                        data-target="#deleteCase{{ proposal.id }}">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div><!-- /.item-list -->
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block"
+                                                                                        style="margin-right: 25px"
+                                                                                        href="#addCase"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
