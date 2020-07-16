@@ -1,4 +1,4 @@
-<input type="hidden" value="{{ property.name }}" name="newPropName">
+
 <div class="form-group">
     <label class="input__label" for="postalCode">Postcode</label>
     <input class="form-control mb-3" id="postcode" type="text">
@@ -10,15 +10,15 @@
     <label class="i4put__label" for="houseNumberSuffix">toevoeging</label>
     <input class="form-control mb-3" id="toevoeging" type="text">
 
-    <button type="button" onclick="getBagKeys()"class="btn btn-info">Zoeken</button>
+    <button type="button" onclick="getBagKeys()" class="btn btn-info">Zoeken</button>
 </div>
 
 <hr style="margin-top: 20px;">
 
 
 <div class="form-control" id="adresLijst" style="margin-top: 20px; margin-bottom: 20px; display: none">
-
 </div>
+<input type="hidden" value="{{ property.name }}" name="newPropName">
 
 
 <script>

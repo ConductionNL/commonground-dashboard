@@ -219,6 +219,9 @@ class VrcController extends AbstractController
                 foreach($item['properties'] as $key => &$value){
                     if($key == $resource['newPropName']){
                         $value = $resource['newProp'];
+
+                    }else{
+                        $item['properties'][$resource['newPropName']] = $value;
                     }
                 }
                 $resource['properties'] = $item['properties'];

@@ -11,15 +11,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ path(route, {id: resource.id}) }}" enctype="multipart/form-data" method="post">
+                <form action="{{ path(route, {id: resource.id}) }}" method="post">
 
                     {% if property.type == 'array' and property.format == 'bsn' %}
                         {% include 'vrc/formelements/person.html.twig' %}
-
                     {% elseif property.format == 'bag' %}
                         {% include 'vrc/formelements/bag/address.html.twig' %}
-
-
                     {% elseif property.iri == 'wrc/organizations'%}
                         {% include 'vrc/formelements/organizations.html.twig' %}
                     {% elseif property.iri == 'grc/cemetery'%}
@@ -28,15 +25,12 @@
                         {% include 'vrc/formelements/grave_type.html.twig' %}
                     {% elseif property.iri == 'arc/event'%}
                         {% include 'vrc/formelements/event.html.twig' %}
-
                     {% elseif property.iri == 'pdc/offer'%}
                         {% include 'vrc/formelements/pdc/offer.html.twig' %}
-
                     {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
                         {% include 'vrc/formelements/ingeschreven_persoon.html.twig' %}
                     {% elseif property.iri == 'irc/assent'%}
                         {% include 'vrc/formelements/assent.html.twig' %}
-
                         {# Let slook for formats #}
                     {% elseif property.format == 'phonenumber'%}
                         {% include 'vrc/formelements/generic.html.twig'  with {'type': 'tel'} %}
@@ -58,7 +52,6 @@
                         {% include 'vrc/formelements/mee_verhuizers.html.twig'  %}
                     {% elseif property.format == 'calendar'%}
                         {% include 'vrc/formelements/calendar.html.twig'  %}
-
                         {# Generic HTML 5 input types #}
                     {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
                         {% include 'vrc/formelements/generic.html.twig'  with {'type': property.format} %}
