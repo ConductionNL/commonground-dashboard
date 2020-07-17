@@ -3,8 +3,6 @@
 {% elseif property.format == 'bag' %}
     <span class="danger">{{ commonground_resource(value).straat }} {{ commonground_resource(value).huisnummer }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
 
-
-
 {% elseif property.iri == 'wrc/organizations'%}
 
 {% elseif property.iri == 'grc/cemetery'%}
@@ -31,9 +29,8 @@
 
 {% elseif property.iri == 'irc/assent'%}
     {% if value is iterable %}
-        {% set test = iterable(value, '<span class="danger">{{ value }}</span>')%}
-        {{ include(template_from_string(test|raw))  }}
-
+        {% set result = iterable(value, '<span class="danger">{{ value }}</span>')%}
+        {{ include(template_from_string(result|raw))  }}
     {% else %}
         <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
     {% endif %}
