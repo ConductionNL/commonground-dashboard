@@ -1,52 +1,53 @@
-<div></div>
-<table class="table table--small-font">
-    <thead>
-        <tr>
-            <th><select id="weekSelect" onchange="weekSelector(this)"  class="calendarSelect">
-                </select></th>
-            <th style="text-align: center">Ma<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Di<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Woe<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Do<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Vrij<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Zat<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Zon<br><p style="font-weight: 100" class="week"></p></th>
+<div class="form-control">
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th><select id="weekSelect" onchange="weekSelector(this)" style=""  class="calendarSelect">
+                    </select></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Ma<br><p style="font-weight: 100" class="week"></p></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Di<br><p style="font-weight: 100" class="week"></p></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Woe<br><p style="font-weight: 100" class="week"></p></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Do<br><p style="font-weight: 100" class="week"></p></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Vrij<br><p style="font-weight: 100" class="week"></p></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Zat<br><p style="font-weight: 100" class="week"></p></th>
+                <th style="font-size: 10px !important; padding: 0px !important; text-align: center">Zon<br><p style="font-weight: 100" class="week"></p></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">09:00 - 10:00</th>
         </tr>
-    </thead>
-    <tbody>
-    <tr style="height: 60px;" class="days">
-        <th>09:00 - 10:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>10:00 - 11:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>11:00 - 12:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>12:00 - 13:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>13:00 - 14:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>14:00 - 15:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>15:00 - 16:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>16:00 - 17:00</th>
-    </tr>
-    </tbody>
-</table>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">10:00 - 11:00</th>
+        </tr>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">11:00 - 12:00</th>
+        </tr>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">12:00 - 13:00</th>
+        </tr>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">13:00 - 14:00</th>
+        </tr>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">14:00 - 15:00</th>
+        </tr>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">15:00 - 16:00</th>
+        </tr>
+        <tr style="height: 60px;" class="days">
+            <th style="font-size: 10px !important;">16:00 - 17:00</th>
+        </tr>
+        </tbody>
+    </table>
 
-<div id="testData" style="margin-top: 40px;">
+    <div id="testData" style="margin-top: 40px;">
+
+    </div>
 
 </div>
-
-
-<input id="calendarValue"  type="hidden" name="request[properties][{{ property.name }}]"
+<input type="hidden" value="{{ property.name }}" name="newPropName">
+<input id="calendarValue"  type="hidden" name="newProp"
 value="">
 <script>
 
@@ -115,10 +116,10 @@ value="">
         for(let j = 0; j < 7; j++){
 
             let td = document.createElement('td');
-            td.setAttribute('style', 'height: 40px; padding: 0;');
+            td.setAttribute('style', 'height: 40px; padding: 0px !important; font-size: 10px !important;');
 
             let button = document.createElement('button');
-            button.setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: white; border: 1px solid lightgray;');
+            button.setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: white; padding: 0px !important; border: 1px solid lightgray;');
             button.type = 'button';
             button.value = days[i].children[0].innerHTML;
 

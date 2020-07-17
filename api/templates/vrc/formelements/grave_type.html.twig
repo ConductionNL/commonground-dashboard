@@ -1,4 +1,4 @@
-{% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
+
     {% set grave_types = commonground_resource_list({'component':'grc', 'type':'grave_types'})['hydra:member'] %}
     <div class="input combobox" id="grafsoort_combobox">
         <div class="input__hint">Selecteer het {{ property.title }}</div>
@@ -25,6 +25,4 @@
         {% endif %}
         dropdownGrafsoort.selectedIndex = selectedIndex;
     </script>
-{% else %}
-    <p>Er is nog geen begraafplaats geselecteerd!</p>
-{% endif %}
+

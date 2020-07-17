@@ -36,32 +36,25 @@
         {% endif %}
     {% endfor %}
     {% else%}
-    <ul class="form-group">
-            <li class="form-group">
-                <ul>
+    <div class="form-group">
                     {% set value = 1 %}
                     {% for offer in offers %}
-
-                    <li>
-                        <input type="checkbox" value="{{ offer['@id'] }}" name="newprop[{{ value }}]" id="{{ offer.id }}">
-                        <label for="{{ offer.id }}"{{ offer.name }}
-                            {% if offer.price != 0 %}
-                                <span style="float:right;">
-                                {% if offer.priceCurrency == 'EUR' %}
-                                    €{{ offer.price }}
-                                {% else %}
-                                    {{ offer.price }}
-                                {% endif %}
+                        <div>
+                            <input type="checkbox" value="{{ offer['@id'] }}" name="newProp" id="{{ offer.id }}">
+                            <label for="{{ offer.id }}">{{ offer.name|capitalize }}
+                                {% if offer.price != 0 %}
+                                    <span style="margin-left: 10px; float:right;">
+                            {% if offer.priceCurrency == 'EUR' %}
+                                €{{ offer.price }}
+                            {% else %}
+                                {{ offer.price }}
+                            {% endif %}
                                         {% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}</span>
-                                {% endif %}
-                        </label>
-                    </li>
+                                {% endif %}</label><br>
+                        </div>
                         {% set value = value + 1 %}
                     {% endfor %}
-                </ul>
-            </li>
-
-    </ul>
+    </div>
     {% endif %}
     <input type="hidden" value="{{ property.name }}" name="newPropName">
 </div>

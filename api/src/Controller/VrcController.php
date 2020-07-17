@@ -216,12 +216,16 @@ class VrcController extends AbstractController
 
             if (array_key_exists('newProp', $resource)) {
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $type = $commonGroundService->getResource($item['requestType']);
                 foreach($item['properties'] as $key => &$value){
                     if($key == $resource['newPropName']){
                         $value = $resource['newProp'];
-
                     }else{
-                        $item['properties'][$resource['newPropName']] = $value;
+                        foreach($type['properties'] as $name => $content){
+                            if($name == $resource['newPropName']){
+                                $item['properties'][$resource['newPropName']] = $resource['newProp'];
+                            }
+                        }
                     }
                 }
                 $resource['properties'] = $item['properties'];
