@@ -217,12 +217,12 @@ class VrcController extends AbstractController
             if (array_key_exists('newProp', $resource)) {
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
                 $type = $commonGroundService->getResource($item['requestType']);
-                foreach($item['properties'] as $key => &$value){
-                    if($key == $resource['newPropName']){
+                foreach ($item['properties'] as $key => &$value) {
+                    if ($key == $resource['newPropName']) {
                         $value = $resource['newProp'];
-                    }else{
-                        foreach($type['properties'] as $name => $content){
-                            if($name == $resource['newPropName']){
+                    } else {
+                        foreach ($type['properties'] as $name => $content) {
+                            if ($name == $resource['newPropName']) {
                                 $item['properties'][$resource['newPropName']] = $resource['newProp'];
                             }
                         }
@@ -244,11 +244,9 @@ class VrcController extends AbstractController
 //
 //                }
                 echo var_dump($resource);
-
             }
             if (array_key_exists('setProperty', $resource) && is_array($resource['setProperty'])) {
             }
-
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'vrc', 'type'=>'requests']));
 
