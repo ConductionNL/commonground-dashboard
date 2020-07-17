@@ -13,7 +13,7 @@
                 <div class="row">
                     {% for resource in resources %}
                     <div class="col-md-4 col-lg-3 col-xl-2">
-                        <div class="card card-dark {% if resource.health >= resource.installations|length %}card-success{% else %}card-danger{% endif %}">
+                        <div class="card card-dark {% if resource.health >= resource.installations %}card-success{% else %}card-danger{% endif %}">
                             <div class="card-body skew-shadow">
                                 <h2 class="py-4 mb-0">{% for domain in resource.domains %}<a href="{{ path('app_evc_cluster', {id: resource.id}) }}">{{ domain.location }}</a>{% endfor %}</h2>
                                 <div class="row">
@@ -22,7 +22,7 @@
                                         <div class="text-small text-uppercase fw-bold op-8">{% for environment in resource.environments %}<a href="{{ path('app_evc_environment', {id: environment.id}) }}">{{ environment.name }}</a><br />{% endfor %}</div>
                                     </div>
                                     <div class="col-4 pl-0 text-right">
-                                        <h3 class="fw-bold mb-1">{{ resource.health }}/{{ resource.installations|length }}</h3>
+                                        <h3 class="fw-bold mb-1">{{ resource.health }}/{{ resource.installations }}</h3>
                                         <div class="text-small text-uppercase fw-bold op-8">Installaties</div>
                                     </div>
                                 </div>
