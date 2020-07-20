@@ -41,6 +41,8 @@ class VrcController extends AbstractController
         $variables['title'] = $translator->trans('requests');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
 
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+
         $variables['requestType'] = $request->query->get('requestType');
         $query = $request->query->all();
 
