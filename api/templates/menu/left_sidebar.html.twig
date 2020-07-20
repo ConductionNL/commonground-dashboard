@@ -1,8 +1,19 @@
 <!-- Sidebar -->
 <div class="sidebar sidebar-style-2">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
-        <div class="sidebar-content">
+
             <ul class="nav nav-primary">
+                {% if application.defaultConfiguration.configuration.sideMenu is defined and application.defaultConfiguration.configuration.sideMenu is not empty %}
+                    {% set menu = commonground_resource(application.defaultConfiguration.configuration.sideMenu) %}
+                <li class="nav-section">
+                    <h4 style="color: black" class="text-section">{{ menu.name|capitalize }}</h4>
+                </li>
+                    {% for item in menu.menuItems %}
+                        <li class="nav-item">
+                            <a href="{{ include(template_from_string(item.href)) }}">{{ item.name }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
                 <li class="nav-section">
                     <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
                 </li>
@@ -179,34 +190,12 @@
                                               class="sub-item">{{ 'components'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                                {#
-                                <li>
-                                    <a href="{{ path("app_evc_domains") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'domains'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_evc_environments") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'environments'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                #}
                                 <li>
                                     <a href="{{ path("app_evc_healthlogs") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'health logs'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                                {#
-                                <li>
-                                    <a href="{{ path("app_evc_installations") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'installations'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                #}
                             </ul>
                         </div>
                     </li>

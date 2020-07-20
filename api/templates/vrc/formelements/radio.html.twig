@@ -1,0 +1,32 @@
+
+<div class="form-control" style="margin-bottom: 10px">
+
+    {% if property.enum is defined and property.enum is not empty and property.type == 'string'%}
+        {% for option in property.enum %}
+            {% if value is defined and value == option %}
+                <div class="input__group input__group--radio">
+                    <input class="input__control input__control--radio" checked="checked" type="radio" id="{{ option }}" name="newProp" value="{{ option }}">
+                    <label class="input__label input__label--radio" for="{{ option }}">{{ option }}</label><br>
+                </div>
+            {% else %}
+    <div class="input__group input__group--radio">
+        <input class="input__control input__control--radio" type="radio" id="{{ option }}" name="newProp" value="{{ option }}">
+        <label class="input__label input__label--radio" for="{{ option }}">{{ option|capitalize }}</label><br>
+    </div>
+            {% endif %}
+        {% endfor %}
+    {% elseif property.type == "boolean" %}
+    <div class="input__group input__group--radio">
+        <input class="input__control input__control--radio" type="radio" id="yes" name="newProp" value="ja"
+                {% if value is defined and value == 'ja' %}checked="checked"{% endif %}>
+        <label class="input__label input__label--radio" for="yes">{{ 'yes'|trans|capitalize }}</label><br>
+    </div>
+    <div class="input__group input__group--radio">
+        <input class="input__control input__control--radio" type="radio" id="no" name="newProp" value="nee"
+               {% if value is defined and value == 'nee' %}checked="checked"{% endif %}>
+        <label class="input__label input__label--radio" for="no">{{ 'no'|trans|capitalize }}</label><br>
+    </div>
+    {% endif %}
+    <input type="hidden" value="{{ property.name }}" name="newPropName">
+</div>
+

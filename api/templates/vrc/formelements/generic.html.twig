@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <div>
+        <label  for="{{ property.id }}">{{ property.title }}</label>
+    </div>
+    <input class="form-control" id="{{ property.id }}" type="{{ type }}" name="newProp"
+        {% if value is defined and value is not empty %}
+        value="{{  value }}"
+        {% endif %}>
+    <input type="hidden" value="{{ property.name }}" name="newPropName">
+</div>
+
