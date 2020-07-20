@@ -1,3 +1,21 @@
 apiVersion: v1
+<<<<<<< HEAD
+entries:
+  db:
+  - apiVersion: v1
+    appVersion: V.0.1
+    created: "2020-07-20T11:23:52.460018892Z"
+    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
+      interface beschikbaar.&#039;'
+    digest: 452c72f408998be3fe6d812bed274891444f23267275f875e3490eec755dddfb
+    home: zuid-drecht.nl
+    icon: zuid-drecht.nl
+    name: db
+    urls:
+    - db-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-07-20T11:23:52.456298092Z"
+=======
 entries: {}
 generated: "2020-07-20T08:00:07.317296453Z"
+>>>>>>> development
