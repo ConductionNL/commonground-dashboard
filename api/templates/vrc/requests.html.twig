@@ -41,6 +41,7 @@
                                     </thead>
                                     <tbody>
                                     {% for resource in resources %}
+
                                         {% if resource.organization == organization['@id'] %}
                                         <tr>
                                             <td>{{ commonground_resource(resource.requestType).name }}</td>
