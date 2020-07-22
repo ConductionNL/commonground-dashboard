@@ -6,12 +6,11 @@
 {% elseif property.iri == 'wrc/organizations'%}
     <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
 {% elseif property.iri == 'grc/cemetery'%}
-
+    <span class="danger">{{ commonground_resource(value).reference }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
 {% elseif property.iri == 'grc/grave_type'%}
 
 {% elseif property.iri == 'arc/event'%}
-
-
+    {{ value }} <td><a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
 {% elseif property.iri == 'pdc/offer'%}
     {% if value is iterable %}
         <ul>
@@ -30,11 +29,10 @@
 {% elseif property.iri == 'irc/assent'%}
     {% if value is iterable %}
         {% set result = iterable(value, '')%}
-        <div>{{ result|raw }}</div>
+        {{ result|raw }}</td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
     {% else %}
         <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
     {% endif %}
-
     {# Let slook for formats #}
 {% elseif property.format == 'phonenumber'%}
     <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>

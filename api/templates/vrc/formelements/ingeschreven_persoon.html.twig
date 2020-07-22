@@ -1,16 +1,5 @@
 <div class="content-background">
     <div class="content">
-        <script>
-            /* Load tab component */
-            System.import('/uno/components/tabs/tabs.js').then(function (module) {
-                /* Select all .tab elements on the page */
-                var tabs = document.querySelectorAll('.tab');
-                /* Initialize all tabs */
-                for (var i = 0; i < tabs.length; i++) {
-                    new module.Tabs(tabs.item(i));
-                }
-            });
-        </script>
         {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'}) %}
 
 
