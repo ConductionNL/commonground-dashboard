@@ -44,10 +44,7 @@
         {% for organization in organizations %}
             {% if organization.contact is defined and organization.contact is not empty %}
                 {% set contact = commonground_resource(organization.contact) %}
-                {% if process.name == "Begraven" and contact.type != "Gemeente" %}
-                {% else %}
                     <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
-                {% endif %}
             {% else %}
                 <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
             {% endif %}
