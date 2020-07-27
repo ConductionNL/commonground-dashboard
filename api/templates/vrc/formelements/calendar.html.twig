@@ -1,4 +1,11 @@
 <div class="form-control">
+    <style>
+        .btnStyle:focus{
+            background-color: #f9e11e !important;
+            color: black;
+            border: none !important;
+        }
+    </style>
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -123,7 +130,7 @@ value="">
             button.type = 'button';
             button.value = days[i].children[0].innerHTML;
 
-            button.className = 'button-'+j.toString();
+            button.className = 'btnStyle button-'+j.toString();
             button.addEventListener('click', function(){
                 selectDate(button.value, button.name);
             });

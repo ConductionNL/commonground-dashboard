@@ -2693,6 +2693,22 @@
         <source>rollingupdate</source>
         <target>bijwerken</target>
       </trans-unit>
+      <trans-unit id="YkhOIqa" resname="health">
+        <source>health</source>
+        <target>__health</target>
+      </trans-unit>
+      <trans-unit id="nygWFmc" resname="requestType">
+        <source>requestType</source>
+        <target>verzoek type</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download">
+        <source>download</source>
+        <target>download</target>
+      </trans-unit>
+      <trans-unit id="QiyCnTv" resname="create slug">
+        <source>create slug</source>
+        <target>slug aanmaken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
