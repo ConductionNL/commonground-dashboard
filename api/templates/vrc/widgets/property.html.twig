@@ -16,10 +16,10 @@
         <ul>
         {% for item in value %}
             <li>
-                <span class="danger">{{ commonground_resource(item).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+                <span class="danger">{{ commonground_resource(item).name }}</span>
             </li>
         {% endfor %}
-        </ul>
+        </ul></td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
     {% else %}
         <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
     {% endif %}

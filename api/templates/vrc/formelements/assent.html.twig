@@ -26,18 +26,17 @@
         </div>
     </div>
     <div id="personForm" class="col-sm-12">
-        <div>
-
+        <div class="form-group">
             <label class="input__label" for="voornaam">Voornaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text">
+            <input class="form-control" style="width: 100%" id="getuigenVoornaam" type="text">
             <label class="input__label" for="achternaam">Achternaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text">
+            <input class="form-control" style="width: 100%" id="getuigenAchternaam" type="text">
             <label class="input__label" for="email">Email</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
+            <input class="form-control" style="width: 100%" id="getuigenEmail" type="email">
             <span id="inputResult"></span>
             <label class="input__label" for="telefoon">Telefoonnummer</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon" type="tel">
-            <button class="btn" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Uitnodigen</button>
+            <input class="form-control" style="width: 100%" id="getuigenTelefoon" type="tel">
+            <button class="btn btn-primary" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Uitnodigen</button>
         </div>
     </div>
 </div>
@@ -91,10 +90,10 @@
             hVoornaam.value = voornaam;
             hAchternaam.value = achternaam;
 
-            hEmail.name = 'newProp['+ counter.toString() +'][email]';
-            hTelefoon.name = 'newProp['+ counter.toString() +'][telephone]';
-            hVoornaam.name = 'newProp['+ counter.toString() +'][person][givenName]';
-            hAchternaam.name = 'newProp['+ counter.toString() +'][person][familyName]';
+            hEmail.name = 'newProp['+ counter +'][email]';
+            hTelefoon.name = 'newProp['+ counter +'][telephone]';
+            hVoornaam.name = 'newProp['+ counter +'][person][givenName]';
+            hAchternaam.name = 'newProp['+ counter +'][person][familyName]';
 
 
             let outerDiv = document.createElement('div');

@@ -37,10 +37,10 @@
     {% endfor %}
     {% else%}
     <div class="form-group">
-                    {% set value = 1 %}
+                    {% set value = 0 %}
                     {% for offer in offers %}
                         <div>
-                            <input type="checkbox" value="{{ offer['@id'] }}" name="newProp" id="{{ offer.id }}">
+                            <input type="checkbox" value="{{ offer['@id'] }}" name="newProp[{{ value }}]" id="{{ offer.id }}">
                             <label for="{{ offer.id }}">{{ offer.name|capitalize }}
                                 {% if offer.price != 0 %}
                                     <span style="margin-left: 10px; float:right;">
