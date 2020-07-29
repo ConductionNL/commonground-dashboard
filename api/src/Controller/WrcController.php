@@ -487,6 +487,7 @@ class WrcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
@@ -568,6 +569,9 @@ class WrcController extends AbstractController
                 $menu = $commonGroundService->saveResource($menu, ['component' => 'wrc', 'type' => 'menus']);
                 $variables['menus'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'menus'], ['application.id' => $id])['hydra:member'];
             }
+
+//            var_dump($resource);
+//            die;
 
             // If we do a reload here anyway? why dont we get the lates version of the resource
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'wrc', 'type' => 'applications']);
