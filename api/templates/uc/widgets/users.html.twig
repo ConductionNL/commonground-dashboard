@@ -7,19 +7,19 @@
             {% for user in users %}
                 <div class="item-list">
                     <div class="info-user ml-3">
-                        <div class="username"><h4>{{ user.name|capitalize }}</h4></div>
-                        <div class="status">{{ slug.slug }}</div>
+                        <div class="username"><h4>{{ user.username|capitalize }}</h4></div>
+                        <div class="status">{{ user.username }}</div>
                     </div>
                     <button class="btn btn-icon btn-primary btn-round btn-s"
                        style="margin-right: 5px"
                        data-toggle="modal"
-                       data-target="#editSlug{{ slug.id }}">
+                       data-target="#editSlug{{ user.id }}">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
                             style="margin-right: 15px"
                             data-toggle="modal"
-                            data-target="#deleteSlug{{ slug.id }}">
+                            data-target="#deleteSlug{{ user.id }}">
                         <i class="fa fa-trash"></i>
                     </button>
 

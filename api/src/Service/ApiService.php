@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
+
 class ApiService
 {
     private $commonGroundService;
@@ -11,10 +13,10 @@ class ApiService
         $this->commonGroundService = $commonGroundService;
     }
 
-    public function getResourceList($component, $type)
+    public function getResourceList($component, $type, $query = false)
     {
         //TODO rechten
-        return $this->commonGroundService->getResourceList(['component'=>$component, 'type'=>$type]);
+        return $this->commonGroundService->getResourceList(['component'=>$component, 'type'=>$type], $query);
     }
 
     public function createResource($resource, $component, $type)
