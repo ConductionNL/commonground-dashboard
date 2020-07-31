@@ -2607,7 +2607,7 @@
       </trans-unit>
       <trans-unit id="zY3g3xa" resname="search by reference">
         <source>search by reference</source>
-        <target>zoek op referentie</target>
+        <target>zoek op kenmerk</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>

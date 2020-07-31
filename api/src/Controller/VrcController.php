@@ -6,8 +6,11 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Conduction\CommonGroundBundle\Service\RequestService;
+use http\Params;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,29 +36,138 @@ class VrcController extends AbstractController
     }
 
     /**
-     * @Route("/requests")
+     * @Route("/requests/{organization}", defaults={"organization"="none"})
      */
-    public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $organization)
     {
         $variables = [];
         $variables['title'] = $translator->trans('requests');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('requests');
+        $variables['thisPath'] = "app_vrc_requests";
 
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
+
+        $query = "";
+
+        if (!isset($organization) || empty($organization) || $organization == 'none') {
+            $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        } elseif ($params->get('app_env') == 'dev') {
+            $variables['organization'] = [];
+            $variables['organization']['id'] = $organization;
+            $variables['organization']['@id'] = 'https://wrc.dev.' . $params->get('app_domain') . '/organizations/' . $organization;
+
+            if (isset($query) && !empty($query)) {
+                $query = $query . "&organization=" . $variables['organization']['@id'];
+            } else {
+                $query = $query . "organization=" . $variables['organization']['@id'];
+            }
+        } else {
+            $variables['organization'] = [];
+            $variables['organization']['id'] = $organization;
+            $variables['organization']['@id'] = 'https://wrc.' . $params->get('app_domain') . '/organizations/' . $organization;
+
+            if (isset($query) && !empty($query)) {
+                $query = $query . "&organization=" . $variables['organization']['@id'];
+            } else {
+                $query = $query . "organization=" . $variables['organization']['@id'];
+            }
+        }
 
         $variables['requestType'] = $request->query->get('requestType');
-        $query = $request->query->all();
+
 
         if ($request->query->get('status')) {
             $variables['status'] = $query['status'];
         }
 
         if (isset($variables['requestType'])) {
-            $variables['requestType'] = $commonGroundService->getResource(['component'=>'vtc', 'type'=>'request_types', 'id'=>$variables['requestType']]);
-            $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
-            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['requestType'=> $variables['requestType']['@id']])['hydra:member'];
+            $variables['requestType'] = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'request_types', 'id' => $variables['requestType']]);
+
+            if (isset($query) && !empty($query)) {
+                $query = $query . "&requestType=" . $variables['requestType'];
+            } else {
+                $query = $query . "requestType=" . $variables['requestType'];
+            }
+
+            $variables['subtitle'] = 'alle ' . $variables['requestType']['name'];
+
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "[" . $query . "]")['hydra:member'];
+
         } else {
-            $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], $query)['hydra:member'];
+
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "[" . $query . "]")['hydra:member'];
+        }
+
+        if ($request->isMethod('POST')) {
+
+            if (isset($_POST['filter'])) {
+
+                $filters = $request->request->all();
+
+//                var_dump($filters);
+//die;
+                $typeFilter = $request->request->get('typeFilter');
+                $referenceFilter = $request->request->get('referenceFilter');
+                $createdFilter = $request->request->get('createdFilter');
+                $modifiedFilter = $request->request->get('modifiedFilter');
+                $statusFilter = $request->request->get('statusFilter');
+
+                if (isset($typeFilter) && !empty($typeFilter)) {
+                    if (isset($query) && !empty($query)) {
+                        $query = $query . "&requestType=" . $typeFilter;
+                    } else {
+                        $query = $query . "requestType=" . $typeFilter;
+                    }
+                }
+
+                if (isset($referenceFilter) && !empty($referenceFilter)) {
+                    if (isset($query) && !empty($query)) {
+                        $query = $query . "&reference=" . $referenceFilter;
+                    } else {
+                        $query = $query . "reference=" . $referenceFilter;
+                    }
+                }
+
+                if(isset($createdFilter) && !empty($createdFilter)){
+                    $date = $createdFilter;
+
+                    // Because you cant filter for 1 date we have to filter between 2 dates
+                    $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
+                    $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
+
+                    if (isset($query) && !empty($query)) {
+                        $query = $query . "&dateCreated[strictly_before]=" . $date2 . "&dateCreated[strictly_after]=" .$date1;
+                    } else {
+                        $query = $query . "dateCreated[strictly_before]=" . $date2 . "&dateCreated[strictly_after]=" .$date1;
+                    }
+
+                }
+
+                if(isset($modifiedFilter) && !empty($modifiedFilter)){
+                    $date = $modifiedFilter;
+
+                    // Because you cant filter for 1 date we have to filter between 2 dates
+                    $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
+                    $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
+
+                    if (isset($query) && !empty($query)) {
+                        $query = $query . "&dateModified[strictly_before]=" . $date2 . "&dateModified[strictly_after]=" .$date1;
+                    } else {
+                        $query = $query . "dateModified[strictly_before]=" . $date2 . "&dateModified[strictly_after]=" .$date1;
+                    }
+
+                }
+
+                if (isset($statusFilter) && !empty($statusFilter)) {
+                    if (isset($query) && !empty($query)) {
+                        $query = $query . "&status=" . $statusFilter;
+                    } else {
+                        $query = $query . "status=" . $statusFilter;
+                    }
+                }
+
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+            }
         }
 
         // Tadaa a very simple download function
@@ -64,10 +176,10 @@ class VrcController extends AbstractController
 
             $response = new Response();
 
-            $filename = date('YmdHis').'_requests';
+            $filename = date('YmdHis') . '_requests';
             //set headers
             $response->headers->set('Content-Type', 'text/csv');
-            $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename.'.csv');
+            $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '.csv');
 
             $response->setContent($serializer->encode($variables['resources'], 'csv'));
 
@@ -75,8 +187,8 @@ class VrcController extends AbstractController
         }
 
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
-            return $this->render('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
+        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig')) {
+            return $this->render('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig', $variables);
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
         }
@@ -106,17 +218,17 @@ class VrcController extends AbstractController
                 $variables['resource'] = ['@id' => null, 'name' => 'new', 'id' => 'new', 'reference' => 'new request'];
             }
         } else {
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
-            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
-            $variables['submitters'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'submitters'], ['request'=> $variables['resource']['@id']])['hydra:member'];
+            $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
+            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/audit_trail');
+            $variables['submitters'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'submitters'], ['request' => $variables['resource']['@id']])['hydra:member'];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
             $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
 
             // $variables['tasks'] = []; //$commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])["hydra:member"];
             // $variables['messages'] = $commonGroundService->getResourceList(['component' => 'bs', 'type' => 'messages'])["hydra:member"];
             // $variables['memos'] = $commonGroundService->getResourceList(['component' => 'memo', 'type' => 'memos'])["hydra:member"];
-            $variables['queues'] = $commonGroundService->getResourceList(['component' => 'qc', 'type' => 'tasks'], ['resource'=>$variables['resource']['@id']])['hydra:member'];
+            $variables['queues'] = $commonGroundService->getResourceList(['component' => 'qc', 'type' => 'tasks'], ['resource' => $variables['resource']['@id']])['hydra:member'];
 
             if (array_key_exists('requestType', $variables['resource'])) {
                 $variables['requestType'] = $commonGroundService->getResource($variables['resource']['requestType']);
@@ -145,9 +257,9 @@ class VrcController extends AbstractController
         $variables['camundaTasks'] = [];
         if (array_key_exists('resource', $variables) && array_key_exists('processes', $variables['resource'])) {
             foreach ($variables['resource']['processes'] as $proces) {
-                $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'], ['processInstanceId'=>$commonGroundService->getUuidFromUrl($proces)]);
+                $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'], ['processInstanceId' => $commonGroundService->getUuidFromUrl($proces)]);
                 foreach ($camundaTasks as $camundaTask) {
-                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/'.$camundaTask['id'].'/rendered-form']);
+                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/' . $camundaTask['id'] . '/rendered-form']);
                     $variables['camundaTasks'][] = $camundaTask;
                 }
             }
@@ -176,10 +288,10 @@ class VrcController extends AbstractController
                     if ($role['action'] == 'delete') {
                         $commonGroundService->deleteResource($role);
 
-                        return $this->redirect($this->generateUrl('app_vrc_request', ['id'=>$id]));
+                        return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $id]));
                     }
                 }
-                $role = $commonGroundService->saveResource($role, ['component'=>'vrc', 'type'=>'roles']);
+                $role = $commonGroundService->saveResource($role, ['component' => 'vrc', 'type' => 'roles']);
             }
 
             if (array_key_exists('memo', $resource)) {
@@ -192,17 +304,17 @@ class VrcController extends AbstractController
                     if ($memo['action'] == 'delete') {
                         $commonGroundService->deleteResource($memo);
 
-                        return $this->redirect($this->generateUrl('app_vrc_request', ['id'=>$id]));
+                        return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $id]));
                     }
                 }
-                $memo = $commonGroundService->saveResource($memo, ['component'=>'memo', 'type'=>'memos']);
+                $memo = $commonGroundService->saveResource($memo, ['component' => 'memo', 'type' => 'memos']);
             }
 
             if (array_key_exists('task', $resource)) {
                 $task = $resource['task'];
                 $task['topic'] = $resource['@id'];
-                $task['priority'] = (int) $task['priority'];
-                $task['percentageDone'] = (int) $task['percentageDone'];
+                $task['priority'] = (int)$task['priority'];
+                $task['percentageDone'] = (int)$task['percentageDone'];
 
                 // The resource action section
                 if (array_key_exists('@id', $task) && array_key_exists('action', $task)) {
@@ -210,14 +322,14 @@ class VrcController extends AbstractController
                     if ($task['action'] == 'delete') {
                         $commonGroundService->deleteResource($task);
 
-                        return $this->redirect($this->generateUrl('app_vrc_request', ['id'=>$id]));
+                        return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $id]));
                     }
                 }
-                $task = $commonGroundService->saveResource($task, ['component'=>'tc', 'type'=>'tasks']);
+                $task = $commonGroundService->saveResource($task, ['component' => 'tc', 'type' => 'tasks']);
             }
 
             if (array_key_exists('newProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
                 $type = $commonGroundService->getResource($item['requestType']);
                 foreach ($item['properties'] as $key => &$value) {
                     if ($key == $resource['newPropName']) {
@@ -250,18 +362,18 @@ class VrcController extends AbstractController
             if (array_key_exists('setProperty', $resource) && is_array($resource['setProperty'])) {
             }
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'vrc', 'type'=>'requests']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_vrc_request', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $variables['resource']['id']]));
             }
         }
         //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
 
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')) {
-            return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
+        if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/' . $variables['requestType']['id'] . '.html.twig')) {
+            return $this->render('vrc/request_templates/' . $variables['requestType']['id'] . '.html.twig', $variables);
         } else {
             return $this->render('vrc/request.html.twig', $variables);
         }
@@ -275,8 +387,8 @@ class VrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('labels');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('labels');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'labels'])['hydra:member'];
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('labels');
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'labels'])['hydra:member'];
 
         return $variables;
     }
@@ -291,9 +403,9 @@ class VrcController extends AbstractController
 
         // Lets see if we need to create
         if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'id'=>'new', 'name'=>'label'];
+            $variables['resource'] = ['@id' => null, 'id' => 'new', 'name' => 'label'];
         } else {
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'labels', 'id'=> $id]);
+            $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'labels', 'id' => $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -303,7 +415,7 @@ class VrcController extends AbstractController
             return $this->redirect($this->generateUrl('app_vrc_labels'));
         }
 
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -316,7 +428,7 @@ class VrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'vrc', 'type'=>'labels']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'labels']));
         }
 
         return $variables;
@@ -330,8 +442,8 @@ class VrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('roles');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('roles');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'roles'])['hydra:member'];
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('roles');
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
 
         return $variables;
     }
@@ -346,9 +458,9 @@ class VrcController extends AbstractController
 
         // Lets see if we need to create
         if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'id'=>'new'];
+            $variables['resource'] = ['@id' => null, 'id' => 'new'];
         } else {
-            $variables['resource'] = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'roles', 'id'=> $id]);
+            $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'roles', 'id' => $id]);
         }
 
         // If it is a delete action we can stop right here
@@ -358,7 +470,7 @@ class VrcController extends AbstractController
             return $this->redirect($this->generateUrl('app_vrc_roles'));
         }
 
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'organizations'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'organizations'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -371,7 +483,7 @@ class VrcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'vrc', 'type'=>'roles', 'id'=>$id]));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'roles', 'id' => $id]));
         }
 
         return $variables;
