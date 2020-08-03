@@ -13,6 +13,10 @@
         <source>granted</source>
         <target>ingestemd</target>
       </trans-unit>
+      <trans-unit id="PBlHIfy" resname="retracted">
+        <source>retracted</source>
+        <target>ingetrokken</target>
+      </trans-unit>
       <trans-unit id="4G_M.Dn" resname="submitted">
         <source>submitted</source>
         <target>ingediend</target>
@@ -2708,6 +2712,10 @@
       <trans-unit id="QiyCnTv" resname="create slug">
         <source>create slug</source>
         <target>slug aanmaken</target>
+      </trans-unit>
+      <trans-unit id="qK6Kcs6" resname="user panel">
+        <source>user panel</source>
+        <target>gebruikerspaneel</target>
       </trans-unit>
     </body>
   </file>

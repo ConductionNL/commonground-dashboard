@@ -1,0 +1,26 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+<div class="main-panel">
+    <div class="container">
+
+
+        {% include 'widgets/babs/title_h1.html.twig' with {
+            'Title': 'applications',
+            'name' : 'applications'|trans|capitalize,
+            'breadcrumbs': [{
+                'home' : {
+                    'name' : 'home',
+                    'path' : 'app_default_index'
+                },
+                'applications' : {
+                    'name' : 'dashboard',
+                    'path' : 'app_ud_index'
+                }
+            }]
+        }
+        %}
+
+    </div>
+</div>
+{% endblock %}

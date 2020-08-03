@@ -5,6 +5,7 @@
     <div class="main-panel">
         <div class="container">
 
+
             {% include 'widgets/babs/title_h1.html.twig' with {
                 'Title': 'dashboard',
                 'name' : 'dashboard'|trans|capitalize,
@@ -19,6 +20,16 @@
 
             <div class="page-inner">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h3 class="d-inline-block">{{ 'user panel'|trans|capitalize }}</h3>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ path('app_ud_applications') }}" class="btn btn-primary">{{ 'applications'|trans|capitalize }}</a>
+                            </div> <!-- /.card-body -->
+                        </div><!-- /.card -->
+                    </div>
                     <div class="col-md-12">
                         {% if requests is defined and requests is not empty %}
                         {% include 'ud/widgets/requests.html.twig'
