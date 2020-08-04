@@ -236,6 +236,7 @@ class VrcController extends AbstractController
 //                        }
 //                    }
 //                }
+                unset($item['properties']['temp']);
                 $resource['properties'] = $item['properties'];
             }
 
