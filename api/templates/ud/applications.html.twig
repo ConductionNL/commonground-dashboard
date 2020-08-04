@@ -1,0 +1,21 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    {% include 'widgets/babs/title_h1.html.twig' with {
+        'Title': 'applications',
+        'name' : 'applications'|trans|capitalize,
+        'breadcrumbs': [{
+            'home' : {
+                'name' : 'home',
+                'path' : 'app_default_index'
+            },
+            'dashboard' : {
+                'name' : 'dashboard',
+                'path' : 'app_ud_index'
+            }
+        }]
+    }
+    %}
+
+{% endblock %}
