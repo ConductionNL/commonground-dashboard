@@ -30,13 +30,13 @@ class UserController extends AbstractController
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
-        if($this->getUser()){
-            if(isset($application['defaultConfiguration']['configuration']['userPage'])){
+        if ($this->getUser()) {
+            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
                 return $this->redirect($application['defaultConfiguration']['configuration']['userPage']);
-            }else{
+            } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
-        }else{
+        } else {
             return $this->render('login/index.html.twig');
         }
     }
