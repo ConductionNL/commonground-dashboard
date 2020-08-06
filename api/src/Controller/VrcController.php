@@ -215,21 +215,11 @@ class VrcController extends AbstractController
                 }
                 $task = $commonGroundService->saveResource($task, ['component'=>'tc', 'type'=>'tasks']);
             }
-
             if (array_key_exists('newProp', $resource)) {
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
-                $type = $commonGroundService->getResource($item['requestType']);
-                foreach ($item['properties'] as $key => &$value) {
-                    if ($key == $resource['newPropName']) {
-                        $value = $resource['newProp'];
-                    } else {
-                        foreach ($type['properties'] as $name => $content) {
-                            if ($name == $resource['newPropName']) {
-                                $item['properties'][$resource['newPropName']] = $resource['newProp'];
-                            }
-                        }
-                    }
-                }
+                $item['properties']['temp'] = 'temp';
+                $item['properties'][$resource['newPropName']] = $resource['newProp'];
+                unset($item['properties']['temp']);
                 $resource['properties'] = $item['properties'];
             }
 

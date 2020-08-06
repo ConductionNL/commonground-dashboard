@@ -13,6 +13,10 @@
         <source>granted</source>
         <target>ingestemd</target>
       </trans-unit>
+      <trans-unit id="PBlHIfy" resname="retracted">
+        <source>retracted</source>
+        <target>ingetrokken</target>
+      </trans-unit>
       <trans-unit id="4G_M.Dn" resname="submitted">
         <source>submitted</source>
         <target>ingediend</target>
@@ -2692,6 +2696,26 @@
       <trans-unit id="8hbTLvS" resname="rollingupdate">
         <source>rollingupdate</source>
         <target>bijwerken</target>
+      </trans-unit>
+      <trans-unit id="YkhOIqa" resname="health">
+        <source>health</source>
+        <target>__health</target>
+      </trans-unit>
+      <trans-unit id="nygWFmc" resname="requestType">
+        <source>requestType</source>
+        <target>verzoek type</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download">
+        <source>download</source>
+        <target>download</target>
+      </trans-unit>
+      <trans-unit id="QiyCnTv" resname="create slug">
+        <source>create slug</source>
+        <target>slug aanmaken</target>
+      </trans-unit>
+      <trans-unit id="qK6Kcs6" resname="user panel">
+        <source>user panel</source>
+        <target>gebruikerspaneel</target>
       </trans-unit>
     </body>
   </file>
