@@ -25,8 +25,8 @@ class UdController extends AbstractController
     public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
         $variables = [];
-        $application =  $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
-        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'],['organization' => $application['organization']['@id']])['hydra:member'];
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['organization' => $application['organization']['@id']])['hydra:member'];
         $variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])['hydra:member'];
         $variables['events'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'events'])['hydra:member'];
 
@@ -39,6 +39,5 @@ class UdController extends AbstractController
      */
     public function Applications(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
-
     }
 }
