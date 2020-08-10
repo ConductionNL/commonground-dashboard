@@ -53,6 +53,12 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
+            $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'templates', 'id' => $id]);
+
+            foreach ($template['slugs'] as $slug) {
+                $commonGroundService->deleteResource(null, $slug['@id']);
+            }
+
             $commonGroundService->deleteResource(null, ['component' => 'wrc', 'type' => 'templates', 'id' => $id]);
 
             return $this->redirect($this->generateUrl('app_wrc_templates'));
