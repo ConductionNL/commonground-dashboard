@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_chrc_pitch' %}
+{% set view = 'app_chrc_answer' %}
 
 {% block content %}
 
@@ -8,9 +8,9 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'Title': 'pitches',
-                'Noun' : 'pitch',
-                'name' : 'pitches'|trans|capitalize,
+                'Title': 'answers',
+                'Noun' : 'answer',
+                'name' : 'answers'|trans|capitalize,
                 'breadcrumbs': [{
                     'home' : {
                         'name' : 'home',

@@ -3,11 +3,16 @@ publiccodeYmlVersion: "0.2"
 name: db
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/Commonground-dashboard"
-landingURL: "https://db.zuid-drecht.nl" 
+landingURL: "https://db.westfriesland.commonground.nu" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
+<<<<<<< HEAD
 releaseDate: "2020-10-08"
 logo: zuid-drecht.nl 
+=======
+releaseDate: "2020-31-07"
+logo: westfriesland.commonground.nu 
+>>>>>>> dev-barry
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -67,7 +72,7 @@ description:
 #          is and why one should need it.
 
     documentation: "https://github.com/ConductionNL/Commonground-dashboard/blob/master/README.md"
-    apiDocumentation: "https://db.zuid-drecht.nl"
+    apiDocumentation: "https://db.westfriesland.commonground.nu"
 #
 #    features:
 #       - Very important feature

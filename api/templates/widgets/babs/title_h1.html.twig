@@ -26,17 +26,17 @@
             <div class="ml-md-auto py-2 py-md-0">
                 {% block buttons %}
                     <div id="myBtnContainer p-2" class="row">
-                        {% if statusFilter is defined and statusFilter == true %}
-                        <a href="{{ path('app_vrc_requests') }}" class=" mx-1 btn btn-secondary btn-round">{{ 'all'|trans|capitalize }}</a>
-                        <a href="{{ path('app_vrc_requests',{'status': "incomplete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'incomplete'|trans|capitalize }}</a>
-                        <a href="{{ path('app_vrc_requests',{'status': "complete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'complete'|trans|capitalize }}</a>
-                        <a href="{{ path('app_vrc_requests',{'status': "submitted"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'submitted'|trans|capitalize }}</a>
-                        <a href="{{ path('app_vrc_requests',{'status': "processed"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'processed'|trans|capitalize }}</a>
-                        <a href="{{ path('app_vrc_requests',{'status': "cancelled"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'cancelled'|trans|capitalize }}</a>
+{#                        {% if statusFilter is defined and statusFilter == true %}#}
+{#                        <a href="{{ path('app_vrc_requests') }}" class=" mx-1 btn btn-secondary btn-round">{{ 'all'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "incomplete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'incomplete'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "complete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'complete'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "submitted"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'submitted'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "processed"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'processed'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "cancelled"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'cancelled'|trans|capitalize }}</a>#}
 
 
 
-                        {% endif %}
+{#                        {% endif %}#}
                         {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
                         {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}"
                                                    class=" mx-1 btn btn-secondary btn-round">{{ 'new'|trans|capitalize }} {{ 'add'|trans }} </a> {% endif %}

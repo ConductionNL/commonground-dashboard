@@ -3,14 +3,27 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V.0.1
+<<<<<<< HEAD
     created: "2020-08-10T10:14:25.658483718Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
     digest: aa2af4ffe29df51e241e4aed60c5a6c56c09a9687b9f3e59e5f38b8a463a5f4b
     home: zuid-drecht.nl
     icon: zuid-drecht.nl
+=======
+    created: "2020-07-31T11:40:38.245745463Z"
+    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
+      interface beschikbaar.&#039;'
+    digest: 196a273ffe2a3b5fb29b82ff7f0b80e6a4229d4ed08cf5a4c54e7c92c2eb7550
+    home: westfriesland.commonground.nu
+    icon: westfriesland.commonground.nu
+>>>>>>> dev-barry
     name: db
     urls:
     - db-0.1.0.tgz
     version: 0.1.0
+<<<<<<< HEAD
 generated: "2020-08-10T10:14:25.654617818Z"
+=======
+generated: "2020-07-31T11:40:38.232237863Z"
+>>>>>>> dev-barry

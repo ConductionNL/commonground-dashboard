@@ -77,13 +77,28 @@ class UcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
-            $resource['@id'] = $variables['resource']['@id'];
-            $resource['id'] = $variables['resource']['id'];
+            $resource = $variables['resource'];
+
+            $newRole = $request->request->get('role');
+            $deleteRole = $request->request->get('deleteRole');
+
+            if(isset($newRole) && !empty($newRole)) {
+                $resource['roles'][] = $newRole;
+            }
+
+            if(isset($deleteRole) && !empty($deleteRole)) {
+
+                for ($i = 0; $i < count($resource['roles']); ++$i) {
+                    if($resource['roles'][$i] == $deleteRole) {
+                        unset($resource['roles'][$i]);
+                    }
+                }
+            }
 
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'users']);
+            $variables['resource'] = $commonGroundService->updateResource($resource, ['component'=>'uc', 'type'=>'users']);
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
@@ -134,6 +149,7 @@ class UcController extends AbstractController
         $variables['title'] = $translator->trans('group');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
+        $variables['applications'] =  $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'applications'])['hydra:member'];
         $variables['scopes'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'scopes'])['hydra:member'];
 
         // Lets see if there is a post to procces
@@ -144,8 +160,26 @@ class UcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
+            // Lets see if we also need t add an slug
+            if (array_key_exists('scope', $resource)) {
+                $scope = $resource['scope'];
+                $scope['userGroups'][] = $resource['@id'];
+                // The resource action section
+                if (array_key_exists('@id', $scope) && array_key_exists('action', $scope)) {
+                    // The delete action
+                    if ($scope['action'] == 'delete') {
+                        $commonGroundService->deleteResource($scope);
+
+                        $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'scopes']);
+
+                        return $this->redirect($this->generateUrl('app_uc_group', ['id' => $id]));
+                    }
+                }
+                unset($scope['application']);
+                $scope = $commonGroundService->saveResource($scope, ['component' => 'uc', 'type' => 'scopes']);
+            }
+
             // Lets see if we also need to add an configurati
-            var_dump($resource);
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */

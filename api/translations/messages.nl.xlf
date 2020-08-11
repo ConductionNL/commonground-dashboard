@@ -2611,7 +2611,7 @@
       </trans-unit>
       <trans-unit id="zY3g3xa" resname="search by reference">
         <source>search by reference</source>
-        <target>zoek op referentie</target>
+        <target>zoek op kenmerk</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
@@ -2716,6 +2716,18 @@
       <trans-unit id="qK6Kcs6" resname="user panel">
         <source>user panel</source>
         <target>gebruikerspaneel</target>
+      </trans-unit>
+      <trans-unit id="aJ7g9lm" resname="tender">
+        <source>tender</source>
+        <target>aanbesteding</target>
+      </trans-unit>
+      <trans-unit id="h2Bn2mA" resname="tenders">
+        <source>tenders</source>
+        <target>aanbestedingen</target>
+      </trans-unit>
+      <trans-unit id="2g5T6Ad" resname="home">
+        <source>home</source>
+        <target>home</target>
       </trans-unit>
     </body>
   </file>
