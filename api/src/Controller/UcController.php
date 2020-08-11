@@ -82,14 +82,13 @@ class UcController extends AbstractController
             $newRole = $request->request->get('role');
             $deleteRole = $request->request->get('deleteRole');
 
-            if(isset($newRole) && !empty($newRole)) {
+            if (isset($newRole) && !empty($newRole)) {
                 $resource['roles'][] = $newRole;
             }
 
-            if(isset($deleteRole) && !empty($deleteRole)) {
-
-                for ($i = 0; $i < count($resource['roles']); ++$i) {
-                    if($resource['roles'][$i] == $deleteRole) {
+            if (isset($deleteRole) && !empty($deleteRole)) {
+                for ($i = 0; $i < count($resource['roles']); $i++) {
+                    if ($resource['roles'][$i] == $deleteRole) {
                         unset($resource['roles'][$i]);
                     }
                 }
@@ -149,7 +148,7 @@ class UcController extends AbstractController
         $variables['title'] = $translator->trans('group');
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('group');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
-        $variables['applications'] =  $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'applications'])['hydra:member'];
+        $variables['applications'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'applications'])['hydra:member'];
         $variables['scopes'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'scopes'])['hydra:member'];
 
         // Lets see if there is a post to procces
