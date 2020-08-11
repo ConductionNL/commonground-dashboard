@@ -6,26 +6,21 @@ settings:
   registryBase: docker.io/conduction
   projectName: db
   name: db
-  title: West-Friesland Dashboard
+  title: Zuid Drecht DashBboard
   version: V.0.1
-<<<<<<< HEAD
   id: 1163e443-5f9c-4aa6-802c-c619a14986c9
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
-=======
-  id: 76298171-e049-4492-ae7b-1d2fe231aa5f
-  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
->>>>>>> dev-barry
   type: application
   repro: https://github.com/ConductionNL/Commonground-dashboard
-  demo: https://db.westfriesland.commonground.nu
+  demo: https://db.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: westfriesland.commonground.nu
+  domain: zuid-drecht.nl
   subdomain: db
-  organisationName: Regio West-Friesland
-  email: info@westfriesland.nl
+  organisationName: Gemeente Zuid Drecht
+  email: info@zuid-drecht.nl
   country: Netherlands
-  state: Friesland
-  locality: West-Friesland
+  state: Noord-Holland
+  locality: Zuid Drecht
   unit: Common-Ground
   env: dev
   web: false
@@ -53,7 +48,7 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "76298171-e049-4492-ae7b-1d2fe231aa5f"
+  commongroundId: "1163e443-5f9c-4aa6-802c-c619a14986c9"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"

@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
-  title: 'West-Friesland Dashboard'
+  title: 'Zuid Drecht DashBboard'
   version: V.0.1
   description: |
     API Details
-    - Component: West-Friesland Dashboard
+    - Component: Zuid Drecht DashBboard
     - Reference: db
     - Enviroment: dev
     - Version: V.0.1
@@ -2379,20 +2379,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-08-10 10:15:02'
-=======
-        example: '2020-07-31 11:41:11'
->>>>>>> dev-barry
+        example: '2020-08-11 08:43:49'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-08-10 10:15:02'
-=======
-        example: '2020-07-31 11:41:11'
->>>>>>> dev-barry
+        example: '2020-08-11 08:43:49'
     required: []
   AuditTrail-write:
     properties:
@@ -2440,20 +2432,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-08-10 10:15:02'
-=======
-        example: '2020-07-31 11:41:11'
->>>>>>> dev-barry
+        example: '2020-08-11 08:43:49'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-08-10 10:15:02'
-=======
-        example: '2020-07-31 11:41:11'
->>>>>>> dev-barry
+        example: '2020-08-11 08:43:49'
     required: []
   ChangeLog-write:
     properties:
@@ -2494,8 +2478,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: westfriesland.commonground.nu
-    url: db.dev.westfriesland.commonground.nu
+    name: zuid-drecht.nl
+    url: db.dev.zuid-drecht.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
