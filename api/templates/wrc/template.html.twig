@@ -126,46 +126,25 @@
                                         </div> <!-- /.col -->
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="">{{ 'create slug'|trans|capitalize }}</label>
-                                                <div>
-                                                    {% if resource.content is defined and resource.content is not empty %}
-                                                    <input type="radio" id="yes" name="createSlug" disabled>
-                                                    <label id="yes" for="yes">{{ 'yes'|trans|capitalize }}</label></div>
-                                                <input type="radio" id="no" name="createSlug" disabled>
-                                                <label id="no" for="no">{{ 'no'|trans|capitalize }}</label></div>
-                                            {% else %}
-                                            <input type="radio" id="yes" name="createSlug" value="true"
-                                                   checked="checked">
-                                            <label id="yes" for="yes">{{ 'yes'|trans|capitalize }}</label></div>
-                                        <input type="radio" id="no" name="createSlug" value="false">
-                                        <label id="no" for="no">{{ 'no'|trans|capitalize }}</label></div>
-                                    {% endif %}
+                                                <label for="description">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5" id="description" name="description"
+                                                          required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="content">{{ 'content'|trans|capitalize }}</label>
+                                                <textarea class="form-control" rows="40" id="content" name="content"
+                                                          required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
                                 </div>
-                        </div>
-
-                    </div> <!-- /.col -->
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="description">{{ 'description'|trans|capitalize }}</label>
-                                <textarea class="form-control summernote" rows="5" id="description" name="description"
-                                          required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
-                            </div>
-                        </div>  <!-- /.col -->
-                    </div> <!-- /.row -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="content">{{ 'content'|trans|capitalize }}</label>
-                                <textarea class="form-control" rows="40" id="content" name="content"
-                                          required>{% if resource.content is defined %}{{ resource.content }}{% endif %}</textarea>
-                            </div>
-                        </div>  <!-- /.col -->
-                    </div> <!-- /.row -->
-                    </form>
+                                </form>
                     <div class="card-action">
                         {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                     </div><!-- /.card-action -->

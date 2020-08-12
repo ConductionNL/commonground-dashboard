@@ -1,0 +1,52 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit template'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add template'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                    <input required type="text" class="form-control form-control-lg" id="name" name ="template[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="name" name ="template[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'type'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="name" name ="template[type]" value="{% if item.type is defined %}{{ item.type }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'template'|trans|capitalize }}</label>
+                    <select id="template[uri]" name="template[uri]" class="form-control form-control-lg" required>
+                    {% for template in uri %}
+                        <option value="{{ template['@id'] }}" {% if item.uri is defined and item.uri == template['@id'] %} selected{% endif %}>{{ template.name }}</option>
+                    {% endfor %}
+                    </select>
+                </div><!-- /.form-group -->
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="template[id]" name ="template[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="template[@id]" name ="template[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <input type="hidden" name="template[requestType]" value="{{ resource['@id'] }}">
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

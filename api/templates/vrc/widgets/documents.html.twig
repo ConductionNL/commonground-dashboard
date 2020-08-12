@@ -3,29 +3,25 @@
         <h3 class="d-inline-block">{{ 'documents'|trans|capitalize }}</h3>
     </div>
 
-    {% if documents is defined %}
-        <div class="card-list">
-            {% for document in documents %}
-                <div class="item-list">
-                    <div class="info-user ml-3">
-                        <div class="username"><h4>{{ document.reference }}</h4></div>
-                        <div class="status">{{ document.status }}</div>
-                    </div>
-                    <button class="btn btn-icon btn-primary btn-round btn-s"
-                            style="margin-right: 5px" data-toggle="modal"
-                            data-target="#editSubmitter{{ document.id }}">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                </div><!-- /.item-list -->
-            {% endfor %}
-        </div><!-- /.card-list -->
-    {% endif %}
+
 
     <div class="card-body">
+        {% if documents is defined %}
+            <div class="card-list">
+                {% for document in documents %}
+                    <div class="item-list">
+                        <div class="info-user ml-3">
+                            <div class="username"><h4>{{ document.name }}</h4></div>
+                            <div class="status">{{ 'file type'|trans|capitalize }}: {{ document.type }}</div>
+                        </div>
+                        <a class="btn btn-primary btn-s" style="margin-right: 5px"
+                        href="{{ path('app_vrc_download',{'id': document.id}) }}">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div><!-- /.item-list -->
+                {% endfor %}
+            </div><!-- /.card-list -->
+        {% endif %}
     </div> <!-- /.card-body -->
-
-    <div class="card-action">
-        <a class="btn btn-info btn-block disabled" style="margin-right: 25px" href="#addChild"  data-toggle="modal" data-target="#addChild">{{ 'add a document'|trans|capitalize }}</a>
-    </div><!-- /.card-action -->
 
 </div><!-- /.card -->

@@ -6,16 +6,26 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Conduction\CommonGroundBundle\Service\RequestService;
+use http\Params;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Reader\Html;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 /**
  * Class DashboardController.
@@ -188,7 +198,7 @@ class VrcController extends AbstractController
     }
 
     /**
-     * @Route("/requests/{id}")
+     * @Route("/request/{id}")
      */
     public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
@@ -468,5 +478,36 @@ class VrcController extends AbstractController
         }
 
         return $variables;
+    }
+
+    /**
+     * @Route("/download/{id}")
+     * @Template
+     */
+    public function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    {
+
+        $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
+        $template = $commonGroundService->getResource($document['uri']);
+
+        switch ($document['type']){
+            case 'word':
+                $phpWord = new PhpWord();
+                $section = $phpWord->addSection();
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $template['content']);
+                $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+                $filename = $document['name'].'.docx';
+                $objWriter->save($filename);
+                header('Content-Type: application/vnd.ms-word');
+                header('Content-Disposition: attachment; filename='.$filename);
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                flush();
+                readfile($filename);
+                unlink($filename); // deletes the temporary file
+                exit;
+        }
+
+
+
     }
 }

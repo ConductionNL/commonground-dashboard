@@ -84,7 +84,7 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'requestType'|trans|capitalize }}</label>
                                                 {% if requestType is defined and requestType is not empty %}
-                                                    <a class="btn btn-info btn-block" href="{{ path('app_vtc_requesttypes',{'id': requestType.id }) }}" >{{ requestType.name }}</a>
+                                                    <a class="btn btn-info btn-block" href="{{ path('app_vtc_requesttype',{'id': requestType.id }) }}" >{{ requestType.name }}</a>
                                                 {% else %}
                                                     <select id="organization" name="requestType" class="form-control form-control-lg" >
                                                         {% for ItrequestType in requestTypes %}
@@ -174,7 +174,11 @@
                             with {
                             'children':resource.children } %}
                     </div><!-- /.col -->
-
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/documents.html.twig'
+                            with {
+                            'documents':requestType.templates } %}
+                    </div><!-- /.col -->
                 </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->

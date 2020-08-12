@@ -74,6 +74,7 @@ class VtcController extends AbstractController
         $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('request type');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component'=>'vtc', 'type'=>'request_types'])['hydra:member'];
+        $variables['uri'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'templates'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -81,9 +82,32 @@ class VtcController extends AbstractController
             // Passing the variables to the resource
             $resource = $request->request->all();
 
-            $resource['unique'] = $resource['unique'] === 'true' ? true : false;
-            $resource['parentRequired'] = $resource['parentRequired'] === 'true' ? true : false;
+            // Lets see if we also need t add an template
+            if (array_key_exists('template', $resource)) {
+                $template = $resource['template'];
+                // The resource action section
+                if (array_key_exists('@id', $template) && array_key_exists('action', $template)) {
+                    // The delete action
+                    if ($template['action'] == 'delete') {
+                        $commonGroundService->deleteResource($template);
 
+                        $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'vtc', 'type'=>'request_types']);
+
+                        return $this->redirect($this->generateUrl('app_vtc_requesttype', ['id' => $id]));
+                    }
+                }
+                $template = $commonGroundService->saveResource($template, ['component' => 'vtc', 'type' => 'templates']);
+
+            }
+
+            if(isset($resource['unique'])){
+                $resource['unique'] = $resource['unique'] === 'true' ? true : false;
+            }
+
+            if(isset($resource['parentRequired'])){
+                $resource['parentRequired'] = $resource['parentRequired'] === 'true' ? true : false;
+
+            }
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
@@ -91,6 +115,8 @@ class VtcController extends AbstractController
 
             //var_dump(json_encode($resource));
             //die;
+
+
 
             // Lets see if we also need to add an configuration
             if (array_key_exists('property', $resource)) {
