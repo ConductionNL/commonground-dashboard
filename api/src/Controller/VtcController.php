@@ -97,16 +97,14 @@ class VtcController extends AbstractController
                     }
                 }
                 $template = $commonGroundService->saveResource($template, ['component' => 'vtc', 'type' => 'templates']);
-
             }
 
-            if(isset($resource['unique'])){
+            if (isset($resource['unique'])) {
                 $resource['unique'] = $resource['unique'] === 'true' ? true : false;
             }
 
-            if(isset($resource['parentRequired'])){
+            if (isset($resource['parentRequired'])) {
                 $resource['parentRequired'] = $resource['parentRequired'] === 'true' ? true : false;
-
             }
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
@@ -115,8 +113,6 @@ class VtcController extends AbstractController
 
             //var_dump(json_encode($resource));
             //die;
-
-
 
             // Lets see if we also need to add an configuration
             if (array_key_exists('property', $resource)) {
