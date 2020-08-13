@@ -339,14 +339,14 @@ class VrcController extends AbstractController
 
                 $token = $commonGroundService->getJwtToken('ztc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
-                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc','type'=>'informatieobjecttypen'])['results'];
+                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
 
-                foreach($infoObjectTypes as $infoObjectType){
-                    if($infoObjectType['omschrijving'] == 'Document'){
+                foreach ($infoObjectTypes as $infoObjectType) {
+                    if ($infoObjectType['omschrijving'] == 'Document') {
                         $drc['informatieobjecttype'] = $infoObjectType['url'];
                     }
                 }
-                $drc['bronorganisatie'] = "999990482";
+                $drc['bronorganisatie'] = '999990482';
                 $drc['titel'] = $resource['newPropName'];
                 $drc['auteur'] = $variables['employees'][0]['@id'];
                 $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
@@ -359,7 +359,7 @@ class VrcController extends AbstractController
                 $token = $commonGroundService->getJwtToken('drc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
 
-                $result = $commonGroundService->createResource($drc, ['component'=>'drc','type'=>'enkelvoudiginformatieobjecten']);
+                $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
 
                 $item['properties'][$resource['newPropName']] = $result['url'];
 //                var_dump($result);
