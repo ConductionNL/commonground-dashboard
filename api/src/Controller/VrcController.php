@@ -6,26 +6,18 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Conduction\CommonGroundBundle\Service\RequestService;
-use http\Params;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Reader\Html;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-
 
 /**
  * Class DashboardController.
@@ -486,12 +478,11 @@ class VrcController extends AbstractController
      */
     public function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id, $requestId)
     {
-
         $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
         $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
         $query = ['request' => $currentRequest['@id']];
         $render = $commonGroundService->createResource($query, $document['uri'].'/render');
-        switch ($document['type']){
+        switch ($document['type']) {
             case 'word':
                 $phpWord = new PhpWord();
                 $section = $phpWord->addSection();
@@ -507,8 +498,5 @@ class VrcController extends AbstractController
                 unlink($filename); // deletes the temporary file
                 exit;
         }
-
-
-
     }
 }
