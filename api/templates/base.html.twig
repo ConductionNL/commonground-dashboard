@@ -35,7 +35,15 @@
 	<!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
 
-    {% if application.style is defined %}
+    {% if app.user.organization is defined %}
+        {% set organizationStyle = commonground_resource(app.user.organization) %}
+    {% endif %}
+
+    {% if organizationStyle.style is defined %}
+        <style>
+            {{ organizationStyle.style.css }}
+        </style>
+    {% elseif application.style is defined %}
     <!-- Commonground Overwrites -->
     <style>
         {{  application.style.css }}
