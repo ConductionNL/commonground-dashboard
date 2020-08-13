@@ -47,7 +47,7 @@ class UserController extends AbstractController
      */
     public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return [];
+        return $this->render('login/index.html.twig');
     }
 
     /**
