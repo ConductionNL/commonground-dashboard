@@ -1,0 +1,60 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'stages'|trans|capitalize }}</h3>
+    </div>
+    {% if stages is defined %}
+        <div class="card-list">
+            {% for stage in stages %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div><h4>{{ stage.name|capitalize }}</h4></div>
+                    </div>
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                            style="margin-right: 5px"
+                            data-toggle="modal"
+                            data-target="#editStage{{ stage.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteStage{{ stage.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addStage"
+           data-toggle="modal" data-target="#addRole">{{ 'add stage'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the stage modals #}
+{% include 'vrc/modals/stage.html.twig'
+    with {
+    'route': 'app_ptc_processtype',
+    'resource':resource,
+    'id':'addStage' } %}
+
+{% if stages is defined %}
+    {% for stage in stages %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_ptc_processtype',
+            'resource':resource,
+            'item':stage,
+            'id':'deleteStage' } %}
+
+        {% include 'vrc/modals/stage.html.twig'
+            with {
+            'route': 'app_ptc_processtype',
+            'resource':resource,
+            'item':stage,
+            'id':'editStage' } %}
+    {% endfor %}
+{% endif %}
