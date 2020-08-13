@@ -35,16 +35,16 @@ class DrcController extends AbstractController
 
         $headers = ['Authorization'=>'Bearer '.$token];
         $guzzleConfig = [
-                    // Base URI is used with relative requests
-                    'http_errors' => false,
-                    //'base_uri' => 'https://wrc.zaakonline.nl/applications/536bfb73-63a5-4719-b535-d835607b88b2/',
-                    // You can set any number of default request options.
-                    'timeout'  => 4000.0,
-                    // To work with NLX we need a couple of default headers
-                    'headers' => $headers,
-                    // Do not check certificates
-                    'verify' => false,
-                ];
+            // Base URI is used with relative requests
+            'http_errors' => false,
+            //'base_uri' => 'https://wrc.zaakonline.nl/applications/536bfb73-63a5-4719-b535-d835607b88b2/',
+            // You can set any number of default request options.
+            'timeout'  => 4000.0,
+            // To work with NLX we need a couple of default headers
+            'headers' => $headers,
+            // Do not check certificates
+            'verify' => false,
+        ];
 
         // Lets start up a default client
         $client = new Client($guzzleConfig);
@@ -54,10 +54,9 @@ class DrcController extends AbstractController
         $response = new Response(
             $data,
             Response::HTTP_OK,
-            ['content-type'=>$result['formaat'], 'Content-Disposition'=>'attachment; filename='.$result['bestandsnaam']],
+            ['content-type'=> $result['formaat'], 'Content-Disposition'=>'attachment; filename='.$result['bestandsnaam']],
         );
 
         $response->send();
-
     }
 }

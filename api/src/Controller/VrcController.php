@@ -7,8 +7,6 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Conduction\CommonGroundBundle\Service\RequestService;
 use DateTime;
-use http\Params;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -329,17 +327,16 @@ class VrcController extends AbstractController
                 $item['properties']['temp'] = 'temp';
                 $item['properties'][$resource['newPropName']] = $resource['newProp'];
 
-
                 unset($item['properties']['temp']);
                 $resource['properties'] = $item['properties'];
             }
             $files = $request->files->all();
 
-            if(key_exists('newProp', $files) && $file = $files['newProp']){
+            if (key_exists('newProp', $files) && $file = $files['newProp']) {
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
 
                 $drc['informatieobjecttype'] = 'https://openzaak.dev.westfriesland.commonground.nu/catalogi/api/v1/informatieobjecttypen/0f73760b-f89d-4d0b-a5b8-21f956c7974a';
-                $drc['bronorganisatie'] = "999990482";
+                $drc['bronorganisatie'] = '999990482';
                 $drc['titel'] = $resource['newPropName'];
                 $drc['auteur'] = $variables['employees'][0]['@id'];
                 $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
@@ -350,7 +347,7 @@ class VrcController extends AbstractController
                 $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
                 $token = $commonGroundService->getJwtToken('drc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
-                $result = $commonGroundService->createResource($drc, ['component'=>'drc','type'=>'enkelvoudiginformatieobjecten']);
+                $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
                 $item['properties'][$resource['newPropName']] = $result['url'];
 //                var_dump($result);
 
