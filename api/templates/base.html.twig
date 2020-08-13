@@ -37,6 +37,9 @@
 
     {% if app.user.organization is defined %}
         {% set organizationStyle = commonground_resource(app.user.organization) %}
+    {% endif %}
+
+    {% if organizationStyle.style is defined %}
         <style>
             {{ organizationStyle.style.css }}
         </style>
