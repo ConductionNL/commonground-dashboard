@@ -335,7 +335,17 @@ class VrcController extends AbstractController
             if (key_exists('newProp', $files) && $file = $files['newProp']) {
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
 
-                $drc['informatieobjecttype'] = 'https://openzaak.dev.westfriesland.commonground.nu/catalogi/api/v1/informatieobjecttypen/0f73760b-f89d-4d0b-a5b8-21f956c7974a';
+                //We are going to need a JWT token for the DRC and ZTC here
+
+                $token = $commonGroundService->getJwtToken('ztc');
+                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
+
+                foreach ($infoObjectTypes as $infoObjectType) {
+                    if ($infoObjectType['omschrijving'] == 'Document') {
+                        $drc['informatieobjecttype'] = $infoObjectType['url'];
+                    }
+                }
                 $drc['bronorganisatie'] = '999990482';
                 $drc['titel'] = $resource['newPropName'];
                 $drc['auteur'] = $variables['employees'][0]['@id'];
@@ -345,9 +355,12 @@ class VrcController extends AbstractController
                 $drc['formaat'] = $file->getClientMimeType();
                 $drc['taal'] = 'nld';
                 $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
+
                 $token = $commonGroundService->getJwtToken('drc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+
                 $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
+
                 $item['properties'][$resource['newPropName']] = $result['url'];
 //                var_dump($result);
 
