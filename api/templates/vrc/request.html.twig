@@ -177,6 +177,7 @@
                     <div class="col-md-4">
                         {% include 'vrc/widgets/documents.html.twig'
                             with {
+                            'resource':resource,
                             'documents':requestType.templates } %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->

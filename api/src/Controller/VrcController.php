@@ -481,20 +481,21 @@ class VrcController extends AbstractController
     }
 
     /**
-     * @Route("/download/{id}")
+     * @Route("/download/{id}/{requestId}")
      * @Template
      */
-    public function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id, $requestId)
     {
 
         $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
-        $template = $commonGroundService->getResource($document['uri']);
-
+        $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
+        $query = ['request' => $currentRequest['@id']];
+        $render = $commonGroundService->createResource($query, $document['uri'].'/render');
         switch ($document['type']){
             case 'word':
                 $phpWord = new PhpWord();
                 $section = $phpWord->addSection();
-                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $template['content']);
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
                 $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
                 $filename = $document['name'].'.docx';
                 $objWriter->save($filename);

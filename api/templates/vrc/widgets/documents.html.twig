@@ -15,7 +15,7 @@
                             <div class="status">{{ 'file type'|trans|capitalize }}: {{ document.type }}</div>
                         </div>
                         <a class="btn btn-primary btn-s" style="margin-right: 5px"
-                        href="{{ path('app_vrc_download',{'id': document.id}) }}">
+                        href="{{ path('app_vrc_download',{'id': document.id, 'requestId': resource.id}) }}">
                             <i class="fas fa-download"></i>
                         </a>
                     </div><!-- /.item-list -->
