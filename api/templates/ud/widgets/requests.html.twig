@@ -19,7 +19,6 @@
                         </thead>
                         <tbody>
                         {% for request in requests %}
-                            {% if request.organization == app.user.organization %}
                             <tr>
                                 <td>{{ request.reference }}</td>
                                 <td>{{ commonground_resource(request.requestType).name }}</td>
@@ -45,7 +44,6 @@
                                     </td>
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_vrc_request', {id: request.id}) }}"><i class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a></td>
                             </tr><!-- /.card-list -->
-                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>

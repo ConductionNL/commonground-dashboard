@@ -54,6 +54,14 @@ class VrcController extends AbstractController
             $variables['status'] = $query['status'];
         }
 
+        if ($this->getUser()->getOrganization()) {
+
+            if (isset($query) && !empty($query)) {
+                $query = $query . '&organization=' . $this->getUser()->getOrganization();
+            } else {
+                $query = $query . 'organization=' . $this->getUser()->getOrganization();
+            }
+        }
         if (isset($variables['requestType'])) {
             $variables['requestType'] = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'request_types', 'id' => $variables['requestType']]);
 
@@ -62,19 +70,24 @@ class VrcController extends AbstractController
             } else {
                 $query = $query.'requestType='.$variables['requestType'];
             }
-
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
-
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], '['.$query.']')['hydra:member'];
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
         } else {
             if ($filterStatus == 'none') {
-                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'])['hydra:member'];
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
             } else {
-                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['status' => $filterStatus])['hydra:member'];
+                if(isset($query)){
+                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "$query&status=$filterStatus")['hydra:member'];
+                }
+                else{
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
+
+                }
             }
         }
 
         if ($request->isMethod('POST')) {
+
             if (isset($_POST['filter'])) {
                 $filters = $request->request->all();
 
