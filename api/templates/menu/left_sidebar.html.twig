@@ -23,27 +23,27 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'status': "incomplete"}) }}">
+                <a href="{{ path('app_vrc_requests',{'filterStatus': "incomplete"}) }}">
                     {{ 'incomplete'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'status': "complete"}) }}">
+                <a href="{{ path('app_vrc_requests',{'filterStatus': "complete"}) }}">
                     {{ 'complete'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'status': "submitted"}) }}">
+                <a href="{{ path('app_vrc_requests',{'filterStatus': "submitted"}) }}">
                     {{ 'submitted'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'status': "processed"}) }}">
+                <a href="{{ path('app_vrc_requests',{'filterStatus': "processed"}) }}">
                     {{ 'processed'|trans|capitalize }}
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'status': "cancelled"}) }}">
+                <a href="{{ path('app_vrc_requests',{'filterStatus': "cancelled"}) }}">
                     {{ 'cancelled'|trans|capitalize }}
                 </a>
             </li>
@@ -540,6 +540,22 @@
             {% endif %}
 
             {% if 'group.beheerder' in app.user.roles %}
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#configuration_vsbe" class="" aria-expanded="false">
+                        <p style="color: #575962">{{ 'vsbe'|trans|capitalize }}</p>
+                        <span style="color: #575962" class="caret"></span>
+                    </a>
+                    <div class="collapse" id="configuration_vsbe">
+                        <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_vsbe_rules") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'rules'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#configuration_wrc" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'configuration'|trans|capitalize }}</p>
