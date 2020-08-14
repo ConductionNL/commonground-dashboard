@@ -36,44 +36,21 @@ class VrcController extends AbstractController
     }
 
     /**
-     * @Route("/requests/{organization}", defaults={"organization"="none"})
+     * @Route("/requests/{filterStatus}", defaults={"filterStatus"="none"})
      */
-    public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $organization)
+    public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $filterStatus)
     {
+
         $variables = [];
         $variables['title'] = $translator->trans('requests');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
         $variables['thisPath'] = 'app_vrc_requests';
-
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-
         $query = '';
 
-        if (!isset($organization) || empty($organization) || $organization == 'none') {
-            $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
-        } elseif ($params->get('app_env') == 'dev') {
-            $variables['organization'] = [];
-            $variables['organization']['id'] = $organization;
-            $variables['organization']['@id'] = 'https://wrc.dev.'.$params->get('app_domain').'/organizations/'.$organization;
-
-            if (isset($query) && !empty($query)) {
-                $query = $query.'&organization='.$variables['organization']['@id'];
-            } else {
-                $query = $query.'organization='.$variables['organization']['@id'];
-            }
-        } else {
-            $variables['organization'] = [];
-            $variables['organization']['id'] = $organization;
-            $variables['organization']['@id'] = 'https://wrc.'.$params->get('app_domain').'/organizations/'.$organization;
-
-            if (isset($query) && !empty($query)) {
-                $query = $query.'&organization='.$variables['organization']['@id'];
-            } else {
-                $query = $query.'organization='.$variables['organization']['@id'];
-            }
-        }
-
         $variables['requestType'] = $request->query->get('requestType');
+
+
 
         if ($request->query->get('status')) {
             $variables['status'] = $query['status'];
@@ -92,8 +69,14 @@ class VrcController extends AbstractController
 
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], '['.$query.']')['hydra:member'];
         } else {
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], '['.$query.']')['hydra:member'];
+            if ($filterStatus == 'none'){
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'])['hydra:member'];
+            }else{
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['status' => $filterStatus])['hydra:member'];
+            }
         }
+
+
 
         if ($request->isMethod('POST')) {
             if (isset($_POST['filter'])) {
