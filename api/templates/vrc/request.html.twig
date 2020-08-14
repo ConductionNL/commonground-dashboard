@@ -180,6 +180,11 @@
                             'resource':resource,
                             'documents':requestType.templates } %}
                     </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/messages.html.twig'
+                            with {
+                            'messages':messages} %}
+                    </div><!-- /.col -->
                 </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->

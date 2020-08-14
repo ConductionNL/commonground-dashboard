@@ -2717,17 +2717,185 @@
         <source>user panel</source>
         <target>gebruikerspaneel</target>
       </trans-unit>
-      <trans-unit id="aJ7g9lm" resname="tender">
+      <trans-unit id="qeunxAX" resname="tender">
         <source>tender</source>
         <target>aanbesteding</target>
       </trans-unit>
-      <trans-unit id="h2Bn2mA" resname="tenders">
+      <trans-unit id="G4vKHHU" resname="tenders">
         <source>tenders</source>
         <target>aanbestedingen</target>
       </trans-unit>
-      <trans-unit id="2g5T6Ad" resname="home">
+      <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
         <target>home</target>
+      </trans-unit>
+      <trans-unit id="_EJX7hF" resname="tenderStages">
+        <source>tenderStages</source>
+        <target>__tenderStages</target>
+      </trans-unit>
+      <trans-unit id="kj.lOWb" resname="entry">
+        <source>entry</source>
+        <target>__entry</target>
+      </trans-unit>
+      <trans-unit id="h9Bc0Ig" resname="entries">
+        <source>entries</source>
+        <target>__entries</target>
+      </trans-unit>
+      <trans-unit id="H1CH25G" resname="question">
+        <source>question</source>
+        <target>__question</target>
+      </trans-unit>
+      <trans-unit id="F9XvppX" resname="questions">
+        <source>questions</source>
+        <target>__questions</target>
+      </trans-unit>
+      <trans-unit id="7NE3i8n" resname="proposal">
+        <source>proposal</source>
+        <target>__proposal</target>
+      </trans-unit>
+      <trans-unit id="wMvw_8r" resname="proposals">
+        <source>proposals</source>
+        <target>__proposals</target>
+      </trans-unit>
+      <trans-unit id="_WyU8oc" resname="deal">
+        <source>deal</source>
+        <target>__deal</target>
+      </trans-unit>
+      <trans-unit id="FGh5OHp" resname="deals">
+        <source>deals</source>
+        <target>__deals</target>
+      </trans-unit>
+      <trans-unit id="kEuyhKP" resname="pitch stages">
+        <source>pitch stages</source>
+        <target>__pitch stages</target>
+      </trans-unit>
+      <trans-unit id="Z3.iG2X" resname="answers">
+        <source>answers</source>
+        <target>__answers</target>
+      </trans-unit>
+      <trans-unit id="qPm1hGI" resname="process types">
+        <source>process types</source>
+        <target>__process types</target>
+      </trans-unit>
+      <trans-unit id="5a.HlHl" resname="process type">
+        <source>process type</source>
+        <target>__process type</target>
+      </trans-unit>
+      <trans-unit id="yzc16Xg" resname="submitter">
+        <source>submitter</source>
+        <target>__submitter</target>
+      </trans-unit>
+      <trans-unit id="DbUvQHb" resname="answer">
+        <source>answer</source>
+        <target>__answer</target>
+      </trans-unit>
+      <trans-unit id="LH40KR2" resname="contractor">
+        <source>contractor</source>
+        <target>__contractor</target>
+      </trans-unit>
+      <trans-unit id="XaKzHfH" resname="date of entry">
+        <source>date of entry</source>
+        <target>__date of entry</target>
+      </trans-unit>
+      <trans-unit id="X2xIV1u" resname="required budget">
+        <source>required budget</source>
+        <target>__required budget</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target>__date</target>
+      </trans-unit>
+      <trans-unit id="EHYuEJT" resname="requirements">
+        <source>requirements</source>
+        <target>__requirements</target>
+      </trans-unit>
+      <trans-unit id="CvlqjtY" resname="budget">
+        <source>budget</source>
+        <target>budget</target>
+      </trans-unit>
+      <trans-unit id="RXPoOvx" resname="selection criteria">
+        <source>selection criteria</source>
+        <target>__selection criteria</target>
+      </trans-unit>
+      <trans-unit id="CyfBWP6" resname="kind">
+        <source>kind</source>
+        <target>__kind</target>
+      </trans-unit>
+      <trans-unit id="38ius5g" resname="deadline">
+        <source>deadline</source>
+        <target>__deadline</target>
+      </trans-unit>
+      <trans-unit id="otNfqP_" resname="tender stages">
+        <source>tender stages</source>
+        <target>__tender stages</target>
+      </trans-unit>
+      <trans-unit id="c.vTarH" resname="pitch stage">
+        <source>pitch stage</source>
+        <target>__pitch stage</target>
+      </trans-unit>
+      <trans-unit id="5XOADt3" resname="vsbe">
+        <source>vsbe</source>
+        <target>vsbe</target>
+      </trans-unit>
+      <trans-unit id="bGIdGgU" resname="rules">
+        <source>rules</source>
+        <target>regels</target>
+      </trans-unit>
+      <trans-unit id="mkCdRrI" resname="edit stage">
+        <source>edit stage</source>
+        <target>__edit stage</target>
+      </trans-unit>
+      <trans-unit id="MyzwkhF" resname="add stage">
+        <source>add stage</source>
+        <target>__add stage</target>
+      </trans-unit>
+      <trans-unit id="oCw4fof" resname="subtitle">
+        <source>subtitle</source>
+        <target>__subtitle</target>
+      </trans-unit>
+      <trans-unit id="6S_VPpf" resname="require login">
+        <source>require login</source>
+        <target>__require login</target>
+      </trans-unit>
+      <trans-unit id="GY3k4tk" resname="edit scope">
+        <source>edit scope</source>
+        <target>__edit scope</target>
+      </trans-unit>
+      <trans-unit id="Q.Hqvib" resname="add scope">
+        <source>add scope</source>
+        <target>__add scope</target>
+      </trans-unit>
+      <trans-unit id="S.._7RM" resname="user group">
+        <source>user group</source>
+        <target>__user group</target>
+      </trans-unit>
+      <trans-unit id="LdNSzUO" resname="file type">
+        <source>file type</source>
+        <target>bestandstype</target>
+      </trans-unit>
+      <trans-unit id="c2mUm0f" resname="rule">
+        <source>rule</source>
+        <target>regel</target>
+      </trans-unit>
+      <trans-unit id="m.WiTkq" resname="operation">
+        <source>operation</source>
+        <target>operation</target>
+      </trans-unit>
+      <trans-unit id="KVjUFtC" resname="object">
+        <source>object</source>
+        <target>object</target>
+      </trans-unit>
+      <trans-unit id="VgF1UtX" resname="object url">
+        <source>object url</source>
+        <target>object url</target>
+      </trans-unit>
+      <trans-unit id="vW6_Y54" resname="service endpoint">
+        <source>service endpoint</source>
+        <target>service endpoint</target>
+      </trans-unit>
+      <trans-unit id="b6zUm8n" resname="service endpoint url">
+        <source>service endpoint url</source>
+        <target>service endpoint url</target>
       </trans-unit>
     </body>
   </file>
