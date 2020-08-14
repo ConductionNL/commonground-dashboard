@@ -2897,6 +2897,10 @@
         <source>service endpoint url</source>
         <target>service endpoint url</target>
       </trans-unit>
+      <trans-unit id="l2vQ37g" resname="validations">
+        <source>validations</source>
+        <target>validaties</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

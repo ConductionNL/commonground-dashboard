@@ -1,14 +1,14 @@
 <div class="card full-height" style="min-height: 150px;">
     <div class="card-header">
-        <h3 class="d-inline-block">{{ 'messages'|trans|capitalize }}</h3>
+        <h3 class="d-inline-block">{{ 'validations'|trans|capitalize }}</h3>
     </div>
-    {% if messages is defined %}
+    {% if validations is defined %}
         <div class="card-list">
-            {% for message in messages %}
+            {% for validation in validations %}
                 <div class="item-list">
                     <div class="info-user ml-3">
-                        <div class="username"><h4>{{ message.name }}</h4></div>
-                        <div class="status">{{ 'message'|trans|capitalize }}: {{ message.message }}</div>
+                        <div class="username"><h4>{{ validation.name }}</h4></div>
+                        <div class="status">{{ 'message'|trans|capitalize }}: {{ validation.message }}</div>
                     </div>
                     </a>
                 </div><!-- /.item-list -->
