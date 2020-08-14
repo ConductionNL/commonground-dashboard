@@ -84,4 +84,16 @@ class VsbeController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/results")
+     * @Template
+     */
+    public function resultsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    {
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vsbe', 'type'=>'results'])['hydra:member'];
+
+        return $variables;
+    }
 }
