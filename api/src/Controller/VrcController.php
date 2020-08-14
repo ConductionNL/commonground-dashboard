@@ -41,7 +41,6 @@ class VrcController extends AbstractController
      */
     public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $filterStatus)
     {
-
         $variables = [];
         $variables['title'] = $translator->trans('requests');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
@@ -50,8 +49,6 @@ class VrcController extends AbstractController
         $query = '';
 
         $variables['requestType'] = $request->query->get('requestType');
-
-
 
         if ($request->query->get('status')) {
             $variables['status'] = $query['status'];
@@ -70,14 +67,12 @@ class VrcController extends AbstractController
 
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], '['.$query.']')['hydra:member'];
         } else {
-            if ($filterStatus == 'none'){
+            if ($filterStatus == 'none') {
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'])['hydra:member'];
-            }else{
+            } else {
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['status' => $filterStatus])['hydra:member'];
             }
         }
-
-
 
         if ($request->isMethod('POST')) {
             if (isset($_POST['filter'])) {
