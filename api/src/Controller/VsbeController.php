@@ -24,7 +24,6 @@ class VsbeController extends AbstractController
      */
     public function indexAction(TranslatorInterface $translator)
     {
-
     }
 
     /**
