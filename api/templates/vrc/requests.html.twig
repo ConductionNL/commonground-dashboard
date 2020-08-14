@@ -119,7 +119,6 @@
                                 <tbody>
                                 {% if resources is defined and resources is not empty %}
                                     {% for resource in resources %}
-                                        {% if resource.organization == app.user.organization %}
                                         <tr>
                                             <td>{{ commonground_resource(resource.requestType).name|capitalize }}</td>
                                             <td>{{ resource.reference }}</td>
@@ -162,7 +161,6 @@
                                                         class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a>
                                             </td>
                                         </tr>
-                                        {% endif %}
                                     {% endfor %}
                                 {% else %}
                                     <tr>

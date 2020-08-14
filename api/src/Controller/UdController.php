@@ -26,7 +26,7 @@ class UdController extends AbstractController
     {
         $variables = [];
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
-        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['organization' => $application['organization']['@id']])['hydra:member'];
+        $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
         $variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])['hydra:member'];
         $variables['events'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'events'])['hydra:member'];
 
