@@ -180,6 +180,11 @@
                             'resource':resource,
                             'documents':requestType.templates } %}
                     </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/validations.html.twig'
+                            with {
+                            'validations':validations} %}
+                    </div><!-- /.col -->
                 </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->
