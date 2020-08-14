@@ -55,11 +55,10 @@ class VrcController extends AbstractController
         }
 
         if ($this->getUser()->getOrganization()) {
-
             if (isset($query) && !empty($query)) {
-                $query = $query . '&organization=' . $this->getUser()->getOrganization();
+                $query = $query.'&organization='.$this->getUser()->getOrganization();
             } else {
-                $query = $query . 'organization=' . $this->getUser()->getOrganization();
+                $query = $query.'organization='.$this->getUser()->getOrganization();
             }
         }
         if (isset($variables['requestType'])) {
@@ -76,18 +75,15 @@ class VrcController extends AbstractController
             if ($filterStatus == 'none') {
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
             } else {
-                if(isset($query)){
+                if (isset($query)) {
                     $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "$query&status=$filterStatus")['hydra:member'];
-                }
-                else{
-                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
-
+                } else {
+                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
                 }
             }
         }
 
         if ($request->isMethod('POST')) {
-
             if (isset($_POST['filter'])) {
                 $filters = $request->request->all();
 
