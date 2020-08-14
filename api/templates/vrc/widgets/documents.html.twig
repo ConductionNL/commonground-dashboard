@@ -2,6 +2,7 @@
     <div class="card-header">
         <h3 class="d-inline-block">{{ 'documents'|trans|capitalize }}</h3>
     </div>
+    <div class="card-body">
     {% if documents is defined %}
         <div class="card-list">
             {% for document in documents %}
@@ -18,4 +19,5 @@
             {% endfor %}
         </div>
     {% endif %}
+    </div>
 </div><!-- /.card -->
