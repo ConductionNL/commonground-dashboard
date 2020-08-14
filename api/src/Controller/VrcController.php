@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Conduction\CommonGroundBundle\Service\RequestService;
+use DateTime;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -248,6 +249,7 @@ class VrcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
                 $resource['@id'] = $variables['resource']['@id'];
@@ -307,7 +309,46 @@ class VrcController extends AbstractController
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
                 $item['properties']['temp'] = 'temp';
                 $item['properties'][$resource['newPropName']] = $resource['newProp'];
+
                 unset($item['properties']['temp']);
+                $resource['properties'] = $item['properties'];
+            }
+            $files = $request->files->all();
+
+            if (key_exists('newProp', $files) && $file = $files['newProp']) {
+                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+
+                //We are going to need a JWT token for the DRC and ZTC here
+
+                $token = $commonGroundService->getJwtToken('ztc');
+                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
+
+                foreach ($infoObjectTypes as $infoObjectType) {
+                    if ($infoObjectType['omschrijving'] == 'Document') {
+                        $drc['informatieobjecttype'] = $infoObjectType['url'];
+                    }
+                }
+                $drc['bronorganisatie'] = '999990482';
+                $drc['titel'] = $resource['newPropName'];
+                $drc['auteur'] = $variables['employees'][0]['@id'];
+                $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
+                $drc['bestandsnaam'] = $file->getClientOriginalName();
+                $drc['bestandstype'] = $file->getClientOriginalExtension();
+                $drc['formaat'] = $file->getClientMimeType();
+                $drc['taal'] = 'nld';
+                $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
+
+                $token = $commonGroundService->getJwtToken('drc');
+                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+
+                $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
+
+                $item['properties'][$resource['newPropName']] = $result['url'];
+//                var_dump($result);
+
+                $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
+
                 $resource['properties'] = $item['properties'];
             }
 

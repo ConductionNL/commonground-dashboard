@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <form action="{{ path(route, {id: resource.id}) }}" method="post" enctype="multipart/form-data">
 
                     {% if property.type == 'array' and property.format == 'bsn' %}
                         {% include 'vrc/formelements/person.html.twig' %}
