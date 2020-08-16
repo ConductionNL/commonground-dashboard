@@ -19,6 +19,7 @@
 <div class="form-control" id="list-{{ property.id }}" style="margin-top: 20px; margin-bottom: 20px; display: none">
 </div>
 <input type="hidden" value="{{ property.name }}" name="newPropName">
+<input type="hidden" value="{{ property.name }}" name="newProp2">
 
 
 <script>
@@ -72,8 +73,8 @@
                             result['hydra:member'][i]['huisnummertoevoeging'] = '';
                         }
 
-                        $('#list-{{ property.id }}').append('<input value="'+ result["hydra:member"][i]['@id'] +'" type="radio" name="newProp" style="margin-right: 5px" id="'+i+'">');
-                        $('#list-{{ property.id }}').append('<label class="input__label input__label--radio" for="'+i+'"> '
+                        $('#list-{{ property.id }}').append('<input value="'+ result["hydra:member"][i]['@id'] +'" type="radio" name="newProp" style="margin-right: 5px" >');
+                        $('#list-{{ property.id }}').append('<label class="input__label input__label--radio" > '
                             + result["hydra:member"][i]["straat"]
                             + ' '
                             + result["hydra:member"][i]["huisnummer"]
