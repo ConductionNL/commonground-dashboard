@@ -1,0 +1,20 @@
+<div class="card full-height" style="min-height: 150px;">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'validations'|trans|capitalize }}</h3>
+    </div>
+    <div class="card-body">
+    {% if validations is defined %}
+        <div class="card-list">
+            {% for validation in validations %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ validation.name }}</h4></div>
+                        <div class="status">{{ 'message'|trans|capitalize }}: {{ validation.message }}</div>
+                    </div>
+                    </a>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+</div><!-- /.card -->

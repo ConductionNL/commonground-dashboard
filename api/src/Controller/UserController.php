@@ -28,7 +28,17 @@ class UserController extends AbstractController
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->render('login/index.html.twig');
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        if ($this->getUser()) {
+            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
+                return $this->redirect($application['defaultConfiguration']['configuration']['userPage']);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
+        } else {
+            return $this->render('login/index.html.twig');
+        }
     }
 
     /**
@@ -37,7 +47,7 @@ class UserController extends AbstractController
      */
     public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return [];
+        return $this->render('login/index.html.twig');
     }
 
     /**

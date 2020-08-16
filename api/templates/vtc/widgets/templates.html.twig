@@ -1,0 +1,61 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'templates'|trans|capitalize }}</h3>
+    </div>
+
+
+
+    <div class="card-body">
+        {% if templates is defined %}
+            <div class="card-list">
+                {% for template in templates %}
+                    <div class="item-list">
+                        <div class="info-user ml-3">
+                            <div class="username"><h4>{{ template.name }}</h4></div>
+                        </div>
+                        <button class="btn btn-icon btn-primary btn-round btn-s"
+                                style="margin-right: 5px"
+                                data-toggle="modal"
+                                data-target="#editTemplate{{ template.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-icon btn-danger btn-round btn-s"
+                                style="margin-right: 15px" data-toggle="modal"
+                                data-target="#deleteTemplate{{ template.id }}">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div><!-- /.item-list -->
+                {% endfor %}
+            </div><!-- /.card-list -->
+        {% endif %}
+    </div> <!-- /.card-body -->
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addTemplate"
+           data-toggle="modal" data-target="#addTemplate">{{ 'add template'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the template modals #}
+{% include 'vtc/modals/template.html.twig'
+    with {
+    'route': 'app_vtc_requesttype',
+    'resource':resource,
+    'id':'addTemplate' } %}
+
+{% if templates is defined %}
+    {% for template in templates %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_vtc_requesttype',
+            'resource':resource,
+            'item':template,
+            'id':'deleteTemplate' } %}
+
+        {% include 'vtc/modals/template.html.twig'
+            with {
+            'route': 'app_vtc_requesttype',
+            'resource':resource,
+            'item':template,
+            'id':'editTemplate' } %}
+    {% endfor %}
+{% endif %}

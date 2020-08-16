@@ -1,27 +1,28 @@
 
 <div class="form-group">
-    <label class="input__label" for="bsn">Bsn</label>
-    <input class="form-control mb-3" id="bsn" type="text">
+    <label class="input__label" for="bsn-{{ property.id }}">{{ 'bsn number' }}</label>
+    <input class="form-control mb-3" id="bsn-{{ property.id }}" type="text">
 
+    <button type="button" onclick="getBsn()" class="btn btn-info">Zoeken</button>
 
-    <button type="button" onclick="getBagKeys()" class="btn btn-info">Zoeken</button>
 </div>
 
 <hr style="margin-top: 20px;">
 
 
-<div class="form-control" id="personLijst" style="margin-top: 20px; margin-bottom: 20px; display: none">
+<div class="form-control" id="list-{{ property.id }}" style="margin-top: 20px; margin-bottom: 20px; display: none">
+
 </div>
 <input type="hidden" value="{{ property.name }}" name="newPropName">
 
 
 <script>
+    function getBsn(){
+        $('#list-{{ property.id }}').show();
+        let bsn = document.getElementById('bsn-{{ property.id }}').value;
 
-    function getBagKeys(){
-        $('#personLijst').show();
-        let bsn = document.getElementById('bsn').value;
 
-        let list = document.getElementById('personLijst');
+        let list = document.getElementById('list-{{ property.id }}');
         while(list.firstChild){
             list.firstChild.remove();
         }
@@ -33,9 +34,9 @@
             type: 'GET',
             processData: true,
             headers: {
-                Accept: 'application/json'
+                Accept: 'application/ld+json'
             },
-            data: { bsn:bsn },
+            data: { burgerservicenummer:bsn },
             statusCode: {
                 404: function() {
                     console.log( "page not found" );
@@ -48,15 +49,24 @@
                 }
             },
             success: function(result) {
-                console.log(result);
-                $('.spinner').hide();
-                if(result.length >= 1){
-                    $('#personLijst').append('<legend class="input__legend">Persoon:</legend>')
-                    for(let i = 0; i < result.length; i++){
 
+                $('#spinner').hide();
+                if(result["hydra:member"].length >= 1){
+                    $('#list-{{ property.id }}').append('<legend class="input__legend">Persoon:</legend>')
+                    for(let i = 0; i < result['hydra:member'].length; i++){
+                        if(result['hydra:member'][i]['huisnummertoevoeging'] === null){
+                            result['hydra:member'][i]['huisnummertoevoeging'] = '';
+                        }
+
+                        $('#list-{{ property.id }}').append('<input value="'+ result["hydra:member"][i]['burgerservicenummer'] +'" type="radio" name="newProp" style="margin-right: 5px" id="'+i+'">');
+                        $('#list-{{ property.id }}').append('<label class="input__label input__label--radio" for="'+i+'"> '
+                            + result["hydra:member"][i]["naam"]['voornamen']
+                            + ' '
+                            + result["hydra:member"][i]["naam"]['geslachtsnaam']
+                            + '</label>');
                     }
                 } else {
-                    $('#personLijst').append('<p>Geen persoon gevonden op het meegegeven Bsn nummer</p>');
+                    $('#list-{{ property.id }}').append('<p>Geen persoon gevonden op meegegeven bsn</p>');
                 }
             },
         });

@@ -53,6 +53,12 @@ class WrcController extends AbstractController
     {
         // If it is a delete action we can stop right here
         if ($request->query->get('action') == 'delete') {
+            $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'templates', 'id' => $id]);
+
+            foreach ($template['slugs'] as $slug) {
+                $commonGroundService->deleteResource(null, $slug['@id']);
+            }
+
             $commonGroundService->deleteResource(null, ['component' => 'wrc', 'type' => 'templates', 'id' => $id]);
 
             return $this->redirect($this->generateUrl('app_wrc_templates'));
@@ -487,6 +493,7 @@ class WrcController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
+
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
@@ -568,6 +575,9 @@ class WrcController extends AbstractController
                 $menu = $commonGroundService->saveResource($menu, ['component' => 'wrc', 'type' => 'menus']);
                 $variables['menus'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'menus'], ['application.id' => $id])['hydra:member'];
             }
+
+//            var_dump($resource);
+//            die;
 
             // If we do a reload here anyway? why dont we get the lates version of the resource
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component' => 'wrc', 'type' => 'applications']);

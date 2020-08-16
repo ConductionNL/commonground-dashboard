@@ -1,0 +1,9 @@
+<h2>{{ 'organizations'|trans|capitalize }}</h2>
+
+<ul>
+    {% for organization in organizations %}
+        <li>
+            <a href="{{ path('app_vrc_requests', {'organization': organization['id']}) }}">{{ organization.name|capitalize }}</a>
+        </li>
+    {% endfor %}
+</ul>
