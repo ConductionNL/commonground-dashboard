@@ -2231,11 +2231,11 @@
       </trans-unit>
       <trans-unit id="Ex1XNpT" resname="unset property">
         <source>unset property</source>
-        <target>__unset property</target>
+        <target>eigenschap verwijderen</target>
       </trans-unit>
       <trans-unit id="NncnwCB" resname="are you sure that you want to unset">
         <source>are you sure that you want to unset</source>
-        <target>__are you sure that you want to unset</target>
+        <target>weet u zeker dat u deze eigenschap wilt verwijderen</target>
       </trans-unit>
       <trans-unit id="I5e5BLh" resname="new request">
         <source>new request</source>
