@@ -1,31 +1,102 @@
+{% if property.type == 'array' and property.format == 'bsn' %}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'bag' %}
+    <span class="danger">{{ commonground_resource(value).straat }} {{ commonground_resource(value).huisnummer }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
 
+{% elseif property.iri == 'wrc/organizations'%}
+    <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.iri == 'grc/cemetery'%}
+    <span class="danger">{{ commonground_resource(value).reference }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.iri == 'grc/grave_type'%}
 
-
-
-
-{% if property.format is not defined %}
-    {{ value }}
-
-{% elseif property.iri is defined and '/' in property.iri %}
-
-    {% set component = property.iri|split('/') %}
-    {% set path = 'app_' ~ component[0] ~ '_' ~ component[1] %}
-    {% set resource = commonground_resource(value) %}
-
-    {% if property.iri == 'orc/order' %}
-        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ resource.reference }}</a>
-    {% elseif property.iri == 'pdc/offer'  %}
-        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ resource.name }}</a>
-    {% elseif property.iri == 'irc/assent'  %}
-        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ commonground_resource(resource.contact).name }} ({{ resource.status|trans }})</a>
-    {% elseif property.iri == 'vrc/request'  %}
-        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ cgresource.reference }}</a>
+{% elseif property.iri == 'arc/event'%}
+    {{ value }} <td><a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+{% elseif property.iri == 'pdc/offer'%}
+    {% if value is iterable %}
+        <ul>
+        {% for item in value %}
+            <li>
+                <span class="danger">{{ commonground_resource(item).name }}</span>
+            </li>
+        {% endfor %}
+        </ul>
+        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+    {% else %}
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
     {% endif %}
 
-{% elseif property.format == 'date' %}
-    <a class="btn btn-danger btn-sm" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-trash"></i></a> {{ value }}
+{% elseif property.iri == 'brp/ingeschrevenpersoon'%}
+    {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }} <td><a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+{% elseif property.iri == 'irc/assent'%}
+    {% if value is iterable %}
+        {% set result = iterable(value, '')%}
+        {{ result|raw }}</td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+    {% else %}
+        <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+    {% endif %}
+    {# Let slook for formats #}
+{% elseif property.format == 'phonenumber'%}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'datetime'%}
+    <span class="danger">{{ value|date("d-m-Y H:i:s", "Europe/Paris") }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'date-time'%}
+    <span class="danger">{{ value|date("d-m-Y H:i:s", "Europe/Paris") }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'textarea'%}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'text-area'%}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'radio'%}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'file'%}
+    <span class="danger"><a href="{{ path('app_drc_download',{'resource':value|url_encode})}}">Download</a></span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'location'%}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+{% elseif property.format == 'meeverhuizen'%}
 
+{% elseif property.format == 'calendar'%}
+    {{ value }} <td><a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+    {# Generic HTML 5 input types #}
+{% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
+    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
 {% else %}
-    <a class="btn btn-danger btn-sm" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-trash"></i></a> {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}
-
+    {{ value }}
 {% endif %}
+
+
+
+
+
+{#{% if property.format is not defined %}#}
+{#    {{ value }}#}
+
+{#{% elseif property.iri is defined and '/' in property.iri %}#}
+
+{#    {% set component = property.iri|split('/') %}#}
+{#    {% set path = 'app_' ~ component[0] ~ '_' ~ component[1] %}#}
+{#    {% set resource = commonground_resource(value) %}#}
+
+{#    {% if property.iri == 'orc/order' %}#}
+{#        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ resource.reference }}</a>#}
+{#    {% elseif property.iri == 'pdc/offer'  %}#}
+{#        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ resource.name }}</a>#}
+{#    {% elseif property.iri == 'irc/assent'  %}#}
+{#        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ commonground_resource(resource.contact).name }} ({{ resource.status|trans }})</a>#}
+{#    {% elseif property.iri == 'vrc/request'  %}#}
+{#        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}" ><i class="fa fa-trash"></i></a> <a href="{{ path(path, {'id': resource.id}) }}"> {{ cgresource.reference }}</a>#}
+{#    {% endif %}#}
+
+{#{% elseif property.format == 'date' %}#}
+{#    <a class="btn btn-danger btn-sm" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-trash"></i></a> {{ value }}#}
+
+{#{% else %}#}
+{#    <a class="btn btn-danger btn-sm" data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-trash"></i></a> {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}#}
+
+{#{% endif %}#}
+
+    {%  include 'vrc/modals/updateProperty.html.twig'
+        with {
+        'route': 'app_vrc_request',
+        'property':property,
+        'resource':resource,
+        'value':value,
+        'id':property.id }%}

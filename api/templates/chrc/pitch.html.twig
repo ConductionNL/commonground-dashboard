@@ -1,8 +1,8 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_chrc_pitch' %}
-
 {% block content %}
+
+    {% set view = 'app_chrc_pitch' %}
 
     <style>
         th {
@@ -26,8 +26,7 @@
                         'path' : 'app_chrc_pitches'
                     }
                 }]
-            }
-            %}
+            } %}
             <div class="page-inner">
                 <div class="row">
 
@@ -37,27 +36,41 @@
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_chrc_pitches')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_chrc_tenders') }}"><i
+                                                class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span
+                                                class="btn-label"><i
+                                                    class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start"
+                                             style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                               data-target="#changeLog"><i
+                                                    class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}
+                                            </a>
                                             <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                               data-target="#auditTrial"><i
+                                                    class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}
+                                            </a>
                                             <div role="separator" class="dropdown-divider"></div>
-                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                            <a href="#delete" class="dropdown-item text-danger"
+                                               style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                               data-target="#delete"><i
+                                                    class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}
+                                            </a>
                                         </div>
-                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                        <button class="btn btn-success"><i
+                                                class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
 
-                                        <div class="col-md-6 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
@@ -65,73 +78,72 @@
                                                        value="{{ resource.name }}">
                                             </div>
                                         </div> <!-- /.col -->
+                                    </div>
 
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
-
-                                    </div><!-- /.row -->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                                                <textarea class="form-control summernote" rows="5" id="description"
-                                                          name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                                <label
+                                                    for="description">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5"
+                                                          id="description"
+                                                          name="description"
+                                                          required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div> <!-- /.row -->
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="submitter">{{ 'submitter'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="submitter"
+                                                       name="submitter"
+                                                       placeholder="https://brp.zuid-drecht.nl/ingeschrevenpersonen/uuid/..."
+                                                    {% if resource.submitter is defined and resource.submitter is not empty %}
+                                                        value="{{ resource.submitter }}"
+                                                    {% endif %}
+                                                >
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="requiredBudget">{{ 'required budget'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="requiredBudget"
+                                                       name="requiredBudget" placeholder="50000"
+                                                    {% if resource.requiredBudget is defined and resource.requiredBudget is not empty %}
+                                                        value="{{ resource.requiredBudget }}"
+                                                    {% endif %}
+                                                >
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="dateSubmitted">{{ 'date'|trans|capitalize }} {{ 'submitted'|trans|capitalize }}</label>
+                                                <input type="date" class="form-control form-control-lg" id="dateSubmitted"
+                                                       name="dateSubmitted"
+                                                    {% if resource.dateSubmitted is defined and resource.dateSubmitted is not empty %}
+                                                        value="{{ resource.dateSubmitted }}"
+                                                        placeholder="{{ resource.dateSubmitted }}"
+                                                    {% endif %}
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div> <!-- /.card-body -->
 
                                 <div class="card-action">
-                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                    {% if resource.created is defined and resource.modified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.created|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.modified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
                                 </div><!-- /.card-action -->
+
                             </form>
                         </div><!-- /.card -->
                     </div>
@@ -141,89 +153,165 @@
                     <div class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2>Groups</h2>
+                                <h2>Documenten</h2>
                             </div>
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="largeInput">{{ 'documents'|trans|capitalize }}</label>
+                                            <ul>
+                                                {% if resource.tendergroups is defined and resource.tendergroups is not empty %}
+                                                    {% for group in resource.tendergroups %}
+                                                        <li>{{ group.name }}</li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="document">{{ 'add'|trans|capitalize }} {{ 'document'|trans }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="document"
+                                                   name="document" placeholder="https://drive.google.com/.."
+                                                   value="">
+                                        </div>
+                                    </div> <!-- /.col -->
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="removedocument">{{ 'delete'|trans|capitalize }} {{ 'document'|trans }}</label>
+                                            <select class="form-control form-control-lg" id="removedocument"
+                                                    name="removedocument">
+                                                <option value="">-</option>
+                                                {% if resource.documents is defined and resource.documents is not empty %}
+                                                    {% for document in resource.documents %}
+                                                        <option
+                                                            value="{{ document }}">{{ document }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div> <!-- /.col -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.entry is defined and resource.entry is not empty %}
+                            {% include 'chrc/widgets/entries.html.twig'
+                                with{
+                                'resources': resource.entries,
+                                'resource':resource.entry,
+                                'path': 'app_chrc_entry'
+                            } %}
+                        {% endif %}
+                        {% if resource.pitchStages is defined and resource.pitchStages is not empty %}
+                            {% include 'chrc/widgets/pitch_stages.html.twig'
+                                with{
+                                'resources': resource.pitchStages,
+                                'resource':resource,
+                                'path': 'app_chrc_pitchstage'
+                            } %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.tender is defined and resource.tender is not empty %}
+                            {% include 'chrc/widgets/tenders.html.twig'
+                                with{
+                                'path': 'app_chrc_tender',
+                                'resource': resource.tender
+                            } %}
+                        {% endif %}
+                    </div><!-- /.col -->
+                    <div class="col-md-6 col-sm-12">
+                        {% if resource.proposals is defined and resource.proposals is not empty %}
+                            {% include 'chrc/widgets/proposals.html.twig'
+                                with{
+                                'proposals': resource.proposals,
+                                'resource':resource
+                            } %}
+                        {% endif %}
+                    </div><!-- /.col -->
+                </div>
+
+
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
-    {% include 'widgets/delete_modal.html.twig'
-        with {
-        'route': 'app_chrc_pitch',
-        'resource':resource,
-        'id':'delete' } %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_chrc_tender',
+            'resource':resource,
+            'id':'delete' } %}
 
-    {% include 'widgets/auditTrail_modal.html.twig'
-        with {
-        'route': 'app_chrc_pitch',
-        'resource':resource,
-        'id':'auditTrial' } %}
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_chrc_tender',
+            'resource':resource,
+            'id':'auditTrial' } %}
 
-    {% include 'widgets/changeLog_modal.html.twig'
-        with {
-        'route': 'app_chrc_pitch',
-        'resource':resource,
-        'id':'changeLog' } %}
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_chrc_tender',
+            'resource':resource,
+            'id':'changeLog' } %}
 
 
-    {% include 'footer.html.twig' %}
+        {% include 'footer.html.twig' %}
 
     </div>
     </div>
     <script>
-    {% block javascript %}
-    //audit_trails
-    $.ajax({
-        url: "/api/chrc/audit_trails",
-        type: 'GET',
-        dataType: 'json',
-        success: function(result) {
-            for(let i = 0; i < result['hydra:member'].length; i++ ){
-                $('#audit').append('<tr>')
-                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
-                $('#audit').append('</tr>')
-            }
-        },
-    });
-    //change_logs
-    $.ajax({
-        url: "/api/chrc/change_logs",
-        type: 'GET',
-        dataType: 'json',
-        success: function(result) {
-            console.log(result);
-            for(let i = 0; i < result['hydra:member'].length; i++ ){
-                $('#changelog').append('<tr>')
-                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
-                $('#changelog').append('</tr>')
-            }
-        },
-    });
-    {% endblock %}
+        {% block javascript %}
+        //audit_trails
+        $.ajax({
+            url: "/api/chrc/audit_trails",
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                for (let i = 0; i < result['hydra:member'].length; i++) {
+                    $('#audit').append('<tr>')
+                    $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#audit').append('</tr>')
+                }
+            },
+        });
+        //change_logs
+        $.ajax({
+            url: "/api/chrc/change_logs",
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                for (let i = 0; i < result['hydra:member'].length; i++) {
+                    $('#changelog').append('<tr>')
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#changelog').append('</tr>')
+                }
+            },
+        });
+        {% endblock %}
     </script>
 {% endblock %}

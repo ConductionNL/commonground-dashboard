@@ -1,0 +1,62 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        {% if resources is defined %}
+            <h3 class="d-inline-block">{{ 'answers'|trans|capitalize }}</h3>
+        {% else %}
+            <h3 class="d-inline-block">{{ 'answer'|trans|capitalize }}</h3>
+        {% endif %}
+
+    </div>
+    {% if resources is defined %}
+        <div class="card-list">
+            {% for item in resources %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ item.name|capitalize }}</h4></div>
+                        <div class="status">{{ item.answer }}</div>
+                    </div>
+                    <a class="btn btn-icon btn-primary btn-round btn-s"
+                       style="margin-right: 5px"
+                       href="{{ path(path, {id: item.id}) }}">
+                        <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                    </a>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteCase{{ item.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% elseif resource is defined %}
+        <div class="card-list">
+            <div class="item-list">
+                <div class="info-user ml-3">
+                    <div class="username"><h4>{{ resource.name|capitalize }}</h4></div>
+                    <div class="status">{{ resource.answer }}</div>
+                </div>
+                <a class="btn btn-icon btn-primary btn-round btn-s"
+                   style="margin-right: 5px"
+                   href="{{ path(path, {id: resource.id}) }}">
+                    <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                </a>
+                <button class="btn btn-icon btn-danger btn-round btn-s"
+                        style="margin-right: 15px" data-toggle="modal"
+                        data-target="#deleteCase{{ resource.id }}">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div><!-- /.item-list -->
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block"
+                                                                                        style="margin-right: 25px"
+                                                                                        href="#addCase"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+    </div><!-- /.card-action -->
+</div><!-- /.card -->

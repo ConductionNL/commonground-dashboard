@@ -1,0 +1,20 @@
+
+{% if resource.properties.gemeente is defined and resource.properties.gemeente is not empty %}
+    {% set cemeteries = commonground_resource_list({'component':'grc', 'type':'cemeteries'}, {'organization':resource.properties.gemeente})['hydra:member'] %}
+    <div class="form-group" id="{{ property.name }}_combobox">
+        <label for="largeInput">{{ property.title }}</label>
+        <input type="hidden" value="{{ property.name }}" name="newPropName">
+        <select name="newProp" id="dropdown-{{ property.name }}" class="form-control form-control-lg">
+            <option hidden="" value=''>Selecteer een {{ property.title }}</option>
+            {% for cemetery in cemeteries %}
+                {% if value is defined and value is not empty and value == cemetery['@id'] %}
+                    <option value='{{ cemetery['@id'] }}' selected>{{ cemetery['reference'] }}</option>
+                {% else %}
+                <option value='{{ cemetery['@id'] }}'>{{ cemetery['reference'] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+{% else %}
+    <p>Er is nog geen gemeente geselecteerd!</p>
+{% endif %}

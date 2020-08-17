@@ -2,45 +2,62 @@
 <nav class="navbar navbar-header navbar-expand-lg">
 
     <div class="container-fluid">
-        <div class="collapse" id="search-nav">
-            <form class="navbar-left navbar-form nav-search mr-md-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button type="submit" class="btn btn-search pr-1">
-                            <i class="fa fa-search search-icon"></i>
-                        </button>
-                    </div>
-                    <input id="searchInput" onkeyup="myFunction()" type="text" placeholder="{{ 'search by reference'|trans|capitalize }}..." class="form-control search-bar">
-                </div>
-            </form>
-        </div>
+{#        <div class="collapse" id="search-nav">#}
+{#            {% if thisPath is defined and thisPath is not empty %}#}
+{#                {% if organization is defined and organization is not empty %}#}
+{#                <form method="post" action="{{ path(thisPath, {'organization': organization['id']}) }}"#}
+{#                      class="navbar-left navbar-form nav-search mr-md-3">#}
+{#                    {% else %}#}
+{#                    <form method="post" action="{{ path(thisPath) }}"#}
+{#                          class="navbar-left navbar-form nav-search mr-md-3">#}
+{#                        {% endif %}#}
+{#                        {% else %}#}
+{#                        <form method="post" action="#" class="navbar-left navbar-form nav-search mr-md-3">#}
+{#                            {% endif %}#}
+{#                            <div class="input-group">#}
+{#                                <div class="input-group-prepend">#}
+{#                                    <button type="submit" class="btn btn-search pr-1">#}
+{#                                        <i class="fa fa-search search-icon"></i>#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                                <input id="searchInput" #}{# onkeyup="orderByInput()" #}{# type="text" name="filter"#}
+{#                                       placeholder="{{ 'search by reference'|trans|capitalize }}..."#}
+{#                                       class="form-control search-bar">#}
+{#                            </div>#}
+{#                        </form>#}
+{#        </div>#}
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
-                        <img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="..." class="avatar-img rounded-circle">
+                        <img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="..."
+                             class="avatar-img rounded-circle">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <div class="dropdown-user-scroll scrollbar-outer">
                         <li>
                             <div class="user-box">
-                                <div class="avatar-lg"><img src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                <div class="avatar-lg"><img
+                                        src="https://huwelijksplanner.online/images/content/ambtenaar/erik.jpg"
+                                        alt="image profile" class="avatar-img rounded"></div>
                                 <div class="u-text">
                                     <h4>{{ app.user.username }}</h4>
-{#                                    <p class="text-muted">hello@example.com</p>#}
-                                    <a style="margin-top: 8px" href="{{ path('app_ud_index') }}" class="btn btn-xs btn-secondary btn-sm">Dashboard</a>
+                                    <span>{{ commonground_resource(app.user.organization).name }}</span>
+                                    {#                                    <p class="text-muted">hello@example.com</p>#}
+                                    <a style="margin-top: 8px" href="{{ path('app_ud_index') }}"
+                                       class="btn btn-xs btn-secondary btn-sm">Dashboard</a>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="dropdown-divider"></div>
-{#                            <a class="dropdown-item" href="#">My Profile</a>#}
-{#                            <a class="dropdown-item" href="#">My Balance</a>#}
-{#                            <a class="dropdown-item" href="#">Inbox</a>#}
-{#                            <div class="dropdown-divider"></div>#}
-{#                            <a class="dropdown-item" href="#">Account Setting</a>#}
-{#                            <div class="dropdown-divider"></div>#}
+                            {#                            <a class="dropdown-item" href="#">My Profile</a>#}
+                            {#                            <a class="dropdown-item" href="#">My Balance</a>#}
+                            {#                            <a class="dropdown-item" href="#">Inbox</a>#}
+                            {#                            <div class="dropdown-divider"></div>#}
+                            {#                            <a class="dropdown-item" href="#">Account Setting</a>#}
+                            {#                            <div class="dropdown-divider"></div>#}
                             <a class="dropdown-item" href="{{ path('app_user_logout') }}">Logout</a>
                         </li>
                     </div>
@@ -51,28 +68,28 @@
 
 </nav>
 
-<script>
-    function myFunction() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("resourceTable");
-        tr = table.getElementsByTagName("tr");
+{#<script>#}
+{#    function orderByInput() {#}
+{#        // Declare variables#}
+{#        var input, filter, table, tr, td, i, txtValue;#}
+{#        input = document.getElementById("searchInput");#}
+{#        filter = input.value.toUpperCase();#}
+{#        table = document.getElementById("resourceTable");#}
+{#        tr = table.getElementsByTagName("tr");#}
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
+{#        // Loop through all table rows, and hide those who don't match the search query#}
+{#        for (i = 0; i < tr.length; i++) {#}
+{#            td = tr[i].getElementsByTagName("td")[1];#}
+{#            if (td) {#}
+{#                txtValue = td.textContent || td.innerText;#}
+{#                if (txtValue.toUpperCase().indexOf(filter) > -1) {#}
+{#                    tr[i].style.display = "";#}
+{#                } else {#}
+{#                    tr[i].style.display = "none";#}
+{#                }#}
+{#            }#}
+{#        }#}
+{#    }#}
 
-</script>
+{#</script>#}
 <!-- End Navbar -->

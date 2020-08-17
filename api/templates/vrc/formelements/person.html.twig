@@ -1,0 +1,18 @@
+<div class="form-control" style="margin-bottom: 20px;">
+{% if property.minItems is defined and property.minItems is not empty %}
+
+{% set count = 1 %}
+{% for count in 1..property.minItems %}
+    <label class="input__label" for="{{ property.name }}">Burger Service Nummer</label>
+    <input class="form-control" id="{{ property.name }}" type="text" name="newProp"
+    {% if value is defined and value is not empty %}value="{{ value }}" {% endif %}>
+    {% set count = count + 1 %}
+{% endfor %}
+{% else %}
+    <label class="input__label" for="{{ property.name }}">Burger Service Nummer</label>
+    <input class="form-control" id="{{ property.name }}" type="text" name="neProp"
+    {% if value is defined and value is not empty %}value="{{ value }}" {% endif %}>
+    <input type="hidden" value="{{ property.name }}" name="newPropName">
+
+{% endif %}
+</div>

@@ -55,7 +55,7 @@ class ApiController extends AbstractController
         if ($request->isMethod('POST')) {
             $results = $apiService->createResource(json_decode($request->getContent(), true), $component, $type);
         } elseif ($request->isMethod('GET')) {
-            $results = $apiService->getResourceList($component, $type);
+            $results = $apiService->getResourceList($component, $type, $request->query->all());
         } else {
             throw new HttpException(405, 'METHOD NOT ALLOWED');
         }
