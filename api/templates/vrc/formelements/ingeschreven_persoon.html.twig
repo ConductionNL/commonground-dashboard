@@ -58,7 +58,7 @@
                             result['hydra:member'][i]['huisnummertoevoeging'] = '';
                         }
 
-                        $('#list-{{ property.id }}').append('<input value="'+ result["hydra:member"][i]['burgerservicenummer'] +'" type="radio" name="newProp" style="margin-right: 5px" id="'+i+'">');
+                        $('#list-{{ property.id }}').append('<input value="'+ result["hydra:member"][i]['@id'] +'" type="radio" name="newProp" style="margin-right: 5px" id="'+i+'">');
                         $('#list-{{ property.id }}').append('<label class="input__label input__label--radio" for="'+i+'"> '
                             + result["hydra:member"][i]["naam"]['voornamen']
                             + ' '
