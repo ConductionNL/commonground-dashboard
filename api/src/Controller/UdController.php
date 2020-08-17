@@ -14,12 +14,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class UdController.
  *
- * @Route("/ud")
+ * @Route("/")
  */
 class UdController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/ud")
+     * @Route("/persoonlijk")
      * @Template
      */
     public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
@@ -34,7 +35,7 @@ class UdController extends AbstractController
     }
 
     /**
-     * @Route("/applications")
+     * @Route("/ud/applications")
      * @Template
      */
     public function Applications(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
