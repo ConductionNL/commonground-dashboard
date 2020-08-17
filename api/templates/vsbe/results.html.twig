@@ -22,7 +22,8 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">{{ 'object' }}</th>
+                            <th scope="col">{{ 'object'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'action'|trans|capitalize }}</th>
                             <th scope="col">{{ 'created'|trans|capitalize }}</th>
                             <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col"></th>
@@ -31,7 +32,12 @@
                         <tbody>
                         {% for resource in resources %}
                         <tr>
-                            <td>{{ resource.object }}</td>
+                            {% if commonground_resource(resource.object)['@type'] == 'Request' %}
+                            <td>{{ commonground_resource(resource.object).reference }}</td>
+                            {% else %}
+                                <td>{{ commonground_resource(resource.object).name }}</td>
+                            {% endif %}
+                            <td>{{ resource.action }}</td>
                             <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                             <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
                         </tr>
