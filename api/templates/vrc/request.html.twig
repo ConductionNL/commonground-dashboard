@@ -146,13 +146,13 @@
                         with {
                         'validations':validations} %}
                     </div>
+                </div><!-- /.row -->
+                    <div class="row">
                     <div class="col-md-4">
                         {% include 'vrc/widgets/submitters.html.twig'
                             with {
                             'resource':resource } %}
                     </div><!-- /.col -->
-                    </div><!-- /.row -->
-                    <div class="row">
                     <div class="col-md-4">
                         {% include 'vrc/widgets/documents.html.twig'
                             with {
@@ -175,19 +175,19 @@
                                 'resource':resource,
                                 'queues':queues } %}
                         </div><!-- /.col -->
-                    {% endif #}
+                    {% endif #} {#
                     <div class="col-md-4">
                         {# include 'vrc/widgets/roles.html.twig'
                             with {
                             'request':resource.id,
                             'roles':resource.roles,
-                            'employees':employees} #}
-                    </div><!-- /.col -->
-                    <div class="col-md-4">
-                        {# } include 'vrc/widgets/children.html.twig'
-                            with {
-                            'children':resource.children } #}
-                    </div><!-- /.col -->
+                            'employees':employees}
+                    </div><!-- /.col -->#}
+                        {#< div class="col-md-4">
+                            {# } include 'vrc/widgets/children.html.twig'
+                                with {
+                                'children':resource.children } #}
+                    </div><!-- /.col -->>#}
                                     </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->
