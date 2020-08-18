@@ -1,0 +1,66 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'stages'|trans|capitalize }}</h3>
+    </div>
+    {% if items is defined %}
+        <div class="card-list">
+            {% for item in items %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ item.name|capitalize }}</h4></div>
+                        <div class="status">{{ item.description }}</div>
+                    </div>
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                            style="margin-right: 5px"
+                            data-toggle="modal"
+                            data-target="#edit{{ type|capitalize~item.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px"
+                            data-toggle="modal"
+                            data-target="#delete{{ type|capitalize~item.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#add{{ type }}" data-toggle="modal"
+           data-target="#add{{ type|capitalize }}">{{ 'add stage'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+
+</div><!-- /.card -->
+
+{# the stage modals #}
+        {% include 'ptc/modals/'~type|lower~'.html.twig'
+            with {
+            'route': path,
+            'resource': resource,
+            'type': type,
+            'id':'add'~type|capitalize } %}
+
+{% if items is defined %}
+    {% for item in items %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': path,
+            'resource':resource,
+            'item':item,
+            'id':'delete'~type|capitalize } %}
+
+        {% include 'ptc/modals/'~type|lower~'.html.twig'
+            with {
+            'route': path,
+            'resource': resource,
+            'item': item,
+            'type': type,
+            'id':'edit'~type|capitalize } %}
+    {% endfor %}
+{% endif %}

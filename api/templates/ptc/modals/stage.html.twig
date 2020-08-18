@@ -1,0 +1,69 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit stage'|trans|capitalize }}: {{ item.name }}{%  else %}{{ 'add stage'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[name]" name="{{ type|lower }}[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[description]" name="{{ type|lower }}[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'code'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[code]" name="{{ type|lower }}[description]" value="{% if item.code is defined %}{{ item.code }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[organization]" name="{{ type|lower }}[organization]" value="{% if item.organization is defined %}{{ item.organization }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="{{ type|lower }}[application]">{{ 'application'|trans|capitalize }}</label>
+                    <select id="{{ type|lower }}[application]" name="{{ type|lower }}[application]" class="form-control form-control-lg" required>
+                        {% if applications is defined %}
+                            {% for application in applications %}
+                                {% if item.application is defined and item.application == application['@id'] %}
+                                    <option selected value="{{ application['@id'] }}">{{ application.name }}</option>
+                                {% endif %}
+                                <option value="{{ application['@id'] }}">{{ application.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="{{ type|lower }}[userGroups]">{{ 'user group'|trans|capitalize }}</label>
+                    <select id="{{ type|lower }}[userGroups]" name="{{ type|lower }}[userGroups]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="{{ type|lower }}[id]" name ="{{ type|lower }}[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="{{ type|lower }}[@id]" name ="{{ type|lower }}[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

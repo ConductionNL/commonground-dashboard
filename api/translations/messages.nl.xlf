@@ -2705,6 +2705,11 @@
         <source>home</source>
         <target>home</target>
       </trans-unit>
+      <trans-unit id="yB4qi80" resname="deposit">
+        <source>deposit</source>
+        <target>storting</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

@@ -26,33 +26,48 @@
                         'path' : 'app_ptc_procestypes'
                     }
                 }]
-            }
-            %}
+            } %}
             <div class="page-inner">
                 <div class="row">
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
+
                             <form action="{{ path(view, {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_ptc_procestypes')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
-                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_ptc_procestypes') }}"><i
+                                                class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span
+                                                class="btn-label"><i
+                                                    class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start"
+                                             style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
                                             <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                               data-target="#changeLog"><i
+                                                    class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}
+                                            </a>
                                             <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                               data-target="#auditTrial"><i
+                                                    class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}
+                                            </a>
                                             <div role="separator" class="dropdown-divider"></div>
-                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                            <a href="#delete" class="dropdown-item text-danger"
+                                               style="margin-right: 25px"
                                                data-toggle="modal"
-                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                               data-target="#delete"><i
+                                                    class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}
+                                            </a>
                                         </div>
-                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                        <button class="btn btn-success"><i
+                                                class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -68,57 +83,103 @@
 
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label
-                                                    for="largeInput">{{ 'all'|trans|capitalize }} {{ 'groups'|trans }}</label>
-                                                <ul>
-                                                    {% if resource.groups is defined and resource.groups is not empty %}
-                                                        {% for group in resource.groups %}
-                                                            <li>{{ group.name }}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul>
+                                                <label for="icon">{{ 'icon'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="icon"
+                                                       name="icon"
+                                                       {% if resource.icon is defined %}value="{{ resource.icon }}"{% endif %}>
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-6 row offset-md-6">
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label
-                                                        for="largeInput">{{ 'add'|trans|capitalize }} {{ 'group'|trans }}</label>
-                                                    <select class="form-control form-control-lg" id="addgroup"
-                                                            name="addgroup">
-                                                        <option value="">-</option>
-                                                        {% if groups is defined and groups is not empty %}
-                                                            {% for group in groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="largeInput">{{ 'delete'|trans|capitalize }} </label>
-                                                    <select class="form-control form-control-lg" id="removegroup"
-                                                            name="removegroup">
-                                                        <option value="">-</option>
-                                                        {% if resource.groups is defined and resource.groups is not empty %}
-                                                            {% for group in resource.groups %}
-                                                                <option
-                                                                    value="groups/{{ group.id }}">{{ group.name }}</option>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div> <!-- /.col -->
-
-                                        </div><!-- /.col /.row -->
+                                        </div> <!-- /.col -->
 
                                     </div><!-- /.row -->
                                     <div class="row">
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="sourceOrganization">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="sourceOrganization" name="sourceOrganization"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}"
+                                                                {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="requestType">{{ 'request type'|trans|capitalize }}</label>
+                                                <select id="requestType" name="requestType"
+                                                        class="form-control form-control-lg" required>
+                                                    {% for requestType in requestTypes %}
+                                                        <option value="{{ requestType['@id'] }}"
+                                                                {% if resource.requestType is defined and requestType['@id'] == resource.requestType %}selected=""{% endif %}>{{ requestType.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="requireLogin">{{ 'require login'|trans|capitalize }}</label>
+                                                <input style="height: 30px !important;" class="form-control form-control-lg" type="checkbox" name="requireLogin" id="requireLogin"{% if resource.requireLogin is defined and resource.requireLogin == 'true' %}checked{% endif %}>
+
+{#                                                <label#}
+{#                                                    for="requireLogin">{{ 'require login'|trans|capitalize }}</label>#}
+{#                                                <select id="requireLogin" name="requireLogin"#}
+{#                                                        class="form-control form-control-lg" required>#}
+{#                                                    <option value="true"#}
+{#                                                            {% if requireLogin is defined and requireLogin == 'true' %}selected{% endif %}>#}
+{#                                                        True#}
+{#                                                    </option>#}
+{#                                                    <option value="false"#}
+{#                                                            {% if requireLogin is defined and requireLogin == 'false' %}selected{% endif %}>#}
+{#                                                        False#}
+{#                                                    </option>#}
+{#                                                </select>#}
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="deposit">{{ 'deposit'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="deposit"
+                                                       name="deposit"
+                                                       {% if resource.deposit is defined %}value="{{ resource.deposit }}"{% endif %}>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="depositCurrency">{{ 'deposit'|trans|capitalize }} {{ 'currency'|trans }}</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                       id="depositCurrency"
+                                                       name="depositCurrency" placeholder="EUR"
+                                                       {% if resource.depositCurrency is defined %}value="{{ resource.depositCurrency }}"{% endif %}>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                    for="depositPercentage">{{ 'deposit'|trans|capitalize }} {{ 'percentage'|trans }}</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                       id="depositPercentage"
+                                                       name="depositPercentage" placeholder="21"
+                                                       {% if resource.depositPercentage is defined %}value="{{ resource.depositPercentage }}"{% endif %}>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
@@ -126,6 +187,7 @@
                                                           name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
                                             </div>
                                         </div>  <!-- /.col -->
+
                                     </div> <!-- /.row -->
                                 </div> <!-- /.card-body -->
 
@@ -141,25 +203,197 @@
                     <div class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
-                                <h2>Groups</h2>
+                                <h2>{{ 'audience'|trans|capitalize }}</h2>
                             </div>
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    {#                                    {% if resource.groups is defined %}#}
-                                    {#                                    {% for group in resource.groups %}#}
-                                    {#                                        <tr>#}
-                                    {#                                            <td>{{ group.name }}</td>#}
-                                    {#                                            <td></td>#}
-                                    {#                                        </tr>#}
-                                    {#                                    {% endfor %}#}
-                                    {#                                    {% endif %}#}
-                                    </tbody>
-                                </table>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="audience">{{ 'audience'|trans|capitalize }}</label>
+                                            {% if resource.audience is defined and resource.audience is not empty %}
+                                                <ul>
+                                                    {% for item in resource.audience %}
+                                                        <li>{{ item }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <p style="color: lightgrey">{{ 'no audience have been found.'|trans|capitalize }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="audience">{{ 'add'|trans|capitalize }} {{ 'audience'|trans }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="audience"
+                                                   name="audience" placeholder=""
+                                                   value="">
+                                        </div>
+                                    </div> <!-- /.col -->
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="removeaudience">{{ 'delete'|trans|capitalize }} {{ 'audience'|trans }}</label>
+                                            <select class="form-control form-control-lg" id="removeaudience"
+                                                    name="removeaudience">
+                                                <option value="">-</option>
+                                                {% if resource.audience is defined and resource.audience is not empty %}
+                                                    {% for item in resource.audience %}
+                                                        <option
+                                                            value="{{ item }}">{{ item }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div> <!-- /.col -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2>{{ 'properties'|trans|capitalize }}</h2>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="largeInput">{{ 'properties'|trans|capitalize }}</label>
+                                            {% if resource.properties is defined and resource.properties is not empty %}
+                                                <ul>
+                                                    {% for item in resource.properties %}
+                                                        <li>{{ item }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <p style="color: lightgrey">{{ 'no properties have been found.'|trans|capitalize }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="property">{{ 'add'|trans|capitalize }} {{ 'property'|trans }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="property"
+                                                   name="property" placeholder=""
+                                                   value="">
+                                        </div>
+                                    </div> <!-- /.col -->
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="removeproperty">{{ 'delete'|trans|capitalize }} {{ 'property'|trans }}</label>
+                                            <select class="form-control form-control-lg" id="removeproperty"
+                                                    name="removeproperty">
+                                                <option value="">-</option>
+                                                {% if resource.properties is defined and resource.properties is not empty %}
+                                                    {% for item in resource.propertes %}
+                                                        <option
+                                                            value="{{ item }}">{{ item }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div> <!-- /.col -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2>Documenten</h2>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="largeInput">{{ 'documents'|trans|capitalize }}</label>
+                                            {% if resource.documents is defined and resource.documents is not empty %}
+
+                                                <ul>
+                                                    {% for item in resource.documents %}
+                                                        <li>{{ document }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <p style="color: lightgrey">{{ 'no documents have been found.'|trans|capitalize }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="document">{{ 'add'|trans|capitalize }} {{ 'document'|trans }}</label>
+                                            <input type="text" class="form-control form-control-lg" id="document"
+                                                   name="document" placeholder="https://drive.google.com/.."
+                                                   value="">
+                                        </div>
+                                    </div> <!-- /.col -->
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label
+                                                for="removedocument">{{ 'delete'|trans|capitalize }} {{ 'document'|trans }}</label>
+                                            <select class="form-control form-control-lg" id="removedocument"
+                                                    name="removedocument">
+                                                <option value="">-</option>
+                                                {% if resource.documents is defined and resource.documents is not empty %}
+                                                    {% for document in resource.documents %}
+                                                        <option
+                                                            value="{{ document }}">{{ document }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div> <!-- /.col -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if resource.stages is defined and resource.stages is not empty %}
+                            {% include 'ptc/widgets/stages.html.twig'
+                                with{
+                                'type': resource.stages[0]['@type'],
+                                'path': 'app_ptc_stage',
+                                'items': resource.stages,
+                                'resource':resource
+                            } %}
+                            {#                        {% else %}#}
+                            {#                            {% include 'ptc/widgets/stages.html.twig'#}
+                            {#                                with{#}
+                            {#                                'items': stages,#}
+                            {#                                'resource':resource#}
+                            {#                            } %}#}
+                        {% endif %}
+                    </div>
+                </div><!-- /.col -->
 
             </div><!-- /.row -->
         </div><!-- /.page-inner -->
@@ -188,42 +422,42 @@
     </div>
     </div>
     <script>
-    {% block javascript %}
-    //audit_trails
-    $.ajax({
-        url: "/api/ptc/audit_trails",
-        type: 'GET',
-        dataType: 'json',
-        success: function(result) {
-            for(let i = 0; i < result['hydra:member'].length; i++ ){
-                $('#audit').append('<tr>')
-                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
-                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
-                $('#audit').append('</tr>')
-            }
-        },
-    });
-    //change_logs
-    $.ajax({
-        url: "/api/ptc/change_logs",
-        type: 'GET',
-        dataType: 'json',
-        success: function(result) {
-            console.log(result);
-            for(let i = 0; i < result['hydra:member'].length; i++ ){
-                $('#changelog').append('<tr>')
-                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
-                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
-                $('#changelog').append('</tr>')
-            }
-        },
-    });
-    {% endblock %}
+        {% block javascript %}
+        //audit_trails
+        $.ajax({
+            url: "/api/ptc/audit_trails",
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                for (let i = 0; i < result['hydra:member'].length; i++) {
+                    $('#audit').append('<tr>')
+                    $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#audit').append('</tr>')
+                }
+            },
+        });
+        //change_logs
+        $.ajax({
+            url: "/api/ptc/change_logs",
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                for (let i = 0; i < result['hydra:member'].length; i++) {
+                    $('#changelog').append('<tr>')
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#changelog').append('</tr>')
+                }
+            },
+        });
+        {% endblock %}
     </script>
 {% endblock %}
