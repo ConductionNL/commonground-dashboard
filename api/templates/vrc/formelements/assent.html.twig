@@ -4,39 +4,39 @@
     <div class="col-sm-12">
         <div class="row" id="getuigen-container">
             <div id="0"></div>
-            {% if request.properties.getuigen is defined and request.properties.getuigen is not empty %}
-                {% set value = 1 %}
-                {% for getuige in request.properties.getuigen %}
-                    <div id="{{ value }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
-                        <h2 id="{{ value }}">{{ getuige.person.givenName }} {{ getuige.person.familyName }}</h2>
-                        <div id="{{ value }}" style="line-height: 15px">
-                            <p id="{{ value }}">Email: {{ getuige.email }}</p>
-                            <p id="{{ value }}">Telefoon: {{ getuige.telephone }}</p>
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="request[properties][{{ property.name }}][{{ value }}][email]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="request[properties][{{ property.name }}][{{ value }}][telephone]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.person.givenName }}" name="request[properties][{{ property.name }}][{{ value }}][person][givenName]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.person.familyName }}" name="request[properties][{{ property.name }}][{{ value }}][person][familyName]">
-                            <button class="btn btn-primary" id="{{ value }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
+            <input type="hidden" value="{{ property.name }}" name="newPropName">
+            {% if value is defined and value is not empty %}
+                {% set id = 1 %}
+                {% for getuige in value %}
+                    <div id="{{ id }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                        <h2 id="{{ id }}">{{ getuige.person.givenName }} {{ getuige.person.familyName }}</h2>
+                        <div id="{{ id }}" style="line-height: 15px">
+                            <p id="{{ id }}">Email: {{ getuige.email }}</p>
+                            <p id="{{ id }}">Telefoon: {{ getuige.telephone }}</p>
+                            <input type="hidden" id="{{ id }}" value="{{ getuige.email }}" name="newProp[{{ id }}][email]">
+                            <input type="hidden" id="{{ id }}" value="{{ getuige.telephone }}" name="newProp[{{ id }}][telephone]">
+                            <input type="hidden" id="{{ id }}" value="{{ getuige.person.givenName }}" name="newProp[{{ id }}][person][givenName]">
+                            <input type="hidden" id="{{ id }}" value="{{ getuige.person.familyName }}" name="newProp[{{ id }}][person][familyName]">
+                            <button class="btn btn-primary" id="{{ id }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
                         </div>
                     </div>
-                    {% set value = value + 1 %}
+                    {% set id = id + 1 %}
                 {% endfor %}
             {% endif %}
         </div>
     </div>
     <div id="personForm" class="col-sm-12">
-        <div>
-
+        <div class="form-group">
             <label class="input__label" for="voornaam">Voornaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text">
+            <input class="form-control" style="width: 100%" id="getuigenVoornaam" type="text">
             <label class="input__label" for="achternaam">Achternaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text">
+            <input class="form-control" style="width: 100%" id="getuigenAchternaam" type="text">
             <label class="input__label" for="email">Email</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
+            <input class="form-control" style="width: 100%" id="getuigenEmail" type="email">
             <span id="inputResult"></span>
             <label class="input__label" for="telefoon">Telefoonnummer</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon" type="tel">
-            <button class="btn" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Uitnodigen</button>
+            <input class="form-control" style="width: 100%" id="getuigenTelefoon" type="tel">
+            <button class="btn btn-primary" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Uitnodigen</button>
         </div>
     </div>
 </div>
@@ -59,17 +59,19 @@
             let telefoon = document.getElementById('getuigenTelefoon').value;
             let voornaam = document.getElementById('getuigenVoornaam').value;
             let achternaam = document.getElementById('getuigenAchternaam').value;
-            let nameCount = document.getElementById("getuigen-container").children[container.children.length-1].id;
+            let nameCount = document.getElementById("getuigen-container").children.length - 1;
             let hEmail = document.createElement('input');
             let hTelefoon = document.createElement('input');
             let hVoornaam = document.createElement('input');
             let hAchternaam = document.createElement('input');
             let counter;
 
+            console.log(document.getElementById("getuigen-container").children.length - 1);
+
             if(nameCount !== undefined){
-                counter = parseInt(nameCount) + 1;
+                counter = parseInt(nameCount)
             } else {
-                counter = parent.children.length;
+                counter = container.children.length;
             }
 
             hEmail.id = counter.toString();
@@ -88,10 +90,10 @@
             hVoornaam.value = voornaam;
             hAchternaam.value = achternaam;
 
-            hEmail.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][email]';
-            hTelefoon.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][telephone]';
-            hVoornaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][person][givenName]';
-            hAchternaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][person][familyName]';
+            hEmail.name = 'newProp['+ counter +'][email]';
+            hTelefoon.name = 'newProp['+ counter +'][telephone]';
+            hVoornaam.name = 'newProp['+ counter +'][person][givenName]';
+            hAchternaam.name = 'newProp['+ counter +'][person][familyName]';
 
 
             let outerDiv = document.createElement('div');
@@ -130,12 +132,13 @@
             button.setAttribute('style', 'background-color: red; margin-bottom: 5px; width:100%;')
             button.type = 'button';
             button.id = counter.toString();
-            innerDiv.appendChild(button);
+
 
             innerDiv.appendChild(hEmail);
             innerDiv.appendChild(hTelefoon);
             innerDiv.appendChild(hVoornaam);
             innerDiv.appendChild(hAchternaam);
+            innerDiv.appendChild(button);
 
             document.getElementById('getuigenEmail').value = null;
             document.getElementById('getuigenTelefoon').value = null;

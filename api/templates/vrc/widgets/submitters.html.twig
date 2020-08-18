@@ -3,36 +3,49 @@
         <h3 class="d-inline-block">{{ 'submitters'|trans|capitalize }}</h3>
     </div>
 
-    {% if resource.submitters is defined %}
-    <div class="card-list">
-        {% for submitter in resource.submitters %}
-            <div class="item-list">
-                <div class="info-user ml-3">
-                    {% if submitter.person is defined and submitter.person is not empty %}
-                        <div class="username"><h4>{{ commonground_resource(submitter.person).name }}</h4></div>
-                    {% endif %}
-                    <div class="status">{% if submitter.assent is defined and submitter.assent is not empty %}{{ commonground_resource(submitter.assent).status }}{% endif %}</div>
-                </div>
-                <button class="btn btn-icon btn-primary btn-round btn-s"
-                   style="margin-right: 5px" data-toggle="modal"
-                        data-target="#editSubmitter{{ submitter.id }}">
-                    <i class="fa fa-edit"></i>
-                </button>
-                <button class="btn btn-icon btn-danger btn-round btn-s"
-                        style="margin-right: 15px" data-toggle="modal"
-                        data-target="#deleteSubmitter{{ submitter.id }}">
-                    <i class="fa fa-trash"></i>
-                </button>
-            </div><!-- /.item-list -->
-        {% endfor %}
-    </div><!-- /.card-list -->
-    {% endif %}
+
 
     <div class="card-body">
+        {% if resource.submitters is defined %}
+            <div class="card-list">
+                {% for submitter in resource.submitters %}
+                    <div class="item-list">
+                        <div class="info-user ml-3">
+                            {% if submitter.brp is defined and submitter.brp is not empty %}
+                                <div class="username"><h4>{{ commonground_resource(submitter.brp).naam.voornamen }} {{ commonground_resource(submitter.brp).naam.geslachtsnaam }}</h4></div>
+                            {% endif %}
+                            <div class="status">{% if submitter.assent is defined and submitter.assent is not empty %}{{ commonground_resource(submitter.assent).status }}{% endif %}</div>
+                        </div>
+                        <button class="btn btn-icon btn-primary btn-round btn-s" data-toggle="collapse" data-target="#{{ submitter.id }}"><i class="fas fa-info"></i></button>
+                    </div><!-- /.item-list -->
+                    <div class="collapse ml-3" id="{{ submitter.id }}">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4>Naam:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <span>{{ commonground_resource(submitter.brp).naam.voornamen }} {{ commonground_resource(submitter.brp).naam.geslachtsnaam }}</span>
+                                </div>
+                                <div class="col-6">
+                                    <h4>Geboortedatum:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <span>temp</span>
+                                </div>
+                                <div class="col-6">
+                                    <h4>BSN:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <span>{{ commonground_resource(submitter.brp).burgerservicenummer }}</span>
+                                </div>
+                            </div>
+                    </div>
+
+                {% endfor %}
+            </div><!-- /.card-list -->
+        {% endif %}
     </div> <!-- /.card-body -->
 
-    <div class="card-action">
-       <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addSubmitter"  data-toggle="modal" data-target="#addSubmitter">{{ 'add submitter'|trans|capitalize }}</a>
-    </div><!-- /.card-action -->
 
 </div><!-- /.card -->
+

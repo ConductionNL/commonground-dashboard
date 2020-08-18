@@ -97,11 +97,11 @@ class PtcController extends AbstractController
      * @Route("/process_types")
      * @Template
      */
-    public function ProcesTypesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function ProcessTypesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
         $variables = [];
         $variables['title'] = $translator->trans('process types');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('process types');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('proces types');
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'ptc', 'type'=>'process_types'])['hydra:member'];
 
         return $variables;
@@ -111,7 +111,7 @@ class PtcController extends AbstractController
      * @Route("/process_types/{id}")
      * @Template
      */
-    public function ProcesTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function ProcessTypeAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
         $variables = [];
 
@@ -126,13 +126,13 @@ class PtcController extends AbstractController
         if ($request->query->get('action') == 'delete') {
             $commonGroundService->deleteResource($variables['resource']);
 
-            return $this->redirect($this->generateUrl('app_ptc_procestypes'));
+            return $this->redirect($this->generateUrl('app_ptc_processtypes'));
         }
 
-        $variables['title'] = $translator->trans('proces type');
-        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('proces type');
+        $variables['title'] = $translator->trans('process type');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('process type');
         $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
-        $variables['requestTypes'] = $commonGroundService->getResourceList(['component'=>'vtc', 'type'=>'request_types'])['hydra:member'];
+        $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -151,11 +151,11 @@ class PtcController extends AbstractController
             // If there are any sub data sources the need to be removed below in order to save the resource
             // unset($resource['somedatasource'])
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'ptc', 'type'=>'proces_types']));
+            $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'ptc', 'type'=>'process_types']));
 
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_ptc_procestypes', ['id' =>  $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_ptc_processtypes', ['id' =>  $variables['resource']['id']]));
             }
         }
 

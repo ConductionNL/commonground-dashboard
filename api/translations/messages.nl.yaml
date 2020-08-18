@@ -1,6 +1,7 @@
 # translations/messages.nl.yaml
 requested: aangevraagd
 granted: ingestemd
+retracted: ingetrokken
 submitted: ingediend
 declined: afgewezen
 incomplete: incompleet

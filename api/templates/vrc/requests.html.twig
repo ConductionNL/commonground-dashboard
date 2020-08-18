@@ -4,14 +4,6 @@
 
 {% block content %}
 
-    {% if organization is defined and organization is not empty %}
-        {% set organization = commonground_resource(organization['@id']) %}
-    {% endif %}
-
-    {% if requestType is defined and requestType is not empty %}
-        {% set requestType = commonground_resource(requestType) %}
-    {% endif %}
-
     <div class="main-panel">
         <div class="container">
 
@@ -31,19 +23,7 @@
             <div style="margin-top: -25px;" class="col-md-12">
                 <div class="card full-height">
                     <div class="card-body">
-                        {% if application.id == '76298171-e049-4492-ae7b-1d2fe231aa5f'
-                            and organizations is defined and organizations is not empty %}
-
-                            {% include 'vrc/widgets/organizations.html.twig' with {'organizations': organizations} %}
-                        {% else %}
-                            {% if organization is defined and organization is not empty %}
-
-                                <a href="{{ path('app_vrc_requests') }}">Terug</a>
-                                <h5 class="card-title">{{ organization.name }}</h5>
-
-                            {% endif %}
-
-                            <form action="{{ path('app_vrc_requests', {'organization': organization.id}) }}"
+                            <form action="{{ path('app_vrc_requests') }}"
                                   method="post">
 
                                 <div class="row">
@@ -175,13 +155,11 @@
                                                     </div>
                                                 {% endif %}
                                             </td>
-                                            {% if app.user.organization == resource.organization %}
-                                                <td>
-                                                    <a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                                                       href="{{ path(view, {id: resource.id}) }}"><i
-                                                            class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a>
-                                                </td>
-                                            {% endif %}
+                                            <td>
+                                                <a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                                   href="{{ path(view, {id: resource.id}) }}"><i
+                                                        class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 {% else %}
@@ -198,7 +176,6 @@
                                 {% endif %}
                                 </tbody>
                             </table>
-                        {% endif %}
 
                     </div> <!-- /.card-body -->
 

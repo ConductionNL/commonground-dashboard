@@ -23,7 +23,7 @@
                 <div class="row">
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card full-height">
-                        	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post">
+                        	<form action="{{ path('app_vrc_request', {'id': resource.id}) }}" method="post" enctype="multipart/form-data">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{% if resource.reference is defined %}{{ 'reference'|trans|capitalize }} {{ resource.reference }} {% else %} {{ 'new request'|trans|capitalize }} {% endif%} </h2>
                                     <div class="float-right">
@@ -84,7 +84,7 @@
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'requestType'|trans|capitalize }}</label>
                                                 {% if requestType is defined and requestType is not empty %}
-                                                    <a class="btn btn-info btn-block" href="{{ path('app_vtc_requesttypes',{'id': requestType.id }) }}" >{{ requestType.name }}</a>
+                                                    <a class="btn btn-info btn-block" href="{{ path('app_vtc_requesttype',{'id': requestType.id }) }}" >{{ requestType.name }}</a>
                                                 {% else %}
                                                     <select id="organization" name="requestType" class="form-control form-control-lg" >
                                                         {% for ItrequestType in requestTypes %}
@@ -136,30 +136,41 @@
                 </div><!-- /.row -->
                 {% if resource['@id'] is defined and  resource['@id'] is not empty  %}
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         {% include 'vrc/widgets/properties.html.twig'
                             with {
                             'resource': resource } %}
                     </div><!-- /.col -->
-                    {% if queues is defined %}
+                    <div class="col-md-4">
+                    {% include 'vrc/widgets/validations.html.twig'
+                        with {
+                        'validations':validations} %}
+                    </div><!-- /.col -->
+                    {# if queues is defined %}
                         <div class="col-md-4">
                             {% include 'vrc/widgets/queue.html.twig'
                                 with {
                                 'resource':resource,
                                 'queues':queues } %}
                         </div><!-- /.col -->
-                    {% endif %}
+                    {% endif #}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/submitters.html.twig'
                             with {
                             'resource':resource } %}
                     </div><!-- /.col -->
                     <div class="col-md-4">
-                        {% include 'vrc/widgets/roles.html.twig'
+                        {% include 'vrc/widgets/documents.html.twig'
+                            with {
+                            'resource':resource,
+                            'documents':requestType.templates } %}
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {# include 'vrc/widgets/roles.html.twig'
                             with {
                             'request':resource.id,
                             'roles':resource.roles,
-                            'employees':employees} %}
+                            'employees':employees} #}
                     </div><!-- /.col -->
                     {% if tasks is defined %}
                     <div class="col-md-4">
@@ -170,12 +181,11 @@
                     </div><!-- /.col -->
                     {% endif %}
                     <div class="col-md-4">
-                        {% include 'vrc/widgets/children.html.twig'
+                        {# } include 'vrc/widgets/children.html.twig'
                             with {
-                            'children':resource.children } %}
+                            'children':resource.children } #}
                     </div><!-- /.col -->
-
-                </div><!-- /.row -->
+                                    </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->
 

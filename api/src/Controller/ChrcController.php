@@ -142,9 +142,9 @@ class ChrcController extends AbstractController
             $resource['id'] = $variables['resource']['id'];
 
 //            var_dump($resource);
-//die;
+            //die;
             // If there are any sub data sources the need to be removed below in order to save the resource
-             unset($resource['pitches']);
+            unset($resource['pitches']);
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component'=>'chrc', 'type'=>'challenges', 'id'=>$id]));
         }
@@ -189,7 +189,7 @@ class ChrcController extends AbstractController
         }
 
         $variables['title'] = $translator->trans('group');
-        $variables['subtitle'] = $translator->trans('save or create a') . ' ' . $translator->trans('groups');
+        $variables['subtitle'] = $translator->trans('save or create a').' '.$translator->trans('groups');
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'slugs'], ['organization.id' => $id]);
 
         // Lets see if there is a post to procces

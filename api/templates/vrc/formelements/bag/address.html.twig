@@ -1,14 +1,14 @@
 
 <div class="form-group">
     <label class="input__label" for="postalCode">Postcode</label>
-    <input class="form-control mb-3" id="postcode" type="text">
+    <input class="form-control mb-3" id="postcode-{{ property.id }}" type="text">
 
     <label class="input__label" for="houseNumber">Huisnummer</label>
-    <input class="form-control mb-3" id="huisnummer" type="text">
+    <input class="form-control mb-3" id="huisnummer-{{ property.id }}" type="text">
 
 
     <label class="i4put__label" for="houseNumberSuffix">toevoeging</label>
-    <input class="form-control mb-3" id="toevoeging" type="text">
+    <input class="form-control mb-3" id="toevoeging-{{ property.id }}" type="text">
 
     <button type="button" onclick="getBagKeys()" class="btn btn-info">Zoeken</button>
 </div>
@@ -16,27 +16,28 @@
 <hr style="margin-top: 20px;">
 
 
-<div class="form-control" id="adresLijst" style="margin-top: 20px; margin-bottom: 20px; display: none">
+<div class="form-control" id="list-{{ property.id }}" style="margin-top: 20px; margin-bottom: 20px; display: none">
 </div>
 <input type="hidden" value="{{ property.name }}" name="newPropName">
+<input type="hidden" value="{{ property.name }}" name="newProp2">
 
 
 <script>
 
     function getBagKeys(){
-        $('#adresLijst').show();
-        let postcode = document.getElementById('postcode').value;
+        $('#list-{{ property.id }}').show();
+        let postcode = document.getElementById('postcode-{{ property.id }}').value;
         postcode = postcode.toUpperCase();
 
-        let huisnummer = document.getElementById('huisnummer').value;
+        let huisnummer = document.getElementById('huisnummer-{{ property.id }}').value;
 
-        let toevoeging = document.getElementById('toevoeging').value;
+        let toevoeging = document.getElementById('toevoeging-{{ property.id }}').value;
 
 
         console.log(postcode);
         console.log(huisnummer);
 
-        let list = document.getElementById('adresLijst');
+        let list = document.getElementById('list-{{ property.id }}');
         while(list.firstChild){
             list.firstChild.remove();
         }
@@ -63,16 +64,17 @@
                 }
             },
             success: function(result) {
+
                 $('.spinner').hide();
                 if(result["hydra:member"].length >= 1){
-                    $('#adresLijst').append('<legend class="input__legend">Adressen:</legend>')
+                    $('#list-{{ property.id }}').append('<legend class="input__legend">Adressen:</legend>')
                     for(let i = 0; i < result['hydra:member'].length; i++){
                         if(result['hydra:member'][i]['huisnummertoevoeging'] === null){
                             result['hydra:member'][i]['huisnummertoevoeging'] = '';
                         }
 
-                        $('#adresLijst').append('<input value="'+ result["hydra:member"][i]['@id'] +'" type="radio" name="newProp" style="margin-right: 5px" id="'+i+'">');
-                        $('#adresLijst').append('<label class="input__label input__label--radio" for="'+i+'"> '
+                        $('#list-{{ property.id }}').append('<input value="'+ result["hydra:member"][i]['@id'] +'" type="radio" name="newProp" style="margin-right: 5px" >');
+                        $('#list-{{ property.id }}').append('<label class="input__label input__label--radio" > '
                             + result["hydra:member"][i]["straat"]
                             + ' '
                             + result["hydra:member"][i]["huisnummer"]
@@ -83,7 +85,7 @@
                             + ' </label>');
                     }
                 } else {
-                    $('#adresLijst').append('<p>Geen adressen gevonden op de meegegeven gegevens</p>');
+                    $('#list-{{ property.id }}').append('<p>Geen adressen gevonden op de meegegeven gegevens</p>');
                 }
             },
         });
