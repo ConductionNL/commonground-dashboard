@@ -1,8 +1,8 @@
 <!-- Sidebar -->
 <div class="sidebar sidebar-style-2">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
-
         <ul class="nav nav-primary">
+            {# logic for sideMenu configuration #}
             {% if application.defaultConfiguration.configuration.sideMenu is defined and application.defaultConfiguration.configuration.sideMenu is not empty %}
                 {% set menu = commonground_resource(application.defaultConfiguration.configuration.sideMenu) %}
                 <li class="nav-section">
@@ -14,108 +14,50 @@
                     </li>
                 {% endfor %}
             {% endif %}
-            <li class="nav-section">
-                <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
-            </li>
-            <li class="nav-item">
-                <a href="{{ path('app_vrc_requests') }}">
-                    {{ 'all'|trans|capitalize }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'filterStatus': "incomplete"}) }}">
-                    {{ 'incomplete'|trans|capitalize }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'filterStatus': "complete"}) }}">
-                    {{ 'complete'|trans|capitalize }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'filterStatus': "submitted"}) }}">
-                    {{ 'submitted'|trans|capitalize }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'filterStatus': "processed"}) }}">
-                    {{ 'processed'|trans|capitalize }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ path('app_vrc_requests',{'filterStatus': "cancelled"}) }}">
-                    {{ 'cancelled'|trans|capitalize }}
-                </a>
-            </li>
 
-            {% if 'group.balie-medewerkers' in app.user.roles %}
+            {# request filters #}
+            {% if commonground_component_health('vrc') %}
+                <li class="nav-section">
+                    <h4 style="color: black" class="text-section">{{ 'requests'|trans|capitalize }}</h4>
+                </li>
                 <li class="nav-item">
                     <a href="{{ path('app_vrc_requests') }}">
-                        {{ 'all requests'|trans|capitalize }}
-                    </a>
-                </li>
-            {% endif %}
-            {% if 'group.trouw-ambtenaar' in app.user.roles or 'group.balie-medewerkers' in app.user.roles %}
-                <li class="nav-item">
-                    <a href="{{ path('app_vrc_requests',{'requestType': "5b10c1d6-7121-4be2-b479-7523f1b625f1"}) }}">
-                        {{ 'marriages'|trans|capitalize }}
+                        {{ 'all'|trans|capitalize }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('app_vrc_requests',{'requestType': "146cb7c8-46b9-4911-8ad9-3238bab4313e"}) }}">
-                        {{ 'notifications'|trans|capitalize }}
+                    <a href="{{ path('app_vrc_requests',{'filterStatus': "incomplete"}) }}">
+                        {{ 'incomplete'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'filterStatus': "complete"}) }}">
+                        {{ 'complete'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'filterStatus': "submitted"}) }}">
+                        {{ 'submitted'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'filterStatus': "processed"}) }}">
+                        {{ 'processed'|trans|capitalize }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('app_vrc_requests',{'filterStatus': "cancelled"}) }}">
+                        {{ 'cancelled'|trans|capitalize }}
                     </a>
                 </li>
             {% endif %}
 
+            <li class="nav-section">
+                <h4 style="color: black" class="text-section">{{ 'components'|trans|capitalize }}</h4>
+            </li>
 
-            {% if 'wrc.applications.read' in app.user.roles or 'wrc.applications.write' in app.user.roles %}
-                <a href="{{ path("app_wrc_applications") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'applications'|trans|capitalize }}</span>
-                </a>
-            {% endif %}
-
-            {% if 'group.balie-medewerkers' in app.user.roles %}
-                <li class="nav-item">
-                    <a href="{{ path('app_vrc_requests', {'requestType': "4830cd4c-d8ce-4f8c-a8ad-f3dc821911f3"}) }}">
-                        Naamwijzigingen
-                    </a>
-                </li>
-            {% endif %}
-
-
-            {% if 'group.trouw-ambtenaar' in app.user.roles %}
-                <li class="nav-item">
-                    <a href="{{ path('app_babs_agenda') }}">
-                        Mijn Agenda</a>
-                </li>
-            {% endif %}
-
-            {% if 'group.balie-medewerkers' in app.user.roles %}
-                <li class="nav-item">
-                    <a href="{{ path('app_babs_babsagenda') }}">
-                        Planning Trouwambtenaren</a>
-                </li>
-            {% endif %}
-
-            {% if 'group.locatie-beheerders' in app.user.roles %}
-
-                <li class="nav-item">
-                    <a href="{{ path('app_babs_locatieagenda') }}">
-                        Planning Locaties</a>
-                </li>
-
-            {% endif %}
-
-            {% if 'group.beheerder' in app.user.roles %}
-                <li class="nav-item">
-                    <h4 style="color: black" class="text-section">{{ 'components'|trans|capitalize }}</h4>
-                </li>
-            {% endif %}
-
-            {% if 'group.beheerder' in app.user.roles %}
-
+            {# Tender component #}
+            {% if commonground_component_health('chrc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#locations" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'tenders'|trans|capitalize }}</p>
@@ -186,10 +128,10 @@
                         </ul>
                     </div>
                 </li>
-
             {% endif %}
 
-            {% if 'scope.lc-accommodations-write' in app.user.roles or 'scope.lc-places-write' in app.user.roles %}
+            {# Location component #}
+            {% if commonground_component_health('lc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#locations" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'locations'|trans|capitalize }}</p>
@@ -197,22 +139,18 @@
                     </a>
                     <div class="collapse" id="locations">
                         <ul class="nav nav-collapse">
-                            {% if 'scope.lc-accommodations-write' in app.user.roles %}
                                 <li>
                                     <a href="{{ path("app_lc_accommodations") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'accommodations'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                            {% endif %}
-                            {% if 'scope.lc-places-write' in app.user.roles %}
                                 <li>
                                     <a href="{{ path("app_lc_places") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'places'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                            {% endif %}
                             <li>
                                 <a href="{{ path("app_lc_properties") }}">
                                         <span style="color: #575962"
@@ -224,9 +162,8 @@
                 </li>
             {% endif %}
 
-
-
-            {% if 'group.beheerder' in app.user.roles %}
+            {# instemming service #}
+            {% if commonground_component_health('irc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#assents" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'assents'|trans|capitalize }}</p>
@@ -245,38 +182,8 @@
                 </li>
             {% endif %}
 
-            {% if 'group.beheerder' in app.user.roles %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#evc" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'Deployments'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="evc">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_evc_clusters") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'clusters'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_evc_components") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'components'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_evc_healthlogs") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'health logs'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
-
-            {% if 'group.beheerder' in app.user.roles %}
+            {# agenda component #}
+            {% if commonground_component_health('arc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#ac" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'calendar'|trans|capitalize }}</p>
@@ -299,89 +206,10 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#employees" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'employees'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="employees">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_mrc_employees") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'employees'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
             {% endif %}
 
-
-            {% if 'group.beheerder' in app.user.roles %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="bc">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_bc_invoices") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'invoices'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bc_payments") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'payments'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bc_taxes") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bc_services") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'services'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
-
-
-            {% if 'group.beheerder' in app.user.roles %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#orc" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'orders'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="orc">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_orc_orders") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'orders'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_orc_taxes") }}">
-                                        <span style="color: #575962"
-                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
-
-            {% if 'group.beheerder' in app.user.roles %}
+            {# berichten service #}
+            {% if commonground_component_health('bs') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#bs" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'messages'|trans|capitalize }}</p>
@@ -406,8 +234,8 @@
                 </li>
             {% endif %}
 
-
-            {# if 'group.beheerder' in app.user.roles %}
+            {# grafregistartie component #}
+            {% if commonground_component_health('grc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
@@ -442,9 +270,10 @@
                         </ul>
                     </div>
                 </li>
-            {% endif #}
+            {% endif %}
 
-            {% if 'group.beheerder' in app.user.roles %}
+            {# contact catalogus #}
+            {% if commonground_component_health('cc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#contacts" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'contacts'|trans|capitalize }}</p>
@@ -493,7 +322,31 @@
                 </li>
             {% endif %}
 
-            {% if 'scope.uc-users-write' in app.user.roles or 'scope.uc-groups-write' in app.user.roles  or 'scope.uc-scopes-write' in app.user.roles %}
+            <li class="nav-section">
+                <h4 style="color: black" class="text-section">{{ 'configurations'|trans|capitalize }}</h4>
+            </li>
+
+            {% if commonground_component_health('mrc') %}
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#employees" class="" aria-expanded="false">
+                        <p style="color: #575962">{{ 'employees'|trans|capitalize }}</p>
+                        <span style="color: #575962" class="caret"></span>
+                    </a>
+                    <div class="collapse" id="employees">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path("app_mrc_employees") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'employees'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+            {# user component #}
+            {% if commonground_component_health('uc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#configuration_uc" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'users'|trans|capitalize }}</p>
@@ -530,7 +383,40 @@
                 </li>
             {% endif %}
 
-            {% if 'group.beheerder' in app.user.roles %}
+            {# environment component #}
+            {% if commonground_component_health('evc') %}
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#evc" class="" aria-expanded="false">
+                        <p style="color: #575962">{{ 'Deployments'|trans|capitalize }}</p>
+                        <span style="color: #575962" class="caret"></span>
+                    </a>
+                    <div class="collapse" id="evc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path("app_evc_clusters") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'clusters'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_evc_components") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'components'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_evc_healthlogs") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'health logs'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+            {# very small business engine #}
+            {% if commonground_component_health('vsbe') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#configuration_vsbe" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'vsbe'|trans|capitalize }}</p>
@@ -553,6 +439,10 @@
                         </ul>
                     </div>
                 </li>
+            {% endif %}
+
+            {# web resource component #}
+            {% if commonground_component_health('wrc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#configuration_wrc" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'configuration'|trans|capitalize }}</p>
@@ -613,10 +503,76 @@
                 </li>
             {% endif %}
 
-            {% if 'group.beheerder' in app.user.roles or 'group.balie-medewerkers' in app.user.roles %}
-                <li class="nav-section">
-                    <h4 style="color: black" class="text-section">{{ 'products'|trans|capitalize }}</h4>
+            <li class="nav-section">
+                <h4 style="color: black" class="text-section">{{ 'products'|trans|capitalize }}</h4>
+            </li>
+
+            {# order registartie component #}
+            {% if commonground_component_health('orc') %}
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#orc" class="" aria-expanded="false">
+                        <p style="color: #575962">{{ 'orders'|trans|capitalize }}</p>
+                        <span style="color: #575962" class="caret"></span>
+                    </a>
+                    <div class="collapse" id="orc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path("app_orc_orders") }}">
+                                    <span style="color: #575962"
+                                          class="sub-item">{{ 'orders'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_orc_taxes") }}">
+                                    <span style="color: #575962"
+                                          class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+            {% endif %}
+
+            {# betaalservice #}
+            {% if commonground_component_health('bc') %}
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
+                        <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
+                        <span style="color: #575962" class="caret"></span>
+                    </a>
+                    <div class="collapse" id="bc">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ path("app_bc_invoices") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'invoices'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_bc_payments") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'payments'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_bc_taxes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_bc_services") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'services'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+
+            {# product en diensten component #}
+            {% if commonground_component_health('pdc') %}
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#products" class="" aria-expanded="false">
                         <p style="color: #575962">{{ 'products'|trans|capitalize }}</p>
@@ -642,42 +598,37 @@
                                               class="sub-item">{{ 'offers'|trans|capitalize }}</span>
                                 </a>
                             </li>
-                            {% if 'group.beheerder' in app.user.roles %}
-                                <li>
-                                    <a href="{{ path("app_pdc_taxes") }}">
-                                            <span style="color: #575962"
-                                                  class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_pdc_catalogues") }}">
-                                            <span style="color: #575962"
-                                                  class="sub-item">{{ 'catalogues'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_pdc_suppliers") }}">
-                                            <span style="color: #575962"
-                                                  class="sub-item">{{ 'suppliers'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path("app_pdc_customertypes") }}">
-                                            <span style="color: #575962"
-                                                  class="sub-item">{{ 'customer types'|trans|capitalize }}</span>
-                                    </a>
-                                </li>
-                            {% endif %}
+                            <li>
+                                <a href="{{ path("app_pdc_taxes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_pdc_catalogues") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'catalogues'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_pdc_suppliers") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'suppliers'|trans|capitalize }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("app_pdc_customertypes") }}">
+                                        <span style="color: #575962"
+                                              class="sub-item">{{ 'customer types'|trans|capitalize }}</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
             {% endif %}
-
-
         </ul>
         <img style="margin-left: 25px;margin-top: 20px; width: 200px; display:none;"
              src='https://svgshare.com/i/Liw.svg'>
     </div>
-</div>
 </div>
 <!-- End Sidebar -->
