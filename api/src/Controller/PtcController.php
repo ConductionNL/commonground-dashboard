@@ -142,7 +142,7 @@ class PtcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            if(isset($resource['requireLogin'])){
+            if (isset($resource['requireLogin'])) {
                 $resource['requireLogin'] = true;
             } else {
                 $resource['requireLogin'] = false;
