@@ -1,6 +1,6 @@
 {% extends "body.html.twig" %}
 
-{% set view = 'app_ptc_processtype' %}
+{% set view = 'app_ptc_procestype' %}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
         <div class="container">
 
             {% include 'widgets/babs/title_h1.html.twig' with {
-                'headerTitle': 'process type',
+                'headerTitle': 'proces type',
                 'name' : resource.name,
                 'breadcrumbs': [{
                     'home' : {
@@ -23,7 +23,7 @@
                     },
                     'proces types' : {
                         'name' : 'proces types',
-                        'path' : 'app_ptc_processtypes'
+                        'path' : 'app_ptc_procestypes'
                     }
                 }]
             } %}
@@ -32,11 +32,12 @@
 
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
+
                             <form action="{{ path(view, {id: resource.id}) }}" method="post">
                                 <div class="card-header">
                                     <h2 class="d-inline-block">{{ resource.name }} </h2>
                                     <div class="float-right">
-                                        <a class="btn btn-primary mr-4" href="{{ path('app_ptc_processtypes') }}"><i
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_ptc_procestypes') }}"><i
                                                 class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <button class="btn btn-info mr-4 dropdown-toggle" type="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span
@@ -66,70 +67,82 @@
                                         <button class="btn btn-success"><i
                                                 class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                                     </div>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12">
+
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="name"
-                                                       name="name" required value="{{ resource.name }}">
+                                                       name="name" placeholder="Large Input"
+                                                       value="{{ resource.name }}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
+
+                                        <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'subtitle'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="subtitle"
-                                                       name="name">
+                                                <label for="icon">{{ 'icon'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="icon"
+                                                       name="icon"
+                                                       {% if resource.icon is defined %}value="{{ resource.icon }}"{% endif %}>
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="subtitle"
-                                                       name="name">
-                                            </div>
-                                        </div> <!-- /.col -->
+
                                     </div><!-- /.row -->
                                     <div class="row">
+
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-
-                                                <select name="sourceOrganization" id="sourceOrganization"
+                                                <label
+                                                    for="sourceOrganization">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="sourceOrganization" name="sourceOrganization"
                                                         class="form-control form-control-lg" required>
                                                     {% for organization in organizations %}
-                                                        <option
-                                                            value="{{ organization['@id'] }}" {% if resource.organization is defined and resource.organization == organization['@id'] %} selected {% endif %} >{{ organization.name }}</option>
+                                                        <option value="{{ organization['@id'] }}"
+                                                                {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization %}selected=""{% endif %}>{{ organization.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                        </div><!-- /.col -->
+                                        </div> <!-- /.col -->
+
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
-                                                <label for="largeInput">{{ 'request type'|trans|capitalize }}</label>
-                                                <select name="requestType" id="requestType"
+                                                <label
+                                                    for="requestType">{{ 'request type'|trans|capitalize }}</label>
+                                                <select id="requestType" name="requestType"
                                                         class="form-control form-control-lg" required>
                                                     {% for requestType in requestTypes %}
-                                                        <option
-                                                            value="{{ requestType['@id'] }}" {% if resource.requestType is defined and resource.requestType == requestType['@id'] %} selected {% endif %} >{{ requestType.name }}</option>
+                                                        <option value="{{ requestType['@id'] }}"
+                                                                {% if resource.requestType is defined and requestType['@id'] == resource.requestType %}selected=""{% endif %}>{{ requestType.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                        </div><!-- /.col -->
-
+                                        </div> <!-- /.col -->
 
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="requireLogin">{{ 'require login'|trans|capitalize }}</label>
-                                                <input style="height: 30px !important;"
-                                                       class="form-control form-control-lg"
-                                                       type="checkbox" name="requireLogin" id="requireLogin"
-                                                       {% if resource.requireLogin is defined and resource.requireLogin == 'true' %}checked{% endif %}>
+                                                <input style="height: 30px !important;" class="form-control form-control-lg" type="checkbox" name="requireLogin" id="requireLogin"{% if resource.requireLogin is defined and resource.requireLogin == 'true' %}checked{% endif %}>
+
+{#                                                <label#}
+{#                                                    for="requireLogin">{{ 'require login'|trans|capitalize }}</label>#}
+{#                                                <select id="requireLogin" name="requireLogin"#}
+{#                                                        class="form-control form-control-lg" required>#}
+{#                                                    <option value="true"#}
+{#                                                            {% if requireLogin is defined and requireLogin == 'true' %}selected{% endif %}>#}
+{#                                                        True#}
+{#                                                    </option>#}
+{#                                                    <option value="false"#}
+{#                                                            {% if requireLogin is defined and requireLogin == 'false' %}selected{% endif %}>#}
+{#                                                        False#}
+{#                                                    </option>#}
+{#                                                </select>#}
                                             </div>
                                         </div> <!-- /.col -->
-                                    </div><!-- /.row -->
 
+                                    </div><!-- /.row -->
                                     <div class="row">
 
                                         <div class="col-md-4 col-sm-12">
@@ -243,7 +256,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
 
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
@@ -361,37 +374,45 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- /.card-body -->
 
-            <div class="card-action">
-                {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
-            </div><!-- /.card-action -->
-            </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if resource.stages is defined and resource.stages is not empty %}
+                            {% include 'ptc/widgets/stages.html.twig'
+                                with{
+                                'type': resource.stages[0]['@type'],
+                                'path': 'app_ptc_stage',
+                                'items': resource.stages,
+                                'resource':resource
+                            } %}
+                            {#                        {% else %}#}
+                            {#                            {% include 'ptc/widgets/stages.html.twig'#}
+                            {#                                with{#}
+                            {#                                'items': stages,#}
+                            {#                                'resource':resource#}
+                            {#                            } %}#}
+                        {% endif %}
+                    </div>
+                </div><!-- /.col -->
 
-        </div><!-- /.row -->
-        <div class="row">
-            <div class="col-md-8">
-                {% include 'vrc/widgets/properties.html.twig'
-                    with {
-                    'resource': resource } %}
-            </div><!-- /.col -->
+            </div><!-- /.row -->
         </div><!-- /.page-inner -->
 
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_ptc_processtype',
+            'route': 'app_ptc_procestype',
             'resource':resource,
             'id':'delete' } %}
 
         {% include 'widgets/auditTrail_modal.html.twig'
             with {
-            'route': 'app_ptc_processtype',
+            'route': 'app_ptc_procestype',
             'resource':resource,
             'id':'auditTrial' } %}
 
         {% include 'widgets/changeLog_modal.html.twig'
             with {
-            'route': 'app_ptc_processtype',
+            'route': 'app_ptc_procestype',
             'resource':resource,
             'id':'changeLog' } %}
 

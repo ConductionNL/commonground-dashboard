@@ -57,7 +57,7 @@
     </div> <!-- /.card-body -->
 </div><!-- /.card -->
 
-
+{% if requestType is defined and requestType is not empty %}
 {% for property in requestType.properties %}
 
     {%  include 'vrc/modals/unsetProperty.html.twig'
@@ -84,6 +84,7 @@
 
 
 {% endfor %}
+{% endif %}
 
 
 
