@@ -63,11 +63,9 @@ class VtcController extends AbstractController
 
         // Lets see if we need to create
         if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new', 'templates'=>[]];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'vtc', 'type'=>'request_types', 'id'=>$id]);
-            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
         }
 
         $variables['title'] = $translator->trans('request type');
@@ -119,6 +117,18 @@ class VtcController extends AbstractController
                 $property = $resource['property'];
                 $property['requestType'] = $resource['@id'];
 
+                // The resource action section
+                if (array_key_exists('@id', $property) && array_key_exists('action', $property)) {
+                    // The delete action
+                    if ($property['action'] == 'delete') {
+                        $commonGroundService->deleteResource($property);
+
+                        $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'vtc', 'type'=>'request_types']);
+
+                        return $this->redirect($this->generateUrl('app_vtc_requesttype', ['id' => $id]));
+                    }
+                }
+
                 // We need to force some properties to integer
                 $property['multipleOf'] = intval($property['multipleOf']);
                 $property['maximum'] = intval($property['maximum']);
@@ -151,22 +161,14 @@ class VtcController extends AbstractController
                     }
                 }
 
-                // The resource action section
-                if (array_key_exists('@id', $property) && array_key_exists('action', $property)) {
-                    // The delete action
-                    if ($property['action'] == 'delete') {
-                        $commonGroundService->deleteResource($property);
-
-                        return $this->redirect($this->generateUrl('app_vtc_requesttype', ['id'=>$id]));
-                    }
-                }
-
                 $property = $commonGroundService->saveResource($property, ['component'=>'vtc', 'type'=>'properties']);
             }
 
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'vtc', 'type'=>'request_types']);
+
+
             /* @to this redirect is a hotfix */
-            if (array_key_exists('id', $variables['resource'])) {
+            if (array_key_exists('id', $variables['resource']) && isset($property) == false) {
                 return $this->redirect($this->generateUrl('app_vtc_requesttypes', ['id' =>  $variables['resource']['id']]));
             }
         }
