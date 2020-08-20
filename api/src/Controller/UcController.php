@@ -191,8 +191,8 @@ class UcController extends AbstractController
                 if (array_key_exists('@id', $user) && array_key_exists('action', $user)) {
                     // The delete action
                     if ($user['action'] == 'delete') {
-                        foreach ($group['users'] as $key => $value){
-                            if($value['@id'] == $user['@id']){
+                        foreach ($group['users'] as $key => $value) {
+                            if ($value['@id'] == $user['@id']) {
                                 unset($group['users'][$key]);
                             }
                         }
