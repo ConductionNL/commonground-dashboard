@@ -183,7 +183,7 @@ class UcController extends AbstractController
                 $user = $resource['user'];
                 $group = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups', 'id' => $id]);
 
-                if (isset($user['action']) == false){
+                if (isset($user['action']) == false) {
                     array_push($group['users'], $user);
                     $resource['users'] = $group['users'];
                 }
