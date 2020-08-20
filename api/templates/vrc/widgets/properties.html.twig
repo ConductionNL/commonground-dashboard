@@ -6,6 +6,14 @@
     <div class="card-body p-0">
         {% if requestType.properties is defined %}
             <table class="table table-hover">
+                <thead>
+                <tr>
+                    <td></td>
+                    <td>{{ 'name'|trans|capitalize }}</td>
+                    <td>{{ 'value'|trans|capitalize }}</td>
+                    <td></td>
+                </tr>
+                </thead>
                 <tbody>
                 {% for property in requestType.properties %}
                     {% if property.type is defined and property.type is not empty and property.title != 'Order'
@@ -35,11 +43,11 @@
                                 <span class="danger">< {{ 'no value'|trans|capitalize }} ></span>
                             {% endif %}
                         </td>
+                        {% if property.name not in resource.properties|keys %}
                         <td>
-                            {% if property.name not in resource.properties|keys %}
                                 <a style="float: right" class="btn btn-success" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="fa fa-plus"></i></a>
-                            {% endif %}
                         </td>
+                        {% endif %}
                     </tr>
                     {% endif %}
                 {% endfor %}
