@@ -142,7 +142,7 @@ class UcController extends AbstractController
             $variables['users'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'uc', 'type'=>'groups', 'id'=>$id]);
-            $variables['users'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'])['hydra:member'];
+            $variables['newUsers'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('group');
@@ -159,7 +159,7 @@ class UcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            // Lets see if we also need t add an slug
+            // Lets see if we also need t add an scope
             if (array_key_exists('scope', $resource)) {
                 $scope = $resource['scope'];
                 $scope['userGroups'][] = $resource['@id'];
@@ -178,7 +178,28 @@ class UcController extends AbstractController
                 $scope = $commonGroundService->saveResource($scope, ['component' => 'uc', 'type' => 'scopes']);
             }
 
-            // Lets see if we also need to add an configurati
+            // Lets see if we also need t add an scope
+            if (array_key_exists('user', $resource)) {
+                $user = $resource['user'];
+                $group = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups', 'id' => $id]);
+
+                if(isset($user['action']) == false){
+                    array_push($group['users'], $user);
+                    $resource['users'] = $group['users'];
+                }
+
+                if (array_key_exists('@id', $user) && array_key_exists('action', $user)) {
+                    // The delete action
+                    if ($user['action'] == 'delete') {
+                        foreach($group['users'] as $key => $value){
+                            if($value['@id'] == $user['@id']){
+                                unset($group['users'][$key]);
+                            }
+                        }
+                    }
+                }
+            }
+
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */
