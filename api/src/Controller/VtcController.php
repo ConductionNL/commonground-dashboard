@@ -166,7 +166,6 @@ class VtcController extends AbstractController
 
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'vtc', 'type'=>'request_types']);
 
-
             /* @to this redirect is a hotfix */
             if (array_key_exists('id', $variables['resource']) && isset($property) == false) {
                 return $this->redirect($this->generateUrl('app_vtc_requesttypes', ['id' =>  $variables['resource']['id']]));
