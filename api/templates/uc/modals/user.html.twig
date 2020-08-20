@@ -14,30 +14,14 @@
             <form action="{{ path(route, {id: resource.id}) }}" method="post">
                 <div class="form-group">
                     <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="slugs[name]" name="slugs[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
-                </div><!-- /.form-group -->
-                <div class="form-group">
-                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="slugs[description]" name="slugs[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
-                </div><!-- /.form-group -->
-                <div class="form-group">
-                    <label for="slugs[template]">{{ 'template'|trans|capitalize }}</label>
-                    <select id="slugs[template]" name="slugs[template]" class="form-control form-control-lg" required disabled>
-                        {% if resource.id is defined %}
-                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
-                        {% endif %}
-                    </select>
-                </div><!-- /.form-group -->
-                <div class="form-group">
-                    <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="slugs[slug]" name="slugs[slug]" value="{% if item.slug is defined %}{{ item.slug }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="user[name]" name="user[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
                 </div><!-- /.form-group -->
 
                 {% if item['id'] is defined %}
-                    <input type="hidden" id="slugs[id]" name ="slugs[id]" value="{{ item['id'] }}">
+                    <input type="hidden" id="user[id]" name ="user[id]" value="{{ item['id'] }}">
                 {% endif %}
                 {% if item['@id'] is defined %}
-                    <input type="hidden" id="slugs[@id]" name ="slugs[@id]" value="{{ item['@id'] }}">
+                    <input type="hidden" id="user[@id]" name ="user[@id]" value="{{ item['@id'] }}">
                 {% endif %}
                 <button type="submit" class="btn btn-success m-3  mx-auto">
                     {% if item.id is defined %}

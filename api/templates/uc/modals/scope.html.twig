@@ -14,23 +14,23 @@
             <form action="{{ path(route, {id: resource.id}) }}" method="post">
                 <div class="form-group">
                     <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[name]" name="{{ type|lower }}[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
+                    <input type="text" class="form-control form-control-lg" id="scope[name]" name="scope[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[description]" name="{{ type|lower }}[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="scope[description]" name="scope[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'code'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[code]" name="{{ type|lower }}[description]" value="{% if item.code is defined %}{{ item.code }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="scope[code]" name="scope[description]" value="{% if item.code is defined %}{{ item.code }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="{{ type|lower }}[organization]" name="{{ type|lower }}[organization]" value="{% if item.organization is defined %}{{ item.organization }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="scope[organization]" name="scope[organization]" value="{% if item.organization is defined %}{{ item.organization }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
-                    <label for="{{ type|lower }}[application]">{{ 'application'|trans|capitalize }}</label>
-                    <select id="{{ type|lower }}[application]" name="{{ type|lower }}[application]" class="form-control form-control-lg" required>
+                    <label for="scope[application]">{{ 'application'|trans|capitalize }}</label>
+                    <select id="scope[application]" name="scope[application]" class="form-control form-control-lg" required>
                         {% if applications is defined %}
                             {% for application in applications %}
                                 {% if item.application is defined and item.application == application['@id'] %}
@@ -42,8 +42,8 @@
                     </select>
                 </div><!-- /.form-group -->
                 <div class="form-group">
-                    <label for="{{ type|lower }}[userGroups]">{{ 'user group'|trans|capitalize }}</label>
-                    <select id="{{ type|lower }}[userGroups]" name="{{ type|lower }}[userGroups]" class="form-control form-control-lg" required disabled>
+                    <label for="scope[userGroups]">{{ 'user group'|trans|capitalize }}</label>
+                    <select id="scope[userGroups]" name="scope[userGroups]" class="form-control form-control-lg" required disabled>
                         {% if resource.id is defined %}
                             <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
                         {% endif %}
@@ -51,10 +51,10 @@
                 </div><!-- /.form-group -->
 
                 {% if item['id'] is defined %}
-                    <input type="hidden" id="{{ type|lower }}[id]" name ="{{ type|lower }}[id]" value="{{ item['id'] }}">
+                    <input type="hidden" id="scope[id]" name ="scope[id]" value="{{ item['id'] }}">
                 {% endif %}
                 {% if item['@id'] is defined %}
-                    <input type="hidden" id="{{ type|lower }}[@id]" name ="{{ type|lower }}[@id]" value="{{ item['@id'] }}">
+                    <input type="hidden" id="scope[@id]" name ="scope[@id]" value="{{ item['@id'] }}">
                 {% endif %}
                 <button type="submit" class="btn btn-success m-3  mx-auto">
                     {% if item.id is defined %}
