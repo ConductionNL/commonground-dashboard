@@ -25,10 +25,6 @@
                     <input type="text" class="form-control form-control-lg" id="scope[code]" name="scope[description]" value="{% if item.code is defined %}{{ item.code }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
-                    <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="scope[organization]" name="scope[organization]" value="{% if item.organization is defined %}{{ item.organization }}{% endif %}">
-                </div><!-- /.form-group -->
-                <div class="form-group">
                     <label for="scope[application]">{{ 'application'|trans|capitalize }}</label>
                     <select id="scope[application]" name="scope[application]" class="form-control form-control-lg" required>
                         {% if applications is defined %}
@@ -38,14 +34,6 @@
                                 {% endif %}
                                 <option value="{{ application['@id'] }}">{{ application.name }}</option>
                             {% endfor %}
-                        {% endif %}
-                    </select>
-                </div><!-- /.form-group -->
-                <div class="form-group">
-                    <label for="scope[userGroups]">{{ 'user group'|trans|capitalize }}</label>
-                    <select id="scope[userGroups]" name="scope[userGroups]" class="form-control form-control-lg" required disabled>
-                        {% if resource.id is defined %}
-                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
                         {% endif %}
                     </select>
                 </div><!-- /.form-group -->

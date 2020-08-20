@@ -163,6 +163,11 @@ class UcController extends AbstractController
             if (array_key_exists('scope', $resource)) {
                 $scope = $resource['scope'];
                 $scope['userGroups'][] = $resource['@id'];
+                $scope['organization'] = $this->getUser()->getOrganization();
+
+                var_dump($scope);
+                die;
+
                 // The resource action section
                 if (array_key_exists('@id', $scope) && array_key_exists('action', $scope)) {
                     // The delete action

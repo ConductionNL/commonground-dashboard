@@ -41,7 +41,7 @@
 {# the Scope modals #}
 {% include 'uc/modals/scope.html.twig'
     with {
-    'route': 'app_uc_user',
+    'route': 'app_uc_group',
     'resource':resource,
     'id':'addScope' } %}
 
@@ -49,14 +49,14 @@
     {% for scope in scopes %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': 'app_uc_user',
+            'route': 'app_uc_group',
             'resource':resource,
             'item':scope,
             'id':'deleteScope' } %}
 
         {% include 'uc/modals/scope.html.twig'
             with {
-            'route': 'app_uc_user',
+            'route': 'app_uc_group',
             'resource':resource,
             'item':scope,
             'id':'editScope' } %}
