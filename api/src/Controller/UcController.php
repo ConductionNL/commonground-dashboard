@@ -40,7 +40,7 @@ class UcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('users');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('users');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
 
         return $variables;
     }
@@ -117,7 +117,7 @@ class UcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('groups');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'groups'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'groups'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
 
         return $variables;
     }
@@ -142,7 +142,7 @@ class UcController extends AbstractController
             $variables['users'] = [];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'uc', 'type'=>'groups', 'id'=>$id]);
-            $variables['users'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['group.id'=>$id])['hydra:member'];
+            $variables['users'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'])['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('group');
