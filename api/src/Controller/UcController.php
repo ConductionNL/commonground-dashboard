@@ -184,9 +184,9 @@ class UcController extends AbstractController
             if (array_key_exists('user', $resource)) {
                 $user = $resource['user'];
                 $group = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups', 'id' => $id]);
-
+                $newUser = $commonGroundService->getResource($resource['user']['user']);
                 if (isset($user['action']) == false) {
-                    array_push($group['users'], $user);
+                    array_push($group['users'], $newUser);
                     $resource['users'] = $group['users'];
                 }
 
@@ -205,7 +205,7 @@ class UcController extends AbstractController
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */
-            if (array_key_exists('id', $variables['resource']) && isset($resouce['user']) == false) {
+            if (array_key_exists('id', $variables['resource'])) {
                 return $this->redirect($this->generateUrl('app_uc_groups', ['id' =>  $variables['resource']['id']]));
             }
         }
