@@ -21,8 +21,8 @@ security:
                 login_path: app_user_login2
                 check_path: app_user_login2
             logout:
-                path: app_user_logout2
-                target: app_user_login2      
+                path: app_user_logout
+                target: app_user_login
             stateless: false
             provider: commongroundUserProvider
             guard:

@@ -53,7 +53,7 @@
         										<input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
         									</div>
     									</div> <!-- /.col -->
-    									<div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
         									<div class="form-group">
         										<label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
         										<select id="organization" name="organization" class="form-control form-control-lg">
@@ -63,7 +63,7 @@
                                                 </select>
         									</div><!-- /.form-group -->
         								</div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
                                                 <input type="text" class="form-control form-control-lg" id="icon" name ="icon" value="{% if resource.icon is defined %}{{ resource.icon }}{% endif %}">
@@ -71,19 +71,19 @@
                                         </div> <!-- /.col -->
     								</div><!-- /.row -->
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'caseType'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="caseType" name ="caseType" value="{% if resource.caseType is defined %}{{ resource.caseType }}{% endif %}">
+                                                <input type="text" disabled class="form-control form-control-lg" id="caseType" name ="caseType" value="{% if resource.caseType is defined %}{{ resource.caseType }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'camundaProces'|trans|capitalize }}</label>
-                                                <input type="text" class="form-control form-control-lg" id="camundaProces" name ="camundaProces" value="{% if resource.camundaProces is defined %}{{ resource.camundaProces }}{% endif %}">
+                                                <input type="text" disabled class="form-control form-control-lg" id="camundaProces" name ="camundaProces" value="{% if resource.camundaProces is defined %}{{ resource.camundaProces }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'parent'|trans|capitalize }}</label>
                                                 <select id="parent" name="parent" class="form-control form-control-lg">
@@ -94,7 +94,7 @@
                                                 </select>
                                             </div><!-- /.form-group -->
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'extends'|trans|capitalize }}</label>
                                                 <select id="extends" name="extends" class="form-control form-control-lg">
@@ -107,16 +107,16 @@
                                         </div> <!-- /.col -->
                                     </div><!-- /.row -->
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'unique'|trans|capitalize }}</label>
-                                                <select id="unique" name="unique" class="form-control form-control-lg" required>
+                                                <select id="unique" name="unique" class="form-control form-control-lg">
                                                     <option value="true" {% if resource.unique is defined and  resource.unique == true %}selected{% endif %}>{{ 'yes'|trans|capitalize }}</option>
                                                     <option value="false" {% if resource.unique is defined and resource.unique == false %}selected{% endif %}>{{ 'no'|trans|capitalize }}</option>
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'parent required'|trans|capitalize }}</label>
                                                 <select id="parentRequired" name="parentRequired" class="form-control form-control-lg" required>
@@ -125,19 +125,19 @@
                                                 </select>
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'availableFrom'|trans|capitalize }}</label>
                                                 <input type="datetime-local" class="form-control form-control-lg" id="availableFrom" name ="availableFrom" value="{% if resource.availableFrom is defined %}{{ resource.availableFrom }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'availableUntil'|trans|capitalize }}</label>
                                                 <input type="datetime-local" class="form-control form-control-lg" id="availableUntil" name ="availableUntil" value="{% if resource.availableUntil is defined %}{{ resource.availableUntil }}{% endif %}">
                                             </div>
                                         </div> <!-- /.col -->
-                                        <div class="col-md-3 col-sm-12">
+                                        <div class="col-xl-3 col-lg-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'number of days requests of this type will be saved if they have not been submitted'|trans|capitalize }}<div style="color: gray">{{ 'not functional'|trans|capitalize }}!</div> </label>
                                                 <input type="number" class="form-control form-control-lg" id="availableUntil" >
@@ -163,13 +163,13 @@
                 </div><!-- /.row -->
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12 col-lg-6 col-xl-8">
                         {% include 'vtc/widgets/properties.html.twig'
                             with{
                             'resource':resource
                         } %}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12 col-lg-6 col-xl-4">
                         {% include 'vtc/widgets/templates.html.twig'
                             with{
                             'templates':resource.templates
