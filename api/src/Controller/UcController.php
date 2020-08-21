@@ -184,10 +184,16 @@ class UcController extends AbstractController
             if (array_key_exists('user', $resource)) {
                 $user = $resource['user'];
                 $group = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups', 'id' => $id]);
-                $newUser = $commonGroundService->getResource($resource['user']['user']);
+
                 if (isset($user['action']) == false) {
-                    array_push($group['users'], $newUser);
-                    $resource['users'] = $group['users'];
+                    $newUser = $commonGroundService->getResource($resource['user']['user']);
+                    $newArray = [];
+                    foreach($group['users'] as $person){
+                        array_push($newArray, $person['@id']);
+                    }
+
+                    array_push($newArray, $newUser['@id']);
+                    $resource['users'] = $newArray;
                 }
 
                 if (array_key_exists('@id', $user) && array_key_exists('action', $user)) {
@@ -198,6 +204,13 @@ class UcController extends AbstractController
                                 unset($group['users'][$key]);
                             }
                         }
+
+                        $newArray = [];
+                        foreach($group['users'] as $person){
+                            array_push($newArray, $person['@id']);
+                        }
+
+                        $resource['users'] = $newArray;
                     }
                 }
             }
@@ -205,7 +218,7 @@ class UcController extends AbstractController
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */
-            if (array_key_exists('id', $variables['resource'])) {
+            if (array_key_exists('id', $variables['resource']) && isset($resource['user']) == false) {
                 return $this->redirect($this->generateUrl('app_uc_groups', ['id' =>  $variables['resource']['id']]));
             }
         }
