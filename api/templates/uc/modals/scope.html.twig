@@ -22,17 +22,14 @@
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="largeInput">{{ 'code'|trans|capitalize }}</label>
-                    <input type="text" class="form-control form-control-lg" id="scope[code]" name="scope[description]" value="{% if item.code is defined %}{{ item.code }}{% endif %}">
+                    <input type="text" class="form-control form-control-lg" id="scope[code]" name="scope[code]" value="{% if item.code is defined %}{{ item.code }}{% endif %}">
                 </div><!-- /.form-group -->
                 <div class="form-group">
                     <label for="scope[application]">{{ 'application'|trans|capitalize }}</label>
                     <select id="scope[application]" name="scope[application]" class="form-control form-control-lg" required>
                         {% if applications is defined %}
                             {% for application in applications %}
-                                {% if item.application is defined and item.application == application['@id'] %}
-                                    <option selected value="{{ application['@id'] }}">{{ application.name }}</option>
-                                {% endif %}
-                                <option value="{{ application['@id'] }}">{{ application.name }}</option>
+                                    <option {% if item.application is defined and item.application == application['@id'] %} selected {% endif %} value="{{ application['@id'] }}">{{ application.name }}</option>
                             {% endfor %}
                         {% endif %}
                     </select>

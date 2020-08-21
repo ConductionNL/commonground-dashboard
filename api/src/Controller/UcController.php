@@ -186,8 +186,14 @@ class UcController extends AbstractController
                 $group = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups', 'id' => $id]);
 
                 if (isset($user['action']) == false) {
-                    array_push($group['users'], $user);
-                    $resource['users'] = $group['users'];
+                    $newUser = $commonGroundService->getResource($resource['user']['user']);
+                    $newArray = [];
+                    foreach ($group['users'] as $person) {
+                        array_push($newArray, $person['@id']);
+                    }
+
+                    array_push($newArray, $newUser['@id']);
+                    $resource['users'] = $newArray;
                 }
 
                 if (array_key_exists('@id', $user) && array_key_exists('action', $user)) {
@@ -198,6 +204,13 @@ class UcController extends AbstractController
                                 unset($group['users'][$key]);
                             }
                         }
+
+                        $newArray = [];
+                        foreach ($group['users'] as $person) {
+                            array_push($newArray, $person['@id']);
+                        }
+
+                        $resource['users'] = $newArray;
                     }
                 }
             }
@@ -205,7 +218,7 @@ class UcController extends AbstractController
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */
-            if (array_key_exists('id', $variables['resource']) && isset($resouce['user']) == false) {
+            if (array_key_exists('id', $variables['resource']) && isset($resource['user']) == false) {
                 return $this->redirect($this->generateUrl('app_uc_groups', ['id' =>  $variables['resource']['id']]));
             }
         }

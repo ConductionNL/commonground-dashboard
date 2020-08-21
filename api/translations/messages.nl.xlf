@@ -2909,6 +2909,18 @@
         <source>add user</source>
         <target>gebruiker toevoegen</target>
       </trans-unit>
+      <trans-unit id="ymbItrd" resname="in Progress">
+        <source>in Progress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="K2uFPJ5" resname="in progress">
+        <source>in progress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="rjgSBY9" resname="inProgress">
+        <source>inProgress</source>
+        <target>in behandeling</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

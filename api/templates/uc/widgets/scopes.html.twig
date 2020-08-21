@@ -2,24 +2,24 @@
     <div class="card-header">
         <h3 class="d-inline-block">{{ 'scopes'|trans|capitalize }}</h3>
     </div>
-    {% if items is defined %}
+    {% if scopes is defined %}
         <div class="card-list">
-            {% for item in items %}
+            {% for scope in scopes %}
                 <div class="item-list">
                     <div class="info-user ml-3">
-                        <div class="username"><h4>{{ item.name|capitalize }}</h4></div>
-                        <div class="status">{{ item.code }}</div>
+                        <div class="username"><h4>{{ scope.name|capitalize }}</h4></div>
+                        <div class="status">{{ scope.code }}</div>
                     </div>
                     <button class="btn btn-icon btn-primary btn-round btn-s"
                             style="margin-right: 5px"
                             data-toggle="modal"
-                            data-target="#editScope{{ item.id }}">
+                            data-target="#editScope{{ scope.id }}">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
                             style="margin-right: 15px"
                             data-toggle="modal"
-                            data-target="#deleteScope{{ item.id }}">
+                            data-target="#deleteScope{{ scope.id }}">
                         <i class="fa fa-trash"></i>
                     </button>
 

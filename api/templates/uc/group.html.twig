@@ -26,7 +26,8 @@
                         <div class="card p-4 full-height">
                         	<form action="{{ path('app_uc_group', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2><br>
+
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_uc_groups')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
@@ -98,7 +99,7 @@
                     <div class="col-md-6">
                             {% include 'uc/widgets/scopes.html.twig'
                                 with{
-                                'items': resource.scopes,
+                                'scopes': resource.scopes,
                                 'resource':resource
                             } %}
                     </div><!-- /.col -->

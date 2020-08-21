@@ -15,9 +15,8 @@
                 <div class="form-group">
                     <label for="largeInput">{{ 'user'|trans|capitalize }}</label>
                     <select name="user[user]" id="user[user]" class="form-control form-control-lg" required>
-                        {
                         {% for user in newUsers %}
-                            <option value="{{ user['@id']}} " {% if item.user is defined and item.user == user['@id']  %}selected{% endif %}>{{ user.username }}</option>
+                            <option value="{{ user['@id']}}" {% if item.user is defined and item.user == user['@id']  %}selected{% endif %}>{{ user.username }}</option>
                         {% endfor %}
                     </select>
                 </div><!-- /.form-group -->
