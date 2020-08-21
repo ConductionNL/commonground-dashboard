@@ -188,7 +188,7 @@ class UcController extends AbstractController
                 if (isset($user['action']) == false) {
                     $newUser = $commonGroundService->getResource($resource['user']['user']);
                     $newArray = [];
-                    foreach($group['users'] as $person){
+                    foreach ($group['users'] as $person) {
                         array_push($newArray, $person['@id']);
                     }
 
@@ -206,7 +206,7 @@ class UcController extends AbstractController
                         }
 
                         $newArray = [];
-                        foreach($group['users'] as $person){
+                        foreach ($group['users'] as $person) {
                             array_push($newArray, $person['@id']);
                         }
 
