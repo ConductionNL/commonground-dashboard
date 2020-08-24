@@ -170,6 +170,12 @@
                             'resource':resource,
                             'documents':requestType.templates } %}
                     </div><!-- /.col -->
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/cases.html.twig'
+                            with {
+                            'resource':resource,
+                            'cases':resource.cases } %}
+                    </div><!-- /.col -->
                     {% if tasks is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/tasks.html.twig'

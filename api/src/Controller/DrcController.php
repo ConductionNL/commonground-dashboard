@@ -31,7 +31,7 @@ class DrcController extends AbstractController
         $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
         $commonGroundService->setHeader('Accept', '*/*');
 
-        $result = $commonGroundService->getResource($resource);
+        $result = $commonGroundService->getResource(['component'=>'drc','type'=>'enkelvoudiginformatieobjecten', 'id'=>$resource]);
         $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
         $commonGroundService->setHeader('Accept', 'application/ld+json');
 //        var_dump($result);
