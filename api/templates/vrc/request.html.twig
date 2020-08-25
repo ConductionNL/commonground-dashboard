@@ -160,12 +160,15 @@
                             with {
                             'resource':resource } %}
                     </div><!-- /.col -->
+                    {% if requestType.templates is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/documents.html.twig'
                             with {
                             'resource':resource,
                             'documents':requestType.templates } %}
-                    </div><!-- /.col -->
+                    </div>
+                    {% endif %}
+                    <!-- /.col -->
                     {# if tasks is defined %}
                         <div class="col-md-4">
                             {% include 'vrc/widgets/tasks.html.twig'
