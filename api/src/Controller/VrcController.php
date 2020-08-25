@@ -205,7 +205,9 @@ class VrcController extends AbstractController
             $variables['submitters'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'submitters'], ['request' => $variables['resource']['@id']])['hydra:member'];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
             $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-            $variables['validations'] = $commonGroundService->getResourceList(['component' => 'trc', 'type' => 'tokens'], ['resource' => $variables['resource']['@id']])['hydra:member'];
+            if($commonGroundService->getComponentHealth('trc')){
+                $variables['validations'] = $commonGroundService->getResourceList(['component' => 'trc', 'type' => 'tokens'], ['resource' => $variables['resource']['@id']])['hydra:member'];
+            }
             $variables['queues'] = $commonGroundService->getResourceList(['component' => 'qc', 'type' => 'tasks'], ['resource' => $variables['resource']['@id']])['hydra:member'];
 
             if (array_key_exists('requestType', $variables['resource'])) {
