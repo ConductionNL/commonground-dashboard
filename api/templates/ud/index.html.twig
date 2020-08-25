@@ -36,13 +36,7 @@
                             with {'requests': requests} %}
                         {% endif %}
                     </div>
-                    <div class="col-md-6 ml-auto">
-                        {% if tasks is defined and tasks is not empty %}
-                        {% include 'ud/widgets/tasks.html.twig'
-                            with {'tasks': tasks} %}
-                        {% endif %}
-                    </div><!-- /.col -->
-                    <div class="col-md-6 ml-auto">
+                    <div class="col-md-12 ml-auto">
                         {% if events is defined and events is not empty %}
                         {% include 'ud/widgets/events.html.twig'
                             with {'events': events} %}
