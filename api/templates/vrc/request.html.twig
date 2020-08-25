@@ -146,11 +146,13 @@
                             with {
                             'resource': resource } %}
                     </div><!-- /.col -->
+                    {% if validations is defined %}
                     <div class="col-md-4">
                     {% include 'vrc/widgets/validations.html.twig'
                         with {
                         'validations':validations} %}
                     </div>
+                    {% endif %}
                 </div><!-- /.row -->
                     <div class="row">
                     <div class="col-md-4">
