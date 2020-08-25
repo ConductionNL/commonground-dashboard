@@ -314,6 +314,17 @@ class VrcController extends AbstractController
                 unset($item['properties']['temp']);
                 $resource['properties'] = $item['properties'];
             }
+
+            if (array_key_exists('unsetProp', $resource)) {
+                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                unset($item['properties'][$resource['unsetProp']]);
+                if (count($item['properties']) < 1) {
+                    $resource['properties'] = null;
+                } else {
+                    $resource['properties'] = $item['properties'];
+                }
+            }
+
             $files = $request->files->all();
 
             if (key_exists('newProp', $files) && $file = $files['newProp']) {
@@ -357,19 +368,6 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = [];
             }
-
-            // If there are any sub data sources the need to be removed below in order to save the resource
-
-            // Lets see if we also need to add an slug
-            if (array_key_exists('unsetProperty', $resource) && is_array($resource['unsetProperty'])) {
-//                foreach($resource['properties'] as $property => $value){
-//
-//                }
-                echo var_dump($resource);
-            }
-            if (array_key_exists('setProperty', $resource) && is_array($resource['setProperty'])) {
-            }
-
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
             /* @to this redirect is a hotfix */

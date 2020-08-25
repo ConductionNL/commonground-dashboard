@@ -51,7 +51,6 @@
                                             {% if resource.parent is defined and resource.parent is not empty %} <b>{{ 'belongs to'|trans|capitalize }}</b> <a href="{{ path('app_vrc_request', {'id': resource.parent.id}) }}">{{ resource.parent.reference }}</a> ({{ commonground_resource(resource.parent.requestType).name }}) {% endif %}
                                         </div>
                                         <div class="col-md-6 col-sm-12">
-
                                         </div>
                                     </div> <!-- /.col -->
 									<div class="row">
@@ -76,6 +75,7 @@
                                                     <option value="incomplete" {% if resource.status is defined and 'incomplete' == resource.status  %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
                                                     <option value="complete" {% if resource.status is defined and 'complete' == resource.status  %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
                                                     <option value="submitted" {% if resource.status is defined and 'submitted' == resource.status  %}selected{% endif %}>{{ 'submitted'|trans|capitalize }}</option>
+                                                    <option value="inProgress" {% if resource.status is defined and 'inProgress' == resource.status  %}selected{% endif %}>{{ 'in Progress'|trans|capitalize }}</option>
                                                     <option value="processed" {% if resource.status is defined and 'processed' == resource.status  %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
                                                 </select>
                                             </div><!-- /.form-group -->
@@ -102,17 +102,22 @@
                                             <label for="largeInput">{{ 'progress'|trans|capitalize }}</label>
                                             {% if resource.status is same as('incomplete') %}
                                                 <div class="progress" style="height: 25px;">
-                                                    <div class="progress-bar" role="progressbar" style="width: 25%; color: black; background-color: red;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width: 20%; color: black; background-color: red;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             {% endif %}
                                             {% if resource.status is same as('complete') %}
                                                 <div class="progress" style="height: 25px;">
-                                                    <div class="progress-bar" role="progressbar" style="width: 50%; color: black; background-color:orangered;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width: 40%; color: black; background-color:orangered;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             {% endif %}
                                             {% if resource.status is same as('submitted') %}
                                                 <div class="progress" style="height: 25px;">
-                                                    <div class="progress-bar" role="progressbar" style="width: 75%; color: black; background-color: limegreen" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width: 60%; color: black; background-color: orange" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            {% endif %}
+                                            {% if resource.status is same as('inProgress') %}
+                                                <div class="progress" style="height: 25px;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 80%; color: black; background-color: limegreen" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             {% endif %}
                                             {% if resource.status is same as('processed') %}
@@ -136,10 +141,10 @@
                 </div><!-- /.row -->
                 {% if resource['@id'] is defined and  resource['@id'] is not empty  %}
                 <div class="row">
-                    <div class="col-md-8">
-                    {% include 'vrc/widgets/properties.html.twig'
-                        with {
-                        'resource': resource } %}
+                    <div class="col-md-12">
+                        {% include 'vrc/widgets/properties.html.twig'
+                            with {
+                            'resource': resource } %}
                     </div><!-- /.col -->
                     <div class="col-md-4">
                     {% include 'vrc/widgets/validations.html.twig'
@@ -177,18 +182,21 @@
                         </div><!-- /.col -->
                     {% endif #} {#
                     <div class="col-md-4">
-                        {# include 'vrc/widgets/roles.html.twig'
+                        {% include 'vrc/widgets/cases.html.twig'
                             with {
-                            'request':resource.id,
-                            'roles':resource.roles,
-                            'employees':employees}
-                    </div><!-- /.col -->#}
-                        {#< div class="col-md-4">
-                            {# } include 'vrc/widgets/children.html.twig'
-                                with {
-                                'children':resource.children } #}
-                    </div><!-- /.col -->>#}
-                                    </div><!-- /.row -->
+                            'resource':resource,
+                            'cases':resource.cases } %}
+                    </div><!-- /.col -->
+                    {% if tasks is defined %}
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/tasks.html.twig'
+                            with {
+                            'resource':resource,
+                            'tasks':tasks} %}
+                    </div><!-- /.col -->
+                    {% endif %}
+                </div><!-- /.row -->
+
                 {% endif %}
             </div><!-- /.page-inner -->
 
@@ -213,7 +221,6 @@
             {% include 'footer.html.twig' %}
         </div>
     </div>
-
     <script>
     {% block javascript %}
     //audit_trails
