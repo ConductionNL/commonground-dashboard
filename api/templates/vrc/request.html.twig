@@ -150,15 +150,9 @@
                     {% include 'vrc/widgets/validations.html.twig'
                         with {
                         'validations':validations} %}
-                    </div><!-- /.col -->
-                    {# if queues is defined %}
-                        <div class="col-md-4">
-                            {% include 'vrc/widgets/queue.html.twig'
-                                with {
-                                'resource':resource,
-                                'queues':queues } %}
-                        </div><!-- /.col -->
-                    {% endif #}
+                    </div>
+                </div><!-- /.row -->
+                    <div class="row">
                     <div class="col-md-4">
                         {% include 'vrc/widgets/submitters.html.twig'
                             with {
@@ -170,6 +164,29 @@
                             'resource':resource,
                             'documents':requestType.templates } %}
                     </div><!-- /.col -->
+                    {# if tasks is defined %}
+                        <div class="col-md-4">
+                            {% include 'vrc/widgets/tasks.html.twig'
+                                with {
+                                'resource':resource,
+                                'tasks':tasks} %}
+                        </div><!-- /.col -->
+                    {% endif #}
+                    <!-- /.col -->
+                    {# if queues is defined %}
+                        <div class="col-md-4">
+                            {% include 'vrc/widgets/queue.html.twig'
+                                with {
+                                'resource':resource,
+                                'queues':queues } %}
+                        </div><!-- /.col -->
+                    {% endif #} {#
+                    <div class="col-md-4">
+                        {% include 'vrc/widgets/cases.html.twig'
+                            with {
+                            'resource':resource,
+                            'cases':resource.cases } %}
+                    </div><!-- /.col -->
                     {% if tasks is defined %}
                     <div class="col-md-4">
                         {% include 'vrc/widgets/tasks.html.twig'
@@ -179,6 +196,7 @@
                     </div><!-- /.col -->
                     {% endif %}
                 </div><!-- /.row -->
+
                 {% endif %}
             </div><!-- /.page-inner -->
 
