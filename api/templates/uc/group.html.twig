@@ -26,7 +26,8 @@
                         <div class="card p-4 full-height">
                         	<form action="{{ path('app_uc_group', {'id': resource.id}) }}" method="post">
                                 <div class="card-header">
-                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2><br>
+
                                     <div class="float-right">
                                         <a class="btn btn-primary mr-4" href="{{ path('app_uc_groups')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
                                         <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
@@ -91,26 +92,16 @@
                     <div class="col-md-6">
                         {% include 'uc/widgets/users.html.twig'
                             with{
-                            'users': users,
+                            'users': resource.users,
                             'resource':resource
                         } %}
                     </div><!-- /.col -->
                     <div class="col-md-6">
-                        {% if resource.scopes is defined and resource.scopes is not empty %}
                             {% include 'uc/widgets/scopes.html.twig'
                                 with{
-                                'type': resource.scopes[0]['@type'],
-                                'path': 'app_uc_group',
-                                'items': resource.scopes,
+                                'scopes': resource.scopes,
                                 'resource':resource
                             } %}
-                        {% else %}
-                            {% include 'uc/widgets/scopes.html.twig'
-                                with{
-                                'items': scopes,
-                                'resource':resource
-                            } %}
-                        {% endif %}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->

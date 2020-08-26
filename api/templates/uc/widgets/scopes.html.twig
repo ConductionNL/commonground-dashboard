@@ -2,24 +2,24 @@
     <div class="card-header">
         <h3 class="d-inline-block">{{ 'scopes'|trans|capitalize }}</h3>
     </div>
-    {% if items is defined %}
+    {% if scopes is defined %}
         <div class="card-list">
-            {% for item in items %}
+            {% for scope in scopes %}
                 <div class="item-list">
                     <div class="info-user ml-3">
-                        <div class="username"><h4>{{ item.name|capitalize }}</h4></div>
-                        <div class="status">{{ item.code }}</div>
+                        <div class="username"><h4>{{ scope.name|capitalize }}</h4></div>
+                        <div class="status">{{ scope.code }}</div>
                     </div>
                     <button class="btn btn-icon btn-primary btn-round btn-s"
                             style="margin-right: 5px"
                             data-toggle="modal"
-                            data-target="#edit{{ type|capitalize~item.id }}">
+                            data-target="#editScope{{ scope.id }}">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button class="btn btn-icon btn-danger btn-round btn-s"
                             style="margin-right: 15px"
                             data-toggle="modal"
-                            data-target="#delete{{ type|capitalize~item.id }}">
+                            data-target="#deleteScope{{ scope.id }}">
                         <i class="fa fa-trash"></i>
                     </button>
 
@@ -32,35 +32,33 @@
     </div> <!-- /.card-body -->
 
     <div class="card-action">
-        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#add{{ type }}" data-toggle="modal"
-           data-target="#add{{ type|capitalize }}">{{ 'add scope'|trans|capitalize }}</a>
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addScope" data-toggle="modal"
+           data-target="#addScope">{{ 'add scope'|trans|capitalize }}</a>
     </div><!-- /.card-action -->
 
 </div><!-- /.card -->
 
-{# the scope modals #}
-        {% include 'uc/modals/'~type|lower~'.html.twig'
-            with {
-            'route': path,
-            'resource': resource,
-            'type': type,
-            'id':'add'~type|capitalize } %}
+{# the Scope modals #}
+{% include 'uc/modals/scope.html.twig'
+    with {
+    'route': 'app_uc_group',
+    'resource':resource,
+    'id':'addScope' } %}
 
-{% if items is defined %}
-    {% for item in items %}
+{% if scopes is defined %}
+    {% for scope in scopes %}
         {% include 'widgets/delete_modal.html.twig'
             with {
-            'route': path,
+            'route': 'app_uc_group',
             'resource':resource,
-            'item':item,
-            'id':'delete'~type|capitalize } %}
+            'item':scope,
+            'id':'deleteScope' } %}
 
-        {% include 'uc/modals/'~type|lower~'.html.twig'
+        {% include 'uc/modals/scope.html.twig'
             with {
-            'route': path,
-            'resource': resource,
-            'item': item,
-            'type': type,
-            'id':'edit'~type|capitalize } %}
+            'route': 'app_uc_group',
+            'resource':resource,
+            'item':scope,
+            'id':'editScope' } %}
     {% endfor %}
 {% endif %}

@@ -2855,15 +2855,15 @@
       </trans-unit>
       <trans-unit id="6S_VPpf" resname="require login">
         <source>require login</source>
-        <target>__require login</target>
+        <target>inloggen vereist</target>
       </trans-unit>
       <trans-unit id="GY3k4tk" resname="edit scope">
         <source>edit scope</source>
-        <target>__edit scope</target>
+        <target>rechten aanpassen</target>
       </trans-unit>
       <trans-unit id="Q.Hqvib" resname="add scope">
         <source>add scope</source>
-        <target>__add scope</target>
+        <target>rechten toevoegen</target>
       </trans-unit>
       <trans-unit id="S.._7RM" resname="user group">
         <source>user group</source>
@@ -2900,6 +2900,26 @@
       <trans-unit id="l2vQ37g" resname="validations">
         <source>validations</source>
         <target>validaties</target>
+      </trans-unit>
+      <trans-unit id="iWdNaxk" resname="edit user">
+        <source>edit user</source>
+        <target>gebruiker aanpassen</target>
+      </trans-unit>
+      <trans-unit id="C4KBGTN" resname="add user">
+        <source>add user</source>
+        <target>gebruiker toevoegen</target>
+      </trans-unit>
+      <trans-unit id="ymbItrd" resname="in Progress">
+        <source>in Progress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="K2uFPJ5" resname="in progress">
+        <source>in progress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="rjgSBY9" resname="inProgress">
+        <source>inProgress</source>
+        <target>in behandeling</target>
       </trans-unit>
     </body>
   </file>
