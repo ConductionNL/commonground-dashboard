@@ -119,7 +119,7 @@
                                                         class="form-control form-control-lg">
                                                     {% for templateGroup in templateGroups %}
                                                         <option value="{{ templateGroup['@id'] }}"
-                                                                {% if resource.templateGroups is defined and resource.templateGroups is not empty templateGroup['@id'] == resource.templateGroups[0]['@id'] %}selected=""{% endif %}>{{ templateGroup.name }}</option>
+                                                                {% if resource.templateGroups is defined and resource.templateGroups is not empty and templateGroup['@id'] == resource.templateGroups[0]['@id'] %}selected=""{% endif %}>{{ templateGroup.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div><!-- /.form-group -->
