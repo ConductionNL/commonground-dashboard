@@ -138,8 +138,8 @@ class UcController extends AbstractController
 
         // Lets see if we need to create
         if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
-            $variables['users'] = [];
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new', 'users' => [], 'scopes' => []];
+            $variables['newUsers'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'uc', 'type'=>'groups', 'id'=>$id]);
             $variables['newUsers'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
@@ -164,7 +164,6 @@ class UcController extends AbstractController
                 $scope = $resource['scope'];
                 $scope['userGroups'][] = $resource['@id'];
                 $scope['organization'] = $this->getUser()->getOrganization();
-
                 // The resource action section
                 if (array_key_exists('@id', $scope) && array_key_exists('action', $scope)) {
                     // The delete action
