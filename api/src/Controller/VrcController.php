@@ -321,7 +321,7 @@ class VrcController extends AbstractController
                 $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
                 unset($item['properties'][$resource['unsetProp']]);
                 if (count($item['properties']) < 1) {
-                    $resource['properties'] = null;
+                    $resource['properties'] = [];
                 } else {
                     $resource['properties'] = $item['properties'];
                 }
