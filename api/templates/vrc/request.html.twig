@@ -170,28 +170,28 @@
                                     'tasks':tasks} %}
                             </div><!-- /.col -->
                         {% endif %}
-                        {# if tasks is defined %}
+                        {% if tasks is defined %}
                             <div class="col-md-4">
                                 {% include 'vrc/widgets/tasks.html.twig'
                                     with {
                                     'resource':resource,
                                     'tasks':tasks} %}
                             </div><!-- /.col -->
-                        {% endif #}
+                        {% endif %}
                         <!-- /.col -->
-                        {# if queues is defined %}
-                            <div class="col-md-4">
-                                {% include 'vrc/widgets/queue.html.twig'
-                                    with {
-                                    'resource':resource,
-                                    'queues':queues } %}
-                            </div><!-- /.col -->
-                        {% endif #} {#
+{#                        {% if queues is defined %}#}
+{#                            <div class="col-md-4">#}
+{#                                {% include 'vrc/widgets/queue.html.twig'#}
+{#                                    with {#}
+{#                                    'resource':resource,#}
+{#                                    'queues':queues } %}#}
+{#                            </div><!-- /.col -->#}
+{#                        {% endif %}#}
                         <div class="col-md-4">
                             {% include 'vrc/widgets/cases.html.twig'
                                 with {
                                 'resource':resource,
-                                'cases':resource.cases } %} #}
+                                'cases':resource.cases } %}
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 {% endif %}
