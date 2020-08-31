@@ -187,12 +187,14 @@
 {#                                    'queues':queues } %}#}
 {#                            </div><!-- /.col -->#}
 {#                        {% endif %}#}
+                        {% if resource.cases is defined and resource.cases is not empty %}
                         <div class="col-md-4">
                             {% include 'vrc/widgets/cases.html.twig'
                                 with {
                                 'resource':resource,
                                 'cases':resource.cases } %}
                         </div><!-- /.col -->
+                        {% endif %}
                     </div><!-- /.row -->
                 {% endif %}
             </div><!-- /.page-inner -->
