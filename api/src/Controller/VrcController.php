@@ -359,7 +359,6 @@ class VrcController extends AbstractController
                 $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
 
                 $item['properties'][$resource['newPropName']] = $result['url'];
-//                var_dump($result);
 
                 $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
 
