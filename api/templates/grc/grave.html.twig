@@ -86,13 +86,15 @@
                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label for="largeInput">{{ 'grave type'|trans|capitalize }}</label>
-                                                <select id="graveType" name="graveType"
-                                                        class="form-control form-control-lg" required>
-                                                    {% for graveType in gravetypes %}
-                                                        <option value="{{ graveType['@id'] }}"
-                                                                {% if resource.graveType is defined and graveType.id == resource.graveType.id %}selected=""{% endif %}>{{ graveType.reference }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                To do
+{#                                                <select id="graveType" name="graveType"#}
+{#                                                        class="form-control form-control-lg" required>#}
+{#                                                    {% for graveType in gravetypes %}#}
+{#                                                        {%  %}#}
+{#                                                        <option value="{{ graveType['@id'] }}"#}
+{#                                                                {% if resource.graveType is defined and graveType.id == resource.graveType.id %}selected=""{% endif %}>{{ graveType.reference }}</option>#}
+{#                                                    {% endfor %}#}
+{#                                                </select>#}
                                             </div>
                                         </div>  <!-- /.col -->
                                     </div><!-- /.row -->
