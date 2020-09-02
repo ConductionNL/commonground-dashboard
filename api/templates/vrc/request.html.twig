@@ -140,67 +140,65 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
                 {% if resource['@id'] is defined and  resource['@id'] is not empty  %}
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'vrc/widgets/properties.html.twig'
-                            with {
-                            'resource': resource } %}
-                    </div><!-- /.col -->
-                    {% if validations is defined %}
-                    <div class="col-md-4">
-                    {% include 'vrc/widgets/validations.html.twig'
-                        with {
-                        'validations':validations} %}
-                    </div>
-                    {% endif %}
-                </div><!-- /.row -->
+
                     <div class="row">
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/submitters.html.twig'
-                            with {
-                            'resource':resource } %}
-                    </div><!-- /.col -->
-                    {% if requestType.templates is defined %}
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/documents.html.twig'
-                            with {
-                            'resource':resource,
-                            'documents':requestType.templates } %}
-                    </div>
-                    {% endif %}
-                    <!-- /.col -->
-                    {# if tasks is defined %}
+                        <div class="col-md-12">
+                            {% include 'vrc/widgets/properties.html.twig'
+                                with {
+                                'resource': resource } %}
+                        </div><!-- /.col -->
                         <div class="col-md-4">
-                            {% include 'vrc/widgets/tasks.html.twig'
+                        {% include 'vrc/widgets/validations.html.twig'
+                            with {
+                            'validations':validations} %}
+                        </div>
+
+                        <div class="col-md-4">
+                            {% include 'vrc/widgets/submitters.html.twig'
+                                with {
+                                'resource':resource } %}
+                        </div><!-- /.col -->
+                        <div class="col-md-4">
+                            {% include 'vrc/widgets/documents.html.twig'
                                 with {
                                 'resource':resource,
-                                'tasks':tasks} %}
+                                'documents':requestType.templates } %}
                         </div><!-- /.col -->
-                    {% endif #}
-                    <!-- /.col -->
-                    {# if queues is defined %}
+                        {% if tasks is defined %}
+                            <div class="col-md-4">
+                                {% include 'vrc/widgets/tasks.html.twig'
+                                    with {
+                                    'resource':resource,
+                                    'tasks':tasks} %}
+                            </div><!-- /.col -->
+                        {% endif %}
+                        {% if tasks is defined %}
+                            <div class="col-md-4">
+                                {% include 'vrc/widgets/tasks.html.twig'
+                                    with {
+                                    'resource':resource,
+                                    'tasks':tasks} %}
+                            </div><!-- /.col -->
+                        {% endif %}
+                        <!-- /.col -->
+{#                        {% if queues is defined %}#}
+{#                            <div class="col-md-4">#}
+{#                                {% include 'vrc/widgets/queue.html.twig'#}
+{#                                    with {#}
+{#                                    'resource':resource,#}
+{#                                    'queues':queues } %}#}
+{#                            </div><!-- /.col -->#}
+{#                        {% endif %}#}
+                        {% if resource.cases is defined and resource.cases is not empty %}
                         <div class="col-md-4">
-                            {% include 'vrc/widgets/queue.html.twig'
+                            {% include 'vrc/widgets/cases.html.twig'
                                 with {
                                 'resource':resource,
-                                'queues':queues } %}
+                                'cases':resource.cases } %}
                         </div><!-- /.col -->
-                    {% endif #}
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/cases.html.twig'
-                            with {
-                            'resource':resource,
-                            'cases':resource.cases } %}
-                    </div><!-- /.col -->
-                    {% if tasks is defined %}
-                    <div class="col-md-4">
-                        {% include 'vrc/widgets/tasks.html.twig'
-                            with {
-                            'resource':resource,
-                            'tasks':tasks} %}
-                    </div><!-- /.col -->
-                    {% endif %}
-                </div><!-- /.row -->
+
+                        {% endif %}
+                    </div><!-- /.row -->
 
                 {% endif %}
             </div><!-- /.page-inner -->
