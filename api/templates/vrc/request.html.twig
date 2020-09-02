@@ -140,6 +140,7 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
                 {% if resource['@id'] is defined and  resource['@id'] is not empty  %}
+
                     <div class="row">
                         <div class="col-md-12">
                             {% include 'vrc/widgets/properties.html.twig'
@@ -151,6 +152,7 @@
                             with {
                             'validations':validations} %}
                         </div>
+
                         <div class="col-md-4">
                             {% include 'vrc/widgets/submitters.html.twig'
                                 with {
@@ -194,8 +196,10 @@
                                 'resource':resource,
                                 'cases':resource.cases } %}
                         </div><!-- /.col -->
+
                         {% endif %}
                     </div><!-- /.row -->
+
                 {% endif %}
             </div><!-- /.page-inner -->
 
