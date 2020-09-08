@@ -251,6 +251,9 @@ class VrcController extends AbstractController
             // Passing the variables to the resource
             $resource = $request->request->all();
 
+            var_dump($resource);
+            die;
+
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
                 $resource['@id'] = $variables['resource']['@id'];
