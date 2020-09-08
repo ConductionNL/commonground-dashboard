@@ -18,11 +18,11 @@ security:
         main:
             anonymous: ~
             form_login:
-                login_path: app_user_login2
-                check_path: app_user_login2
+                login_path: app_user_login
+                check_path: app_user_login
             logout:
-                path: app_user_logout2
-                target: app_user_login2      
+                path: app_user_logout
+                target: app_user_login
             stateless: false
             provider: commongroundUserProvider
             guard:

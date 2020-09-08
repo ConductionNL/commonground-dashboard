@@ -6,30 +6,37 @@
         {% if cases is defined %}
             <div class="card-list">
                 {% for case in cases %}
+                    {% set case = commonground_resource(case) %}
                     <div class="item-list">
                         <div class="info-user ml-3">
-                            <div class="username"><h4>{{ menu.name|capitalize }}</h4></div>
-                            <div class="status">{{ menu.description }}</div>
+                            <div class="username"><h4>{{ case.identificatie }}</h4></div>
+                        </div><!-- /.item-list -->
+                        <button class="btn btn-icon btn-primary btn-round btn-s" data-toggle="collapse" data-target="#{{ case.uuid }}"><i class="fas fa-info"></i></button>
+                    </div>
+                <div class="collapse ml-3" id="{{ case.uuid }}">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>{{ 'reference'|trans|capitalize }}:</h4>
                         </div>
-                        <a class="btn btn-icon btn-primary btn-round btn-s"
-                           style="margin-right: 5px"
-                           href="{{ path('app_zgw_case', {id: case}) }}">
-                            <i class="fa fa-edit" style="margin: 12px !important;"></i>
-                        </a>
-                        <button class="btn btn-icon btn-danger btn-round btn-s"
-                                style="margin-right: 15px" data-toggle="modal"
-                                data-target="#deleteCase{{ case }}">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div><!-- /.item-list -->
+                        <div class="col-6">
+                            <span>{{ case.identificatie }}</span>
+                        </div>
+                        <div class="col-6">
+                            <h4>{{ 'casetype'|trans|capitalize }}:</h4>
+                        </div>
+                        <div class="col-6">
+                            <span>{{ commonground_resource(case.zaaktype)['omschrijving'] }}</span>
+                        </div>
+                        <div class="col-6">
+                            <h4>{{ 'created at'|trans|capitalize }}:</h4>
+                        </div>
+                        <div class="col-6">
+                            <span>{{ case.registratiedatum }}</span>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
             </div><!-- /.card-list -->
         {% endif %}
-
-        <div class="card-body">
-        </div> <!-- /.card-body -->
-
-    <div class="card-action">
-        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
-    </div><!-- /.card-action -->
+    </div>
 </div><!-- /.card -->

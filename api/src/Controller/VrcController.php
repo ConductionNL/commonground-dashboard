@@ -205,7 +205,9 @@ class VrcController extends AbstractController
             $variables['submitters'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'submitters'], ['request' => $variables['resource']['@id']])['hydra:member'];
             $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
             $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-            $variables['validations'] = $commonGroundService->getResourceList(['component' => 'trc', 'type' => 'tokens'], ['resource' => $variables['resource']['@id']])['hydra:member'];
+            if ($commonGroundService->getComponentHealth('trc')) {
+                $variables['validations'] = $commonGroundService->getResourceList(['component' => 'trc', 'type' => 'tokens'], ['resource' => $variables['resource']['@id']])['hydra:member'];
+            }
             $variables['queues'] = $commonGroundService->getResourceList(['component' => 'qc', 'type' => 'tasks'], ['resource' => $variables['resource']['@id']])['hydra:member'];
 
             if (array_key_exists('requestType', $variables['resource'])) {
@@ -317,6 +319,17 @@ class VrcController extends AbstractController
                 unset($item['properties']['temp']);
                 $resource['properties'] = $item['properties'];
             }
+
+            if (array_key_exists('unsetProp', $resource)) {
+                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                unset($item['properties'][$resource['unsetProp']]);
+                if (count($item['properties']) < 1) {
+                    $resource['properties'] = null;
+                } else {
+                    $resource['properties'] = $item['properties'];
+                }
+            }
+
             $files = $request->files->all();
 
             if (key_exists('newProp', $files) && $file = $files['newProp']) {
@@ -349,7 +362,6 @@ class VrcController extends AbstractController
                 $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
 
                 $item['properties'][$resource['newPropName']] = $result['url'];
-//                var_dump($result);
 
                 $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
 
@@ -360,19 +372,6 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = [];
             }
-
-            // If there are any sub data sources the need to be removed below in order to save the resource
-
-            // Lets see if we also need to add an slug
-            if (array_key_exists('unsetProperty', $resource) && is_array($resource['unsetProperty'])) {
-//                foreach($resource['properties'] as $property => $value){
-//
-//                }
-                echo var_dump($resource);
-            }
-            if (array_key_exists('setProperty', $resource) && is_array($resource['setProperty'])) {
-            }
-
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
             /* @to this redirect is a hotfix */

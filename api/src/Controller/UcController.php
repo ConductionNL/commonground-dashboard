@@ -40,7 +40,7 @@ class UcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('users');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('users');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
 
         return $variables;
     }
@@ -117,7 +117,7 @@ class UcController extends AbstractController
         $variables = [];
         $variables['title'] = $translator->trans('groups');
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('groups');
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'groups'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'groups'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
 
         return $variables;
     }
@@ -138,11 +138,11 @@ class UcController extends AbstractController
 
         // Lets see if we need to create
         if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new'];
-            $variables['users'] = [];
+            $variables['resource'] = ['@id' => null, 'name'=>'new', 'id'=>'new', 'users' => [], 'scopes' => []];
+            $variables['newUsers'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component'=>'uc', 'type'=>'groups', 'id'=>$id]);
-            $variables['users'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['group.id'=>$id])['hydra:member'];
+            $variables['newUsers'] = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
         }
 
         $variables['title'] = $translator->trans('group');
@@ -159,10 +159,11 @@ class UcController extends AbstractController
             $resource['@id'] = $variables['resource']['@id'];
             $resource['id'] = $variables['resource']['id'];
 
-            // Lets see if we also need t add an slug
+            // Lets see if we also need t add an scope
             if (array_key_exists('scope', $resource)) {
                 $scope = $resource['scope'];
                 $scope['userGroups'][] = $resource['@id'];
+                $scope['organization'] = $this->getUser()->getOrganization();
                 // The resource action section
                 if (array_key_exists('@id', $scope) && array_key_exists('action', $scope)) {
                     // The delete action
@@ -178,11 +179,45 @@ class UcController extends AbstractController
                 $scope = $commonGroundService->saveResource($scope, ['component' => 'uc', 'type' => 'scopes']);
             }
 
-            // Lets see if we also need to add an configurati
+            // Lets see if we also need t add an scope
+            if (array_key_exists('user', $resource)) {
+                $user = $resource['user'];
+                $group = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups', 'id' => $id]);
+
+                if (isset($user['action']) == false) {
+                    $newUser = $commonGroundService->getResource($resource['user']['user']);
+                    $newArray = [];
+                    foreach ($group['users'] as $person) {
+                        array_push($newArray, $person['@id']);
+                    }
+
+                    array_push($newArray, $newUser['@id']);
+                    $resource['users'] = $newArray;
+                }
+
+                if (array_key_exists('@id', $user) && array_key_exists('action', $user)) {
+                    // The delete action
+                    if ($user['action'] == 'delete') {
+                        foreach ($group['users'] as $key => $value) {
+                            if ($value['@id'] == $user['@id']) {
+                                unset($group['users'][$key]);
+                            }
+                        }
+
+                        $newArray = [];
+                        foreach ($group['users'] as $person) {
+                            array_push($newArray, $person['@id']);
+                        }
+
+                        $resource['users'] = $newArray;
+                    }
+                }
+            }
+
             $variables['resource'] = $commonGroundService->saveResource($resource, ['component'=>'uc', 'type'=>'groups']);
 
             /* @to this redirect is a hotfix */
-            if (array_key_exists('id', $variables['resource'])) {
+            if (array_key_exists('id', $variables['resource']) && isset($resource['user']) == false) {
                 return $this->redirect($this->generateUrl('app_uc_groups', ['id' =>  $variables['resource']['id']]));
             }
         }
