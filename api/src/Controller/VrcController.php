@@ -203,7 +203,6 @@ class VrcController extends AbstractController
             $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
             $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
             $variables['submitters'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'submitters'], ['request' => $variables['resource']['@id']])['hydra:member'];
-            $variables['roles'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
             $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
             if ($commonGroundService->getComponentHealth('trc')) {
                 $variables['validations'] = $commonGroundService->getResourceList(['component' => 'trc', 'type' => 'tokens'], ['resource' => $variables['resource']['@id']])['hydra:member'];
@@ -253,26 +252,13 @@ class VrcController extends AbstractController
             // Passing the variables to the resource
             $resource = $request->request->all();
 
+            var_dump($resource);
+            die;
+
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
                 $resource['@id'] = $variables['resource']['@id'];
                 $resource['id'] = $variables['resource']['id'];
-            }
-
-            if (array_key_exists('role', $resource)) {
-                $role = $resource['role'];
-                $role['request'] = $resource['@id'];
-
-                // The resource action section
-                if (array_key_exists('@id', $role) && array_key_exists('action', $role)) {
-                    // The delete action
-                    if ($role['action'] == 'delete') {
-                        $commonGroundService->deleteResource($role);
-
-                        return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $id]));
-                    }
-                }
-                $role = $commonGroundService->saveResource($role, ['component' => 'vrc', 'type' => 'roles']);
             }
 
             if (array_key_exists('memo', $resource)) {
@@ -436,61 +422,6 @@ class VrcController extends AbstractController
             // unset($resource['somedatasource'])
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'labels']));
-        }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/roles")
-     * @Template
-     */
-    public function rolesAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
-    {
-        $variables = [];
-        $variables['title'] = $translator->trans('roles');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('roles');
-        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'roles'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/roles/{id}")
-     * @Template
-     */
-    public function RoleAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-    {
-        $variables = [];
-
-        // Lets see if we need to create
-        if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'id' => 'new'];
-        } else {
-            $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'roles', 'id' => $id]);
-        }
-
-        // If it is a delete action we can stop right here
-        if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource($variables['resource']);
-
-            return $this->redirect($this->generateUrl('app_vrc_roles'));
-        }
-
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'organizations'])['hydra:member'];
-
-        // Lets see if there is a post to procces
-        if ($request->isMethod('POST')) {
-
-            // Passing the variables to the resource
-            $resource = $request->request->all();
-            $resource['@id'] = $variables['resource']['@id'];
-            $resource['id'] = $variables['resource']['id'];
-
-            // If there are any sub data sources the need to be removed below in order to save the resource
-            // unset($resource['somedatasource'])
-
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'roles', 'id' => $id]));
         }
 
         return $variables;
