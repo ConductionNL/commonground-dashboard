@@ -172,14 +172,6 @@
                                     'tasks':tasks} %}
                             </div><!-- /.col -->
                         {% endif %}
-                        {% if tasks is defined %}
-                            <div class="col-md-4">
-                                {% include 'vrc/widgets/tasks.html.twig'
-                                    with {
-                                    'resource':resource,
-                                    'tasks':tasks} %}
-                            </div><!-- /.col -->
-                        {% endif %}
                         <!-- /.col -->
 {#                        {% if queues is defined %}#}
 {#                            <div class="col-md-4">#}
@@ -189,15 +181,15 @@
 {#                                    'queues':queues } %}#}
 {#                            </div><!-- /.col -->#}
 {#                        {% endif %}#}
-                        {% if resource.cases is defined and resource.cases is not empty %}
-                        <div class="col-md-4">
-                            {% include 'vrc/widgets/cases.html.twig'
-                                with {
-                                'resource':resource,
-                                'cases':resource.cases } %}
-                        </div><!-- /.col -->
+{#                        {% if resource.cases is defined and resource.cases is not empty %}#}
+{#                        <div class="col-md-4">#}
+{#                            {% include 'vrc/widgets/cases.html.twig'#}
+{#                                with {#}
+{#                                'resource':resource,#}
+{#                                'cases':resource.cases } %}#}
+{#                        </div><!-- /.col -->#}
 
-                        {% endif %}
+{#                        {% endif %}#}
                     </div><!-- /.row -->
 
                 {% endif %}
