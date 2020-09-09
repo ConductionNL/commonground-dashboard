@@ -9,9 +9,32 @@
                     {% set case = commonground_resource(case) %}
                     <div class="item-list">
                         <div class="info-user ml-3">
-                            {{ dump(case) }}
+                            <div class="username"><h4>{{ case.identificatie }}</h4></div>
+                        </div><!-- /.item-list -->
+                        <button class="btn btn-icon btn-primary btn-round btn-s" data-toggle="collapse" data-target="#{{ case.uuid }}"><i class="fas fa-info"></i></button>
+                    </div>
+                <div class="collapse ml-3" id="{{ case.uuid }}">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>{{ 'reference'|trans|capitalize }}:</h4>
                         </div>
-                    </div><!-- /.item-list -->
+                        <div class="col-6">
+                            <span>{{ case.identificatie }}</span>
+                        </div>
+                        <div class="col-6">
+                            <h4>{{ 'casetype'|trans|capitalize }}:</h4>
+                        </div>
+                        <div class="col-6">
+                            <span>{{ commonground_resource(case.zaaktype)['omschrijving'] }}</span>
+                        </div>
+                        <div class="col-6">
+                            <h4>{{ 'created at'|trans|capitalize }}:</h4>
+                        </div>
+                        <div class="col-6">
+                            <span>{{ case.registratiedatum }}</span>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
             </div><!-- /.card-list -->
         {% endif %}
