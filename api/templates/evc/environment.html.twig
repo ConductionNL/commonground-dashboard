@@ -70,7 +70,7 @@
                                                 <select name="cluster" id="cluster" class="form-control form-control-lg" required>
                                                     {
                                                     {% for cluster in clusters %}
-                                                        <option value="{{ cluster['@id']}} "{% if resource.cluster is defined and resource.cluster['@id'] == cluster['@id']  %}selected{% endif %}>{{ cluster.name }}</option>
+                                                        <option value="{{ cluster['@id']}}" {% if resource.cluster is defined and resource.cluster['@id'] == cluster['@id']  %}selected{% endif %}>{{ cluster.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
