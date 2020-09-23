@@ -1,18 +1,18 @@
 openapi: 3.0.2
 info:
   title: 'Zuid Drecht DashBboard'
-  version: V.0.1
+  version: V1.0
   description: |
     API Details
     - Component: Zuid Drecht DashBboard
     - Reference: db
     - Enviroment: dev
-    - Version: V.0.1
+    - Version: V1.0
     - Repository: [online](https://github.com/ConductionNL/Commonground-dashboard) / [zip](https://github.com/ConductionNL/Commonground-dashboard/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/db.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
+    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
   /audit_trails:
@@ -2379,12 +2379,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-09-09 18:56:57'
+        example: '2020-09-23 07:21:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-09-09 18:56:57'
+        example: '2020-09-23 07:21:28'
     required: []
   AuditTrail-write:
     properties:
@@ -2432,12 +2432,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-09-09 18:56:57'
+        example: '2020-09-23 07:21:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-09-09 18:56:57'
+        example: '2020-09-23 07:21:28'
     required: []
   ChangeLog-write:
     properties:
@@ -2478,8 +2478,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: westfriesland.commonground.nu
-    url: db.dev.westfriesland.commonground.nu
+    name: zuid-drecht.nl
+    url: db.dev.zuid-drecht.nl
 externalDocs:
   -
     description: 'OAS Documentatie'

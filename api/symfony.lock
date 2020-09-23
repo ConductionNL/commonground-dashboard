@@ -112,9 +112,6 @@
     "doctrine/rst-parser": {
         "version": "0.1.0"
     },
-    "doctrine/sql-formatter": {
-        "version": "1.0.1"
-    },
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
@@ -145,20 +142,14 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "jdorn/sql-formatter": {
+        "version": "v1.2.17"
+    },
     "knplabs/knp-markdown-bundle": {
         "version": "1.8.1"
     },
     "league/html-to-markdown": {
         "version": "4.8.1"
-    },
-    "maennchen/zipstream-php": {
-        "version": "2.1.0"
-    },
-    "markbaker/complex": {
-        "version": "1.4.8"
-    },
-    "markbaker/matrix": {
-        "version": "1.2.0"
     },
     "michelf/php-markdown": {
         "version": "1.9.0"
@@ -168,9 +159,6 @@
     },
     "moneyphp/money": {
         "version": "v1.3.0"
-    },
-    "myclabs/php-enum": {
-        "version": "1.7.6"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
@@ -190,9 +178,6 @@
     "ocramius/package-versions": {
         "version": "1.5.1"
     },
-    "pclzip/pclzip": {
-        "version": "2.8.2"
-    },
     "php": {
         "version": "7.3"
     },
@@ -208,26 +193,11 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
-    "phpoffice/common": {
-        "version": "0.2.9"
-    },
-    "phpoffice/phpspreadsheet": {
-        "version": "1.14.1"
-    },
-    "phpoffice/phpword": {
-        "version": "0.17.0"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
-    },
-    "psr/http-client": {
-        "version": "1.0.1"
-    },
-    "psr/http-factory": {
-        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
@@ -237,9 +207,6 @@
     },
     "psr/log": {
         "version": "1.1.0"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.1"
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
@@ -447,6 +414,9 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.11.0"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.18.1"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.11.0"
     },
@@ -455,6 +425,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.18.1"
     },
     "symfony/process": {
         "version": "v4.3.1"
@@ -614,8 +587,5 @@
     },
     "willdurand/negotiation": {
         "version": "v2.3.1"
-    },
-    "zendframework/zend-escaper": {
-        "version": "2.6.1"
     }
 }

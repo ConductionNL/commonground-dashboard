@@ -7,7 +7,8 @@ settings:
   projectName: db
   name: db
   title: Zuid Drecht DashBboard
-  version: V.0.1
+  version: V1.0
+  majorVersion: v1
   id: 1163e443-5f9c-4aa6-802c-c619a14986c9
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
@@ -16,6 +17,8 @@ settings:
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: zuid-drecht.nl
   subdomain: db
+  subpath: 
+  subpathRouting: true
   organisationName: Gemeente Zuid Drecht
   email: info@zuid-drecht.nl
   country: Netherlands
@@ -53,7 +56,7 @@ security:
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   authorisationProviderUser: https://uc.zuid-drecht.nl
-  authorisationProviderApplication: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
 
 
 php:
