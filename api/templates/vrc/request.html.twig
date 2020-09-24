@@ -147,12 +147,13 @@
                                 with {
                                 'resource': resource } %}
                         </div><!-- /.col -->
+                        {% if validations is defined and validations is not empty %}
                         <div class="col-md-4">
                         {% include 'vrc/widgets/validations.html.twig'
                             with {
                             'validations':validations} %}
                         </div>
-
+                        {% endif %}
                         <div class="col-md-4">
                             {% include 'vrc/widgets/submitters.html.twig'
                                 with {

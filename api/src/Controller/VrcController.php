@@ -46,40 +46,44 @@ class VrcController extends AbstractController
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
         $variables['thisPath'] = 'app_vrc_requests';
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-        $query = '';
+//        $query = [];
+
+        $query = $request->query->all();
 
         $variables['requestType'] = $request->query->get('requestType');
 
         if ($request->query->get('status')) {
-            $variables['status'] = $query['status'];
+            $variables['status'] = $request->query->get('status');
         }
 
         if ($this->getUser()->getOrganization()) {
-            if (isset($query) && !empty($query)) {
-                $query = $query.'&organization='.$this->getUser()->getOrganization();
-            } else {
-                $query = $query.'organization='.$this->getUser()->getOrganization();
-            }
+            $query['organization'] = $this->getUser()->getOrganization();
+//            if (isset($query) && !empty($query)) {
+//
+//            } else {
+//                $query['organization'] = $this->getUser()->getOrganization();
+//            }
         }
         if (isset($variables['requestType'])) {
             $variables['requestType'] = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'request_types', 'id' => $variables['requestType']]);
-
-            if (isset($query) && !empty($query)) {
-                $query = $query.'&requestType='.$variables['requestType'];
-            } else {
-                $query = $query.'requestType='.$variables['requestType'];
-            }
+            $query['requestType'] = $variables['requestType'];
+//
+//            if (isset($query) && !empty($query)) {
+//                $query = $query.'&requestType='.$variables['requestType'];
+//            } else {
+//            }
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
         } else {
             if ($filterStatus == 'none') {
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
             } else {
-                if (isset($query)) {
-                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "$query&status=$filterStatus")['hydra:member'];
-                } else {
-                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
-                }
+//                if (isset($query)) {
+                $query['status'] = $filterStatus;
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+//                } else {
+//                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
+//                }
             }
         }
 
@@ -96,19 +100,20 @@ class VrcController extends AbstractController
                 $statusFilter = $request->request->get('statusFilter');
 
                 if (isset($typeFilter) && !empty($typeFilter)) {
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&requestType='.$typeFilter;
-                    } else {
-                        $query = $query.'requestType='.$typeFilter;
-                    }
+//                    if (isset($query) && !empty($query)) {
+//                        $query = $query.'&requestType='.$typeFilter;
+//                    } else {
+                    $query['requestType'] = $typeFilter;
+//                    }
                 }
 
                 if (isset($referenceFilter) && !empty($referenceFilter)) {
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&reference='.$referenceFilter;
-                    } else {
-                        $query = $query.'reference='.$referenceFilter;
-                    }
+                    $query['reference'] = $referenceFilter;
+//                    if (isset($query) && !empty($query)) {
+//                        $query = $query.'&reference='.$referenceFilter;
+//                    } else {
+//                        $query = $query.'reference='.$referenceFilter;
+//                    }
                 }
 
                 if (isset($createdFilter) && !empty($createdFilter)) {
@@ -118,11 +123,12 @@ class VrcController extends AbstractController
                     $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
                     $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
 
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
-                    } else {
-                        $query = $query.'dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
-                    }
+//                    if (isset($query) && !empty($query)) {
+                    $query['dateCreated[strictly_before]'] = $date2;
+                    $query['dateCreated[strictly_after]'] = $date1;
+//                    } else {
+//                        $query = $query.'dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
+//                    }
                 }
 
                 if (isset($modifiedFilter) && !empty($modifiedFilter)) {
@@ -131,20 +137,21 @@ class VrcController extends AbstractController
                     // Because you cant filter for 1 date we have to filter between 2 dates
                     $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
                     $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
-
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
-                    } else {
-                        $query = $query.'dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
-                    }
+                    $query['dateModified[strictly_before]'] = $date2;
+                    $query['dateModified[strictly_after]'] = $date1;
+//                    if (isset($query) && !empty($query)) {
+//                        $query = $query.'&dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
+//                    } else {
+//                        $query = $query.'dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
+//                    }
                 }
 
                 if (isset($statusFilter) && !empty($statusFilter)) {
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&status='.$statusFilter;
-                    } else {
-                        $query = $query.'status='.$statusFilter;
-                    }
+//                    if (isset($query) && !empty($query)) {
+                    $query['status'] = $statusFilter;
+//                    } else {
+//                        $query = $query.'status='.$statusFilter;
+//                    }
                 }
 
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
@@ -166,6 +173,8 @@ class VrcController extends AbstractController
 
             return $response;
         }
+
+        $variables['query'] = $query;
 
         /* If we have specific view for this request type use that instead */
         if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
