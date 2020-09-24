@@ -18,8 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_user_login2")
-     * @Route("/dashboard/login", name="app_user_login")
+     * @Route("/login", name="app_user_login")
      * @Template
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -38,8 +37,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_user_logout2")
-     * @Route("/dashboard/logout", name="app_user_logout")
+     * @Route("/logout", name="app_user_logout")
      */
     public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
