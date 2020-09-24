@@ -80,7 +80,7 @@ class VrcController extends AbstractController
             } else {
 //                if (isset($query)) {
                 $query['status'] = $filterStatus;
-                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
 //                } else {
 //                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
 //                }
@@ -103,12 +103,12 @@ class VrcController extends AbstractController
 //                    if (isset($query) && !empty($query)) {
 //                        $query = $query.'&requestType='.$typeFilter;
 //                    } else {
-                        $query['requestType']=$typeFilter;
+                    $query['requestType'] = $typeFilter;
 //                    }
                 }
 
                 if (isset($referenceFilter) && !empty($referenceFilter)) {
-                    $query['reference']=$referenceFilter;
+                    $query['reference'] = $referenceFilter;
 //                    if (isset($query) && !empty($query)) {
 //                        $query = $query.'&reference='.$referenceFilter;
 //                    } else {
@@ -124,8 +124,8 @@ class VrcController extends AbstractController
                     $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
 
 //                    if (isset($query) && !empty($query)) {
-                    $query['dateCreated[strictly_before]']=$date2;
-                    $query['dateCreated[strictly_after]']=$date1;
+                    $query['dateCreated[strictly_before]'] = $date2;
+                    $query['dateCreated[strictly_after]'] = $date1;
 //                    } else {
 //                        $query = $query.'dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
 //                    }
@@ -137,8 +137,8 @@ class VrcController extends AbstractController
                     // Because you cant filter for 1 date we have to filter between 2 dates
                     $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
                     $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
-                    $query['dateModified[strictly_before]']=$date2;
-                    $query['dateModified[strictly_after]']=$date1;
+                    $query['dateModified[strictly_before]'] = $date2;
+                    $query['dateModified[strictly_after]'] = $date1;
 //                    if (isset($query) && !empty($query)) {
 //                        $query = $query.'&dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
 //                    } else {
@@ -148,7 +148,7 @@ class VrcController extends AbstractController
 
                 if (isset($statusFilter) && !empty($statusFilter)) {
 //                    if (isset($query) && !empty($query)) {
-                        $query['status'] = $statusFilter;
+                    $query['status'] = $statusFilter;
 //                    } else {
 //                        $query = $query.'status='.$statusFilter;
 //                    }
