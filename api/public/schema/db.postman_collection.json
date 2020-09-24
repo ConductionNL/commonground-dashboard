@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "8beec6ea-b1e0-4c5a-9ff7-2df799a97648",
+		"name": "Commonground Dashboard",
+		"description": "API Details\n- Component: Zuid Drecht DashBboard\n- Reference: db\n- Enviroment: dev\n- Version: V.0.1\n- Repository: [online](https://github.com/ConductionNL/Commonground-dashboard) / [zip](https://github.com/ConductionNL/Commonground-dashboard/archive/master.zip)\n- Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) \n- Datamodel: [postman](/schema/db.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) \n\n'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         \n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Retrieve the dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "efb73eea-2e5b-4217-81c3-62a5304d03b4",
+						"exec": [
+							"// example using pm.response.to.have\r",
+							"pm.test(\"response is ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "db.dev.zuid-drecht.nl/login",
+					"host": [
+						"db",
+						"dev",
+						"zuid-drecht",
+						"nl"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{authorization}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "df6dc019-51ba-4471-b049-97c12eeaa1be",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5b38f8b2-61cb-483a-a285-d0821e3ed27f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "2bee36d1-bb81-457d-912e-263f6d232318",
+			"key": "baseUrl",
+			"value": "localhost"
+		},
+		{
+			"id": "90f91741-23bf-46c8-b13e-1c238e1208d7",
+			"key": "authorization",
+			"value": "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

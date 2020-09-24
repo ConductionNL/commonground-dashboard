@@ -41,6 +41,9 @@ parameters:
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
+    
+    env(APP_CERTIFICATE): "/var/run/certs/tls.crt"
+    env(APP_SSL_KEY): "/var/run/certs/tls.key"
   
     app_env: "%env(APP_ENV)%"
     app_debug: "%env(APP_DEBUG)%"
@@ -68,6 +71,9 @@ parameters:
     app_web: "%env(APP_WEB)%"
     app_internal: "%env(APP_INTERNAL)%"
     app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+    
+    app_certificate: "%env(APP_CERTIFICATE)%"
+    app_ssl_key: "%env(APP_SSL_KEY)%"
 
     # Organisatie details
     env(GOOGLE_TAG_MANAGER_ID): ""
@@ -313,6 +319,9 @@ twig:
         app_web: "%env(APP_WEB)%"
         app_internal: "%env(APP_INTERNAL)%"
         app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+
+        app_certificate: "%env(APP_CERTIFICATE)%"
+        app_ssl_key: "%env(APP_SSL_KEY)%"
 
         # Security Details
         app_commonground_id: "%env(APP_COMMONGROUND_ID)%"
