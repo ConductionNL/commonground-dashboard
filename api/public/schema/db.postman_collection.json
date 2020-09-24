@@ -26,17 +26,17 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/health+json",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "db.dev.zuid-drecht.nl/login",
+					"raw": "{{baseUrl}}",
 					"host": [
-						"db",
-						"dev",
-						"zuid-drecht",
-						"nl"
-					],
-					"path": [
-						"login"
+						"{{baseUrl}}"
 					]
 				}
 			},
@@ -82,12 +82,12 @@
 	],
 	"variable": [
 		{
-			"id": "2bee36d1-bb81-457d-912e-263f6d232318",
+			"id": "177a8b73-0340-41a3-9524-91d0058ec5da",
 			"key": "baseUrl",
 			"value": "localhost"
 		},
 		{
-			"id": "90f91741-23bf-46c8-b13e-1c238e1208d7",
+			"id": "95d3eccd-5171-49e3-9b1e-161cd886fed4",
 			"key": "authorization",
 			"value": "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
 		}
