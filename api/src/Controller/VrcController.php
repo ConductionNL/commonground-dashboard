@@ -261,10 +261,22 @@ class VrcController extends AbstractController
             // Passing the variables to the resource
             $resource = $request->request->all();
 
+
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
                 $resource['@id'] = $variables['resource']['@id'];
                 $resource['id'] = $variables['resource']['id'];
+                if(array_key_exists('requestType', $variables['resource'])) {
+                    $resource['requestType'] = $variables['resource']['requestType'];
+                } elseif(key_exists('requestType', $variables)) {
+                    $resource['requestType'] = $variables['requestType']['@id'];
+                }
+
+                if(key_exists('properties', $variables['resource']) && key_exists('properties',$resource)){
+                    $resource['properties'] = array_merge($variables['resource']['properties'], $resource['properties']);
+                } elseif(key_exists('properties', $variables['resource'])){
+                    $resource['properties'] = $variables['resource']['properties'];
+                }
             }
 
             if (array_key_exists('memo', $resource)) {
@@ -359,7 +371,7 @@ class VrcController extends AbstractController
 
             // Fix for properties not being nullabe @todo long term fix should be implemented
             if (!array_key_exists('properties', $resource)) {
-                $resource['properties'] = [];
+                $resource['properties'] = null;
             }
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
