@@ -35,7 +35,7 @@
     }
 </script>
 
-{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'},{'id': application['organization']['id']})['hydra:member'] %}
+{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'})['hydra:member'] %}
 <div class="form-control" id="{{property.name}}_combobox" style="margin-bottom: 20px">
     <div class="input__hint">Selecteer een {{property.title}}</div>
     <input type="hidden" value="{{ property.name }}" name="newPropName">
@@ -44,9 +44,11 @@
         {% for organization in organizations %}
             {% if organization.contact is defined and organization.contact is not empty %}
                 {% set contact = commonground_resource(organization.contact) %}
-                    <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+                    <option value="{{ organization['@id'] }}"
+                    {% if resource.properties[property.name] is defined and resource.properties[property.name] == organization['@id'] %} selected {% endif %}>{{ organization['name'] }}</option>
             {% else %}
-                <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+                <option value="{{ organization['@id'] }}"
+                    {% if resource.properties[property.name] is defined and resource.properties[property.name] == organization['@id'] %} selected {% endif %}>{{ organization['name'] }}</option>
             {% endif %}
         {% endfor %}
     </select>
