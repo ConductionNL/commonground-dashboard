@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>{% if application is defined %}{{ application.name }}{% else %}Dashboard{% endif %}</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
         <link rel="icon" href="{{ application['style']['favicon']['base64']|raw }}">
     {% else %}
@@ -12,27 +12,31 @@
     {% endif %}
 
 
-	<!-- Fonts and icons -->
+    <!-- Fonts and icons -->
     <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}">
 
-	<script>
-		WebFont.load({
-			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['/assets/css/fonts.min.css']},
-			active: function() {
-				sessionStorage.fonts = true;
-			}
-		});
-	</script>
+        <
+        script >
+        WebFont.load({
+            google: {"families": ["Lato:300,400,700,900"]},
+            custom: {
+                "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ['/assets/css/fonts.min.css']
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
 
-	<!-- CSS Files -->
+    <!-- CSS Files -->
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/atlantis.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/summernote-bs4.css') }}">
 
-	<!-- CSS Just for demo purpose, don't include it in your project -->
+    <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
 
     {% if app.user.organization is defined %}
@@ -44,18 +48,18 @@
             {{ organizationStyle.style.css }}
         </style>
     {% elseif application.style is defined %}
-    <!-- Commonground Overwrites -->
-    <style>
-        {{  application.style.css }}
-    </style>
+        <!-- Commonground Overwrites -->
+        <style>
+            {{  application.style.css }}
+        </style>
     {% endif %}
     <style>
-        .appIcon{
+        .appIcon {
             color: #2A2F5B;
             text-decoration: none !important;
         }
 
-        .appIcon:hover{
+        .appIcon:hover {
             color: #535eb5;
         }
     </style>
@@ -66,105 +70,110 @@
 
 {% endblock %}
 
-    <!-- Google maps api -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvjuY_QquUy3abazKUJJEMh8DFvpKKRBI&callback=initMap"></script>
+<!-- Google maps api -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvjuY_QquUy3abazKUJJEMh8DFvpKKRBI&callback=initMap"></script>
 
-	<!--   Core JS Files   -->
-	<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-	<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-	<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+<!--   Core JS Files   -->
+<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 
-	<!-- jQuery UI -->
-	<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-	<script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+<!-- jQuery UI -->
+<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
-	<!-- jQuery Scrollbar -->
-	<script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<!-- jQuery Scrollbar -->
+<script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
-	<!-- Moment JS -->
-	<script src="{{ asset('assets/js/plugin/moment/moment.min.js') }}"></script>
+<!-- Moment JS -->
+<script src="{{ asset('assets/js/plugin/moment/moment.min.js') }}"></script>
 
-	<!-- Chart JS -->
-	<script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
+<!-- Chart JS -->
+<script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
 
-	<!-- jQuery Sparkline -->
-	<script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+<!-- jQuery Sparkline -->
+<script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
-	<!-- Chart Circle -->
-	<script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
+<!-- Chart Circle -->
+<script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
 
-	<!-- Datatables -->
-	<script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
+<!-- Datatables -->
+<script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
-	<!-- Bootstrap Notify -->
-	<script src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+<!-- Bootstrap Notify -->
+<script src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
-	<!-- Bootstrap Toggle -->
-	<script src="{{ asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js') }}"></script>
+<!-- Bootstrap Toggle -->
+<script src="{{ asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js') }}"></script>
 
-	<!-- jQuery Vector Maps -->
-	<script src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
-	<script src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
+<!-- jQuery Vector Maps -->
+<script src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
-	<!-- Google Maps Plugin -->
-	<script src="{{ asset('assets/js/plugin/gmaps/gmaps.js') }}"></script>
+<!-- Google Maps Plugin -->
+<script src="{{ asset('assets/js/plugin/gmaps/gmaps.js') }}"></script>
 
-	<!-- Dropzone -->
-	<script src="{{ asset('assets/js/plugin/dropzone/dropzone.min.js') }}"></script>
+<!-- Dropzone -->
+<script src="{{ asset('assets/js/plugin/dropzone/dropzone.min.js') }}"></script>
 
-	<!-- Fullcalendar -->
-	<script src="{{ asset('assets/js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>
+<!-- Fullcalendar -->
+<script src="{{ asset('assets/js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>
 
-	<!-- DateTimePicker -->
-	<script src="{{ asset('assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
+<!-- DateTimePicker -->
+<script src="{{ asset('assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
 
-	<!-- Bootstrap Tagsinput -->
-	<script src="{{ asset('assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+<!-- Bootstrap Tagsinput -->
+<script src="{{ asset('assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 
-	<!-- Bootstrap Wizard -->
-	<script src="{{ asset('assets/js/plugin/bootstrap-wizard/bootstrapwizard.js') }}"></script>
+<!-- Bootstrap Wizard -->
+<script src="{{ asset('assets/js/plugin/bootstrap-wizard/bootstrapwizard.js') }}"></script>
 
-	<!-- jQuery Validation -->
-	<script src="{{ asset('assets/js/plugin/jquery.validate/jquery.validate.min.js') }}"></script>
+<!-- jQuery Validation -->
+<script src="{{ asset('assets/js/plugin/jquery.validate/jquery.validate.min.js') }}"></script>
 
-	<!-- Select2 -->
-	<script src="{{ asset('assets/js/plugin/select2/select2.full.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('assets/js/plugin/select2/select2.full.min.js') }}"></script>
 
-	<!-- Sweet Alert -->
-	<script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+<!-- Sweet Alert -->
+<script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
-	<!-- Owl Carousel -->
-	<script src="{{ asset('assets/js/plugin/owl-carousel/owl.carousel.min.js') }}"></script>
+<!-- Owl Carousel -->
+<script src="{{ asset('assets/js/plugin/owl-carousel/owl.carousel.min.js') }}"></script>
 
-	<!-- Magnific Popup -->
-	<script src="{{ asset('assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+<!-- Magnific Popup -->
+<script src="{{ asset('assets/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js') }}"></script>
 
-	<!-- Atlantis JS -->
-	<script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
+<!-- Atlantis JS -->
+<script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
 
-    <!-- Summernote JS -->
-    <script src="{{ asset('assets/js/summernote-bs4.js') }}"></script>
+<!-- Summernote JS -->
+<script src="{{ asset('assets/js/summernote-bs4.js') }}"></script>
 
-	<script>
-	{% for label, messages in app.flashes(['warning', 'error', 'success']) %}
-        {% for message in messages %}
-        //Notify
-        $.notify({
-        	icon: 'flaticon-alarm-1',
-        	title: '{{ label }}',
-        	message: '{{ message }}',
-        },{
-        	type: 'secondary',
-        	placement: {
-        		from: "bottom",
-        		align: "right"
-        	},
-        	time: 1000,
-        });
-        {% endfor %}
+<script>
+    {% set flashes = [] %}
+    {% for label, messages in app.flashes(['warning', 'error', 'success']) %}
+    {% for message in messages %}
+    {% if message not in flashes %}
+    {% set flashes = flashes|merge([message]) %}
+    //Notify
+    $.notify({
+        icon: 'flaticon-alarm-1',
+        title: '{{ label }}',
+        message: '{{ message }}',
+    }, {
+        type: 'secondary',
+        placement: {
+            from: "bottom",
+            align: "right"
+        },
+        time: 1000,
+    });
+    {% endif %}
+    {% endfor %}
     {% endfor %}
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.summernote').summernote();
     });
 
@@ -173,6 +182,6 @@
 
     {% endblock %}
 
-	</script>
+</script>
 </body>
 </html>
