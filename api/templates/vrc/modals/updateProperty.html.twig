@@ -63,7 +63,7 @@
                         {% include 'vrc/formelements/kvk.html.twig' %}
                     {% elseif property.format == 'btw' %}
                         {% include 'vrc/formelements/btw.html.twig' %}
-                         Generic HTML 5 input types
+{#                         Generic HTML 5 input types#}
                     {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
                         {% include 'vrc/formelements/generic.html.twig'  with {'type': property.format} %}
                     {% endif %}
