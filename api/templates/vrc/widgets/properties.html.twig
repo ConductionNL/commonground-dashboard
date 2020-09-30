@@ -18,7 +18,7 @@
                 {% for property in requestType.properties %}
                     {% if property.type is defined and property.type is not empty and property.title != 'Order'
                         and property.title != 'Extras'
-                        and property.title != 'Overig'%}
+                        and property.title != 'Overig' %}
                     <tr>
                         <td style="width: 75px !important; padding-right: 0 !important; text-align: center">
                             {% if property.required is defined and property.required  %}
@@ -32,15 +32,17 @@
                             {% endif %}
                         </td>
                         <td>{{ property.title|trans }}</td>
-                        {#
-                        <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td> #}
+
+                        {# Waarom lieten we deze info zien? #}
+{#                        <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td>#}
+
                         <td>{% if property.name in resource.properties|keys  %}
                                     {% include 'vrc/widgets/property.html.twig'
                                     with {
                                         'property':property,
                                         'value':resource.properties[property.name] } %}
                             {% else %}
-                                <span class="danger">< {{ 'no value'|trans|capitalize }} ></span>
+                                <span style="color: lightgrey;" class="danger">{{ 'no value'|trans|capitalize }}</span>
                             {% endif %}
                         </td>
                         {% if property.name not in resource.properties|keys %}
