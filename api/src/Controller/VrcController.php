@@ -38,6 +38,7 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/requests/{filterStatus}", defaults={"filterStatus"="none"})
+     * @Template
      */
     public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $filterStatus)
     {
@@ -182,12 +183,11 @@ class VrcController extends AbstractController
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
         }
-
-        return $this->render('vrc/requests.html.twig', $variables);
     }
 
     /**
      * @Route("/request/{id}")
+     * @Template
      */
     public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
@@ -259,7 +259,11 @@ class VrcController extends AbstractController
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
+
             $resource = $request->request->all();
+
+
+
 
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
@@ -317,6 +321,7 @@ class VrcController extends AbstractController
                 $item['properties'][$resource['newPropName']] = $resource['newProp'];
 
                 unset($item['properties']['temp']);
+
                 $resource['properties'] = $item['properties'];
             }
 
@@ -372,6 +377,14 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = null;
             }
+
+//            var_dump($resource);
+            // If we township gets changed unset grave and cemetery
+            if(!empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']){
+                unset($resource['properties']['soort_graf']);
+                unset($resource['properties']['begraafplaats']);
+            }
+
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
             /* @to this redirect is a hotfix */
