@@ -1,15 +1,14 @@
-
-
 {% if property.query is defined and property.query is not empty %}
     {% set queryArray = [] %}
     {% for key, value in property.query %}
         {% if 'request.properties' in value %}
-            {% if value|split('.')[2]|trim(' }}') in resource.properties|keys %}
-                {% set newValue = include(template_from_string(value)) %}
-                {% set queryArray = queryArray|merge({ (key): newValue }) %}
-            {% else %}
-                {% set newValue = 'null' %}
-            {% endif %}
+            {# Door onderstaande code gaat de pagina kapot op request? #}
+{#            {% if value|split('.')[2]|trim(' }}') in resource.properties|keys %}#}
+{#                {% set newValue = include(template_from_string(value)) %}#}
+{#                {% set queryArray = queryArray|merge({ (key): newValue }) %}#}
+{#            {% else %}#}
+{#                {% set newValue = 'null' %}#}
+{#            {% endif %}#}
         {% else %}
             {% set queryArray = queryArray|merge({ (key): value }) %}
         {% endif %}
@@ -22,57 +21,57 @@
     <div>
         <label for="{{ property.id }}">{{ property.title }}</label>
     </div>
-    {% if property.type == 'string'%}
-    {% for offer in offers %}
-        {% if value is defined and value == offer['@id'] %}
-            <div>
-                <input  checked="checked" type="radio" id="{{ offer.id }}" name="newProp" value="{{ offer['@id'] }}">
-                <label for="{{ offer.id }}">{{ offer.name|capitalize }}
-                    {% if offer.price != 0 %}<span style="margin-left: 10px; float:right;">
-                        {% if offer.priceCurrency == 'EUR' %}
-                            €{{ offer.price }}
-                        {% else %}
-                            {{ offer.price }}
-                        {% endif %}
-                        {% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}</span>
-                    {% endif %}</label><br>
-            </div>
-        {% else %}
-            <div>
-                <input  type="radio" id="{{ offer.id }}" name="newProp" value="{{ offer['@id'] }}">
-                <label for="{{ offer.id }}">{{ offer.name|capitalize }}
-                    {% if offer.price != 0 %}
-                        <span style="margin-left: 10px; float:right;">
+    {% if property.type == 'string' %}
+        {% for offer in offers %}
+            {% if value is defined and value == offer['@id'] %}
+                <div>
+                    <input checked="checked" type="radio" id="{{ offer.id }}" name="newProp" value="{{ offer['@id'] }}">
+                    <label for="{{ offer.id }}">{{ offer.name|capitalize }}
+                        {% if offer.price != 0 %}<span style="margin-left: 10px; float:right;">
                             {% if offer.priceCurrency == 'EUR' %}
                                 €{{ offer.price }}
                             {% else %}
                                 {{ offer.price }}
                             {% endif %}
                             {% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}</span>
-                    {% endif %}</label><br>
-            </div>
-        {% endif %}
-    {% endfor %}
-    {% else%}
-    <div class="form-group">
-                    {% set value = 0 %}
-                    {% for offer in offers %}
-                        <div>
-                            <input type="checkbox" value="{{ offer['@id'] }}" name="newProp[{{ value }}]" id="{{ offer.id }}">
-                            <label for="{{ offer.id }}">{{ offer.name|capitalize }}
-                                {% if offer.price != 0 %}
-                                    <span style="margin-left: 10px; float:right;">
+                        {% endif %}</label><br>
+                </div>
+            {% else %}
+                <div>
+                    <input type="radio" id="{{ offer.id }}" name="newProp" value="{{ offer['@id'] }}">
+                    <label for="{{ offer.id }}">{{ offer.name|capitalize }}
+                        {% if offer.price != 0 %}
+                            <span style="margin-left: 10px; float:right;">
                             {% if offer.priceCurrency == 'EUR' %}
                                 €{{ offer.price }}
                             {% else %}
                                 {{ offer.price }}
                             {% endif %}
-                                        {% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}</span>
-                                {% endif %}</label><br>
-                        </div>
-                        {% set value = value + 1 %}
-                    {% endfor %}
-    </div>
+                                {% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}</span>
+                        {% endif %}</label><br>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="form-group">
+            {% set value = 0 %}
+            {% for offer in offers %}
+                <div>
+                    <input type="checkbox" value="{{ offer['@id'] }}" name="newProp[{{ value }}]" id="{{ offer.id }}">
+                    <label for="{{ offer.id }}">{{ offer.name|capitalize }}
+                        {% if offer.price != 0 %}
+                            <span style="margin-left: 10px; float:right;">
+                            {% if offer.priceCurrency == 'EUR' %}
+                                €{{ offer.price }}
+                            {% else %}
+                                {{ offer.price }}
+                            {% endif %}
+                                {% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}</span>
+                        {% endif %}</label><br>
+                </div>
+                {% set value = value + 1 %}
+            {% endfor %}
+        </div>
     {% endif %}
     <input type="hidden" value="{{ property.name }}" name="newPropName">
 </div>
