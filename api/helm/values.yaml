@@ -9,16 +9,16 @@ settings:
   title: Zuid Drecht DashBboard
   version: V1.0
   majorVersion: v1
-  id: 76298171-e049-4492-ae7b-1d2fe231aa5f
+  id: 1163e443-5f9c-4aa6-802c-c619a14986c9
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
   repro: https://github.com/ConductionNL/Commonground-dashboard
   demo: https://db.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: westfriesland.commonground.nu
+  domain: zuid-drecht.nl
   subdomain: db
-  subpath: 
-  subpathRouting: 
+  subpath: dashboard
+  subpathRouting: true
   organisationName: Gemeente Zuid Drecht
   email: info@zuid-drecht.nl
   country: Netherlands
@@ -51,12 +51,12 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "76298171-e049-4492-ae7b-1d2fe231aa5f"
+  commongroundId: "1163e443-5f9c-4aa6-802c-c619a14986c9"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.westfriesland.commonground.nu
-  authorisationProviderApplication: https://openzaak.dev.westfriesland.commonground.nu/authorizaties/api/v1
+  authorisationProviderUser: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
   certificate: 
   sslKey: 
 
