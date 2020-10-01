@@ -1,7 +1,7 @@
 <div class="modal fade" style="text-align: center" id="updateProperty{{ id }}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
-    <div class="modal-dialog model-dialog-centered" role="document">
+    <div class="modal-dialog model-dialog-centered" role="document" {% if property.iri == 'arc/event' or property.format == 'calendar' %}style="min-width: 900px !important;"{% elseif property.iri == 'pdc/offer' %}style="min-width: 600px !important;"{% endif %}>
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'set property '|trans|capitalize }} {{ property.title }}</b></h5>
