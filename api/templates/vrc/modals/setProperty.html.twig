@@ -13,9 +13,61 @@
             <div class="modal-body">
                 <form action="{{ path(route, {id: resource.id}) }}" method="post">
 
-                    <button type="submit" class="btn btn-success m-3  mx-auto">
-                        {{ 'save'|trans|capitalize }}
-                    </button>
+{#                    {% if property.type == 'array' and property.format == 'bsn' %}#}
+{#                        {% include 'vrc/formelements/person.html.twig' %}#}
+{#                    {% elseif property.format == 'bag' %}#}
+{#                        {% include 'vrc/formelements/bag/address.html.twig' %}#}
+{#                    {% elseif property.iri == 'wrc/organizations'%}#}
+{#                        {% include 'vrc/formelements/organizations.html.twig' %}#}
+{#                    {% elseif property.iri == 'grc/cemetery'%}#}
+{#                        {% include 'vrc/formelements/cemetery.html.twig' %}#}
+{#                    {% elseif property.iri == 'grc/grave_type'%}#}
+{#                        {% include 'vrc/formelements/grave_type.html.twig' %}#}
+{#                    {% elseif property.iri == 'arc/event'%}#}
+{#                        {% include 'vrc/formelements/calendar.html.twig' %}#}
+{#                    {% elseif property.iri == 'pdc/offer'%}#}
+{#                        {% include 'vrc/formelements/pdc/offer.html.twig' %}#}
+{#                    {% elseif property.iri == 'brp/ingeschrevenpersoon'%}#}
+{#                        {% include 'vrc/formelements/ingeschreven_persoon.html.twig' %}#}
+{#                    {% elseif property.iri == 'irc/assents'%}#}
+{#                        {% include 'vrc/formelements/assent.html.twig' %}#}
+{#                    {% elseif property.iri == 'cc/people' %}#}
+{#                        {% include 'vrc/formelements/people.html.twig' %}#}
+{#                    {% elseif property.iri == 'cc/organization' %}#}
+{#                        {% include 'vrc/formelements/ccOrganization.html.twig' %}#}
+{#                    {% elseif property.iri == 'wrc/organization' %}#}
+{#                        {% include 'vrc/formelements/wrcOrganization.html.twig' %}#}
+{#                    {% elseif property.format == 'phonenumber'%}#}
+{#                        {% include 'vrc/formelements/generic.html.twig'  with {'type': 'tel'} %}#}
+{#                    {% elseif property.format == 'datetime'%}#}
+{#                        {% include 'vrc/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}#}
+{#                    {% elseif property.format == 'date-time'%}#}
+{#                        {% include 'vrc/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}#}
+{#                    {% elseif property.format == 'textarea'%}#}
+{#                        {% include 'vrc/formelements/textarea.html.twig'  %}#}
+{#                    {% elseif property.format == 'text-area'%}#}
+{#                        {% include 'vrc/formelements/textarea.html.twig'  %}#}
+{#                    {% elseif property.format == 'radio'%}#}
+{#                        {% include 'vrc/formelements/radio.html.twig'  %}#}
+{#                    {% elseif property.format == 'file'%}#}
+{#                        {% include 'vrc/formelements/file.html.twig'  %}#}
+{#                    {% elseif property.format == 'location'%}#}
+{#                        {% include 'vrc/formelements/location.html.twig'  %}#}
+{#                    {% elseif property.format == 'meeverhuizen'%}#}
+{#                        {% include 'vrc/formelements/mee_verhuizers.html.twig'  %}#}
+{#                    {% elseif property.format == 'calendar'%}#}
+{#                        {% include 'vrc/formelements/calendar.html.twig'  %}#}
+{#                    {% elseif property.format == 'tofrom-time' %}#}
+{#                        {% include 'vrc/formelements/tofromtime.html.twig' %}#}
+{#                    {% elseif property.format == 'kvk' %}#}
+{#                        {% include 'vrc/formelements/kvk.html.twig' %}#}
+{#                    {% elseif property.format == 'btw' %}#}
+{#                        {% include 'vrc/formelements/btw.html.twig' %}#}
+{#                        #}{# Generic HTML 5 input types #}
+{#                    {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}#}
+{#                        {% include 'vrc/formelements/generic.html.twig'  with {'type': property.format} %}#}
+{#                    {% endif %}#}
+                    <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                 </form>
             </div>
         </div>

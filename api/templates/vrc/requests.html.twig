@@ -32,10 +32,10 @@
                                             <label for="typeFilter">Type</label>
                                             <select class="form-control form-control-xs" name="typeFilter"
                                                     id="typeFilter">
-                                                <option value="" selected></option>
+                                                <option value="" {% if query.requestType is not defined or query.requestType is empty %}selected{% endif %}></option>
                                                 {% for requestType in requestTypes %}
                                                     <option
-                                                        value="{{ requestType['@id'] }}">{{ requestType.name|capitalize }}</option>
+                                                        value="{{ requestType['@id'] }}" {% if query.requestType is defined and query.requestType is not empty and query.requestType == requestType['@id'] %}selected{% endif %}>{{ requestType.name|capitalize }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -47,7 +47,9 @@
                                             <label for="referenceFilter">{{ 'reference'|trans|capitalize }}</label>
                                             <input class="form-control form-control-xs" type="text"
                                                    name="referenceFilter"
-                                                   id="referenceFilter">
+                                                   id="referenceFilter"
+                                                   {% if query.reference is defined and query.reference is not empty %}value="{{ query.reference }}"{% endif %}
+                                            >
                                         </div>
                                     </div>
 
@@ -55,7 +57,9 @@
                                         <div class="form-group">
                                             <label for="createdFilter">{{ 'created'|trans|capitalize }}</label>
                                             <input class="form-control form-control-xs" type="date"
-                                                   name="createdFilter" id="createdFilter">
+                                                   name="createdFilter" id="createdFilter"
+                                                {% if query['dateCreated[strictly_before]'] is defined and query['dateCreated[strictly_before]'] is not empty %}value="{{ query['dateCreated[strictly_before]']|date('Y-m-d  H:m') }}"{% endif %}
+                                            >
                                         </div>
                                     </div>
 
@@ -63,7 +67,9 @@
                                         <div class="form-group">
                                             <label for="modifiedFilter">{{ 'modified'|trans|capitalize }}</label>
                                             <input class="form-control form-control-xs" type="date"
-                                                   name="modifiedFilter" id="modifiedFilter">
+                                                   name="modifiedFilter" id="modifiedFilter"
+                                                   {% if query['dateModified[strictly_before]'] is defined and query['dateModified[strictly_before]'] is not empty %}value="{{ query['dateModified[strictly_before]']|date('Y-m-d H:m') }}"{% endif %}
+                                            >
                                         </div>
                                     </div>
 
@@ -72,19 +78,19 @@
                                             <label for="statusFilter">Status</label>
                                             <select class="form-control form-control-xs" name="statusFilter"
                                                     id="statusFilter">
-                                                <option value="" selected></option>
+                                                <option value="" {% if query.status is not defined or query.status is empty %}selected{% endif %}></option>
                                                 <option
-                                                    value="incomplete">{{ 'incomplete'|trans|capitalize }}</option>
+                                                    value="incomplete" {% if query.status is defined and query.status is not empty and query.status == 'incomplete' %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
                                                 <option
-                                                    value="complete">{{ 'complete'|trans|capitalize }}</option>
+                                                    value="complete" {% if query.status is defined and query.status is not empty and query.status == 'complete' %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
                                                 <option
-                                                    value="submitted">{{ 'submitted'|trans|capitalize }}</option>
+                                                    value="submitted" {% if query.status is defined and query.status is not empty and query.status == 'submitted' %}selected{% endif %}>{{ 'submitted'|trans|capitalize }}</option>
                                                 <option
-                                                    value="processed">{{ 'processed'|trans|capitalize }}</option>
+                                                    value="processed" {% if query.status is defined and query.status is not empty and query.status == 'processed' %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
                                                 <option
-                                                    value="submitted">{{ 'cancelled'|trans|capitalize }}</option>
+                                                    value="cancelled" {% if query.status is defined and query.status is not empty and query.status == 'cancelled' %}selected{% endif %}>{{ 'cancelled'|trans|capitalize }}</option>
                                                 <option
-                                                    value="submitted">{{ 'retracted'|trans|capitalize }}</option>
+                                                    value="retracted" {% if query.status is defined and query.status is not empty and query.status == 'retracted' %}selected{% endif %}>{{ 'retracted'|trans|capitalize }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -122,8 +128,8 @@
                                         <tr>
                                             <td>{{ commonground_resource(resource.requestType).name|capitalize }}</td>
                                             <td>{{ resource.reference }}</td>
-                                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
-                                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                                            <td>{{ resource.dateCreated|date("d-m-Y", "Europe/Paris") }}</td>
+                                            <td>{{ resource.dateModified|date("d-m-Y", "Europe/Paris") }}</td>
                                             <td>
                                                 {% if resource.status is same as('incomplete') %}
                                                     <div class="progress" style="height: 25px;">
@@ -187,16 +193,17 @@
                     </div> <!-- /.card-body -->
 
                     <div class="card-action">
-                        {% if status is defined %}
+{#                        {% if status is defined %}#}
+                            {% set downloadQuery = query|merge({'download': 'csv'}) %}
                             <a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                               href="{{ path('app_vrc_requests',{'status': status,'download':'csv'}) }}"
+                               href="{{ path('app_vrc_requests',downloadQuery) }}"
                                target="_blank"><i class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }}
                                     CSV</b></a>
-                        {% else %}
-                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                               href="{{ path('app_vrc_requests',{'download':'csv'}) }}" target="_blank"><i
-                                    class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }} CSV</b></a>
-                        {% endif %}
+{#                        {% else %}#}
+{#                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
+{#                               href="{{ path('app_vrc_requests',{'download':'csv'}) }}" target="_blank"><i#}
+{#                                    class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }} CSV</b></a>#}
+{#                        {% endif %}#}
                     </div><!-- /.card-action -->
 
                 </div>
