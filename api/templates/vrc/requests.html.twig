@@ -58,7 +58,7 @@
                                             <label for="createdFilter">{{ 'created'|trans|capitalize }}</label>
                                             <input class="form-control form-control-xs" type="date"
                                                    name="createdFilter" id="createdFilter"
-                                                {% if query['dateCreated[strictly_before]'] is defined and query['dateCreated[strictly_before]'] is not empty %}value="{{ query['dateCreated[strictly_before]']|date('Y-m-d') }}"{% endif %}
+                                                {% if query['dateCreated[strictly_before]'] is defined and query['dateCreated[strictly_before]'] is not empty %}value="{{ query['dateCreated[strictly_before]']|date('Y-m-d  H:m') }}"{% endif %}
                                             >
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                             <label for="modifiedFilter">{{ 'modified'|trans|capitalize }}</label>
                                             <input class="form-control form-control-xs" type="date"
                                                    name="modifiedFilter" id="modifiedFilter"
-                                                   {% if query['dateModified[strictly_before]'] is defined and query['dateModified[strictly_before]'] is not empty %}value="{{ query['dateModified[strictly_before]']|date('Y-m-d') }}"{% endif %}
+                                                   {% if query['dateModified[strictly_before]'] is defined and query['dateModified[strictly_before]'] is not empty %}value="{{ query['dateModified[strictly_before]']|date('Y-m-d H:m') }}"{% endif %}
                                             >
                                         </div>
                                     </div>
