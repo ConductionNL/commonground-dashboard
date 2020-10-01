@@ -44,7 +44,7 @@ class VrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('requests');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
+        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('requests');
         $variables['thisPath'] = 'app_vrc_requests';
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
 //        $query = [];
@@ -73,7 +73,7 @@ class VrcController extends AbstractController
 //                $query = $query.'&requestType='.$variables['requestType'];
 //            } else {
 //            }
-            $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
+            $variables['subtitle'] = 'alle ' . $variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
         } else {
             if ($filterStatus == 'none') {
@@ -121,8 +121,8 @@ class VrcController extends AbstractController
                     $date = $createdFilter;
 
                     // Because you cant filter for 1 date we have to filter between 2 dates
-                    $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
-                    $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
+                    $date1 = date('Y-m-d', strtotime($date . ' - 1 day'));
+                    $date2 = date('Y-m-d', strtotime($date . ' + 1 day'));
 
 //                    if (isset($query) && !empty($query)) {
                     $query['dateCreated[strictly_before]'] = $date2;
@@ -136,8 +136,8 @@ class VrcController extends AbstractController
                     $date = $modifiedFilter;
 
                     // Because you cant filter for 1 date we have to filter between 2 dates
-                    $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
-                    $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
+                    $date1 = date('Y-m-d', strtotime($date . ' - 1 day'));
+                    $date2 = date('Y-m-d', strtotime($date . ' + 1 day'));
                     $query['dateModified[strictly_before]'] = $date2;
                     $query['dateModified[strictly_after]'] = $date1;
 //                    if (isset($query) && !empty($query)) {
@@ -165,10 +165,10 @@ class VrcController extends AbstractController
 
             $response = new Response();
 
-            $filename = date('YmdHis').'_requests';
+            $filename = date('YmdHis') . '_requests';
             //set headers
             $response->headers->set('Content-Type', 'text/csv');
-            $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename.'.csv');
+            $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '.csv');
 
             $response->setContent($serializer->encode($variables['resources'], 'csv'));
 
@@ -178,8 +178,8 @@ class VrcController extends AbstractController
         $variables['query'] = $query;
 
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
-            return $this->render('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
+        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig')) {
+            return $this->render('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig', $variables);
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
         }
@@ -209,8 +209,8 @@ class VrcController extends AbstractController
             }
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
-            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
+            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/audit_trail');
             $variables['submitters'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'submitters'], ['request' => $variables['resource']['@id']])['hydra:member'];
             $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
             if ($commonGroundService->getComponentHealth('trc')) {
@@ -247,7 +247,7 @@ class VrcController extends AbstractController
             foreach ($variables['resource']['processes'] as $proces) {
                 $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'], ['processInstanceId' => $commonGroundService->getUuidFromUrl($proces)]);
                 foreach ($camundaTasks as $camundaTask) {
-                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/'.$camundaTask['id'].'/rendered-form']);
+                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/' . $camundaTask['id'] . '/rendered-form']);
                     $variables['camundaTasks'][] = $camundaTask;
                 }
             }
@@ -261,9 +261,6 @@ class VrcController extends AbstractController
             // Passing the variables to the resource
 
             $resource = $request->request->all();
-
-
-
 
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
@@ -301,8 +298,8 @@ class VrcController extends AbstractController
             if (array_key_exists('task', $resource)) {
                 $task = $resource['task'];
                 $task['topic'] = $resource['@id'];
-                $task['priority'] = (int) $task['priority'];
-                $task['percentageDone'] = (int) $task['percentageDone'];
+                $task['priority'] = (int)$task['priority'];
+                $task['percentageDone'] = (int)$task['percentageDone'];
 
                 // The resource action section
                 if (array_key_exists('@id', $task) && array_key_exists('action', $task)) {
@@ -315,173 +312,213 @@ class VrcController extends AbstractController
                 }
                 $task = $commonGroundService->saveResource($task, ['component' => 'tc', 'type' => 'tasks']);
             }
-            if (array_key_exists('newProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
-                $item['properties']['temp'] = 'temp';
-                $item['properties'][$resource['newPropName']] = $resource['newProp'];
 
-                unset($item['properties']['temp']);
+            // Custom code for adding assent for aanvrager/rechthebbende
 
-                $resource['properties'] = $item['properties'];
-            }
+//            if (!empty($resource['newPropName']) && $resource['newPropName'] == 'aanvrager/rechthebbende') {
+//
+//                $resource['newProp']['person'] = $commonGroundService->createResource($resource['newProp'][1]['person'], ['component' => 'cc', 'type' => 'people']);
+////var_dump($resource['newProp']['person']);
+////                die;
+//                if (!empty($resource['newProp'][1]['email'])) {
+//                    $email['email'] = $resource['newProp'][1]['email'];
+//                    $resource['newProp']['email'] = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+////                    var_dump($resource['newProp']['email']);
+////                    die;
+//                    $resource['newProp']['person']['emails'][] = $resource['newProp']['email']['@id'];
+//                    $resource['newProp']['person'] = $commonGroundService->saveResource($resource['newProp']['person'], ['component' => 'cc', 'type' => 'people']);
+////                    var_dump($resource['newProp']['person']);
+////                    die;
+//                }
+//                if (!empty($resource['newProp'][1]['telephone'])) {
+//                    $telephone['telephone'] = $resource['newProp'][1]['telephone'];
+//                    $resource['newProp']['telephone'] = $commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
+//                    var_dump($resource['newProp']['telephone']);
+//                    die;
+//                    $resource['newProp']['person']['telephones'][] = $resource['newProp']['telephone']['@id'];
+//                    $resource['newProp']['person'] = $commonGroundService->saveResource($resource['newProp']['person'], ['component' => 'cc', 'type' => 'people']);
+//                }
+//                var_dump($resource['newProp']['person']);
+//                die;
+//                $assent['name'] = 'Instemmingsverzoek voor aanvragen begravenis';
+//                $assent['request'] = $resource['@id'];
+//
+//
+//                var_dump($resource);
+//                die;
 
-            if (array_key_exists('unsetProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
-                unset($item['properties'][$resource['unsetProp']]);
-                if (count($item['properties']) < 1) {
-                    $resource['properties'] = [];
-                } else {
+//                $resource['properties'][$resource['newPropName']] =
+//            } elseif (array_key_exists('newProp', $resource)) {
+                if (array_key_exists('newProp', $resource)) {
+                    $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
+                    $item['properties']['temp'] = 'temp';
+                    $item['properties'][$resource['newPropName']] = $resource['newProp'];
+
+                    unset($item['properties']['temp']);
+
                     $resource['properties'] = $item['properties'];
                 }
-            }
 
-            $files = $request->files->all();
-
-            if (key_exists('newProp', $files) && $file = $files['newProp']) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
-
-                //We are going to need a JWT token for the DRC and ZTC here
-
-                $token = $commonGroundService->getJwtToken('ztc');
-                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
-                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
-
-                foreach ($infoObjectTypes as $infoObjectType) {
-                    if ($infoObjectType['omschrijving'] == 'Document') {
-                        $drc['informatieobjecttype'] = $infoObjectType['url'];
+                if (array_key_exists('unsetProp', $resource)) {
+                    $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
+                    unset($item['properties'][$resource['unsetProp']]);
+                    if (count($item['properties']) < 1) {
+                        $resource['properties'] = [];
+                    } else {
+                        $resource['properties'] = $item['properties'];
                     }
                 }
-                $drc['bronorganisatie'] = '999990482';
-                $drc['titel'] = $resource['newPropName'];
-                $drc['auteur'] = $variables['employees'][0]['@id'];
-                $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
-                $drc['bestandsnaam'] = $file->getClientOriginalName();
-                $drc['bestandstype'] = $file->getClientOriginalExtension();
-                $drc['formaat'] = $file->getClientMimeType();
-                $drc['taal'] = 'nld';
-                $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
 
-                $token = $commonGroundService->getJwtToken('drc');
-                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+                $files = $request->files->all();
 
-                $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
+                if (key_exists('newProp', $files) && $file = $files['newProp']) {
+                    $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
 
-                $item['properties'][$resource['newPropName']] = $result['url'];
+                    //We are going to need a JWT token for the DRC and ZTC here
 
-                $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
+                    $token = $commonGroundService->getJwtToken('ztc');
+                    $commonGroundService->setHeader('Authorization', 'Bearer ' . $token);
+                    $infoObjectTypes = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'informatieobjecttypen'])['results'];
 
-                $resource['properties'] = $item['properties'];
-            }
+                    foreach ($infoObjectTypes as $infoObjectType) {
+                        if ($infoObjectType['omschrijving'] == 'Document') {
+                            $drc['informatieobjecttype'] = $infoObjectType['url'];
+                        }
+                    }
+                    $drc['bronorganisatie'] = '999990482';
+                    $drc['titel'] = $resource['newPropName'];
+                    $drc['auteur'] = $variables['employees'][0]['@id'];
+                    $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
+                    $drc['bestandsnaam'] = $file->getClientOriginalName();
+                    $drc['bestandstype'] = $file->getClientOriginalExtension();
+                    $drc['formaat'] = $file->getClientMimeType();
+                    $drc['taal'] = 'nld';
+                    $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
 
-            // Fix for properties not being nullabe @todo long term fix should be implemented
-            if (!array_key_exists('properties', $resource)) {
-                $resource['properties'] = null;
-            }
+                    $token = $commonGroundService->getJwtToken('drc');
+                    $commonGroundService->setHeader('Authorization', 'Bearer ' . $token);
+
+                    $result = $commonGroundService->createResource($drc, ['component' => 'drc', 'type' => 'enkelvoudiginformatieobjecten']);
+
+                    $item['properties'][$resource['newPropName']] = $result['url'];
+
+                    $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
+
+                    $resource['properties'] = $item['properties'];
+                }
+
+                // Fix for properties not being nullabe @todo long term fix should be implemented
+                if (!array_key_exists('properties', $resource)) {
+                    $resource['properties'] = null;
+                }
 
 //            var_dump($resource);
-            // If we township gets changed unset grave and cemetery
-            if(!empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']){
-                unset($resource['properties']['soort_graf']);
-                unset($resource['properties']['begraafplaats']);
+                // If we township gets changed unset grave and cemetery
+                if (!empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
+                    unset($resource['properties']['soort_graf']);
+                    unset($resource['properties']['begraafplaats']);
+                }
+
+                $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
+
+                /* @to this redirect is a hotfix */
+                if (array_key_exists('id', $variables['resource'])) {
+                    return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $variables['resource']['id']]));
+                }
+            }
+            //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
+
+            /* If we have specific view for this request type use that instead */
+            if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/' . $variables['requestType']['id'] . '.html.twig')) {
+                return $this->render('vrc/request_templates/' . $variables['requestType']['id'] . '.html.twig', $variables);
+            } else {
+                return $this->render('vrc/request.html.twig', $variables);
+            }
+        }
+
+        /**
+         * @Route("/labels")
+         * @Template
+         */
+        public
+        function labelsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+        {
+            $variables = [];
+            $variables['title'] = $translator->trans('labels');
+            $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('labels');
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'labels'])['hydra:member'];
+
+            return $variables;
+        }
+
+        /**
+         * @Route("/labels/{id}")
+         * @Template
+         */
+        public
+        function labelAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+        {
+            $variables = [];
+
+            // Lets see if we need to create
+            if ($id == 'new') {
+                $variables['resource'] = ['@id' => null, 'id' => 'new', 'name' => 'label'];
+            } else {
+                $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'labels', 'id' => $id]);
             }
 
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
+            // If it is a delete action we can stop right here
+            if ($request->query->get('action') == 'delete') {
+                $commonGroundService->deleteResource($variables['resource']);
 
-            /* @to this redirect is a hotfix */
-            if (array_key_exists('id', $variables['resource'])) {
-                return $this->redirect($this->generateUrl('app_vrc_request', ['id' => $variables['resource']['id']]));
+                return $this->redirect($this->generateUrl('app_vrc_labels'));
+            }
+
+            $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+
+            // Lets see if there is a post to procces
+            if ($request->isMethod('POST')) {
+
+                // Passing the variables to the resource
+                $resource = $request->request->all();
+                $resource['@id'] = $variables['resource']['@id'];
+                $resource['id'] = $variables['resource']['id'];
+
+                // If there are any sub data sources the need to be removed below in order to save the resource
+                // unset($resource['somedatasource'])
+
+                $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'labels']));
+            }
+
+            return $variables;
+        }
+
+        /**
+         * @Route("/download/{id}/{requestId}")
+         * @Template
+         */
+        public
+        function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id, $requestId)
+        {
+            $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
+            $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
+            $query = ['request' => $currentRequest['@id']];
+            $render = $commonGroundService->createResource($query, $document['uri'] . '/render');
+            switch ($document['type']) {
+                case 'word':
+                    $phpWord = new PhpWord();
+                    $section = $phpWord->addSection();
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
+                    $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+                    $filename = dirname(__FILE__, 3) . "/var/{$document['name']}.docx";
+                    $objWriter->save($filename);
+                    header('Content-Type: application/vnd.ms-word');
+                    header('Content-Disposition: attachment; filename=' . $document['name'] . '.docx');
+                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                    flush();
+                    readfile($filename);
+                    unlink($filename); // deletes the temporary file
+                    exit;
             }
         }
-        //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
-
-        /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')) {
-            return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
-        } else {
-            return $this->render('vrc/request.html.twig', $variables);
-        }
     }
-
-    /**
-     * @Route("/labels")
-     * @Template
-     */
-    public function labelsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
-    {
-        $variables = [];
-        $variables['title'] = $translator->trans('labels');
-        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('labels');
-        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'labels'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/labels/{id}")
-     * @Template
-     */
-    public function labelAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
-    {
-        $variables = [];
-
-        // Lets see if we need to create
-        if ($id == 'new') {
-            $variables['resource'] = ['@id' => null, 'id' => 'new', 'name' => 'label'];
-        } else {
-            $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'labels', 'id' => $id]);
-        }
-
-        // If it is a delete action we can stop right here
-        if ($request->query->get('action') == 'delete') {
-            $commonGroundService->deleteResource($variables['resource']);
-
-            return $this->redirect($this->generateUrl('app_vrc_labels'));
-        }
-
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
-
-        // Lets see if there is a post to procces
-        if ($request->isMethod('POST')) {
-
-            // Passing the variables to the resource
-            $resource = $request->request->all();
-            $resource['@id'] = $variables['resource']['@id'];
-            $resource['id'] = $variables['resource']['id'];
-
-            // If there are any sub data sources the need to be removed below in order to save the resource
-            // unset($resource['somedatasource'])
-
-            $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'labels']));
-        }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/download/{id}/{requestId}")
-     * @Template
-     */
-    public function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id, $requestId)
-    {
-        $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
-        $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
-        $query = ['request' => $currentRequest['@id']];
-        $render = $commonGroundService->createResource($query, $document['uri'].'/render');
-        switch ($document['type']) {
-            case 'word':
-                $phpWord = new PhpWord();
-                $section = $phpWord->addSection();
-                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
-                $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-                $filename = dirname(__FILE__, 3)."/var/{$document['name']}.docx";
-                $objWriter->save($filename);
-                header('Content-Type: application/vnd.ms-word');
-                header('Content-Disposition: attachment; filename='.$document['name'].'.docx');
-                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                flush();
-                readfile($filename);
-                unlink($filename); // deletes the temporary file
-                exit;
-        }
-    }
-}
