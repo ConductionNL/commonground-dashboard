@@ -1,7 +1,7 @@
 <div class="modal fade" style="text-align: center" id="updateProperty{{ id }}" tabindex="-1"
      role="dialog"
      aria-labelledby="{{ id }}Title" aria-hidden="true">
-    <div class="modal-dialog model-dialog-centered" role="document" {% if property.iri == 'arc/event' or property.format == 'calendar' %}style="min-width: 900px !important;"{% elseif property.iri == 'pdc/offer' %}style="min-width: 600px !important;"{% endif %}>
+    <div class="modal-dialog model-dialog-centered" role="document" {% if property.iri == 'arc/event' or property.format == 'calendar' %}style="min-width: 900px !important;"{% else %}style="min-width: 600px !important;"{% endif %}>
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{ id }}Title"><b>{{ 'set property '|trans|capitalize }} {{ property.title }}</b></h5>
@@ -67,7 +67,7 @@
                     {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
                         {% include 'vrc/formelements/generic.html.twig'  with {'type': property.format} %}
                     {% endif %}
-                    <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                    <button class="btn btn-success mt-3"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
                 </form>
             </div>
         </div>

@@ -36,7 +36,7 @@
 </script>
 
 {% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'})['hydra:member'] %}
-<div class="form-control" id="{{property.name}}_combobox" style="margin-bottom: 20px">
+<div id="{{property.name}}_combobox">
     <div class="input__hint">Selecteer een {{property.title}}</div>
     <input type="hidden" value="{{ property.name }}" name="newPropName">
     <select name="newProp" {# onclick="enableBegraafplaats()" #} id="dropdown-{{property.name}}" class="form-control">

@@ -7,37 +7,69 @@
             <input type="hidden" value="{{ property.name }}" name="newPropName">
             {% if value is defined and value is not empty %}
                 {% if value is iterable %}
-                {% set id = 1 %}
-                {% for assent in value %}
-                    {% set assent = commonground_resource(assent) %}
-                    {% set contact = commonground_resource(assent.contact) %}
-                    <div id="{{ id }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
-                        <h2 id="{{ id }}">{{ contact.givenName }} {{ contact.familyName }}</h2>
-                        <div id="{{ id }}" style="line-height: 15px">
-                            <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
-                            <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
-                            <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}" name="newProp[{{ id }}][email]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}" name="newProp[{{ id }}][telephone]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}" name="newProp[{{ id }}][person][givenName]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}" name="newProp[{{ id }}][person][familyName]">
-                            <button class="btn btn-primary" id="{{ id }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
+                    {% set id = 1 %}
+                    {% for assent in value %}
+                        {% set assent = commonground_resource(assent) %}
+                        {% set contact = commonground_resource(assent.contact) %}
+                        <div id="{{ id }}" class="col-sm-12 col-md-5"
+                             style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                            <h2 id="{{ id }}">{{ contact.givenName }} {{ contact.familyName }}</h2>
+                            <div id="{{ id }}" style="line-height: 15px">
+                                <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
+                                <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
+                                <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
+                                       name="newProp[{{ id }}][email]">
+                                <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
+                                       name="newProp[{{ id }}][telephone]">
+                                <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}"
+                                       name="newProp[{{ id }}][person][givenName]">
+                                <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
+                                       name="newProp[{{ id }}][person][familyName]">
+                                <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
+                                       name="newProp[{{ id }}][person][familyName]">
+                                <input type="hidden" name="newProp[requestType]" value="{{ resource.requestType }}">
+                                <input type="hidden" name="newProp[component]" value="vrc">
+                                <input type="hidden" name="newProp[type]" value="requests">
+                                <input type="hidden" name="newProp[status]" value="{{ resource.status }}">
+                                <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">
+                                <input type="hidden" name="newProp[processType]" value="{{ resource.processType }}">
+                                <button class="btn btn-primary" id="{{ id }}"
+                                        onclick="storedDelete(this, '{{ property.maxItems }}')"
+                                        style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i
+                                        style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    {% set id = id + 1 %}
-                {% endfor %}
+                        {% set id = id + 1 %}
+                    {% endfor %}
                 {% else %}
                     {% set assent = commonground_resource(value) %}
                     {% set contact = commonground_resource(assent.contact) %}
-                    <div id="{{ id }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                    <div id="{{ id }}" class="col-sm-12 col-md-5"
+                         style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
                         <h2 id="{{ id }}">{{ contact.givenName }} {{ contact.familyName }}</h2>
                         <div id="{{ id }}" style="line-height: 15px">
                             <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
                             <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
-                            <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}" name="newProp[{{ id }}][email]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}" name="newProp[{{ id }}][telephone]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}" name="newProp[{{ id }}][person][givenName]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}" name="newProp[{{ id }}][person][familyName]">
-                            <button class="btn btn-primary" id="{{ id }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
+                            <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
+                                   name="newProp[{{ id }}][email]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
+                                   name="newProp[{{ id }}][telephone]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}"
+                                   name="newProp[{{ id }}][person][givenName]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
+                                   name="newProp[{{ id }}][person][familyName]">
+                            <input type="hidden" name="newProp[requestType]" value="{{ resource.requestType }}">
+                            <input type="hidden" name="newProp[component]" value="vrc">
+                            <input type="hidden" name="newProp[type]" value="requests">
+                            <input type="hidden" name="newProp[status]" value="{{ resource.status }}">
+                            <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">
+                            <input type="hidden" name="newProp[processType]" value="{{ resource.processType }}">
+                            <button class="btn btn-primary" id="{{ id }}"
+                                    onclick="storedDelete(this, '{{ property.maxItems }}')"
+                                    style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i
+                                    style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen
+                            </button>
                         </div>
                     </div>
                 {% endif %}
@@ -46,16 +78,26 @@
     </div>
     <div id="personForm" class="col-sm-12">
         <div class="form-group">
-            <label class="input__label" for="voornaam">Voornaam</label>
+            <label class="input__label" for="getuigenVoornaam">Voornaam</label>
             <input class="form-control" style="width: 100%" id="getuigenVoornaam" type="text">
-            <label class="input__label" for="achternaam">Achternaam</label>
+            <label class="input__label mt-1" for="getuigenTussenvoegsel">Tussenvoegsel</label>
+            <input class="form-control" style="width: 100%" id="getuigenTussenvoegsel" type="text">
+            <label class="input__label mt-1" for="getuigenAchternaam">Achternaam</label>
             <input class="form-control" style="width: 100%" id="getuigenAchternaam" type="text">
-            <label class="input__label" for="email">Email</label>
+            <label class="input__label mt-1" for="getuigenEmail">Email</label>
             <input class="form-control" style="width: 100%" id="getuigenEmail" type="email">
             <span id="inputResult"></span>
-            <label class="input__label" for="telefoon">Telefoonnummer</label>
+            <label class="input__label" for="getuigenTelefoon">Telefoonnummer</label>
             <input class="form-control" style="width: 100%" id="getuigenTelefoon" type="tel">
-            <button class="btn btn-primary" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Uitnodigen</button>
+            <p class="mt-2"><b>Met toestemming van de instemmende?</b></p>
+            <input type="radio" id="withPermission" name="withPermission" value="true">
+            <label for="withPermission">Ja</label><br>
+            <input type="radio" id="withoutPermission" name="withPermission" value="false">
+            <label for="withoutPermission">Nee</label>
+            <button class="btn btn-primary" id="toevoegen"
+                    onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button"
+                    style="margin-top: 5px; width: 100%">Uitnodigen
+            </button>
         </div>
     </div>
 </div>
@@ -65,29 +107,45 @@
 
     function addGetuigen(propertyName, items) {
         let input = document.getElementById('getuigenEmail');
-        if(!input.checkValidity()){
-            document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
-        }else{
+        if (!input.checkValidity()) {
+            document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult <br>';
+        } else {
             document.getElementById('inputResult').innerHTML = '';
             let container = document.getElementById("getuigen-container");
-            if(container.children.length === parseInt(items)){
+            if (container.children.length === parseInt(items)) {
                 $('#toevoegen').prop('disabled', true);
                 personForm.setAttribute('style', 'display: none;');
             }
             let email = document.getElementById('getuigenEmail').value;
             let telefoon = document.getElementById('getuigenTelefoon').value;
             let voornaam = document.getElementById('getuigenVoornaam').value;
+            let tussenvoegsel = document.getElementById('getuigenTussenvoegsel').value;
             let achternaam = document.getElementById('getuigenAchternaam').value;
+            var radios = document.getElementsByName('withPermission');
+            var value;
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].type === 'radio' && radios[0].checked) {
+                    // get value, set checked flag or do whatever you need to
+                    toestemming = 'Met toestemming';
+                } else {
+                    toestemming = 'Zonder toestemming';
+                }
+            }
+            var requester = "{{ commonground_resource(app.user.organization).rsin }}";
+
             let nameCount = document.getElementById("getuigen-container").children.length - 1;
             let hEmail = document.createElement('input');
             let hTelefoon = document.createElement('input');
             let hVoornaam = document.createElement('input');
+            let hTussenvoegsel = document.createElement('input');
             let hAchternaam = document.createElement('input');
+            let hPermission = document.createElement('input');
+            let hRequester = document.createElement('input');
             let counter;
 
             console.log(document.getElementById("getuigen-container").children.length - 1);
 
-            if(nameCount !== undefined){
+            if (nameCount !== undefined) {
                 counter = parseInt(nameCount)
             } else {
                 counter = container.children.length;
@@ -96,33 +154,42 @@
             hEmail.id = counter.toString();
             hTelefoon.id = counter.toString();
             hVoornaam.id = counter.toString();
+            hTussenvoegsel.id = counter.toString();
             hAchternaam.id = counter.toString();
-
+            hPermission.id = counter.toString();
+            hRequester.id = counter.toString();
 
             hEmail.type = 'hidden';
             hTelefoon.type = 'hidden';
             hVoornaam.type = 'hidden';
+            hTussenvoegsel.type = 'hidden';
             hAchternaam.type = 'hidden';
+            hPermission.type = 'hidden';
+            hRequester.type = 'hidden';
 
             hEmail.value = email;
             hTelefoon.value = telefoon;
             hVoornaam.value = voornaam;
+            hTussenvoegsel.value = tussenvoegsel;
             hAchternaam.value = achternaam;
+            hPermission.value = toestemming;
+            hRequester.value = requester;
 
-            hEmail.name = 'newProp['+ counter +'][email]';
-            hTelefoon.name = 'newProp['+ counter +'][telephone]';
-            hVoornaam.name = 'newProp['+ counter +'][person][givenName]';
-            hAchternaam.name = 'newProp['+ counter +'][person][familyName]';
-
+            hEmail.name = 'newProp[' + counter + '][email]';
+            hTelefoon.name = 'newProp[' + counter + '][telephone]';
+            hVoornaam.name = 'newProp[' + counter + '][contact][givenName]';
+            hTussenvoegsel.name = 'newProp[' + counter + '][contact][additionalName]';
+            hAchternaam.name = 'newProp[' + counter + '][contact][familyName]';
+            hPermission.name = 'newProp[' + counter + '][contact][familyName]';
+            hRequester.name = 'newProp[' + counter + '][requester]';
 
             let outerDiv = document.createElement('div');
-            outerDiv.className = "col-sm-12 col-md-6";
             outerDiv.setAttribute('style', 'min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;');
             outerDiv.id = counter.toString();
             container.appendChild(outerDiv);
 
             let h2 = document.createElement('h2');
-            h2.innerHTML = voornaam + " " + achternaam;
+            h2.innerHTML = voornaam + " " + tussenvoegsel + " " + achternaam;
             h2.id = counter.toString();
             outerDiv.appendChild(h2);
 
@@ -133,6 +200,7 @@
 
             let pEmail = document.createElement('p');
             pEmail.innerHTML = 'Email: ' + email;
+            pEmail.setAttribute('style', 'margin-bottom: 0px !important;');
             pEmail.id = counter.toString();
             innerDiv.appendChild(pEmail);
 
@@ -142,9 +210,21 @@
             pTelefoon.id = counter.toString();
             innerDiv.append(pTelefoon);
 
+            let pToestemming = document.createElement('p');
+            pToestemming.innerHTML = toestemming;
+            pToestemming.setAttribute('style', 'margin-bottom: 5px;');
+            pToestemming.id = counter.toString();
+            innerDiv.append(pToestemming);
+
+            let pRequester = document.createElement('p');
+            pRequester.innerHTML = requester;
+            pRequester.setAttribute('style', 'margin-bottom: 5px;');
+            pRequester.id = counter.toString();
+            innerDiv.append(pRequester);
+
             let button = document.createElement('button');
             button.innerHTML = '<i style="margin-right: 10px" class="fas fa-trash-alt"></i> Verwijderen';
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function () {
                 removeGetuigen(outerDiv, '{{ property.maxItems }}');
             });
             button.className = 'btn btn-primary';
@@ -156,13 +236,19 @@
             innerDiv.appendChild(hEmail);
             innerDiv.appendChild(hTelefoon);
             innerDiv.appendChild(hVoornaam);
+            innerDiv.appendChild(hTussenvoegsel);
             innerDiv.appendChild(hAchternaam);
+            innerDiv.appendChild(hToestemming);
+            innerDiv.appendChild(hRequester);
             innerDiv.appendChild(button);
 
-            document.getElementById('getuigenEmail').value = null;
-            document.getElementById('getuigenTelefoon').value = null;
-            document.getElementById('getuigenVoornaam').value = null;
-            document.getElementById('getuigenAchternaam').value = null;
+            document.getElementById('getuigenEmail').value = '';
+            document.getElementById('getuigenTelefoon').value = '';
+            document.getElementById('getuigenVoornaam').value = '';
+            document.getElementById('getuigenTussenvoegsel').value = '';
+            document.getElementById('getuigenAchternaam').value = '';
+            document.getElementById('withoutPermission').checked = false;
+            document.getElementById('withPermission').checked = false;
         }
 
     }
@@ -170,20 +256,20 @@
     function removeGetuigen(target, items) {
         let container = document.getElementById("getuigen-container");
         target.remove();
-        if(container.children.length < parseInt(items) + 1){
+        if (container.children.length < parseInt(items) + 1) {
             $('#toevoegen').prop('disabled', false);
             personForm.setAttribute('style', 'display: block;');
         }
     }
 
-    function storedDelete(given, items){
+    function storedDelete(given, items) {
         let container = document.getElementById("getuigen-container");
         let td = given.parentNode;
         let tr = td.parentNode;
         given.remove();
         td.remove();
         tr.remove();
-        if(container.children.length < parseInt(items) + 1){
+        if (container.children.length < parseInt(items) + 1) {
             $('#toevoegen').prop('disabled', false);
             personForm.setAttribute('style', 'display: block;');
         }

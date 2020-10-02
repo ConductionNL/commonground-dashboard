@@ -15,6 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                {{ dump(resource) }}
                 {% for property in requestType.properties %}
                     {% if property.type is defined and property.type is not empty and property.title != 'Order'
                         and property.title != 'Extras'
@@ -31,7 +32,7 @@
                                 <i style="color: deepskyblue" class="fas fa-info" data-toggle="tooltip" data-placement="right" title="{{ property.description }}"></i>
                             {% endif %}
                         </td>
-                        <td>{{ property.title|trans }}</td>
+                        <td>{{ property.title|trans|capitalize }}</td>
 
                         {# Waarom lieten we deze info zien? #}
 {#                        <td>{{ property.type }} ({{ property.format }} | {{ property.iri }})</td>#}
