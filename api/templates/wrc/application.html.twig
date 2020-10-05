@@ -189,7 +189,7 @@
             {% block javascript %}
             //audit_trails
             $.ajax({
-                url: "/api/wrc/audit_trails",
+                url: "{{ path('app_api_collection', {'component': 'wrc', 'type': 'audit_trails'}) }}",
                 type: 'GET',
                 dataType: 'json',
                 success: function(result) {
@@ -206,7 +206,7 @@
             });
             //change_logs
             $.ajax({
-                url: "/api/wrc/change_logs",
+                url: "{{ path('app_api_collection', {'component': 'wrc', 'type': 'change_logs'}) }}",
                 type: 'GET',
                 dataType: 'json',
                 success: function(result) {
