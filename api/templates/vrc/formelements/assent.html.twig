@@ -52,19 +52,18 @@
                             <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
                             <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
                             <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
-                                   name="newProp[{{ id }}][email]">
+                                   name="newProp[{{ id }}][contact][email]">
                             <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
-                                   name="newProp[{{ id }}][telephone]">
+                                   name="newProp[{{ id }}][contact][telephone]">
                             <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}"
-                                   name="newProp[{{ id }}][person][givenName]">
+                                   name="newProp[{{ id }}][givenName]">
                             <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
-                                   name="newProp[{{ id }}][person][familyName]">
-                            <input type="hidden" name="newProp[requestType]" value="{{ resource.requestType }}">
-                            <input type="hidden" name="newProp[component]" value="vrc">
-                            <input type="hidden" name="newProp[type]" value="requests">
-                            <input type="hidden" name="newProp[status]" value="{{ resource.status }}">
-                            <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">
-                            <input type="hidden" name="newProp[processType]" value="{{ resource.processType }}">
+                                   name="newProp[{{ id }}][familyName]">
+{#                            <input type="hidden" name="newProp[component]" value="vrc">#}
+{#                            <input type="hidden" name="newProp[type]" value="requests">#}
+{#                            <input type="hidden" name="newProp[status]" value="{{ resource.status }}">#}
+{#                            <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">#}
+{#                            <input type="hidden" name="newProp[processType]" value="{{ resource.processType }}">#}
                             <button class="btn btn-primary" id="{{ id }}"
                                     onclick="storedDelete(this, '{{ property.maxItems }}')"
                                     style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i
@@ -146,7 +145,7 @@
             console.log(document.getElementById("getuigen-container").children.length - 1);
 
             if (nameCount !== undefined) {
-                counter = parseInt(nameCount)
+                counter = parseInt(nameCount)  - 1;
             } else {
                 counter = container.children.length;
             }
@@ -175,12 +174,12 @@
             hPermission.value = toestemming;
             hRequester.value = requester;
 
-            hEmail.name = 'newProp[' + counter + '][email]';
-            hTelefoon.name = 'newProp[' + counter + '][telephone]';
+            hEmail.name = 'newProp[' + counter + '][contact][emails][0][email]';
+            hTelefoon.name = 'newProp[' + counter + '][contact][telephones][0][telephone]';
             hVoornaam.name = 'newProp[' + counter + '][contact][givenName]';
             hTussenvoegsel.name = 'newProp[' + counter + '][contact][additionalName]';
             hAchternaam.name = 'newProp[' + counter + '][contact][familyName]';
-            hPermission.name = 'newProp[' + counter + '][contact][familyName]';
+            // hPermission.name = 'newProp[' + counter + '][familyName]';
             hRequester.name = 'newProp[' + counter + '][requester]';
 
             let outerDiv = document.createElement('div');
