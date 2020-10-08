@@ -44,7 +44,7 @@ class VrcController extends AbstractController
     {
         $variables = [];
         $variables['title'] = $translator->trans('requests');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('requests');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
         $variables['thisPath'] = 'app_vrc_requests';
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
 //        $query = [];
@@ -73,7 +73,7 @@ class VrcController extends AbstractController
 //                $query = $query.'&requestType='.$variables['requestType'];
 //            } else {
 //            }
-            $variables['subtitle'] = 'alle ' . $variables['requestType']['name'];
+            $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
         } else {
             if ($filterStatus == 'none') {
@@ -121,8 +121,8 @@ class VrcController extends AbstractController
                     $date = $createdFilter;
 
                     // Because you cant filter for 1 date we have to filter between 2 dates
-                    $date1 = date('Y-m-d', strtotime($date . ' - 1 day'));
-                    $date2 = date('Y-m-d', strtotime($date . ' + 1 day'));
+                    $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
+                    $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
 
 //                    if (isset($query) && !empty($query)) {
                     $query['dateCreated[strictly_before]'] = $date2;
@@ -136,8 +136,8 @@ class VrcController extends AbstractController
                     $date = $modifiedFilter;
 
                     // Because you cant filter for 1 date we have to filter between 2 dates
-                    $date1 = date('Y-m-d', strtotime($date . ' - 1 day'));
-                    $date2 = date('Y-m-d', strtotime($date . ' + 1 day'));
+                    $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
+                    $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
                     $query['dateModified[strictly_before]'] = $date2;
                     $query['dateModified[strictly_after]'] = $date1;
 //                    if (isset($query) && !empty($query)) {
@@ -165,10 +165,10 @@ class VrcController extends AbstractController
 
             $response = new Response();
 
-            $filename = date('YmdHis') . '_requests';
+            $filename = date('YmdHis').'_requests';
             //set headers
             $response->headers->set('Content-Type', 'text/csv');
-            $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '.csv');
+            $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename.'.csv');
 
             $response->setContent($serializer->encode($variables['resources'], 'csv'));
 
@@ -178,8 +178,8 @@ class VrcController extends AbstractController
         $variables['query'] = $query;
 
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig')) {
-            return $this->render('vrc/requests_templates/' . $variables['requestType']['id'] . '.html.twig', $variables);
+        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
+            return $this->render('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
         }
@@ -209,8 +209,8 @@ class VrcController extends AbstractController
             }
         } else {
             $variables['resource'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
-            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/change_log');
-            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'] . '/audit_trail');
+            $variables['changeLog'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/change_log');
+            $variables['auditTrail'] = $commonGroundService->getResourceList($variables['resource']['@id'].'/audit_trail');
             $variables['submitters'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'submitters'], ['request' => $variables['resource']['@id']])['hydra:member'];
             $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
             if ($commonGroundService->getComponentHealth('trc')) {
@@ -247,7 +247,7 @@ class VrcController extends AbstractController
             foreach ($variables['resource']['processes'] as $proces) {
                 $camundaTasks = $commonGroundService->getResourceList(['component' => 'be', 'type' => 'task'], ['processInstanceId' => $commonGroundService->getUuidFromUrl($proces)]);
                 foreach ($camundaTasks as $camundaTask) {
-                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/' . $camundaTask['id'] . '/rendered-form']);
+                    $camundaTask['form'] = $commonGroundService->getResource(['component' => 'be', 'type' => 'task/'.$camundaTask['id'].'/rendered-form']);
                     $variables['camundaTasks'][] = $camundaTask;
                 }
             }
@@ -298,8 +298,8 @@ class VrcController extends AbstractController
             if (array_key_exists('task', $resource)) {
                 $task = $resource['task'];
                 $task['topic'] = $resource['@id'];
-                $task['priority'] = (int)$task['priority'];
-                $task['percentageDone'] = (int)$task['percentageDone'];
+                $task['priority'] = (int) $task['priority'];
+                $task['percentageDone'] = (int) $task['percentageDone'];
 
                 // The resource action section
                 if (array_key_exists('@id', $task) && array_key_exists('action', $task)) {
@@ -330,11 +330,11 @@ class VrcController extends AbstractController
 
                 // Specific code to fix assent aanvrager/rechthebbende
                 if ($resource['newPropName'] == 'aanvrager/rechthebbende') {
-                    for($i=0;$i < count($resource['properties']['aanvrager/rechthebbende']);$i++){
+                    for ($i = 0; $i < count($resource['properties']['aanvrager/rechthebbende']); $i++) {
                         $resource['properties']['aanvrager/rechthebbende'][$i]['name'] = 'Instemmingsverzoek voor Aanvragen begrafenis';
                         $resource['properties']['aanvrager/rechthebbende'][$i]['description'] = 'U heeft een instemmingsverzoek ontvangen als aanvrager/rechthebbende voor een Aavragen begrafenis aangevraagd door '.$commonGroundService->getResource($this->getUser()->getOrganization())['name'].'.';
                         $resource['properties']['aanvrager/rechthebbende'][$i]['requester'] = $this->getUser()->getOrganization();
-                        if ($i > 1){
+                        if ($i > 1) {
                             unset($resource['properties']['aanvrager/rechthebbende'][$i]);
                         }
                     }
@@ -364,7 +364,7 @@ class VrcController extends AbstractController
                 //We are going to need a JWT token for the DRC and ZTC here
 
                 $token = $commonGroundService->getJwtToken('ztc');
-                $commonGroundService->setHeader('Authorization', 'Bearer ' . $token);
+                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
                 $infoObjectTypes = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'informatieobjecttypen'])['results'];
 
                 foreach ($infoObjectTypes as $infoObjectType) {
@@ -383,7 +383,7 @@ class VrcController extends AbstractController
                 $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
 
                 $token = $commonGroundService->getJwtToken('drc');
-                $commonGroundService->setHeader('Authorization', 'Bearer ' . $token);
+                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
 
                 $result = $commonGroundService->createResource($drc, ['component' => 'drc', 'type' => 'enkelvoudiginformatieobjecten']);
 
@@ -409,8 +409,8 @@ class VrcController extends AbstractController
         //$variables['casetypes'] = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'zaaktypen'])["results"];
 
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/' . $variables['requestType']['id'] . '.html.twig')) {
-            return $this->render('vrc/request_templates/' . $variables['requestType']['id'] . '.html.twig', $variables);
+        if (array_key_exists('requestType', $variables['resource']) && $this->get('twig')->getLoader()->exists('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig')) {
+            return $this->render('vrc/request_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         } else {
             return $this->render('vrc/request.html.twig', $variables);
         }
@@ -420,12 +420,11 @@ class VrcController extends AbstractController
      * @Route("/labels")
      * @Template
      */
-    public
-    function labelsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function labelsAction(CommonGroundService $commonGroundService, TranslatorInterface $translator)
     {
         $variables = [];
         $variables['title'] = $translator->trans('labels');
-        $variables['subtitle'] = $translator->trans('all') . ' ' . $translator->trans('labels');
+        $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('labels');
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'labels'])['hydra:member'];
 
         return $variables;
@@ -435,8 +434,7 @@ class VrcController extends AbstractController
      * @Route("/labels/{id}")
      * @Template
      */
-    public
-    function labelAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
+    public function labelAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id)
     {
         $variables = [];
 
@@ -477,23 +475,22 @@ class VrcController extends AbstractController
      * @Route("/download/{id}/{requestId}")
      * @Template
      */
-    public
-    function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id, $requestId)
+    public function DownloadAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, $id, $requestId)
     {
         $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
         $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
         $query = ['request' => $currentRequest['@id']];
-        $render = $commonGroundService->createResource($query, $document['uri'] . '/render');
+        $render = $commonGroundService->createResource($query, $document['uri'].'/render');
         switch ($document['type']) {
             case 'word':
                 $phpWord = new PhpWord();
                 $section = $phpWord->addSection();
                 \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
                 $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-                $filename = dirname(__FILE__, 3) . "/var/{$document['name']}.docx";
+                $filename = dirname(__FILE__, 3)."/var/{$document['name']}.docx";
                 $objWriter->save($filename);
                 header('Content-Type: application/vnd.ms-word');
-                header('Content-Disposition: attachment; filename=' . $document['name'] . '.docx');
+                header('Content-Disposition: attachment; filename='.$document['name'].'.docx');
                 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                 flush();
                 readfile($filename);
