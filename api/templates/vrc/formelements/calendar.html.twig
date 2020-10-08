@@ -1,6 +1,6 @@
 {% set calendarUrls = [] %}
 {% for property in resource.properties %}
-    {% if 'http' in property %}
+    {% if '://grc' in property %}
         {% set propObject = commonground_resource(property) %}
         {% if propObject is defined and propObject is not empty %}
             {% for property in propObject %}
