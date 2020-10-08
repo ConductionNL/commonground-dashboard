@@ -1,0 +1,191 @@
+<br>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row" id="getuigen-container">
+            <div id="0"></div>
+            <input type="hidden" value="{{ property.name }}" name="newPropName">
+            {% if value is defined and value is not empty %}
+                {% if value is iterable %}
+                {% set id = 1 %}
+                {% for assent in value %}
+                    {% set assent = commonground_resource(assent) %}
+                    {% set contact = commonground_resource(assent.contact) %}
+                    <div id="{{ id }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                        <h2 id="{{ id }}">{{ contact.givenName }} {{ contact.familyName }}</h2>
+                        <div id="{{ id }}" style="line-height: 15px">
+                            <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
+                            <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
+                            <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}" name="newProp[{{ id }}][email]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}" name="newProp[{{ id }}][telephone]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}" name="newProp[{{ id }}][person][givenName]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}" name="newProp[{{ id }}][person][familyName]">
+                            <button class="btn btn-primary" id="{{ id }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
+                        </div>
+                    </div>
+                    {% set id = id + 1 %}
+                {% endfor %}
+                {% else %}
+                    {% set assent = commonground_resource(value) %}
+                    {% set contact = commonground_resource(assent.contact) %}
+                    <div id="{{ id }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                        <h2 id="{{ id }}">{{ contact.givenName }} {{ contact.familyName }}</h2>
+                        <div id="{{ id }}" style="line-height: 15px">
+                            <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
+                            <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
+                            <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}" name="newProp[{{ id }}][email]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}" name="newProp[{{ id }}][telephone]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}" name="newProp[{{ id }}][person][givenName]">
+                            <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}" name="newProp[{{ id }}][person][familyName]">
+                            <button class="btn btn-primary" id="{{ id }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div id="personForm" class="col-sm-12">
+        <div class="form-group">
+            <label class="input__label" for="voornaam">Voornaam</label>
+            <input class="form-control" style="width: 100%" id="getuigenVoornaam" type="text">
+            <label class="input__label" for="achternaam">Achternaam</label>
+            <input class="form-control" style="width: 100%" id="getuigenAchternaam" type="text">
+            <label class="input__label" for="email">Email</label>
+            <input class="form-control" style="width: 100%" id="getuigenEmail" type="email">
+            <span id="inputResult"></span>
+            <label class="input__label" for="telefoon">Telefoonnummer</label>
+            <input class="form-control" style="width: 100%" id="getuigenTelefoon" type="tel">
+            <button class="btn btn-primary" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Uitnodigen</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let personForm = document.getElementById("personForm");
+
+    function addGetuigen(propertyName, items) {
+        let input = document.getElementById('getuigenEmail');
+        if(!input.checkValidity()){
+            document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
+        }else{
+            document.getElementById('inputResult').innerHTML = '';
+            let container = document.getElementById("getuigen-container");
+            if(container.children.length === parseInt(items)){
+                $('#toevoegen').prop('disabled', true);
+                personForm.setAttribute('style', 'display: none;');
+            }
+            let email = document.getElementById('getuigenEmail').value;
+            let telefoon = document.getElementById('getuigenTelefoon').value;
+            let voornaam = document.getElementById('getuigenVoornaam').value;
+            let achternaam = document.getElementById('getuigenAchternaam').value;
+            let nameCount = document.getElementById("getuigen-container").children.length - 1;
+            let hEmail = document.createElement('input');
+            let hTelefoon = document.createElement('input');
+            let hVoornaam = document.createElement('input');
+            let hAchternaam = document.createElement('input');
+            let counter;
+
+            console.log(document.getElementById("getuigen-container").children.length - 1);
+
+            if(nameCount !== undefined){
+                counter = parseInt(nameCount)
+            } else {
+                counter = container.children.length;
+            }
+
+            hEmail.id = counter.toString();
+            hTelefoon.id = counter.toString();
+            hVoornaam.id = counter.toString();
+            hAchternaam.id = counter.toString();
+
+
+            hEmail.type = 'hidden';
+            hTelefoon.type = 'hidden';
+            hVoornaam.type = 'hidden';
+            hAchternaam.type = 'hidden';
+
+            hEmail.value = email;
+            hTelefoon.value = telefoon;
+            hVoornaam.value = voornaam;
+            hAchternaam.value = achternaam;
+
+            hEmail.name = 'newProp['+ counter +'][email]';
+            hTelefoon.name = 'newProp['+ counter +'][telephone]';
+            hVoornaam.name = 'newProp['+ counter +'][person][givenName]';
+            hAchternaam.name = 'newProp['+ counter +'][person][familyName]';
+
+
+            let outerDiv = document.createElement('div');
+            outerDiv.className = "col-sm-12 col-md-6";
+            outerDiv.setAttribute('style', 'min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;');
+            outerDiv.id = counter.toString();
+            container.appendChild(outerDiv);
+
+            let h2 = document.createElement('h2');
+            h2.innerHTML = voornaam + " " + achternaam;
+            h2.id = counter.toString();
+            outerDiv.appendChild(h2);
+
+            let innerDiv = document.createElement('div');
+            innerDiv.setAttribute('style', 'line-height: 15px');
+            innerDiv.id = counter.toString();
+            outerDiv.appendChild(innerDiv);
+
+            let pEmail = document.createElement('p');
+            pEmail.innerHTML = 'Email: ' + email;
+            pEmail.id = counter.toString();
+            innerDiv.appendChild(pEmail);
+
+            let pTelefoon = document.createElement('p');
+            pTelefoon.innerHTML = 'Telefoon: ' + telefoon;
+            pTelefoon.setAttribute('style', 'margin-bottom: 5px;');
+            pTelefoon.id = counter.toString();
+            innerDiv.append(pTelefoon);
+
+            let button = document.createElement('button');
+            button.innerHTML = '<i style="margin-right: 10px" class="fas fa-trash-alt"></i> Verwijderen';
+            button.addEventListener('click', function(){
+                removeGetuigen(outerDiv, '{{ property.maxItems }}');
+            });
+            button.className = 'btn btn-primary';
+            button.setAttribute('style', 'background-color: red; margin-bottom: 5px; width:100%;')
+            button.type = 'button';
+            button.id = counter.toString();
+
+
+            innerDiv.appendChild(hEmail);
+            innerDiv.appendChild(hTelefoon);
+            innerDiv.appendChild(hVoornaam);
+            innerDiv.appendChild(hAchternaam);
+            innerDiv.appendChild(button);
+
+            document.getElementById('getuigenEmail').value = null;
+            document.getElementById('getuigenTelefoon').value = null;
+            document.getElementById('getuigenVoornaam').value = null;
+            document.getElementById('getuigenAchternaam').value = null;
+        }
+
+    }
+
+    function removeGetuigen(target, items) {
+        let container = document.getElementById("getuigen-container");
+        target.remove();
+        if(container.children.length < parseInt(items) + 1){
+            $('#toevoegen').prop('disabled', false);
+            personForm.setAttribute('style', 'display: block;');
+        }
+    }
+
+    function storedDelete(given, items){
+        let container = document.getElementById("getuigen-container");
+        let td = given.parentNode;
+        let tr = td.parentNode;
+        given.remove();
+        td.remove();
+        tr.remove();
+        if(container.children.length < parseInt(items) + 1){
+            $('#toevoegen').prop('disabled', false);
+            personForm.setAttribute('style', 'display: block;');
+        }
+    }
+</script>

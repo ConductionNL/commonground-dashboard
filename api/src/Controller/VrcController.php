@@ -38,6 +38,7 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/requests/{filterStatus}", defaults={"filterStatus"="none"})
+     * @Template
      */
     public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $filterStatus)
     {
@@ -182,12 +183,11 @@ class VrcController extends AbstractController
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
         }
-
-        return $this->render('vrc/requests.html.twig', $variables);
     }
 
     /**
      * @Route("/request/{id}")
+     * @Template
      */
     public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
@@ -259,6 +259,7 @@ class VrcController extends AbstractController
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
+
             $resource = $request->request->all();
 
             // if we have a resource we want to use that id
@@ -311,17 +312,42 @@ class VrcController extends AbstractController
                 }
                 $task = $commonGroundService->saveResource($task, ['component' => 'tc', 'type' => 'tasks']);
             }
+
+            // If we township gets changed unset grave and cemetery
+            if (!empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
+                unset($resource['properties']['soort_graf']);
+                unset($resource['properties']['begraafplaats']);
+            }
+
             if (array_key_exists('newProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
                 $item['properties']['temp'] = 'temp';
                 $item['properties'][$resource['newPropName']] = $resource['newProp'];
 
                 unset($item['properties']['temp']);
+
                 $resource['properties'] = $item['properties'];
+
+                // Specific code to fix assent aanvrager/rechthebbende
+                if ($resource['newPropName'] == 'aanvrager/rechthebbende') {
+                    for ($i = 0; $i < count($resource['properties']['aanvrager/rechthebbende']); $i++) {
+                        $resource['properties']['aanvrager/rechthebbende'][$i]['name'] = 'Instemmingsverzoek voor Aanvragen begrafenis';
+                        $resource['properties']['aanvrager/rechthebbende'][$i]['description'] = 'U heeft een instemmingsverzoek ontvangen als aanvrager/rechthebbende voor een Aavragen begrafenis aangevraagd door '.$commonGroundService->getResource($this->getUser()->getOrganization())['name'].'.';
+                        $resource['properties']['aanvrager/rechthebbende'][$i]['requester'] = $this->getUser()->getOrganization();
+                        if ($i > 1) {
+                            unset($resource['properties']['aanvrager/rechthebbende'][$i]);
+                        }
+                    }
+                    $resource['properties']['aanvrager/rechthebbende'] = $resource['properties']['aanvrager/rechthebbende'][0];
+                    unset($resource['properties']['aanvrager/rechthebbende'][0]);
+                }
+
+                unset($resource['newPropName']);
+                unset($resource['newProp']);
             }
 
             if (array_key_exists('unsetProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
                 unset($item['properties'][$resource['unsetProp']]);
                 if (count($item['properties']) < 1) {
                     $resource['properties'] = [];
@@ -333,13 +359,13 @@ class VrcController extends AbstractController
             $files = $request->files->all();
 
             if (key_exists('newProp', $files) && $file = $files['newProp']) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
 
                 //We are going to need a JWT token for the DRC and ZTC here
 
                 $token = $commonGroundService->getJwtToken('ztc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
-                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
+                $infoObjectTypes = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'informatieobjecttypen'])['results'];
 
                 foreach ($infoObjectTypes as $infoObjectType) {
                     if ($infoObjectType['omschrijving'] == 'Document') {
@@ -359,7 +385,7 @@ class VrcController extends AbstractController
                 $token = $commonGroundService->getJwtToken('drc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
 
-                $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
+                $result = $commonGroundService->createResource($drc, ['component' => 'drc', 'type' => 'enkelvoudiginformatieobjecten']);
 
                 $item['properties'][$resource['newPropName']] = $result['url'];
 
@@ -372,6 +398,7 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = null;
             }
+
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
             /* @to this redirect is a hotfix */
