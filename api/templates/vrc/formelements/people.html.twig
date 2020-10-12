@@ -32,7 +32,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="personForm" class="col-sm-12">
+            <div id="personForm{{ property.id }}" class="col-sm-12">
                 {% if property.defaultValue is defined and property.defaultValue is not empty %}
                     {% set assent = commonground_resource(include(template_from_string(property.defaultValue))) %}
                 {% endif %}
@@ -118,7 +118,8 @@
     {% endif %}
 </div>
 <script>
-    let personForm = document.getElementById("personForm");
+
+    personForm = document.getElementById("personForm{{ property.id }}");
 
     function addGetuigen(propertyName, items) {
         let input = document.getElementById('getuigenEmail');
