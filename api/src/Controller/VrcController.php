@@ -254,7 +254,7 @@ class VrcController extends AbstractController
         }
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'],['limit'=>100])['hydra:member'];
 
         if ($request->isMethod('POST')) {
 
