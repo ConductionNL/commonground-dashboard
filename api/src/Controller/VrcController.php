@@ -314,7 +314,7 @@ class VrcController extends AbstractController
             }
 
             // If we township gets changed unset grave and cemetery
-            if (!empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
+            if (key_exists('newPropName', $resource) && !empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
                 unset($resource['properties']['soort_graf']);
                 unset($resource['properties']['begraafplaats']);
             }
