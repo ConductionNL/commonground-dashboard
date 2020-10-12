@@ -2,27 +2,27 @@
     {% set person = commonground_resource(request.properties[property.name]) %}
 {% endif %}
 
-        <label class="input__label" for="bsn">{{ 'social service number'|trans|capitalize }}</label>
-        <input class="form-control form-control-m" id="bsn-{{ property.id }}" type="text"
-            {% if person.burgerservicenummer is defined %} value="{{ person.burgerservicenummer }}"{% endif %}>
+<label class="input__label" for="bsn">{{ 'social service number'|trans|capitalize }}</label>
+<input class="form-control form-control-m" id="bsn-{{ property.id }}" type="text"
+    {% if person.burgerservicenummer is defined %} value="{{ person.burgerservicenummer }}"{% endif %}>
 <b>of</b><br>
-        <label class="input__label" for="givenNames">{{ 'given names'|trans|capitalize }}</label>
-        <input class="form-control form-control-m" id="givenNames-{{ property.id }}" type="text"
-            {% if person.naam.voornamen is defined %} value="{{ person.naam.voornamen }}"{% endif %}>
+<label class="input__label" for="givenNames">{{ 'given names'|trans|capitalize }}</label>
+<input class="form-control form-control-m" id="givenNames-{{ property.id }}" type="text"
+    {% if person.naam.voornamen is defined %} value="{{ person.naam.voornamen }}"{% endif %}>
 
-        <label class="input__label" for="familyName">{{ 'family name'|trans|capitalize }}</label>
-        <input class="form-control form-control-m" id="familyName-{{ property.id }}" type="text"
-            {% if person.naam.geslachtsnaam is defined %} value="{{ person.naam.geslachtsnaam }}"{% endif %}>
+<label class="input__label" for="familyName">{{ 'family name'|trans|capitalize }}</label>
+<input class="form-control form-control-m" id="familyName-{{ property.id }}" type="text"
+    {% if person.naam.geslachtsnaam is defined %} value="{{ person.naam.geslachtsnaam }}"{% endif %}>
 
-        <label class="input__label" for="familyName">{{ 'date of birth'|trans|capitalize }}</label>
-        <input class="form-control form-control-m" id="dateOfBirth-{{ property.id }}" type="date">
+<label class="input__label" for="familyName">{{ 'date of birth'|trans|capitalize }}</label>
+<input class="form-control form-control-m" id="dateOfBirth-{{ property.id }}" type="date">
 
-        <label class="input__label" for="familyName">{{ 'place of birth'|trans|capitalize }}</label>
-        <input class="form-control form-control-m" id="placeOfBirth-{{ property.id }}" type="text">
+<label class="input__label" for="familyName">{{ 'place of birth'|trans|capitalize }}</label>
+<input class="form-control form-control-m" id="placeOfBirth-{{ property.id }}" type="text">
 
-        <button type="button" onclick="getPeople{{ property.id|replace({'-':''}) }}()" style="width: 100%; color: black; background-color: #f9e11e"
-                class="btn btn-primary mt-3">Zoeken
-        </button>
+<button type="button" onclick="getPeople{{ property.id|replace({'-':''}) }}()" style="width: 100%; color: black; background-color: #f9e11e"
+        class="btn btn-primary mt-3">Zoeken
+</button>
 
 <hr style="margin-top: 20px;">
 
@@ -33,7 +33,6 @@
 <fieldset class="input" id="persoonsLijst-{{ property.id }}" style="margin-top: 20px;">
 
 </fieldset>
-<input type="hidden" name="none" value="">
 
 <script>
     $('.spinner').hide();
