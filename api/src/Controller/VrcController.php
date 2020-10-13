@@ -261,6 +261,8 @@ class VrcController extends AbstractController
             // Passing the variables to the resource
 
             $resource = $request->request->all();
+            echo '<pre>';
+            var_dump($resource);
 
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
@@ -398,6 +400,9 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = null;
             }
+
+            var_dump($resource);
+            echo '</pre>';
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
