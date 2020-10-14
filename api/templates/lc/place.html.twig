@@ -1,0 +1,271 @@
+{% extends "body.html.twig" %}
+
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'place',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'places' : {
+                        'name' : 'places',
+                        'path' : 'app_lc_places'
+                    }
+                }]
+            }
+            %}
+            <div class="page-inner">
+                <div class="row">
+
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_lc_place', {id: resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <div class="float-right">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_lc_places')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name" name="name"
+                                                       value="{% if resource.name is defined %}{{ resource.name }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'bag ID'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="bagId"
+                                                       name="bagId"
+                                                       value="{% if resource.bagId is defined %}{{ resource.bagId }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'telephone'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="telephone"
+                                                       name="telephone"
+                                                       value="{% if resource.telephone is defined %}{{ resource.telephone }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div> <!-- /.card-body -->
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'logo'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="logo"
+                                                       name="logo"
+                                                       value="{% if resource.logo is defined %}{{ resource.logo }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'photo'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="photo"
+                                                       name="photo"
+                                                       value="{% if resource.bagId is defined %}{{ resource.photo }}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'has map'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="hasMap"
+                                                       name="hasMap"
+                                                       value="{% if resource.hasMap is defined %}{{ resource.hasMap }}{% endif %}"
+                                                       required>
+
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'opening time'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="openingTime"
+                                                       name="openingTime"
+                                                       value="{% if resource.openingTime is defined %}{{ resource.openingTime|date("Y-m-d\\TH:i")}}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'closing time'|trans|capitalize }}</label>
+                                                <input type="datetime-local" class="form-control form-control-lg" id="closingTime"
+                                                       name="closingTime"
+                                                       value="{% if resource.closingTime is defined %}{{ resource.closingTime|date("Y-m-d\\TH:i")}}{% endif %}"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'url'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="url"
+                                                       name="url"
+                                                       value="{% if resource.url is defined %}{{ resource.url }}{% endif %}"
+                                                       required>
+
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <input class="" type="hidden" name="publicAccess" value="false" />
+                                                {% if resource.publicAccess is defined %}
+                                                    {% if resource.publicAccess == 'true' %}
+                                                        <input class="" type="checkbox" name="publicAccess" value="true" checked/>
+                                                    {% else %}
+                                                        <input class="" type="checkbox" name="publicAccess" value="true" />
+                                                    {% endif %}
+                                                {% else %}
+                                                    <input class="" type="checkbox" name="publicAccess" value="true" />
+                                                {% endif %}
+                                                <label for="largeInput">{{ 'public access'|trans|capitalize }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <input class="" type="hidden" name="smokingAllowed" value="false" />
+                                                {% if resource.smokingAllowed is defined %}
+                                                    {% if resource.smokingAllowed == 'true' %}
+                                                        <input class="" type="checkbox" name="smokingAllowed" value="true" checked/>
+                                                    {% else %}
+                                                        <input class="" type="checkbox" name="smokingAllowed" value="true" />
+                                                    {% endif %}
+                                                {% else %}
+                                                    <input class="" type="checkbox" name="smokingAllowed" value="true" />
+                                                {% endif %}
+                                                <label for="largeInput">{{ 'smoking allowed'|trans|capitalize }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5" id="description"
+                                                          name="description"
+                                                          required>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div>
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div>
+                    <div class="col-md-4">
+                        {% include 'lc/widgets/placeProperties.html.twig'
+                            with {
+                            'place':resource,
+                            'placeProperties':placeProperties,
+                            'properties':properties} %}
+                    </div><!-- /.col -->
+                </div>
+
+
+            </div><!-- /.row -->
+        </div><!-- /.page-inner -->
+
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_lc_place',
+            'resource':resource,
+            'id':'delete' } %}
+
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_lc_place',
+            'resource':resource,
+            'id':'auditTrial' } %}
+
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_lc_place',
+            'resource':resource,
+            'id':'changeLog' } %}
+
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+    </div>
+    <script>
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/lc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/lc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
+    </script>
+{% endblock %}

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="nl" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="2BxV9Jx" resname="saved">
+        <source>saved</source>
+        <target>__saved</target>
+      </trans-unit>
+      <trans-unit id="FGw_5pd" resname="could not be saved">
+        <source>could not be saved</source>
+        <target>__could not be saved</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created">
+        <source>created</source>
+        <target>__created</target>
+      </trans-unit>
+      <trans-unit id="jHE8PIT" resname="could not be created">
+        <source>could not be created</source>
+        <target>__could not be created</target>
+      </trans-unit>
+      <trans-unit id="DhzHgEL" resname="product and service catalouge">
+        <source>product and service catalouge</source>
+        <target>__product and service catalouge</target>
+      </trans-unit>
+      <trans-unit id="rHxEJUO" resname="the product and service catalouge holds al data concerning product, groups and offers">
+        <source>the product and service catalouge holds al data concerning product, groups and offers</source>
+        <target>__the product and service catalouge holds al data concerning product, groups and offers</target>
+      </trans-unit>
+      <trans-unit id="Cj4nuMq" resname="products">
+        <source>products</source>
+        <target>__products</target>
+      </trans-unit>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
+        <target>__all</target>
+      </trans-unit>
+      <trans-unit id="0lBOUri" resname="catalogue">
+        <source>catalogue</source>
+        <target>__catalogue</target>
+      </trans-unit>
+      <trans-unit id="wXPQ_At" resname="save or create a">
+        <source>save or create a</source>
+        <target>__save or create a</target>
+      </trans-unit>
+      <trans-unit id="TtN51Bi" resname="groups">
+        <source>groups</source>
+        <target>__groups</target>
+      </trans-unit>
+      <trans-unit id="rZNvy_1" resname="group">
+        <source>group</source>
+        <target>__group</target>
+      </trans-unit>
+      <trans-unit id="kqs2To9" resname="offers">
+        <source>offers</source>
+        <target>__offers</target>
+      </trans-unit>
+      <trans-unit id="mIGAvwy" resname="offer">
+        <source>offer</source>
+        <target>__offer</target>
+      </trans-unit>
+      <trans-unit id="7MNm73z" resname="catalogues">
+        <source>catalogues</source>
+        <target>__catalogues</target>
+      </trans-unit>
+      <trans-unit id="wG3IzBc" resname="taxes">
+        <source>taxes</source>
+        <target>__taxes</target>
+      </trans-unit>
+      <trans-unit id="H.wEBrm" resname="tax">
+        <source>tax</source>
+        <target>__tax</target>
+      </trans-unit>
+      <trans-unit id="X_WVFRN" resname="suppliers">
+        <source>suppliers</source>
+        <target>__suppliers</target>
+      </trans-unit>
+      <trans-unit id="lV7RC3P" resname="supplier">
+        <source>supplier</source>
+        <target>__supplier</target>
+      </trans-unit>
+      <trans-unit id="Eq.gG4n" resname="customer types">
+        <source>customer types</source>
+        <target>__customer types</target>
+      </trans-unit>
+      <trans-unit id="Tj2qtab" resname="customer type">
+        <source>customer type</source>
+        <target>__customer type</target>
+      </trans-unit>
+      <trans-unit id=".PEor6M" resname="user configurtion">
+        <source>user configurtion</source>
+        <target>__user configurtion</target>
+      </trans-unit>
+      <trans-unit id="4_5EQvS" resname="the user component holds all users, user groups and acces rights">
+        <source>the user component holds all users, user groups and acces rights</source>
+        <target>__the user component holds all users, user groups and acces rights</target>
+      </trans-unit>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
+        <target>__users</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target>__user</target>
+      </trans-unit>
+      <trans-unit id="VSpzjxm" resname="scops">
+        <source>scops</source>
+        <target>__scops</target>
+      </trans-unit>
+      <trans-unit id="VrNmnDo" resname="scopes">
+        <source>scopes</source>
+        <target>__scopes</target>
+      </trans-unit>
+      <trans-unit id="XxYckUm" resname="scope">
+        <source>scope</source>
+        <target>__scope</target>
+      </trans-unit>
+      <trans-unit id="KrYau5y" resname="webresources">
+        <source>webresources</source>
+        <target>__webresources</target>
+      </trans-unit>
+      <trans-unit id="7ac7Hz0" resname="the webresources consist of all items that are needed to render the application web interface">
+        <source>the webresources consist of all items that are needed to render the application web interface</source>
+        <target>__the webresources consist of all items that are needed to render the application web interface</target>
+      </trans-unit>
+      <trans-unit id="nGZBwfn" resname="templates">
+        <source>templates</source>
+        <target>__templates</target>
+      </trans-unit>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
+        <target>__template</target>
+      </trans-unit>
+      <trans-unit id="_KZlqXd" resname="organizations">
+        <source>organizations</source>
+        <target>__organizations</target>
+      </trans-unit>
+      <trans-unit id="TJRIXgw" resname="v">
+        <source>v</source>
+        <target>__v</target>
+      </trans-unit>
+      <trans-unit id="rzobsxK" resname="organization">
+        <source>organization</source>
+        <target>__organization</target>
+      </trans-unit>
+      <trans-unit id="NSuEd32" resname="cases">
+        <source>cases</source>
+        <target>__cases</target>
+      </trans-unit>
+      <trans-unit id="u.zUFgo" resname="case">
+        <source>case</source>
+        <target>__case</target>
+      </trans-unit>
+      <trans-unit id="t9ZKkiE" resname="configuration">
+        <source>configuration</source>
+        <target>__configuration</target>
+      </trans-unit>
+      <trans-unit id="YZdZVQP" resname="delete">
+        <source>delete</source>
+        <target>__delete</target>
+      </trans-unit>
+      <trans-unit id="FX3KkuQ" resname="save">
+        <source>save</source>
+        <target>__save</target>
+      </trans-unit>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
+        <target>__name</target>
+      </trans-unit>
+      <trans-unit id="NZjOb5Z" resname="logo">
+        <source>logo</source>
+        <target>__logo</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
+        <target>__description</target>
+      </trans-unit>
+      <trans-unit id="ko0vg2p" resname="created at">
+        <source>created at</source>
+        <target>__created at</target>
+      </trans-unit>
+      <trans-unit id="kxW44RI" resname="last updated add">
+        <source>last updated add</source>
+        <target>__last updated add</target>
+      </trans-unit>
+      <trans-unit id="uAAShRz" resname="modified">
+        <source>modified</source>
+        <target>__modified</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>__edit</target>
+      </trans-unit>
+      <trans-unit id="wtS0RqR" resname="icon">
+        <source>icon</source>
+        <target>__icon</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>__price</target>
+      </trans-unit>
+      <trans-unit id="6Ph65Qp" resname="priceCurrency">
+        <source>priceCurrency</source>
+        <target>__priceCurrency</target>
+      </trans-unit>
+      <trans-unit id="fp5aww8" resname="add">
+        <source>add</source>
+        <target>__add</target>
+      </trans-unit>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
+        <target>__title</target>
+      </trans-unit>
+      <trans-unit id="7XACtDn" resname="content">
+        <source>content</source>
+        <target>__content</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
+        <target>__type</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
+        <target>__status</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

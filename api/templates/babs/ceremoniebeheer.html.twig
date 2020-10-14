@@ -1,0 +1,202 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin: auto;margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-10">Alle Ceremonies</th>
+                                    <th class="col-md-2"></th>
+                                    <th class="col-md-2"><a href="#newModal" data-toggle="modal"
+                                                            data-target="#newModal"><i
+                                                    style="font-size: 24px;color:limegreen" class="fa fa-plus"></i></a>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td class="col-md-10">Huwelijk</td>
+                                    <td class="col-md-2"><a href="#editModal" data-toggle="modal"
+                                                            data-target="#editModal"><i class="fa fa-edit"></i></a></td>
+                                    <td class="col-md-2"><a style="color: red;" href="#deleteLocationModal" data-toggle="modal" data-target="#deleteLocationModal"><i class="fa fa-trash"></i></a></td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-10">Partnerschap</td>
+                                    <td class="col-md-2"><a href="#editModal" data-toggle="modal"
+                                                            data-target="#editModal"><i class="fa fa-edit"></i></a></td>
+                                    <td class="col-md-2"><a style="color: red;" href="#deleteLocationModal" data-toggle="modal" data-target="#deleteLocationModal"><i class="fa fa-trash"></i></a></td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-10">Omzetten</td>
+                                    <td class="col-md-2"><a href="#editModal" data-toggle="modal"
+                                                            data-target="#editModal"><i class="fa fa-edit"></i></a></td>
+                                    <td class="col-md-2"><a style="color: red;" href="#deleteLocationModal" data-toggle="modal" data-target="#deleteLocationModal"><i class="fa fa-trash"></i></a></td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-10">Fake ceremonie</td>
+                                    <td class="col-md-2"><a href="#editModal" data-toggle="modal"
+                                                            data-target="#editModal"><i class="fa fa-edit"></i></a></td>
+                                    <td class="col-md-2"><a style="color: red;" href="#deleteLocationModal" data-toggle="modal" data-target="#deleteLocationModal"><i class="fa fa-trash"></i></a></td>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+
+                        <div class="card p-4">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-10" style="color: limegreen">Actieve Ceremonies</th>
+                                    <th class="col-md-2"></th>
+                                    </td>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td class="col-md-10" style="color: black">Huwelijk</td>
+                                    <td class="col-md-2"><a style="color: red;" href="#"><b>DEACTIVEER</b></a></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-10" style="color: black">Partnerschap</td>
+                                    <td class="col-md-2"><a style="color: red;" href="#"><b>DEACTIVEER</b></a></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-10" style="color: black">Omzetten</td>
+                                    <td class="col-md-2"><a style="color: red;" href="#"><b>DEACTIVEER</b></a></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <div class="card p-4">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-10" style="color: red">Inactieve Ceremonies</th>
+                                    <th class="col-md-2"></th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td class="col-md-10">Fake ceremonie</td>
+                                    <td class="col-md-2"><a style="color: limegreen;" href="#"><b>ACTIVEER</b></a>
+
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+    <div class="modal fade" style="text-align: center" id="newModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Ceremonie toevoegen</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+
+                    <p ><b>Naam:</b></p>
+
+                    <input class="form-control" type="text">
+
+                    <p ><b>Beschrijving:</b></p>
+
+                    <input class="form-control" type="text">
+
+                    <button type="button" class="btn btn-success mx-auto m-3">
+                        Toevoegen
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" style="text-align: center" id="editModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Ceremonie wijzigen</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+
+                    <p ><b>Naam wijzigen:</b></p>
+
+                    <input class="form-control" type="text">
+
+                    <p class="mt-4"><b>Beschrijving wijzigen:</b></p>
+
+                    <textarea rows="4" class="form-control"></textarea>
+
+                    <button type="button" class="btn btn-success mx-auto m-4">
+                            Wijzigen
+                        </button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" style="text-align: center" id="deleteLocationModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Ceremonie verwijderen</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+
+                    <p><b>Weet u zeker dat u deze ceremonie wilt verwijderen?</b></p>
+
+                    <button type="button" class="btn btn-danger mb-4 mx-auto">
+                        Verwijderen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

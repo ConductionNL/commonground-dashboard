@@ -1,0 +1,56 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'Title': 'results',
+                'Noun' : 'result',
+                'name' : 'results'|trans|capitalize,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    }
+                }]
+            }
+            %}
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'object'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'action'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resource in resources %}
+                        <tr>
+                            {% if commonground_resource(resource.object)['@type'] == 'Request' %}
+                            <td>{{ commonground_resource(resource.object).reference }}</td>
+                            {% else %}
+                                <td>{{ commonground_resource(resource.object).name }}</td>
+                            {% endif %}
+                            <td>{{ resource.action }}</td>
+                            <td>{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                            <td>{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+{% endblock %}

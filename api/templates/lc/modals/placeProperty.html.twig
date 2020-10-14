@@ -1,0 +1,51 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit place property'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add place property'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'value'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="placeProperty[value]" name="placeProperty[value]" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'property'|trans|capitalize }}</label>
+                    <select name="placeProperty[property]" id="placeProperty[property]" class="form-control form-control-lg" required>
+                        {% for property in properties %}
+                            <option value="{{ property['@id'] }}">{{ property.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'place'|trans|capitalize }}</label>
+                    <select id="placeProperty[place]" name="placeProperty[place]" class="form-control form-control-lg" required disabled>
+                        {% if place is defined %}
+                            <option value="{{ place['@id'] }}">{{ place.name }}</option>
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="placeProperty[id]" name ="placeProperty[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="placeProperty[@id]" name ="placeProperty[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

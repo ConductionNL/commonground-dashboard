@@ -1,0 +1,259 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'user',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'users' : {
+                        'name' : 'users',
+                        'path' : 'app_uc_users'
+                    }
+                }]
+            } %}
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_uc_user', {'id': resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{% if resource.username is defined %} {{ resource.username }} {% else %} {{ 'new user' }} {% endif %}</h2>
+                                    <div class="float-right">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_uc_users') }}"><i
+                                                class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span
+                                                class="btn-label"><i
+                                                    class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-start"
+                                             style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i
+                                                    class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}
+                                            </a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i
+                                                    class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}
+                                            </a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger"
+                                               style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i
+                                                    class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}
+                                            </a>
+                                        </div>
+                                        <button class="btn btn-success"><i
+                                                class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'username'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="username"
+                                                       name="username"
+                                                       value="{% if resource.username is defined %}{{ resource.username }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="organization" name="organization"
+                                                        class="form-control form-control-lg">
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}"
+                                                                {% if resource.organization is defined and organization['@id'] == resource.organization %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'person'|trans|capitalize }}</label>
+                                                <select name="person" id="person" class="form-control form-control-lg"
+                                                        required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person['@id'] }} "
+                                                                {% if resource.person is defined and resource.person == person['@id'] %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'password'|trans|capitalize }}</label>
+                                                <input type="password" class="form-control form-control-lg"
+                                                       id="password" name="password"
+                                                       value="{% if resource.password is defined %}{{ resource.password }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+            <div class="page-inner">
+                <div class="row">
+                    {% if resource.roles is defined and resource.roles is not empty %}
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'roles'|trans|capitalize }}</h2>
+
+                                <div style="float: right">
+                                    <button style="padding: 0 !important;" type="button"
+                                            class="btn btn-success"><i style="padding: 12px 15px 12px 15px !important;"
+                                            class="fa fa-plus" data-toggle="modal" data-target="#addRoleModal"></i></button>
+                                </div>
+                            </div>
+
+                            <form method="post" action="{{ path('app_uc_user', {id: resource.id}) }}">
+                                <table id="resourceTable" class="table table-hover table-fixed">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for role in resource.roles %}
+                                        <tr>
+                                            <td style="width: 90%">{{ role }}</td>
+                                            <td>
+                                                <button style="padding: 7.5px 15px 7.5px 15px" type="submit"
+                                                        name="deleteRole" value="{{ role }}"
+                                                        class="btn btn-danger "><i class="fa fa-trash"
+                                                                                   aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    {% endif %}
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_uc_user',
+                'resource':resource,
+                'id':'delete' } %}
+
+            {% include 'widgets/auditTrail_modal.html.twig'
+                with {
+                'route': 'app_uc_user',
+                'resource':resource,
+                'id':'auditTrial' } %}
+
+            {% include 'widgets/changeLog_modal.html.twig'
+                with {
+                'route': 'app_uc_user',
+                'resource':resource,
+                'id':'changeLog' } %}
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="addRoleModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <b>{{ 'new'|trans|capitalize }} {{ 'role'|trans }}</b></h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body p-4">
+
+                    <form action="{{ path('app_uc_user', {id: resource.id}) }}" method="post">
+
+                        <div class="form-group">
+                            <label for="role">{{ 'role'|trans|capitalize }}</label>
+                            <input id="role"  type="text" class="form-control form-control-xs" name="role">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" name="addRole" class="btn btn-succes">{{ 'add'|trans|capitalize }}</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <script>
+        {% block javascript %}
+        //audit_trails
+        $.ajax({
+            url: "/api/uc/audit_trails",
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                for (let i = 0; i < result['hydra:member'].length; i++) {
+                    $('#audit').append('<tr>')
+                    $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#audit').append('</tr>')
+                }
+            },
+        });
+        //change_logs
+        $.ajax({
+            url: "/api/uc/change_logs",
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                for (let i = 0; i < result['hydra:member'].length; i++) {
+                    $('#changelog').append('<tr>')
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#changelog').append('</tr>')
+                }
+            },
+        });
+        {% endblock %}
+    </script>
+{% endblock %}

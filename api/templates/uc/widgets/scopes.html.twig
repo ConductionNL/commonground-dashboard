@@ -1,0 +1,64 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'scopes'|trans|capitalize }}</h3>
+    </div>
+    {% if scopes is defined %}
+        <div class="card-list">
+            {% for scope in scopes %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ scope.name|capitalize }}</h4></div>
+                        <div class="status">{{ scope.code }}</div>
+                    </div>
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                            style="margin-right: 5px"
+                            data-toggle="modal"
+                            data-target="#editScope{{ scope.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px"
+                            data-toggle="modal"
+                            data-target="#deleteScope{{ scope.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addScope" data-toggle="modal"
+           data-target="#addScope">{{ 'add scope'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+
+</div><!-- /.card -->
+
+{# the Scope modals #}
+{% include 'uc/modals/scope.html.twig'
+    with {
+    'route': 'app_uc_group',
+    'resource':resource,
+    'id':'addScope' } %}
+
+{% if scopes is defined %}
+    {% for scope in scopes %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_uc_group',
+            'resource':resource,
+            'item':scope,
+            'id':'deleteScope' } %}
+
+        {% include 'uc/modals/scope.html.twig'
+            with {
+            'route': 'app_uc_group',
+            'resource':resource,
+            'item':scope,
+            'id':'editScope' } %}
+    {% endfor %}
+{% endif %}

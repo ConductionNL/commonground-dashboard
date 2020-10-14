@@ -1,0 +1,579 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'product',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'products' : {
+                        'name' : 'products',
+                        'path' : 'app_pdc_products'
+                    }
+                }]
+            }
+            %}
+            <div class="page-inner">
+                <div class="row">
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_pdc_product', {id: resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <div class="float-right">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_pdc_products')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name" name ="name" value="{% if resource.name is defined %}{{ resource.name }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'sku'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="sku" name ="sku" value="{% if resource.sku is defined %}{{ resource.sku }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'organization'|trans|capitalize }}</label>
+                                                <select id="sourceOrganization" name="sourceOrganization" class="form-control form-control-lg">
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization['@id'] }}" {% if resource.sourceOrganization is defined and organization['@id'] == resource.sourceOrganization  %}selected=""{% endif %}>{{ organization.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div><!-- /.form-group -->
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'logo'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="logo" name="logo" value="{% if resource.logo is defined %}{{ resource.logo }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'movie'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="movie" name="movie" value="{% if resource.movie is defined %}{{ resource.movie }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'type'|trans|capitalize }}</label>
+                                                <select id="status" name="type" class="form-control form-control-lg">
+                                                    <option value="simple" {% if resource.type is defined and 'simple' == resource.type  %}selected{% endif %}>{{ 'simple'|trans|capitalize }}</option>
+                                                    <option value="set" {% if resource.type is defined and 'set' == resource.type  %}selected{% endif %}>{{ 'set'|trans|capitalize }}</option>
+                                                    <option value="virtual" {% if resource.type is defined and 'virtual' == resource.type  %}selected{% endif %}>{{ 'virtual'|trans|capitalize }}</option>
+                                                    <option value="ticket" {% if resource.type is defined and 'ticket' == resource.type  %}selected{% endif %}>{{ 'ticket'|trans|capitalize }}</option>
+                                                    <option value="variable" {% if resource.type is defined and 'variable' == resource.type  %}selected{% endif %}>{{ 'variable'|trans|capitalize }}</option>
+                                                    <option value="subscription" {% if resource.type is defined and 'subscription' == resource.type  %}selected{% endif %}>{{ 'subscription'|trans|capitalize }}</option>
+                                                    <option value="person" {% if resource.type is defined and 'person' == resource.type  %}selected{% endif %}>{{ 'person'|trans|capitalize }}</option>
+                                                    <option value="location" {% if resource.type is defined and 'location' == resource.type  %}selected{% endif %}>{{ 'location'|trans|capitalize }}</option>
+                                                    <option value="service" {% if resource.type is defined and 'service' == resource.type  %}selected{% endif %}>{{ 'service'|trans|capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'price'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="price" name="price" value="{% if resource.price is defined %}{{ resource.price }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'currency'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="priceCurrency" name="priceCurrency" value="{% if resource.priceCurrency is defined %}{{ resource.priceCurrency }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'tax percentage'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="taxPercentage" name="taxPercentage" value="{% if resource.taxPercentage is defined %}{{ resource.taxPercentage }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'catalogue'|trans|capitalize }}</label>
+                                                <select name="catalogue" id="catalogue" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for catalogue in catalogues %}
+                                                        <option value="{{ catalogue['@id']}} "{% if resource.catalogue is defined and resource.catalogue == catalogue['@id']  %}selected{% endif %}>{{ catalogue.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'requires appointment'|trans|capitalize }}</label>
+                                                <select id="status" name="requiresAppointment" class="form-control form-control-lg">
+                                                    <option value="true" {% if resource.requiresAppointment is defined and 'true' == resource.requiresAppointment  %}selected{% endif %}>{{ 'yes'|trans|capitalize }}</option>
+                                                    <option value="false" {% if resource.requiresAppointment is defined and 'false' == resource.requiresAppointment  %}selected{% endif %}>{{ 'no'|trans|capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'audience'|trans|capitalize }}</label>
+                                                <select id="status" name="audience" class="form-control form-control-lg">
+                                                    <option value="public" {% if resource.audience is defined and 'public' == resource.audience  %}selected{% endif %}>{{ 'public'|trans|capitalize }}</option>
+                                                    <option value="internal" {% if resource.audience is defined and 'internal' == resource.audience  %}selected{% endif %}>{{ 'internal'|trans|capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'duration'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="duration" name="duration" value="{% if resource.duration is defined %}{{ resource.duration }}{% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5" id="description" name =description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+
+                        </div><!-- /.card -->
+                    </div><!-- /.col -->
+                    <div class="col-md-4">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'documents'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addDocument"  data-toggle="modal" data-target="#addDocument"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body" >
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'url'|trans|capitalize }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="documentBody">
+                                    {% if resource.documents is defined %}
+                                        {% set value = 0 %}
+                                        {% for document in resource.documents %}
+                                            <tr id="{{ value }}">
+                                                <td id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="documents[]" value="{{ document }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="documentDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'images'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addImage"  data-toggle="modal" data-target="#addImage"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body" >
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'url'|trans|capitalize }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="imageBody">
+                                    {% if resource.images is defined %}
+                                        {% set value = 0 %}
+                                        {% for image in resource.images %}
+                                            <tr id="{{ value }}">
+                                                <td id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="images[]" value="{{ image }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="imageDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h2 class="d-inline-block">{{ 'external docs'|trans|capitalize }}</h2>
+                                <div class="float-right">
+                                    <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addExternalDoc"  data-toggle="modal" data-target="#addExternalDoc"><i class="fas fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body" >
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'url'|trans|capitalize }}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="externalDocBody">
+                                    {% if resource.externalDocs is defined %}
+                                        {% set value = 0 %}
+                                        {% for externalDoc in resource.externalDocs %}
+                                            <tr id="{{ value }}">
+                                                <td id="{{ value }}">
+                                                    <input type="text" style="height: fit-content !important;" class="form-control form-control-lg " id="{{ value }}" name ="externalDocs[]" value="{{ externalDoc }}" readonly="readonly">
+                                                </td>
+                                                <td id="{{ value }}">
+                                                    <button class="btn btn-danger" id="{{ value }}" type="button" onclick="externalDocDelete(this.id)"><i class='fas fa-minus'></i></button>
+                                                </td>
+                                            </tr>
+                                            {% set value = value + 1 %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.row -->
+                </form>
+            </div><!-- /.page-inner -->
+                </div><!-- /.row -->
+            </div><!-- /.page-inner -->
+
+
+
+            <div class="modal fade" style="text-align: center" id="addDocument" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addDocument" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add document'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'url'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="documentName" name="name" value="">
+                        </div><!-- /.form-group -->
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="documentButton();">{{ 'add'|trans|capitalize }}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" style="text-align: center" id="addImage" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addImage" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="image">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add image'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'url'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="imageName" name="name" value="">
+                        </div><!-- /.form-group -->
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="imageButton();">{{ 'add'|trans|capitalize }}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" style="text-align: center" id="addExternalDoc" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="addDocument" aria-hidden="true">
+                <div class="modal-dialog model-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addScheduleTitle"><b>{{ 'add external doc'|trans|capitalize }}</b></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'url'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="externalDocName" name="name" value="">
+                        </div><!-- /.form-group -->
+                        <button class="btn btn-success m-3  mx-auto" data-dismiss="modal" onclick="externalDocButton();">{{ 'add'|trans|capitalize }}</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            {% include 'widgets/delete_modal.html.twig'
+                with {
+                'route': 'app_pdc_catalogue',
+                'resource':resource,
+                'id':'delete' } %}
+
+            {% include 'widgets/auditTrail_modal.html.twig'
+                with {
+                'route': 'app_pdc_catalogue',
+                'resource':resource,
+                'id':'auditTrial' } %}
+
+            {% include 'widgets/changeLog_modal.html.twig'
+                with {
+                'route': 'app_pdc_catalogue',
+                'resource':resource,
+                'id':'changeLog' } %}
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+    </div>
+    <script>
+        {% block javascript %}
+        //documents
+        function documentButton(){
+            let counts = document.getElementById("documentBody").lastChild.id;
+            let parent = document.getElementById("documentBody")
+            let name = document.getElementById("documentName");
+            let newDocument = document.createElement("input");
+            let tr = document.createElement("tr")
+            let td = document.createElement("td")
+            let tdButton = document.createElement("td")
+            let delButton = document.createElement("button")
+            let counter;
+
+            if(counts !== undefined){
+                counter = parseInt(counts) + 1;
+            } else {
+                counter = parent.children.length;
+            }
+
+            newDocument.value = name.value;
+            newDocument.name = "documents[]";
+            newDocument.className = "form-control form-control-lg"
+            newDocument.readOnly = true;
+            newDocument.id = counter.toString();
+            newDocument.setAttribute("style", "height: fit-content !important;");
+            tdButton.id = counter.toString();
+
+            delButton.id = counter.toString();
+            delButton.innerHTML = "<i class='fas fa-minus'></i>";
+            delButton.addEventListener('click', function(){
+                documentDelete(counter);
+            });
+            delButton.className = "btn btn-danger";
+            delButton.type = "button";
+
+            tr.id = counter.toString();
+            td.id = counter.toString();
+
+            parent.appendChild(tr);
+            tr.appendChild(td);
+            td.appendChild(newDocument);
+            tr.appendChild(tdButton);
+            tdButton.appendChild(delButton);
+
+            name.value = "";
+        }
+
+        function documentDelete(selected){
+            document.getElementById(selected).remove();
+        }
+
+        //images
+        function imageButton(){
+            let counts = document.getElementById("imageBody").lastChild.id;
+            let parent = document.getElementById("imageBody")
+            let name = document.getElementById("imageName");
+            let newImage = document.createElement("input");
+            let tr = document.createElement("tr")
+            let td = document.createElement("td")
+            let tdButton = document.createElement("td")
+            let delButton = document.createElement("button")
+            let counter;
+
+            if(counts !== undefined){
+                counter = parseInt(counts) + 1;
+            } else {
+                counter = parent.children.length;
+            }
+
+            newImage.value = name.value;
+            newImage.name = "images[]";
+            newImage.className = "form-control form-control-lg"
+            newImage.readOnly = true;
+            newImage.id = counter.toString();
+            newImage.setAttribute("style", "height: fit-content !important;");
+            tdButton.id = counter.toString();
+
+            delButton.id = counter.toString();
+            delButton.innerHTML = "<i class='fas fa-minus'></i>";
+            delButton.addEventListener('click', function(){
+                imageDelete(counter);
+            });
+            delButton.className = "btn btn-danger";
+            delButton.type = "button";
+
+            tr.id = counter.toString();
+            td.id = counter.toString();
+
+            parent.appendChild(tr);
+            tr.appendChild(td);
+            td.appendChild(newImage);
+            tr.appendChild(tdButton);
+            tdButton.appendChild(delButton);
+
+            name.value = "";
+        }
+
+        function imageDelete(selected){
+            document.getElementById(selected).remove();
+        }
+
+        //external docs
+        function externalDocButton(){
+            let counts = document.getElementById("externalDocBody").lastChild.id;
+            let parent = document.getElementById("externalDocBody")
+            let name = document.getElementById("externalDocName");
+            let newExternalDoc = document.createElement("input");
+            let tr = document.createElement("tr")
+            let td = document.createElement("td")
+            let tdButton = document.createElement("td")
+            let delButton = document.createElement("button")
+            let counter;
+
+            if(counts !== undefined){
+                counter = parseInt(counts) + 1;
+            } else {
+                counter = parent.children.length;
+            }
+
+            newExternalDoc.value = name.value;
+            newExternalDoc.name = "externalDocs[]";
+            newExternalDoc.className = "form-control form-control-lg"
+            newExternalDoc.readOnly = true;
+            newExternalDoc.id = counter.toString();
+            newExternalDoc.setAttribute("style", "height: fit-content !important;");
+            tdButton.id = counter.toString();
+
+            delButton.id = counter.toString();
+            delButton.innerHTML = "<i class='fas fa-minus'></i>";
+            delButton.addEventListener('click', function(){
+                externalDocDelete(counter);
+            });
+            delButton.className = "btn btn-danger";
+            delButton.type = "button";
+
+            tr.id = counter.toString();
+            td.id = counter.toString();
+
+            parent.appendChild(tr);
+            tr.appendChild(td);
+            td.appendChild(newExternalDoc);
+            tr.appendChild(tdButton);
+            tdButton.appendChild(delButton);
+
+            name.value = "";
+        }
+
+        function externalDocDelete(selected){
+            document.getElementById(selected).remove();
+        }
+
+
+
+
+        //audit_trails
+        $.ajax({
+            url: "/api/pdc/audit_trails",
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                for(let i = 0; i < result['hydra:member'].length; i++ ){
+                    $('#audit').append('<tr>')
+                    $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                    $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#audit').append('</tr>')
+                }
+            },
+        });
+        //change_logs
+        $.ajax({
+            url: "/api/pdc/change_logs",
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                console.log(result);
+                for(let i = 0; i < result['hydra:member'].length; i++ ){
+                    $('#changelog').append('<tr>')
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                    $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                    $('#changelog').append('</tr>')
+                }
+            },
+        });
+        {% endblock %}
+    </script>
+{% endblock %}

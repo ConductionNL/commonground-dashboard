@@ -1,0 +1,22 @@
+# translations/messages.nl.yaml
+requested: aangevraagd
+granted: ingestemd
+retracted: ingetrokken
+submitted: ingediend
+declined: afgewezen
+incomplete: incompleet
+complete: compleet
+processed: verwerkt
+cancelled: geannuleerd
+reference: kenmerk
+event: evenement
+birthday: geboortedatum
+social service number: burgerservicenummer
+given name: voornamen
+family name: achternaam
+place of birth: geboorteplaats
+date of birth: geboortedatum
+streetname: straatnaam
+e-mail address: e-mailadres
+phone number: telefoonnummer
+house number suffix: huisnummertoevoeging

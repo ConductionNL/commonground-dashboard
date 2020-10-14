@@ -1,0 +1,50 @@
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">{% block headerTitle %}{% if headerTitle is defined %}{{ 'save or create a'|trans|capitalize }} {{ headerTitle|trans }}{% elseif Title is defined %} {{ Title|trans|capitalize }}{% endif %}{% endblock %}</h2>
+                <nav class="op-7" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% block breadcrumbs %}
+                            {% if breadcrumbs is defined %}
+                                {% for breadcrumb in breadcrumbs %}
+                                    {% for bread in breadcrumb %}
+                                        <li class="breadcrumb-item"><a
+                                                href="{{ path(bread.path) }}">{{ bread.name|trans|capitalize }} </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% if name is defined %}
+                                    <li class="breadcrumb-item active"
+                                        aria-label="breadcrumb">{{ name|trans|capitalize }}</li>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    </ol>
+                </nav>
+            </div>
+            <div class="ml-md-auto py-2 py-md-0">
+                {% block buttons %}
+                    <div id="myBtnContainer p-2" class="row">
+{#                        {% if statusFilter is defined and statusFilter == true %}#}
+{#                        <a href="{{ path('app_vrc_requests') }}" class=" mx-1 btn btn-secondary btn-round">{{ 'all'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "incomplete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'incomplete'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "complete"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'complete'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "submitted"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'submitted'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "processed"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'processed'|trans|capitalize }}</a>#}
+{#                        <a href="{{ path('app_vrc_requests',{'status': "cancelled"}) }}" class=" mx-1 btn btn-secondary btn-round">{{ 'cancelled'|trans|capitalize }}</a>#}
+
+
+
+{#                        {% endif %}#}
+                        {#                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>#}
+                        {% if view is defined %}<a href="{{ path(view, {id: 'new'}) }}"
+                                                   class=" mx-1 btn btn-secondary btn-round">{{ 'new'|trans|capitalize }} {{ 'add'|trans }} </a> {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+</script>

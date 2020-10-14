@@ -1,0 +1,28 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'child requests'|trans|capitalize }}</h3>
+    </div>
+
+    {% if children is defined %}
+    <div class="card-list">
+        {% for child in children %}
+            <div class="item-list">
+                <div class="info-user ml-3">
+                    <div class="username"><h4>{{ child.reference }}</h4></div>
+                    <div class="status">{{ child.status }}</div>
+                </div>
+                <a class="btn btn-icon btn-primary btn-round btn-s"
+                   style="margin-right: 5px"
+                        href="{{ path('app_vrc_request', {'id': child.id}) }}">
+                    <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                </a>
+            </div><!-- /.item-list -->
+        {% endfor %}
+    </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+
+</div><!-- /.card -->

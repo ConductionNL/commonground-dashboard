@@ -1,0 +1,119 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card p-4 full-height">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Functies/Rollen</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>Dhr. Erik Hendrik</td>
+                            <td style="padding: 5px 25px 5px 25px !important;">Medewerker<br>
+                                Trouwambtenaar<br>
+                                Beheerder<br></td>
+                            <td>
+                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal" data-target="#rollenModal"><i style=""
+                                                                                             class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mvr. Ike van den Pol</td>
+                            <td style="padding: 5px 25px 5px 25px !important;">Trouwambtenaar</td>
+                            <td>
+                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal" data-target="#rollenModal"><i style=""
+                                                                                          class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Dhr. Rene Gulje</td>
+                            <td style="padding: 5px 25px 5px 25px !important;">Trouwambtenaar</td>
+                            <td>
+                                <button style="margin-left: 80%;padding: 7px 14px 7px 14px;" type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal" data-target="#rollenModal"><i style=""
+                                                                                          class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+    {# Modals #}
+
+    <div class="modal fade" style="text-align: center" id="rollenModal" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog model-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Rollen wijzigen</b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding-bottom: 0 !important;" class="modal-body">
+                    <p style="margin-right: 5px !important;"><b>Dhr. Erik Hendrik <i class="fas fa-user"></i></b></p>
+
+                    <form>
+                    <p><b>Rollen verwijderen <i style="color: #F25961">X</i></b></p>
+                    <p style="margin-top: -17.5px;color: gray;">Hou "ctrl" ingedrukt om meerdere rollen tegelijk
+                        te selecteren.</p>
+                        <div class="d-block">
+                            <select style="width: 250px;" class="form-control d-inline-block" multiple="">
+                                <option>Trouwambtenaar</option>
+                                <option>Medewerker</option>
+                                <option>Beheerder</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn btn-danger float-right m-3">
+                            Verwijderen
+                        </button>
+                    </form>
+
+                    <form style="margin-top: 80px !important;">
+                    <p><b>Rollen toevoegen <i style="color: limegreen;" class="fas fa-plus"></i></b></p>
+                        <div class="d-block">
+                            <select style="width: 250px;" class="form-control d-inline-block" multiple="">
+                                <option></option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn btn-success  mx-auto m-3">
+                            Toevoegen
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

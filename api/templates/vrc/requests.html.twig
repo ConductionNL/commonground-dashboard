@@ -1,0 +1,282 @@
+{% extends "body.html.twig" %}
+
+{% set view = 'app_vrc_request' %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% set statusFilter = true %}
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'Title': 'requests',
+                'Noun' : 'request',
+                'name' : 'requests'|trans|capitalize,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    }
+                }]
+            } %}
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                            <form action="{{ path('app_vrc_requests') }}"
+                                  method="post">
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="typeFilter">Type</label>
+                                            <select class="form-control form-control-xs" name="typeFilter"
+                                                    id="typeFilter">
+                                                <option value="" {% if query.requestType is not defined or query.requestType is empty %}selected{% endif %}></option>
+                                                {% for requestType in requestTypes %}
+                                                    <option
+                                                        value="{{ requestType['@id'] }}" {% if query.requestType is defined and query.requestType is not empty and query.requestType == requestType['@id'] %}selected{% endif %}>{{ requestType.name|capitalize }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="referenceFilter">{{ 'reference'|trans|capitalize }}</label>
+                                            <input class="form-control form-control-xs" type="text"
+                                                   name="referenceFilter"
+                                                   id="referenceFilter"
+                                                   {% if query.reference is defined and query.reference is not empty %}value="{{ query.reference }}"{% endif %}
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="createdFilter">{{ 'created'|trans|capitalize }}</label>
+                                            <input class="form-control form-control-xs" type="date"
+                                                   name="createdFilter" id="createdFilter"
+                                                {% if query['dateCreated[strictly_before]'] is defined and query['dateCreated[strictly_before]'] is not empty %}value="{{ query['dateCreated[strictly_before]']|date('Y-m-d  H:m') }}"{% endif %}
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="modifiedFilter">{{ 'modified'|trans|capitalize }}</label>
+                                            <input class="form-control form-control-xs" type="date"
+                                                   name="modifiedFilter" id="modifiedFilter"
+                                                   {% if query['dateModified[strictly_before]'] is defined and query['dateModified[strictly_before]'] is not empty %}value="{{ query['dateModified[strictly_before]']|date('Y-m-d H:m') }}"{% endif %}
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="statusFilter">Status</label>
+                                            <select class="form-control form-control-xs" name="statusFilter"
+                                                    id="statusFilter">
+                                                <option value="" {% if query.status is not defined or query.status is empty %}selected{% endif %}></option>
+                                                <option
+                                                    value="incomplete" {% if query.status is defined and query.status is not empty and query.status == 'incomplete' %}selected{% endif %}>{{ 'incomplete'|trans|capitalize }}</option>
+                                                <option
+                                                    value="complete" {% if query.status is defined and query.status is not empty and query.status == 'complete' %}selected{% endif %}>{{ 'complete'|trans|capitalize }}</option>
+                                                <option
+                                                    value="submitted" {% if query.status is defined and query.status is not empty and query.status == 'submitted' %}selected{% endif %}>{{ 'submitted'|trans|capitalize }}</option>
+                                                <option
+                                                    value="processed" {% if query.status is defined and query.status is not empty and query.status == 'processed' %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
+                                                <option
+                                                    value="cancelled" {% if query.status is defined and query.status is not empty and query.status == 'cancelled' %}selected{% endif %}>{{ 'cancelled'|trans|capitalize }}</option>
+                                                <option
+                                                    value="retracted" {% if query.status is defined and query.status is not empty and query.status == 'retracted' %}selected{% endif %}>{{ 'retracted'|trans|capitalize }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button style="margin-top: 35px; width: 60%" name="filter" type="submit"
+                                                class="btn btn-secondary btn-round">Filter
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+
+                            <table id="resourceTable" class="table table-hover table-fixed">
+                                <thead>
+                                <tr>
+                                    <th scope="col"
+                                    >{{ 'type'|trans|capitalize }}</th>
+                                    <th style="cursor: pointer" scope="col"
+                                        onclick="sortTable(1); toggleIcon();">{{ 'reference'|trans|capitalize }} <i
+                                            id="orderIcon1"
+                                            class="fa fa-angle-up"></i></th>
+                                    <th scope="col"
+                                    >{{ 'created'|trans|capitalize }}</th>
+                                    <th scope="col"
+                                    >{{ 'modified'|trans|capitalize }}</th>
+                                    <th scope="col"
+                                    >{{ 'status'|trans|capitalize }}</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if resources is defined and resources is not empty %}
+                                    {% for resource in resources %}
+                                        <tr>
+                                            <td>{{ commonground_resource(resource.requestType).name|capitalize }}</td>
+                                            <td>{{ resource.reference }}</td>
+                                            <td>{{ resource.dateCreated|date("d-m-Y", "Europe/Paris") }}</td>
+                                            <td>{{ resource.dateModified|date("d-m-Y", "Europe/Paris") }}</td>
+                                            <td>
+                                                {% if resource.status is same as('incomplete') %}
+                                                    <div class="progress" style="height: 25px;">
+                                                        <div class="progress-bar" role="progressbar"
+                                                             style="padding-left:7.5px; width: 20%; color: black; background-color: red;"
+                                                             aria-valuenow="25" aria-valuemin="0"
+                                                             aria-valuemax="100">{{ 'incomplete'|trans|capitalize }}</div>
+                                                    </div>
+                                                {% elseif resource.status is same as('complete') %}
+                                                    <div class="progress" style="height: 25px;">
+                                                        <div class="progress-bar" role="progressbar"
+                                                             style="padding-left:7.5px; width: 40%; color: black; background-color:orangered;"
+                                                             aria-valuenow="50" aria-valuemin="0"
+                                                             aria-valuemax="100">{{ 'complete'|trans|capitalize }}</div>
+                                                    </div>
+                                                {% elseif resource.status is same as('submitted') %}
+                                                    <div class="progress" style="height: 25px;">
+                                                        <div class="progress-bar" role="progressbar"
+                                                             style="padding-left:7.5px; width: 60%; color: black; background-color: orange"
+                                                             aria-valuenow="75" aria-valuemin="0"
+                                                             aria-valuemax="100">{{ 'submitted'|trans|capitalize }}</div>
+                                                    </div>
+                                                {% elseif resource.status is same as('inProgress') %}
+                                                    <div class="progress" style="height: 25px;">
+                                                        <div class="progress-bar" role="progressbar"
+                                                             style="padding-left:7.5px; width: 80%; color: black; background-color: limegreen"
+                                                             aria-valuenow="75" aria-valuemin="0"
+                                                             aria-valuemax="100">{{ 'in progress'|trans|capitalize }}</div>
+                                                    </div>
+                                                {% elseif resource.status is same as('processed') %}
+                                                    <div class="progress" style="height: 25px;">
+                                                        <div class="progress-bar" role="progressbar"
+                                                             style="padding-left:7.5px; width: 100%; color: black; background-color: green"
+                                                             aria-valuenow="100" aria-valuemin="0"
+                                                             aria-valuemax="100">{{ 'processed'|trans|capitalize }}</div>
+                                                    </div>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                                   href="{{ path(view, {id: resource.id}) }}"><i
+                                                        class="far fa-edit mr-2"></i><b>{{ 'edit'|trans|capitalize }}</b></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td>
+                                            Er zijn geen verzoeken gevonden.
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+
+                    </div> <!-- /.card-body -->
+
+                    <div class="card-action">
+{#                        {% if status is defined %}#}
+                            {% set downloadQuery = query|merge({'download': 'csv'}) %}
+                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                               href="{{ path('app_vrc_requests',downloadQuery) }}"
+                               target="_blank"><i class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }}
+                                    CSV</b></a>
+{#                        {% else %}#}
+{#                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
+{#                               href="{{ path('app_vrc_requests',{'download':'csv'}) }}" target="_blank"><i#}
+{#                                    class="fa fa-download"></i> <b>{{ 'download'|trans|capitalize }} CSV</b></a>#}
+{#                        {% endif %}#}
+                    </div><!-- /.card-action -->
+
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("resourceTable");
+            switching = true;
+            // Set the sorting direction to ascending:
+            dir = "asc";
+            /* Make a loop that will continue until
+            no switching has been done: */
+            while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 1; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /* Check if the two rows should switch place,
+                    based on the direction, asc or desc: */
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function toggleIcon() {
+            var element = document.getElementById("orderIcon1");
+            element.classList.toggle('fa-angle-up');
+            element.classList.toggle('fa-angle-down');
+        }
+    </script>
+
+{% endblock %}

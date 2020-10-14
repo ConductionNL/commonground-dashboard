@@ -1,0 +1,65 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit slug'|trans|capitalize }}: {{ item.name }}{%  else %}{{ 'add slug'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="form-group">
+                    <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="slug[name]" name="slug[name]" value="{% if item.name is defined %}{{ item.name }}{% endif %}" required>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="slug[description]" name="slug[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="slug[template]">{{ 'template'|trans|capitalize }}</label>
+                    <select id="slug[template]" name="slug[template]" class="form-control form-control-lg" required disabled>
+                        {% if resource.id is defined %}
+                            <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="slug[application]">{{ 'application'|trans|capitalize }}</label>
+                    <select id="slug[application]" name="slug[application]" class="form-control form-control-lg" required>
+                        {% if applications is defined %}
+                            {% for application in applications %}
+                                {% if item.application is defined and item.application == application['@id'] %}
+                                    <option selected value="{{ application['@id'] }}">{{ application.name }}</option>
+                                {% endif %}
+                                <option value="{{ application['@id'] }}">{{ application.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div><!-- /.form-group -->
+                <div class="form-group">
+                    <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
+                    <input type="text" class="form-control form-control-lg" id="slug[slug]" name="slug[slug]" value="{% if item.slug is defined %}{{ item.slug }}{% endif %}">
+                </div><!-- /.form-group -->
+
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="slug[id]" name ="slug[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="slug[@id]" name ="slug[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

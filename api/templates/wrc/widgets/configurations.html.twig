@@ -1,0 +1,61 @@
+<div class="card p-4 full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'configurations'|trans|capitalize }}</h3>
+    </div>
+    {% if configurations is defined %}
+        <div class="card-list">
+            {% for configuration in configurations %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="username"><h4>{{ configuration.name|capitalize }}</h4></div>
+                        <div class="status">{{ configuration.description }}</div>
+                    </div>
+                    <a class="btn btn-icon btn-primary btn-round btn-s"
+                       style="margin-right: 5px"
+                       data-toggle="modal"
+                       data-target="#editConfiguration{{ configuration.id }}"
+                       href="#editConfiguration{{ configuration.id }}">
+                        <i class="fa fa-edit" style="margin: 12px !important;"></i>
+                    </a>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteConfiguration{{ configuration.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        {% if resource.organization is defined and resource.requestType is defined %}<a class="btn btn-info btn-block" style="margin-right: 25px" href="#addCase"  data-toggle="modal" data-target="#addCase">{{ 'add case'|trans|capitalize }}</a>{% endif %}
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the configuration modals #}
+{% include 'wrc/modals/configuration.html.twig'
+    with {
+    'route': 'app_wrc_application',
+    'resource':resource,
+    'id':'addConfiguration' } %}
+
+{% if configurations is defined %}
+    {% for configuration in configurations %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_wrc_application',
+            'resource':resource,
+            'item':configuration,
+            'id':'deleteConfiguration' } %}
+
+        {% include 'wrc/modals/configuration.html.twig'
+            with {
+            'route': 'app_wrc_application',
+            'resource':resource,
+            'item':configuration,
+            'id':'editConfiguration' } %}
+    {% endfor %}
+{% endif %}

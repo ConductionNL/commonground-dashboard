@@ -1,0 +1,233 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'environment',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'environments' : {
+                        'name' : 'environments',
+                        'path' : 'app_evc_environments'
+                    }
+                }]
+            }
+            %}
+            <div class="page-inner">
+                <div class="row">
+
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_evc_environment', {id: resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <div class="float-right">
+                                        {% if resource.cluster is defined %}
+                                            <a class="btn btn-primary mr-4" href="{{ path('app_evc_cluster', {id:resource.cluster.id})}}"><i class="fas fa-long-arrow-alt-left"></i> {{ 'cluster'|trans|capitalize }}</a>
+                                        {% endif %}
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="name" placeholder=""
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'cluster'|trans|capitalize }}</label>
+                                                <select name="cluster" id="cluster" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for cluster in clusters %}
+                                                        <option value="{{ cluster['@id']}}" {% if resource.cluster is defined and resource.cluster['@id'] == cluster['@id']  %}selected{% endif %}>{{ cluster.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'authorization'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="authorization"
+                                                       name="authorization" placeholder=""
+                                                       {% if resource.id != 'new' %}readonly{% endif %}
+                                                       value="{% if resource.authorization is defined %}{{ resource.authorization }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'debug'|trans|capitalize }}</label>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="debug" id="debug off" value="0" {% if resource.debug is defined and resource.debug == 0 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="debug off">{{ 'no'|trans|capitalize }}</label>
+                                                </div>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="debug" id="debug on" value="1"{% if resource.debug is defined and resource.debug == 1 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="debug on">{{ 'yes'|trans|capitalize }}</label>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="form-check-label">
+                                                    <label  for="largeInput">{{ 'cache'|trans|capitalize }}</label>
+                                                </div>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="cache" id="cache off" value="0" {% if resource.cache is defined and resource.cache == 0 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="cache off">{{ 'no'|trans|capitalize }}</label>
+                                                </div>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="cache" id="cache on" value="1" {% if resource.cache is defined and resource.cache == 1 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="cache on">{{ 'yes'|trans|capitalize }}</label>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'exposed backend'|trans|capitalize }}</label>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="web" id="web off" value="0" {% if resource.web is defined and resource.web == 0 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="cache off">{{ 'no'|trans|capitalize }}</label>
+                                                </div>
+                                                <div class="ml-2 form-check">
+                                                    <input class="form-check-input" type="radio" name="web" id="web on" value="1" {% if resource.web is defined and resource.web == 1 %}checked{% endif %}>
+                                                    <label class="form-check-label" for="cache on">{{ 'yes'|trans|capitalize }}</label>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'evc/widgets/installations.html.twig'
+                            with{
+                            'installations': resource.installations,
+                            'resource':resource
+                        } %}
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.row -->
+        </div><!-- /.page-inner -->
+
+
+
+
+
+
+
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_evc_environment',
+            'resource':resource,
+            'id':'delete' } %}
+
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_evc_environment',
+            'resource':resource,
+            'id':'auditTrial' } %}
+
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_evc_environment',
+            'resource':resource,
+            'id':'changeLog' } %}
+
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+    </div>
+    <script>
+    {% block javascript %}
+    //logic for configurations
+
+
+
+    //audit_trails
+    $.ajax({
+        url: "/api/evc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/evc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
+    </script>
+{% endblock %}

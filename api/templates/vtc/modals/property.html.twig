@@ -1,0 +1,254 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog modal-lg model-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit property'|trans|capitalize }}{{ item.id }}{%  else %}{{ 'add property'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'titel'|trans|capitalize }} <span style="color: red;">*</span></label>
+                            <input required type="text" class="form-control form-control-lg" id="property[title]" name="property[title]" value="{% if item.title is defined %}{{ item.title }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'iri'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[iri]" name="property[iri]" value="{% if item.iri is defined %}{{ item.iri }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[description]" name="property[description]" value="{% if item.description is defined %}{{ item.description }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'defaultValue'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[defaultValue]" name="property[defaultValue]" value="{% if item.defaultValue is defined %}{{ item.defaultValue }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'type'|trans|capitalize }} <span style="color: red;">*</span></label>
+                            <select id="property[format]" name="property[type]" class="form-control form-control-lg" required>
+                                <option value="string" {% if item.type  is defined and "string" == item.type %}selected=""{% endif %}>string</option>
+                                <option value="integer" {% if item.type  is defined and "integer" == item.type %}selected=""{% endif %}>integer</option>
+                                <option value="boolean" {% if item.type  is defined and "boolean" == item.type %}selected=""{% endif %}>boolean</option>
+                                <option value="number" {% if item.type  is defined and "number" == item.type %}selected=""{% endif %}>number</option>
+                                <option value="array" {% if item.type  is defined and "array" == item.type %}selected=""{% endif %}>array</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'format'|trans|capitalize }} <span style="color: red;">*</span></label>
+                            <select id="property[format]" name="property[format]" class="form-control form-control-lg" required>
+                                <option value="string" {% if item.format  is defined and "string" == item.format %}selected=""{% endif %}>string</option>
+                                <option value="int32" {% if item.format  is defined and "int32" == item.format %}selected=""{% endif %}>int32</option>
+                                <option value="int64" {% if item.format  is defined and "int64" == item.format %}selected=""{% endif %}>int64</option>
+                                <option value="base64" {% if item.format  is defined and "base64" == item.format %}selected=""{% endif %}>base64</option>
+                                <option value="float" {% if item.format  is defined and "float" == item.format %}selected=""{% endif %}>float</option>
+                                <option value="double" {% if item.format  is defined and "double" == item.format %}selected=""{% endif %}>double</option>
+                                <option value="byte" {% if item.format  is defined and "byte" == item.format %}selected=""{% endif %}>byte</option>
+                                <option value="binary" {% if item.format  is defined and "binary" == item.format %}selected=""{% endif %}>binary</option>
+                                <option value="date" {% if item.format  is defined and "date" == item.format %}selected=""{% endif %}>date</option>
+                                <option value="date-time" {% if item.format  is defined and "date-time" == item.format %}selected=""{% endif %}>date-time</option>
+                                <option value="duration" {% if item.format  is defined and "duration" == item.format %}selected=""{% endif %}>duration</option>
+                                <option value="password" {% if item.format  is defined and "password" == item.format %}selected=""{% endif %}>password</option>
+                                <option value="boolean" {% if item.format  is defined and "boolean" == item.format %}selected=""{% endif %}>boolean</option>
+                                <option value="uuid" {% if item.format  is defined and "uuid" == item.format %}selected=""{% endif %}>uuid</option>
+                                <option value="uri" {% if item.format  is defined and "uri" == item.format %}selected=""{% endif %}>uri</option>
+                                <option value="url" {% if item.format  is defined and "url" == item.format %}selected=""{% endif %}>url</option>
+                                <option value="email" {% if item.format  is defined and "email" == item.format %}selected=""{% endif %}>email</option>
+                                <option value="uuid" {% if item.format  is defined and "uuid" == item.format %}selected=""{% endif %}>uuid</option>
+                                <option value="rsin" {% if item.format  is defined and "rsin" == item.format %}selected=""{% endif %}>rsin</option>
+                                <option value="bag" {% if item.format  is defined and "bag" == item.format %}selected=""{% endif %}>bag</option>
+                                <option value="bsn" {% if item.format  is defined and "bsn" == item.format %}selected=""{% endif %}>bsn</option>
+                                <option value="iban" {% if item.format  is defined and "iban" == item.format %}selected=""{% endif %}>iban</option>
+                                <option value="resource" {% if item.format  is defined and "resource" == item.format %}selected=""{% endif %}>resource</option>
+                                <option value="text-area" {% if item.format  is defined and "text-area" == item.format %}selected=""{% endif %}>text-area</option>
+                                <option value="rdw" {% if item.format  is defined and "rdw" == item.format %}selected=""{% endif %}>rdw</option>
+                                <option value="radio" {% if item.format  is defined and "radio" == item.format %}selected=""{% endif %}>radio</option>
+                                <option value="calendar" {% if item.format  is defined and "calendar" == item.format %}selected=""{% endif %}>calendar</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="number">{{ 'multipleOf'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[multipleOf]" name="property[multipleOf]" value="{% if item.multipleOf is defined %}{{ item.multipleOf }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'maximum '|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[maximum]" name="property[maximum]" value="{% if item.maximum is defined %}{{ item.maximum }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'exclusiveMaximum'|trans|capitalize }}</label>
+                            <select id="property[exclusiveMaximum]" name="property[exclusiveMaximum]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'minimum'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[minimum]" name="property[minimum]" value="{% if item.minimum is defined %}{{ item.minimum }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'exclusiveMinimum'|trans|capitalize }}</label>
+                            <select id="property[exclusiveMinimum]" name="property[exclusiveMinimum]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'maxLength'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[maxLength]" name="property[maxLength]" value="{% if item.maxLength is defined %}{{ item.maxLength }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'minLength'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[minLength]" name="property[minLength]" value="{% if item.minLength is defined %}{{ item.minLength }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'pattern'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[pattern]" name="property[pattern]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'maxItems'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[maxItems]" name="property[maxItems]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'minItems'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[minItems]" name="property[minItems]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'uniqueItems'|trans|capitalize }}</label>
+                            <select id="property[uniqueItems]" name="property[uniqueItems]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'maxProperties'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[maxProperties]" name="property[maxProperties]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'minProperties'|trans|capitalize }}</label>
+                            <input type="number" class="form-control form-control-lg" id="property[minProperties]" name="property[minProperties]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'required'|trans|capitalize }}</label>
+                            <select id="property[required]" name="property[required]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'enum'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[enum]" name="property[enum]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'allOf'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[allOf]" name="property[allOf]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'anyOf'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[anyOf]" name="property[anyOf]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'oneOf'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[oneOf]" name="property[oneOf]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'definitions'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[definitions]" name="property[definitions]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'nullable'|trans|capitalize }}</label>
+                            <select id="property[nullable]" name="property[nullable]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'discriminator'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[discriminator]" name="property[discriminator]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'readOnly'|trans|capitalize }}</label>
+                            <select id="property[readOnly]" name="property[readOnly]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'writeOnly'|trans|capitalize }}</label>
+                            <select id="property[writeOnly]" name="property[writeOnly]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'xml'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[xml]" name="property[xml]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'externalDoc'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[externalDoc]" name="property[externalDoc]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'example'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[example]" name="property[example]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'deprecated'|trans|capitalize }}</label>
+                            <select id="property[deprecated]" name="property[deprecated]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'availableFrom'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="property[availableFrom]" name="property[availableFrom]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'availableUntil'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="property[availableUntil]" name="property[availableUntil]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'minDate'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="property[minDate]" name="property[minDate]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'maxDate'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="property[maxDate]" name="property[maxDate]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'icon'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[icon]" name="property[icon]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'slug'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="property[slug]" name="property[slug]" value="{% if item.pattern is defined %}{{ item.pattern }}{% endif %}">
+                        </div><!-- /.form-group -->
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label for="largeInput">{{ 'start'|trans|capitalize }}</label>
+                            <select id="property[start]" name="property[start]" class="form-control form-control-lg">
+                                <option value="true" selected>{{ 'yes'|trans|capitalize }}</option>
+                                <option value="false">{{ 'no'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+
+                        {% if item['id'] is defined %}
+                        <input type="hidden" id="property[id]" name ="property[id]" value="{{ item['id'] }}">
+                        {% endif %}
+                        {% if item['@id'] is defined %}
+                        <input type="hidden" id="property[@id]" name ="property[@id]" value="{{ item['@id'] }}">
+                        {% endif %}
+                        <div class="form-group col-12">
+                            <button type="submit" class="btn btn-success m-3  mx-auto">
+                                {% if item['id'] is defined %}{{ 'save'|trans|capitalize }}{% else %}{{ 'add'|trans|capitalize }}{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

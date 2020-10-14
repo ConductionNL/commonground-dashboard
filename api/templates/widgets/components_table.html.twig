@@ -1,0 +1,26 @@
+<div class="col-md-8">
+    <div class="card full-height">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+            	{% for name,iri in resourceContext['@context']  %}
+				            {% if name not in ['@vocab','hydra'] %}
+                			<th scope="col">{{ name }}</th>
+                   	        {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+			{% for name, component in components %}
+            <tr>
+                <td>Order Registratie</td>
+                <td style="color: lime">Online</td>
+                <td><a href="https://github.com/ConductionNL/orderregistratiecomponent" target="_blank">Github</a></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md-8">
+</div>

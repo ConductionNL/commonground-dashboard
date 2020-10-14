@@ -1,0 +1,241 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <style>
+        th {
+            width: 33.33%;
+        }
+    </style>
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' with {
+                'headerTitle': 'assent',
+                'name' : resource.name,
+                'breadcrumbs': [{
+                    'home' : {
+                        'name' : 'home',
+                        'path' : 'app_default_index'
+                    },
+                    'assents' : {
+                        'name' : 'assents',
+                        'path' : 'app_irc_assents'
+                    }
+                }]
+            }
+            %}
+            <div class="page-inner">
+                <div class="row">
+
+                    <div style="margin-top: -50px;" class="col-md-12">
+                        <div class="card p-4 full-height">
+                            <form action="{{ path('app_irc_assent', {id: resource.id}) }}" method="post">
+                                <div class="card-header">
+                                    <h2 class="d-inline-block">{{ resource.name }} </h2>
+                                    <div class="float-right">
+                                        <a class="btn btn-primary mr-4" href="{{ path('app_irc_assents')}}"><i class="far fa-window-close mr-2"></i>{{ 'cancel'|trans|capitalize }}</a>
+                                        <button class="btn btn-info mr-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="btn-label"><i class="fas fa-cog mr-2"></i></span>{{ 'options'|trans|capitalize }}</button>
+                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(710px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="#changeLog" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#changeLog"><i class="far fa-file-alt mr-2"></i>{{ 'change log'|trans|capitalize }}</a>
+                                            <a href="#auditTrial" class="dropdown-item text" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#auditTrial"><i class="fas fa-list mr-2"></i>{{ 'audit trail'|trans|capitalize }}</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a href="#delete" class="dropdown-item text-danger" style="margin-right: 25px"
+                                               data-toggle="modal"
+                                               data-target="#delete"><i class="far fa-trash-alt mr-2"></i>{{ 'delete'|trans|capitalize }}</a>
+                                        </div>
+                                        <button class="btn btn-success"><i class="far fa-save mr-2"></i>{{ 'save'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'name'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                       name="name" placeholder=""
+                                                       value="{% if resource.name is defined %}{{ resource.name }} {% endif %}">
+                                            </div>
+                                        </div> <!-- /.col -->
+
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'request'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="request"
+                                                       name="request" placeholder=""
+                                                       value="{% if resource.request is defined %}{{ resource.request }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'person'|trans|capitalize }}</label>
+                                                <select name="person" id="person" class="form-control form-control-lg" required>
+                                                    {
+                                                    {% for person in people %}
+                                                        <option value="{{ person.name }} "{% if resource.person is defined and resource.person == person.name  %}selected{% endif %}>{{ person.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label
+                                                        for="largeInput">{{ 'status'|trans|capitalize }} {{ 'assent'|trans }}</label>
+
+                                                <select id="status" name="status" class="form-control form-control-lg">
+                                                    <option value="requested" {% if resource.status is defined and 'requested' == resource.status  %}selected{% endif %}>{{ 'requested'|trans|capitalize }}</option>
+                                                    <option value="granted" {% if resource.status is defined and 'granted' == resource.status  %}selected{% endif %}>{{ 'granted'|trans|capitalize }}</option>
+                                                    <option value="declined" {% if resource.status is defined and 'declined' == resource.status  %}selected{% endif %}>{{ 'declined'|trans|capitalize }}</option>
+                                                    <option value="withdrawn" {% if resource.status is defined and 'withdrawn' == resource.status  %}selected{% endif %}>{{ 'withdrawn'|trans|capitalize }}</option>
+                                                    <option value="cancelled" {% if resource.status is defined and 'cancelled' == resource.status  %}selected{% endif %}>{{ 'cancelled'|trans|capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'forward url'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="forwardUrl"
+                                                       name="forwardUrl" placeholder=""
+                                                       value="{% if resource.forwardUrl is defined %}{{ resource.forwardUrl }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'property'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="property"
+                                                       name="property" placeholder=""
+                                                       value="{% if resource.property is defined %}{{ resource.property }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'process'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="process"
+                                                       name="process" placeholder=""
+                                                       value="{% if resource.process is defined %}{{ resource.process }} {% endif %}">
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'contact'|trans|capitalize }}</label>
+                                                <select name="contact" id="contact" class="form-control form-control-lg" required>
+                                                    {% for employee in employees %}
+                                                        <option value="{{ employee.person }}"{% if resource.contact is defined and resource.contact == employee.person  %}selected{% endif %}>{{ employee.person }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> <!-- /.col -->
+
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'requester'|trans|capitalize }}</label>
+                                                <input type="text" class="form-control form-control-lg" id="requester"
+                                                       name="requester" placeholder=""
+                                                       value="{% if resource.requester is defined %}{{ resource.requester }} {% endif %}">
+                                            </div>
+                                        </div>
+
+
+                                    </div><!-- /.row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                                                <textarea class="form-control summernote" rows="5" id="description" name=description>{% if resource.description is defined %}{{ resource.description }}{% endif %}</textarea>
+                                            </div>
+                                        </div>  <!-- /.col -->
+                                    </div> <!-- /.row -->
+                                </div> <!-- /.card-body -->
+
+                                <div class="card-action">
+                                    {% if resource.dateCreated is defined and resource.dateModified  is defined %}{{ 'created at'|trans|capitalize }} {{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }} | {{ 'last updated add'|trans|capitalize }}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}
+                                </div><!-- /.card-action -->
+                            </form>
+                        </div><!-- /.card -->
+                    </div>
+                </div>
+
+
+            </div><!-- /.row -->
+        </div><!-- /.page-inner -->
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_irc_assent',
+            'resource':resource,
+            'id':'delete' } %}
+
+        {% include 'widgets/auditTrail_modal.html.twig'
+            with {
+            'route': 'app_irc_assent',
+            'resource':resource,
+            'id':'auditTrial' } %}
+
+        {% include 'widgets/changeLog_modal.html.twig'
+            with {
+            'route': 'app_irc_assent',
+            'resource':resource,
+            'id':'changeLog' } %}
+        {% include 'footer.html.twig' %}
+
+    </div>
+    </div>
+    <script>
+    {% block javascript %}
+    //audit_trails
+    $.ajax({
+        url: "/api/irc/audit_trails",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#audit').append('<tr>')
+                $('#audit').append("<td>" + result['hydra:member'][i]['method'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['user'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['ip'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['session'] + "</td>");
+                $('#audit').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#audit').append('</tr>')
+            }
+        },
+    });
+    //change_logs
+    $.ajax({
+        url: "/api/irc/change_logs",
+        type: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            console.log(result);
+            for(let i = 0; i < result['hydra:member'].length; i++ ){
+                $('#changelog').append('<tr>')
+                $('#changelog').append("<td>" + result['hydra:member'][i]['version'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['action'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['username'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['data'] + "</td>");
+                $('#changelog').append("<td>" + result['hydra:member'][i]['dateCreated'] + "</td>");
+                $('#changelog').append('</tr>')
+            }
+        },
+    });
+    {% endblock %}
+    </script>
+{% endblock %}

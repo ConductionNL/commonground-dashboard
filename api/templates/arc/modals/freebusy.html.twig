@@ -1,0 +1,102 @@
+<div class="modal fade" style="text-align: center" id="{{ id }}{% if item.id is defined %}{{ item.id }}{% endif %}" tabindex="-1"
+     role="dialog"
+     aria-labelledby="{{ id }}Title" aria-hidden="true">
+    <div class="modal-dialog model-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ id }}Title"><b>{% if item.id is defined %}{{ 'edit freebusy'|trans|capitalize }} {{ item.id }}{%  else %}{{ 'add freebusy'|trans|capitalize }}{% endif %}</b></h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ path(route, {id: resource.id}) }}" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'organizer'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="freebusy[organizer]" name="freebusy[organizer]" value="{% if freebusy.organizer is defined %} {{ freebusy.organizer }} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'calendar'|trans|capitalize }}</label>
+                            <select id="freebusy[calendar]" name="freebusy[calendar]" class="form-control form-control-lg" required disabled>
+                                {% if resource.id is defined %}
+                                    <option value="{{ resource['@id'] }}">{{ resource.name }}</option>
+                                {% endif %}
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'freebusy'|trans|capitalize }}</label>
+                            <select id="freebusy" name="freebusy" class="form-control form-control-lg">
+                                <option value="FREE" {% if resource.freebusy is defined and 'FREE' == resource.freebusy  %}selected{% endif %}>{{ 'free'|trans|capitalize }}</option>
+                                <option value="BUSY" {% if resource.freebusy is defined and 'BUSY' == resource.freebusy  %}selected{% endif %}>{{ 'busy'|trans|capitalize }}</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'comments'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="freebusy[comments[]]" name="freebusy[comments[]]" value="">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'contact'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="freebusy[contact]" name="freebusy[contact]" value="{% if freebusy.contact is defined %} {{ freebusy.contact }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'duration'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="freebusy[duration]" name="freebusy[duration]" value="{% if freebusy.duration is defined %} {{ freebusy.duration }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'start date'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="freebusy[startDate]" name="freebusy[startDate]" value="{% if freebusy.startDate is defined %} {{ freebusy.startDate|date("Y-m-d\\TH:i")}} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'end date'|trans|capitalize }}</label>
+                            <input type="datetime-local" class="form-control form-control-lg" id="freebusy[endDate]" name="freebusy[endDate]" value="{% if freebusy.endDate is defined %} {{ freebusy.endDate|date("Y-m-d\\TH:i")}} {% endif %}" required>
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="largeInput">{{ 'description'|trans|capitalize }}</label>
+                            <input type="text" class="form-control form-control-lg" id="freebusy[description]" name="freebusy[description]" value="{% if freebusy.description is defined %} {{ freebusy.description }} {% endif %}">
+                        </div><!-- /.form-group -->
+                    </div>
+                </div>
+                {% if item['id'] is defined %}
+                    <input type="hidden" id="freebusy[id]" name ="freebusy[id]" value="{{ item['id'] }}">
+                {% endif %}
+                {% if item['@id'] is defined %}
+                    <input type="hidden" id="freebusy[@id]" name ="freebusy[@id]" value="{{ item['@id'] }}">
+                {% endif %}
+                <button type="submit" class="btn btn-success m-3  mx-auto">
+                    {% if item.id is defined %}
+                        {{ 'modify'|trans|capitalize }}
+                    {% else %}
+                        {{ 'add'|trans|capitalize }}
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px;" class="col-md-12">
+                <div class="card full-height p-4">
+
+                    <div id="calendar"></div>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+
+    <div id="fullCalModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="margin: auto" id="modalTitle" class="modal-title"></h4>
+                </div>
+                <div id="modalBody" class="modal-body">
+                    <p style="text-align: center;" id="huwelijkStel"></p>
+                    <p style="text-align: center;"><b>Locatie</b></p>
+                    <p style="text-align: center; margin-top: -15px" id="huwelijkLocatie"></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a class="btn btn-primary" style="color: white" id="huwelijkLink" href="" target="_blank">Huwelijk</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+
+	<script>
+		/* initialize the calendar
+		-----------------------------------------------------------------*/
+    var a = document.getElementById('huwelijkLink');
+
+		$(document).ready(function () {
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+			var className = Array('fc-primary', 'fc-danger', 'fc-black', 'fc-success', 'fc-info', 'fc-warning', 'fc-danger-solid', 'fc-warning-solid', 'fc-success-solid', 'fc-black-solid', 'fc-success-solid', 'fc-primary-solid');
+
+			$calendar = $('#calendar');
+			$calendar.fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay,listWeek'
+				},
+
+                // Show modal on eventClick
+                eventClick:  function(calEvent, jsEvent, view, ) {
+                    $("#modalTitle").html(calEvent.title);
+                    $("#huwelijkLocatie").html(calEvent.locatie);
+                    a.href = calEvent.link;
+                    $("#fullCalModal").modal();
+
+                    if(calEvent.url) {
+                        return false;
+                    }
+                },
+
+                businessHours: {
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    daysOfWeek: [ 1, 2, 3, 4, 5 ], // Monday - Thursday
+
+                    startTime: '9:00', // a start time (10am in this example)
+                    endTime: '18:00', // an end time (6pm in this example)
+                },
+				events: [
+				{
+					title: 'M. Timmers en A. de Kieft',
+					start: new Date(2020, 1, 10, 10, 50),
+					end: new Date(2020, 1, 10, 12, 20),
+					allDay: false,
+                    huwelijk: 'M. Timmers en A. de Kieft',
+                    locatie: 'Stadhuis grote zaal',
+                    babs: 'Dhr. Erik Hendrik',
+                    link: '',
+					className: 'fc-danger-solid',
+					description: 'Martin Timmers en Anita Henrika de Kieft'
+				},
+				{
+					title: 'A. van Helvert en C. Gavey',
+					start: new Date(2020,1, 17, 10, 50),
+					end: new Date(2020, 1, 17, 12, 20),
+					allDay: false,
+                huwelijk: 'M. Timmers en A. de Kieft',
+                    locatie: 'Stadhuis grote zaal',
+                babs: 'Dhr. Erik Hendrik',
+                    link: '',
+					className: 'fc-success-solid',
+					description: 'Annemarijn van Helvert en Clinton Gavey'
+				},
+				{
+					title: 'M. Sinclair en K. Ross',
+					start: new Date(2020, 1, 24, 10, 50),
+					end: new Date(2020, 1, 24, 12, 20),
+					allDay: false,
+                huwelijk: 'M. Timmers en A. de Kieft',
+                    locatie: 'Stadhuis grote zaal',
+                babs: 'Dhr. Erik Hendrik',
+                    link: '{',
+					className: 'fc-success-solid',
+					description: 'Miley Sinclair en Kevin Ross'
+				},
+				{
+					title: 'J. de Kieft en R. van der Heijden',
+					start: new Date(2020, 2, 1, 10, 50),
+					end: new Date(2020, 2, 1, 12, 20),
+					allDay: false,
+                huwelijk: 'M. Timmers en A. de Kieft',
+                    locatie: 'Stadhuis grote zaal',
+                babs: 'Dhr. Erik Hendrik',
+                    link: '',
+					className: 'fc-danger-solid',
+					description: 'John Willem de Kieft en Ranata van der Heijden'
+				}
+				],
+
+
+			});
+		});
+	</script>
+{% endblock %}

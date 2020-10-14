@@ -1,0 +1,40 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h2>Persoonsgegevens</h2>
+    </div>
+    <div class="card-body form-group">
+        <h4>Gegevens</h4>
+
+        <label for="name">Voornaam</label>
+        <input id="name" class="form-control" type="text" name="name"
+               {% if resource.properties.gegevens.name is defined and resource.properties.gegevens.name is not empty %}value="{{ resource.properties.gegevens.name }}"{% endif %}>
+
+        <label for="familyName">Achternaam</label>
+        <input id="familyName" class="form-control" type="text" name="familyName"
+               {% if resource.properties.gegevens.familyName is defined and resource.properties.gegevens.familyName is not empty %}value="{{ resource.properties.gegevens.familyName }}"{% endif %}>
+
+        <label for="email">E-mail</label>
+        <input id="email" class="form-control" type="text" name="email"
+               {% if resource.properties.gegevens.email is defined and resource.properties.gegevens.email is not empty %}value="{{ resource.properties.gegevens.email }}"{% endif %}>
+
+        <label for="largeInput">{{ 'status'|trans|capitalize }}</label>
+        <select class="form-control" id="status" name="status">
+            <option value="processed"
+                    {% if resource.status == "processed" %}selected{% endif %}>
+                Processed
+            </option>
+            <option value="requested"
+                    {% if resource.status == "requested" %}selected{% endif %}>
+                Requested
+            </option>
+            <option value="submitted"
+                    {% if resource.status == "submitted" %}selected{% endif %}>
+                Submitted
+            </option>
+            <option value="Incomplete"
+                    {% if resource.status == "incomplete" %}selected{% endif %}>
+                Incomplete
+            </option>
+        </select>
+    </div>
+</div>

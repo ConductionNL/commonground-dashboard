@@ -1,0 +1,46 @@
+{% extends "body.html.twig" %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="container">
+
+            {% include 'widgets/babs/title_h1.html.twig' %}
+
+            <div style="margin-top: -25px" class="row p-3">
+                <div class="col-md-10">
+                    <div class="card full-height p-4">
+                        <div class="card-header">
+                            <h1>Test Table</h1>
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>A</td>
+                                <td>B</td>
+                                <td>C</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="card full-height p-4">
+                        <a href="{{ path('app_test_subpage') }}">Subpage</a>
+                    </div>
+                </div>
+
+            </div>
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+
+    </div><!-- /.main-panel -->
+
+{% endblock %}

@@ -1,0 +1,51 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'submitters'|trans|capitalize }}</h3>
+    </div>
+
+
+
+    <div class="card-body">
+        {% if resource.submitters is defined %}
+            <div class="card-list">
+                {% for submitter in resource.submitters %}
+                    <div class="item-list">
+                        <div class="info-user ml-3">
+                            {% if submitter.brp is defined and submitter.brp is not empty %}
+                                <div class="username"><h4>{{ commonground_resource(submitter.brp).naam.voornamen }} {{ commonground_resource(submitter.brp).naam.geslachtsnaam }}</h4></div>
+                            {% endif %}
+                            <div class="status">{% if submitter.assent is defined and submitter.assent is not empty %}{{ commonground_resource(submitter.assent).status }}{% endif %}</div>
+                        </div>
+                        <button class="btn btn-icon btn-primary btn-round btn-s" data-toggle="collapse" data-target="#{{ submitter.id }}"><i class="fas fa-info"></i></button>
+                    </div><!-- /.item-list -->
+                    <div class="collapse ml-3" id="{{ submitter.id }}">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4>Naam:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <span>{{ commonground_resource(submitter.brp).naam.voornamen }} {{ commonground_resource(submitter.brp).naam.geslachtsnaam }}</span>
+                                </div>
+                                <div class="col-6">
+                                    <h4>Geboortedatum:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <span>temp</span>
+                                </div>
+                                <div class="col-6">
+                                    <h4>BSN:</h4>
+                                </div>
+                                <div class="col-6">
+                                    <span>{{ commonground_resource(submitter.brp).burgerservicenummer }}</span>
+                                </div>
+                            </div>
+                    </div>
+
+                {% endfor %}
+            </div><!-- /.card-list -->
+        {% endif %}
+    </div> <!-- /.card-body -->
+
+
+</div><!-- /.card -->
+

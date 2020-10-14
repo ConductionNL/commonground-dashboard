@@ -1,0 +1,61 @@
+<div class="card full-height">
+    <div class="card-header">
+        <h3 class="d-inline-block">{{ 'roles'|trans|capitalize }}</h3>
+    </div>
+    {% if roles is defined %}
+        <div class="card-list">
+            {% for role in roles %}
+                <div class="item-list">
+                    <div class="info-user ml-3">
+                        <div class="roleType"><h4>{{ role.rolType|capitalize }}</h4></div>
+                        <div class="participant">{{ commonground_resource(role.participant).person }}</div>
+                    </div>
+                    <button class="btn btn-icon btn-primary btn-round btn-s"
+                            style="margin-right: 5px"
+                            data-toggle="modal"
+                            data-target="#editRole{{ role.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger btn-round btn-s"
+                            style="margin-right: 15px" data-toggle="modal"
+                            data-target="#deleteRole{{ role.id }}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div><!-- /.item-list -->
+            {% endfor %}
+        </div><!-- /.card-list -->
+    {% endif %}
+
+    <div class="card-body">
+    </div> <!-- /.card-body -->
+
+    <div class="card-action">
+        <a class="btn btn-info btn-block" style="margin-right: 25px" href="#addRole"
+           data-toggle="modal" data-target="#addRole">{{ 'add role'|trans|capitalize }}</a>
+    </div><!-- /.card-action -->
+</div><!-- /.card -->
+
+{# the role modals #}
+{% include 'vrc/modals/role.html.twig'
+    with {
+    'route': 'app_vrc_request',
+    'resource':resource,
+    'id':'addRole' } %}
+
+{% if roles is defined %}
+    {% for role in roles %}
+        {% include 'widgets/delete_modal.html.twig'
+            with {
+            'route': 'app_vrc_request',
+            'resource':resource,
+            'item':role,
+            'id':'deleteRole' } %}
+
+        {% include 'vrc/modals/role.html.twig'
+            with {
+            'route': 'app_vrc_request',
+            'resource':resource,
+            'item':role,
+            'id':'editRole' } %}
+    {% endfor %}
+{% endif %}
