@@ -6,7 +6,7 @@
 		"ext-ctype": "*",
 		"ext-iconv": "*",
 		"api-platform/api-pack": "^1.1",
-		"conduction/commongroundbundle": "dev-master",
+		"conduction/commongroundbundle": "dev-dev-robert",
 		"phpdocumentor/reflection-docblock": "^4.3",
 		"phpoffice/phpspreadsheet": "^1.14",
 		"phpoffice/phpword": "^0.17.0",
