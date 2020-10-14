@@ -35,7 +35,7 @@
     }
 </script>
 
-{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'})['hydra:member'] %}
+{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'},{'root':app.user.organization})['hydra:member'] %}
 <div id="{{property.name}}_combobox">
     <div class="input__hint">Selecteer een {{property.title}}</div>
     <input type="hidden" value="{{ property.name }}" name="newPropName">

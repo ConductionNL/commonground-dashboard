@@ -254,13 +254,15 @@ class VrcController extends AbstractController
         }
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['limit'=>100])['hydra:member'];
 
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
 
             $resource = $request->request->all();
+            echo '<pre>';
+            var_dump($resource);
 
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
@@ -314,7 +316,7 @@ class VrcController extends AbstractController
             }
 
             // If we township gets changed unset grave and cemetery
-            if (!empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
+            if (key_exists('newPropName', $resource) && !empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
                 unset($resource['properties']['soort_graf']);
                 unset($resource['properties']['begraafplaats']);
             }
@@ -398,6 +400,9 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = null;
             }
+
+            var_dump($resource);
+            echo '</pre>';
 
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 

@@ -18,15 +18,15 @@
                                 <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
                                 <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
                                 <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
-                                       name="newProp[{{ id }}][email]">
+                                       name="newProp[{{ id }}][contact][emails][0][email]">
                                 <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
-                                       name="newProp[{{ id }}][telephone]">
+                                       name="newProp[{{ id }}][contact][telephones][0][telephone]">
                                 <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}"
-                                       name="newProp[{{ id }}][person][givenName]">
+                                       name="newProp[{{ id }}][contact][givenName]">
+                                <input type="hidden" id="{{ id }}" value="{{ contact.additionalName }}"
+                                       name="newProp[{{ id }}][contact][additionalName]">
                                 <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
-                                       name="newProp[{{ id }}][person][familyName]">
-                                <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
-                                       name="newProp[{{ id }}][person][familyName]">
+                                       name="newProp[{{ id }}][contact][familyName]">
                                 <input type="hidden" name="newProp[requestType]" value="{{ resource.requestType }}">
                                 <input type="hidden" name="newProp[component]" value="vrc">
                                 <input type="hidden" name="newProp[type]" value="requests">
@@ -52,14 +52,14 @@
                             <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
                             <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
                             <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
-                                   name="newProp[{{ id }}][contact][email]">
+                                   name="newProp[{{ id }}][contact][emails][0][email]">
                             <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
-                                   name="newProp[{{ id }}][contact][telephone]">
+                                   name="newProp[{{ id }}][contact][telephones][0][telephone]">
                             <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}"
-                                   name="newProp[{{ id }}][givenName]">
+                                   name="newProp[{{ id }}][contact][givenName]">
                             <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
-                                   name="newProp[{{ id }}][familyName]">
-{#                            <input type="hidden" name="newProp[component]" value="vrc">#}
+                                   name="newProp[{{ id }}][contact][familyName]">
+                            <input type="hidden" name="newProp[component]" value="vrc">
 {#                            <input type="hidden" name="newProp[type]" value="requests">#}
 {#                            <input type="hidden" name="newProp[status]" value="{{ resource.status }}">#}
 {#                            <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">#}
@@ -94,7 +94,7 @@
             <input type="radio" id="withoutPermission" name="withPermission" value="false">
             <label for="withoutPermission">Nee</label>
             <button class="btn btn-primary" id="toevoegen"
-                    onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button"
+                    onclick="addAssents('{{ property.name }}', '{{ property.maxItems }}')" type="button"
                     style="margin-top: 5px; width: 100%">Uitnodigen
             </button>
         </div>
@@ -104,7 +104,7 @@
 <script>
     let personForm = document.getElementById("personForm");
 
-    function addGetuigen(propertyName, items) {
+    function addAssents(propertyName, items) {
         let input = document.getElementById('getuigenEmail');
         if (!input.checkValidity()) {
             document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult <br>';
