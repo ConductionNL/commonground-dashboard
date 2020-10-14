@@ -38,6 +38,7 @@ parameters:
     env(APP_WEB): false
     env(APP_INTERNAL): 'false'
     env(APP_BUILD_ALL_FIXTURES): false
+    env(APP_URL): http://localhost
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
@@ -71,6 +72,7 @@ parameters:
     app_web: "%env(APP_WEB)%"
     app_internal: "%env(APP_INTERNAL)%"
     app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+    app_url: "%env(APP_URL)%"
     
     app_certificate: "%env(APP_CERTIFICATE)%"
     app_ssl_key: "%env(APP_SSL_KEY)%"
