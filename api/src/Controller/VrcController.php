@@ -92,8 +92,6 @@ class VrcController extends AbstractController
             if (isset($_POST['filter'])) {
                 $filters = $request->request->all();
 
-//                var_dump($filters);
-                //die;
                 $typeFilter = $request->request->get('typeFilter');
                 $referenceFilter = $request->request->get('referenceFilter');
                 $createdFilter = $request->request->get('createdFilter');
@@ -334,6 +332,9 @@ class VrcController extends AbstractController
                         $resource['properties']['aanvrager/rechthebbende'][$i]['name'] = 'Instemmingsverzoek voor Aanvragen begrafenis';
                         $resource['properties']['aanvrager/rechthebbende'][$i]['description'] = 'U heeft een instemmingsverzoek ontvangen als aanvrager/rechthebbende voor een Aavragen begrafenis aangevraagd door '.$commonGroundService->getResource($this->getUser()->getOrganization())['name'].'.';
                         $resource['properties']['aanvrager/rechthebbende'][$i]['requester'] = $this->getUser()->getOrganization();
+                        if(empty($resource['properties']['aanvrager/rechthebbende'][$i]['status']) || $resource['properties']['aanvrager/rechthebbende'][$i]['status'] != 'granted') {
+                            $resource['properties']['aanvrager/rechthebbende'][$i]['status'] = 'requested';
+                        }
                         if ($i > 1) {
                             unset($resource['properties']['aanvrager/rechthebbende'][$i]);
                         }
@@ -398,7 +399,6 @@ class VrcController extends AbstractController
             if (!array_key_exists('properties', $resource)) {
                 $resource['properties'] = null;
             }
-
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
             /* @to this redirect is a hotfix */
