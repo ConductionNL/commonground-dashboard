@@ -1,55 +1,124 @@
 {% if property.type == 'array' and property.format == 'bsn' %}
-    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+    <span class="danger">{{ value }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
 {% elseif property.format == 'bag' %}
-    <span class="danger">{{ commonground_resource(value).straat }} {{ commonground_resource(value).huisnummer }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.iri == 'wrc/organizations'%}
-    <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.iri == 'grc/cemetery'%}
-    <span class="danger">{{ commonground_resource(value).reference }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.iri == 'grc/grave_type'%}
-    <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.iri == 'arc/event'%}
-    {{ value }} <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.iri == 'pdc/offer'%}
+    <span
+        class="danger">{{ commonground_resource(value).straat }} {{ commonground_resource(value).huisnummer }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.iri == 'wrc/organizations' %}
+    <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.iri == 'grc/cemetery' %}
+    <span class="danger">{{ commonground_resource(value).reference }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.iri == 'grc/grave_type' %}
+    <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.iri == 'arc/event' %}
+    {{ value }}
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.iri == 'pdc/offer' %}
     {% if value is iterable %}
         <ul>
-        {% for item in value %}
-            <li>
-                <span class="danger">{{ commonground_resource(item).name }}</span>
-            </li>
-        {% endfor %}
+            {% for item in value %}
+                <li>
+                    <span class="danger">{{ commonground_resource(item).name }}</span>
+                </li>
+            {% endfor %}
         </ul>
-        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
 
-{% elseif property.iri == 'brp/ingeschrevenpersoon'%}
-    {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }} <td><a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.iri == 'irc/assents'%}
+{% elseif property.iri == 'brp/ingeschrevenpersoon' %}
+    {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }}
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.iri == 'irc/assents' %}
     {% if value is iterable %}
-        {% set result = iterable(value, '')%}
-        {{ result|raw }}</td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a></td>
+        {% set result = iterable(value, '') %}
+        {{ result|raw }}</td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a></td>
+    {% elseif 'http' in value %}
+        {% set resource = commonground_resource(value) %}
+        {% if resource.contact is defined and resource.contact is not empty %}
+            {% set contact = commonground_resource(resource.contact) %}
+            <span class="danger">{{ contact.name }}</span> </td>
+        {% else %}
+            <span class="danger">{{ resource.name }}</span> </td>
+        {% endif %}
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ value }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
     {# Let slook for formats #}
-{% elseif property.format == 'phonenumber'%}
-    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+{% elseif property.format == 'phonenumber' %}
+    <span class="danger">{{ value }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
 {% elseif property.format == 'datetime' or property.format == 'calendar' %}
-    <span class="danger">{{ value|date("d-m-Y H:i", "Europe/Paris") }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+    <span class="danger">{{ value|date("d-m-Y H:i", "Europe/Paris") }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
 {% elseif property.iri == 'irc/assents' %}
     {% if value is iterable %}
         <ul>
@@ -59,11 +128,21 @@
                 </li>
             {% endfor %}
         </ul>
-        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
 {% elseif property.iri == 'cc/people' %}
     {% if value is iterable %}
@@ -74,11 +153,21 @@
                 </li>
             {% endfor %}
         </ul>
-        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
 {% elseif property.iri == 'cc/organization' %}
     {% if value is iterable %}
@@ -89,11 +178,21 @@
                 </li>
             {% endfor %}
         </ul>
-        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
     {% if value is iterable %}
         <ul>
@@ -103,11 +202,21 @@
                 </li>
             {% endfor %}
         </ul>
-        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
 {% elseif property.iri == 'lc/accommodation' %}
     {% if value is iterable %}
@@ -118,48 +227,90 @@
                 </li>
             {% endfor %}
         </ul>
-        </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ commonground_resource(value).name }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+        <span class="danger">{{ commonground_resource(value).name }}</span> </td>
+        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                    class="far fa-edit"></i></a>
+            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                    class="fa fa-minus"></i></a></td>
     {% endif %}
-{% elseif property.format == 'date-time'%}
-    <span class="danger">{{ value|date("d-m-Y H:i:s", "Europe/Paris") }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.format == 'textarea'%}
-    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.format == 'text-area'%}
-    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.format == 'radio'%}
-    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.format == 'file'%}
+{% elseif property.format == 'date-time' %}
+    <span class="danger">{{ value|date("d-m-Y H:i:s", "Europe/Paris") }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.format == 'textarea' %}
+    <span class="danger">{{ value }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.format == 'text-area' %}
+    <span class="danger">{{ value }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.format == 'radio' %}
+    <span class="danger">{{ value }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.format == 'file' %}
     {% set value = commonground_resource(value) %}
-    <span class="danger"><a href="{{ path('app_drc_download',{'resource':value.id})}}">{{ value.bestandsnaam }}</a></span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.format == 'location'%}
-    <span class="danger">{{ value }}</span> </td> <td> <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
-{% elseif property.format == 'meeverhuizen'%}
+    <span class="danger"><a
+            href="{{ path('app_drc_download',{'resource':value.id}) }}">{{ value.bestandsnaam }}</a></span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.format == 'location' %}
+    <span class="danger">{{ value }}</span> </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
+{% elseif property.format == 'meeverhuizen' %}
 
-{% elseif property.format == 'calendar'%}
-    {{ value }} <td><a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a>
+{% elseif property.format == 'calendar' %}
+    {{ value }}
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+       data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a>
     {# Generic HTML 5 input types #}
 {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
     <span class="danger">
         {% if value is iterable %}
             {{ dump(value) }}
         {% else %}
-        {{ value }}
+            {{ value }}
         {% endif %}
     </span>
 
-    </td> <td>  <a style="float: right" class="btn btn-info" data-toggle="modal"  data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
-    <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"  data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i class="fa fa-minus"></i></a> </td>
+    </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal" data-target="#updateProperty{{ property.id }}"
+           href="#updateProperty{{ property.id }}"><i class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
 {% else %}
     {{ value }}
 {% endif %}
