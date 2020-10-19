@@ -5,10 +5,10 @@
         <div class="row" id="getuigen-container">
             <div id="0"></div>
             <input type="hidden" value="{{ property.name }}" name="newPropName">
-            {% if value is defined and value is not empty %}
-                {% if value is iterable %}
+            {% if resource.properties[property.name] is defined and resource.properties[property.name] is not empty %}
+                {% if resource.properties[property.name] is iterable %}
                     {% set id = 1 %}
-                    {% for assent in value %}
+                    {% for assent in resource.properties[property.name] %}
                         {% set assent = commonground_resource(assent) %}
                         {% set contact = commonground_resource(assent.contact) %}
                         <div id="{{ id }}" class="col-sm-12 col-md-5"
@@ -17,6 +17,10 @@
                             <div id="{{ id }}" style="line-height: 15px">
                                 <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
                                 <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
+                                <label>Ingestemd</label>
+                                test
+                                <input type="checkbox" id="{{ id }}" value="granted"
+                                       name="newProp[{{ id }}][status]" {% if assent.status == 'granted' %}checked{% endif %}>
                                 <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
                                        name="newProp[{{ id }}][contact][emails][0][email]">
                                 <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
@@ -27,6 +31,7 @@
                                        name="newProp[{{ id }}][contact][additionalName]">
                                 <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
                                        name="newProp[{{ id }}][contact][familyName]">
+
                                 <input type="hidden" name="newProp[requestType]" value="{{ resource.requestType }}">
                                 <input type="hidden" name="newProp[component]" value="vrc">
                                 <input type="hidden" name="newProp[type]" value="requests">
@@ -43,28 +48,37 @@
                         {% set id = id + 1 %}
                     {% endfor %}
                 {% else %}
-                    {% set assent = commonground_resource(value) %}
+                    {% set assent = commonground_resource(resource.properties[property.name]) %}
                     {% set contact = commonground_resource(assent.contact) %}
-                    <div id="{{ id }}" class="col-sm-12 col-md-5"
+                    <div id="1" class="col-sm-12 col-md-5"
                          style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
-                        <h2 id="{{ id }}">{{ contact.givenName }} {{ contact.familyName }}</h2>
-                        <div id="{{ id }}" style="line-height: 15px">
-                            <p id="{{ id }}">Email: {{ contact.emails[0].email }}</p>
-                            <p id="{{ id }}">Telefoon: {{ contact.telephones[0].telephone }}</p>
-                            <input type="hidden" id="{{ id }}" value="{{ contact.emails[0].email }}"
-                                   name="newProp[{{ id }}][contact][emails][0][email]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.telephones[0].telephone }}"
-                                   name="newProp[{{ id }}][contact][telephones][0][telephone]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.givenName }}"
-                                   name="newProp[{{ id }}][contact][givenName]">
-                            <input type="hidden" id="{{ id }}" value="{{ contact.familyName }}"
-                                   name="newProp[{{ id }}][contact][familyName]">
+                        <h2>{{ contact.givenName }} {{ contact.familyName }}</h2>
+                        <div style="line-height: 15px">
+                            <p>Email: {{ contact.emails[0].email }}</p>
+                            <p>Telefoon: {{ contact.telephones[0].telephone }}</p>
+                            <label style="margin-bottom: 10px">Ingestemd</label>
+                            <input type="checkbox" id="1" value="granted"
+                                   name="newProp[0][status]" {% if assent.status == 'granted' %}checked{% endif %}>
+                            <input type="hidden" id="1" value="{{ contact.emails[0].email }}"
+                                   name="newProp[0][contact][emails][0][email]">
+                            <input type="hidden" id="1" value="{{ contact.telephones[0].telephone }}"
+                                   name="newProp[0][contact][telephones][0][telephone]">
+                            <input type="hidden" id="1" value="{{ contact.givenName }}"
+                                   name="newProp[0][contact][givenName]">
+                            <input type="hidden" id="1" value="{{ contact.additionalName }}"
+                                   name="newProp[0][contact][additionalName]">
+                            <input type="hidden" id="1" value="{{ contact.familyName }}"
+                                   name="newProp[0][contact][familyName]">
+
+                            <input type="hidden" id="1" name="newProp[0][@id]" value="{{ assent['@id'] }}">
+                            <input type="hidden" id="1" name="newProp[0][id]" value="{{ assent.id }}">
+                            <input type="hidden" name="newProp[requestType]" value="{{ resource.requestType }}">
                             <input type="hidden" name="newProp[component]" value="vrc">
-{#                            <input type="hidden" name="newProp[type]" value="requests">#}
-{#                            <input type="hidden" name="newProp[status]" value="{{ resource.status }}">#}
-{#                            <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">#}
-{#                            <input type="hidden" name="newProp[processType]" value="{{ resource.processType }}">#}
-                            <button class="btn btn-primary" id="{{ id }}"
+                            <input type="hidden" name="newProp[type]" value="requests">
+                            <input type="hidden" name="newProp[status]" value="{{ resource.status }}">
+                            <input type="hidden" name="newProp[organization]" value="{{ resource.organization }}">
+                            <input type="hidden" name="newProp[processType]" value="{{ resource.processType }}">
+                            <button class="btn btn-primary" id="1"
                                     onclick="storedDelete(this, '{{ property.maxItems }}')"
                                     style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i
                                     style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen
@@ -88,11 +102,11 @@
             <span id="inputResult"></span>
             <label class="input__label" for="getuigenTelefoon">Telefoonnummer</label>
             <input class="form-control" style="width: 100%" id="getuigenTelefoon" type="tel">
-            <p class="mt-2"><b>Met toestemming van de instemmende?</b></p>
-            <input type="radio" id="withPermission" name="withPermission" value="true">
-            <label for="withPermission">Ja</label><br>
-            <input type="radio" id="withoutPermission" name="withPermission" value="false">
-            <label for="withoutPermission">Nee</label>
+{#            <p class="mt-2"><b>Met toestemming van de instemmende?</b></p>#}
+{#            <input type="radio" id="withPermission" name="withPermission" value="true">#}
+{#            <label for="withPermission">Ja</label><br>#}
+{#            <input type="radio" id="withoutPermission" name="withPermission" value="false">#}
+{#            <label for="withoutPermission">Nee</label>#}
             <button class="btn btn-primary" id="toevoegen"
                     onclick="addAssents('{{ property.name }}', '{{ property.maxItems }}')" type="button"
                     style="margin-top: 5px; width: 100%">Uitnodigen
@@ -121,15 +135,15 @@
             let tussenvoegsel = document.getElementById('getuigenTussenvoegsel').value;
             let achternaam = document.getElementById('getuigenAchternaam').value;
             var radios = document.getElementsByName('withPermission');
-            var value;
-            for (var i = 0; i < radios.length; i++) {
-                if (radios[i].type === 'radio' && radios[0].checked) {
-                    // get value, set checked flag or do whatever you need to
-                    toestemming = 'Met toestemming';
-                } else {
-                    toestemming = 'Zonder toestemming';
-                }
-            }
+            // var status;
+            // for (var i = 0; i < radios.length; i++) {
+            //     if (radios[i].type === 'radio' && radios[0].checked) {
+            //         // get value, set checked flag or do whatever you need to
+            //         status = 'granted';
+            //     } else {
+            //         status = '';
+            //     }
+            // }
             var requester = "{{ commonground_resource(app.user.organization).rsin }}";
 
             let nameCount = document.getElementById("getuigen-container").children.length - 1;
@@ -138,14 +152,14 @@
             let hVoornaam = document.createElement('input');
             let hTussenvoegsel = document.createElement('input');
             let hAchternaam = document.createElement('input');
-            let hPermission = document.createElement('input');
+            // let hStatus = document.createElement('input');
             let hRequester = document.createElement('input');
             let counter;
 
             console.log(document.getElementById("getuigen-container").children.length - 1);
 
             if (nameCount !== undefined) {
-                counter = parseInt(nameCount)  - 1;
+                counter = parseInt(nameCount) - 1;
             } else {
                 counter = container.children.length;
             }
@@ -155,7 +169,7 @@
             hVoornaam.id = counter.toString();
             hTussenvoegsel.id = counter.toString();
             hAchternaam.id = counter.toString();
-            hPermission.id = counter.toString();
+            // hStatus.id = counter.toString();
             hRequester.id = counter.toString();
 
             hEmail.type = 'hidden';
@@ -163,7 +177,7 @@
             hVoornaam.type = 'hidden';
             hTussenvoegsel.type = 'hidden';
             hAchternaam.type = 'hidden';
-            hPermission.type = 'hidden';
+            // hStatus.type = 'hidden';
             hRequester.type = 'hidden';
 
             hEmail.value = email;
@@ -171,7 +185,7 @@
             hVoornaam.value = voornaam;
             hTussenvoegsel.value = tussenvoegsel;
             hAchternaam.value = achternaam;
-            hPermission.value = toestemming;
+            // hStatus.value = status;
             hRequester.value = requester;
 
             hEmail.name = 'newProp[' + counter + '][contact][emails][0][email]';
@@ -179,7 +193,7 @@
             hVoornaam.name = 'newProp[' + counter + '][contact][givenName]';
             hTussenvoegsel.name = 'newProp[' + counter + '][contact][additionalName]';
             hAchternaam.name = 'newProp[' + counter + '][contact][familyName]';
-            // hPermission.name = 'newProp[' + counter + '][familyName]';
+            // hStatus.name = 'newProp[' + counter + '][status]';
             hRequester.name = 'newProp[' + counter + '][requester]';
 
             let outerDiv = document.createElement('div');
@@ -209,17 +223,28 @@
             pTelefoon.id = counter.toString();
             innerDiv.append(pTelefoon);
 
-            let pToestemming = document.createElement('p');
-            pToestemming.innerHTML = toestemming;
-            pToestemming.setAttribute('style', 'margin-bottom: 5px;');
-            pToestemming.id = counter.toString();
-            innerDiv.append(pToestemming);
+            let pStatusLabel = document.createElement('label');
+            pStatusLabel.classList.add('input__label');
+            pStatusLabel.setAttribute('style', 'margin-bottom: 5px;');
+            pStatusLabel.id = counter.toString();
+            pStatusLabel.innerText = 'Ingestemd';
+            pStatusLabel.style.display = 'inline-block !important';
+            innerDiv.append(pStatusLabel);
 
-            let pRequester = document.createElement('p');
-            pRequester.innerHTML = requester;
-            pRequester.setAttribute('style', 'margin-bottom: 5px;');
-            pRequester.id = counter.toString();
-            innerDiv.append(pRequester);
+            let pStatus = document.createElement('input');
+            pStatus.value = 'granted';
+            pStatus.type = 'checkbox';
+            pStatus.setAttribute('style', 'margin-bottom: 5px;important;margin-left: 7.5px;width: 14px !important;display: inline-block;');
+            pStatus.classList.add('form-control');
+            pStatus.id = counter.toString();
+            pStatus.name = 'newProp[' + counter + '][status]';
+            innerDiv.append(pStatus);
+
+            // let pRequester = document.createElement('p');
+            // pRequester.innerHTML = requester;
+            // pRequester.setAttribute('style', 'margin-bottom: 5px;');
+            // pRequester.id = counter.toString();
+            // innerDiv.append(pRequester);
 
             let button = document.createElement('button');
             button.innerHTML = '<i style="margin-right: 10px" class="fas fa-trash-alt"></i> Verwijderen';
@@ -237,7 +262,7 @@
             innerDiv.appendChild(hVoornaam);
             innerDiv.appendChild(hTussenvoegsel);
             innerDiv.appendChild(hAchternaam);
-            innerDiv.appendChild(hToestemming);
+            innerDiv.appendChild(hStatus);
             innerDiv.appendChild(hRequester);
             innerDiv.appendChild(button);
 
