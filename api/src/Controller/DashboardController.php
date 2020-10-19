@@ -28,4 +28,14 @@ class DashboardController extends AbstractController
 
         return ['requests'=>$requests];
     }
+
+
+    /**
+     * @Route("/persoonlijk")
+     */
+    public function persoonlijkAction()
+    {
+        return $this->redirect('/ud');
+    }
+
 }
