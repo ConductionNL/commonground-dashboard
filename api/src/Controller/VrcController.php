@@ -332,7 +332,7 @@ class VrcController extends AbstractController
                         $resource['properties']['aanvrager/rechthebbende'][$i]['name'] = 'Instemmingsverzoek voor Aanvragen begrafenis';
                         $resource['properties']['aanvrager/rechthebbende'][$i]['description'] = 'U heeft een instemmingsverzoek ontvangen als aanvrager/rechthebbende voor een Aavragen begrafenis aangevraagd door '.$commonGroundService->getResource($this->getUser()->getOrganization())['name'].'.';
                         $resource['properties']['aanvrager/rechthebbende'][$i]['requester'] = $this->getUser()->getOrganization();
-                        if(empty($resource['properties']['aanvrager/rechthebbende'][$i]['status']) || $resource['properties']['aanvrager/rechthebbende'][$i]['status'] != 'granted') {
+                        if (empty($resource['properties']['aanvrager/rechthebbende'][$i]['status']) || $resource['properties']['aanvrager/rechthebbende'][$i]['status'] != 'granted') {
                             $resource['properties']['aanvrager/rechthebbende'][$i]['status'] = 'requested';
                         }
                         if ($i > 1) {
