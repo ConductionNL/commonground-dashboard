@@ -29,7 +29,6 @@ class DashboardController extends AbstractController
         return ['requests'=>$requests];
     }
 
-
     /**
      * @Route("/persoonlijk")
      */
@@ -37,5 +36,4 @@ class DashboardController extends AbstractController
     {
         return $this->redirect('/ud');
     }
-
 }
