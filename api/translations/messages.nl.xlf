@@ -2921,6 +2921,38 @@
         <source>rejected</source>
         <target>afgewezen</target>
       </trans-unit>
+      <trans-unit id="YHnb321" resname="has agreed with the assent">
+        <source>has agreed with the assent</source>
+        <target>heeft ingestemd met de instemming</target>
+      </trans-unit>
+      <trans-unit id="Oin21AS" resname="has been requested to agree with the assent">
+        <source>has been requested to agree with the assent</source>
+        <target>is gevraagd om in te stemmen met het instemmingsverzoek</target>
+      </trans-unit>
+      <trans-unit id="ijn213A" resname="this assent has been submitted">
+        <source>this assent has been submitted</source>
+        <target>dit instemmingsverzoek is ingediend</target>
+      </trans-unit>
+      <trans-unit id="4Fs27Bl" resname="has declined this assent">
+        <source>has declined this assent</source>
+        <target>heeft dit instemmingsverzoek afgewezen</target>
+      </trans-unit>
+      <trans-unit id="Jn21Ba0" resname="this assent has been cancelled">
+        <source>this assent has been cancelled</source>
+        <target>instemmingsverzoek is geannuleerd</target>
+      </trans-unit>
+      <trans-unit id="Pom213A" resname="change">
+        <source>change</source>
+        <target>wijzig</target>
+      </trans-unit>
+      <trans-unit id="H1N20pa" resname="invite someone as">
+        <source>invite someone as</source>
+        <target>nodig iemand uit als</target>
+      </trans-unit>
+      <trans-unit id="J121asW" resname="assent requests for">
+        <source>assent requests for</source>
+        <target>instemmingsverzoeken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
