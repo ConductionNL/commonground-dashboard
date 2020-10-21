@@ -88,7 +88,7 @@
                                                 <option
                                                     value="processed" {% if query.status is defined and query.status is not empty and query.status == 'processed' %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
                                                 <option
-                                                    value="cancelled" {% if query.status is defined and query.status is not empty and query.status == 'cancelled' %}selected{% endif %}>{{ 'cancelled'|trans|capitalize }}</option>
+                                                    value="rejected" {% if query.status is defined and query.status is not empty and query.status == 'rejected' %}selected{% endif %}>{{ 'rejected'|trans|capitalize }}</option>
                                                 <option
                                                     value="retracted" {% if query.status is defined and query.status is not empty and query.status == 'retracted' %}selected{% endif %}>{{ 'retracted'|trans|capitalize }}</option>
                                             </select>

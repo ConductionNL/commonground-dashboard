@@ -43,7 +43,7 @@
                 class="fa fa-minus"></i></a></td>
 {% elseif property.iri == 'pdc/offer' %}
     {% if value is iterable %}
-        <ul>
+        <ul class="mt-3">
             {% for item in value %}
                 <li>
                     <span class="danger">{{ commonground_resource(item).name }}</span>
@@ -77,7 +77,7 @@
 {% elseif property.iri == 'irc/assents' %}
     {% if value is iterable %}
         {% set result = iterable(value, '') %}
-        {{ result|raw }}</td>
+        {{ result|raw }}
         <td><a style="float: right" class="btn btn-info" data-toggle="modal"
                data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
                     class="far fa-edit"></i></a></td>
@@ -85,25 +85,31 @@
         {% set resource = commonground_resource(value) %}
         {% if resource.contact is defined and resource.contact is not empty %}
             {% set contact = commonground_resource(resource.contact) %}
-            <span class="danger">{{ contact.name }}</span> </td>
+            {% if resource.status == 'granted' %}
+                <span class="success">{{ contact.name~' '~'has agreed with the assent'|trans }}</span>
+            {% elseif resource.status == 'requested' %}
+                <span class="danger">{{ contact.name~' '~'has been requested to agree with the assent'|trans }}</span>
+            {% elseif resource.status == 'submitted' %}
+                <span class="danger">{{ 'this assent has been submitted'|trans|capitalize }}</span>
+            {% elseif resource.status == 'declined' %}
+                <span class="danger">{{ contact.name~' '~'has declined this assent'|trans }}</span>
+            {% elseif resource.status == 'cancelled' %}
+                <span class="danger">{{ 'this assent has been cancelled'|trans|capitalize }}</span>
+            {% endif %}
+
         {% else %}
-            <span class="danger">{{ resource.name }}</span> </td>
+            <span class="danger">{{ resource.name }}</span>
         {% endif %}
-        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
-               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
-                    class="far fa-edit"></i></a>
-            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
-               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
-                    class="fa fa-minus"></i></a></td>
     {% else %}
-        <span class="danger">{{ value }}</span> </td>
-        <td><a style="float: right" class="btn btn-info" data-toggle="modal"
-               data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
-                    class="far fa-edit"></i></a>
-            <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
-               data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
-                    class="fa fa-minus"></i></a></td>
+        <span class="danger">{{ value }}</span>
     {% endif %}
+    </td>
+    <td><a style="float: right" class="btn btn-info" data-toggle="modal"
+           data-target="#updateProperty{{ property.id }}" href="#updateProperty{{ property.id }}"><i
+                class="far fa-edit"></i></a>
+        <a style="float: right; width: 63px;" class="btn btn-danger mr-md-2 mt-1 mt-sm-0" data-toggle="modal"
+           data-target="#unsetProperty{{ property.id }}" href="#unsetProperty{{ property.id }}"><i
+                class="fa fa-minus"></i></a></td>
     {# Let slook for formats #}
 {% elseif property.format == 'phonenumber' %}
     <span class="danger">{{ value }}</span> </td>

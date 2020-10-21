@@ -100,6 +100,10 @@
                                                         {% if resource.status is defined and 'inProgress' == resource.status %}selected{% endif %}>{{ 'in Progress'|trans|capitalize }}</option>
                                                 <option value="processed"
                                                         {% if resource.status is defined and 'processed' == resource.status %}selected{% endif %}>{{ 'processed'|trans|capitalize }}</option>
+                                                <option value="retracted"
+                                                        {% if resource.status is defined and 'retracted' == resource.status %}selected{% endif %}>{{ 'retracted'|trans|capitalize }}</option>
+                                                <option value="rejected"
+                                                        {% if resource.status is defined and 'rejected' == resource.status %}selected{% endif %}>{{ 'rejected'|trans|capitalize }}</option>
                                             </select>
                                         </div><!-- /.form-group -->
                                     </div> <!-- /.col -->
@@ -108,7 +112,7 @@
                                             <label for="largeInput">{{ 'requestType'|trans|capitalize }}</label>
                                             {% if requestType is defined and requestType is not empty %}
                                                 <a class="btn btn-info btn-block"
-                                                   href="{{ path('app_vtc_requesttype',{'id': requestType.id }) }}">{{ requestType.name }}</a>
+                                                   href="{{ path('app_vtc_requesttype',{'id': requestType.id }) }}">{{ requestType.name|capitalize }}</a>
                                             {% else %}
                                                 <select id="organization" name="requestType"
                                                         class="form-control form-control-lg">
@@ -122,7 +126,7 @@
                                     </div> <!-- /.col -->
                                 </div><!-- /.row -->
                                 <div class="row"></div>
-                                {% if resource.status is defined %}
+                                {% if resource.status is defined and resource.status != 'retracted' and resource.status != 'rejected' %}
                                     <div class="col-md-12 col-sm-12 mt-3">
                                         <div class="form-group">
                                             <label for="largeInput">{{ 'progress'|trans|capitalize }}</label>

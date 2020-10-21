@@ -176,7 +176,7 @@ class VrcController extends AbstractController
         $variables['query'] = $query;
 
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
+        if (!empty($variables['requestType']) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
             return $this->render('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
