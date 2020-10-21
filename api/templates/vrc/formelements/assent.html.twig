@@ -2,6 +2,7 @@
 
 <div class="row">
     <div class="col-sm-12">
+        <h3>{{ 'assent requests for'|trans|capitalize~' '~property.name }}</h3>
         <div class="row" id="getuigen-container">
             <div id="0"></div>
             <input type="hidden" value="{{ property.name }}" name="newPropName">
@@ -90,6 +91,7 @@
         </div>
     </div>
     <div id="personForm" class="col-sm-12">
+        <h3 class="mt-3">{{ 'invite someone as'|trans|capitalize~' '~property.name }}</h3>
         <div class="form-group">
             <label class="input__label" for="getuigenVoornaam">Voornaam</label>
             <input class="form-control" style="width: 100%" id="getuigenVoornaam" type="text">
