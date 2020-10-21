@@ -2917,9 +2917,9 @@
         <source>in progress</source>
         <target>in behandeling</target>
       </trans-unit>
-      <trans-unit id="rjgSBY9" resname="inProgress">
-        <source>inProgress</source>
-        <target>in behandeling</target>
+      <trans-unit id="oaw213b" resname="rejected">
+        <source>rejected</source>
+        <target>afgewezen</target>
       </trans-unit>
     </body>
   </file>
