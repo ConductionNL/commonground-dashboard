@@ -39,13 +39,12 @@ parameters:
     env(APP_INTERNAL):
     env(APP_BUILD_ALL_FIXTURES):
     env(APP_URL): "http://localhost"
+    env(APP_SESSION_DURATION): "900"
+    env(APP_MOLLIE_KEY): ""
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
-    
-    env(APP_CERTIFICATE): "/var/run/certs/tls.crt"
-    env(APP_SSL_KEY): "/var/run/certs/tls.key"
-  
+
     app_env: "%env(APP_ENV)%"
     app_debug: "%env(APP_DEBUG)%"
     app_cache: "%env(APP_CACHE)%"
@@ -73,10 +72,8 @@ parameters:
     app_web: "%env(APP_WEB)%"
     app_internal: "%env(APP_INTERNAL)%"
     app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
-    app_url: "%env(APP_URL)%"
-    
-    app_certificate: "%env(APP_CERTIFICATE)%"
-    app_ssl_key: "%env(APP_SSL_KEY)%"
+    app_session_duration: "%env(APP_SESSION_DURATION)%"
+    app_mollie_key: "%env(APP_MOLLIE_KEY)%"
 
     # Organisatie details
     env(GOOGLE_TAG_MANAGER_ID): ""
@@ -163,7 +160,7 @@ parameters:
     env(APP_COMMONGROUND_KIC_LOCATION): "https://kic.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_KIC_ID): "%env(APP_COMMONGROUND_ID)%"
     env(APP_COMMONGROUND_KIC_SECRET): "%env(APP_COMMONGROUND_SECRET)%"
-    
+
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): "https://bag.basisregistraties.overheid.nl/api/v1/"
     env(APP_COMMONGROUND_BAG_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
@@ -322,9 +319,9 @@ twig:
         app_web: "%env(APP_WEB)%"
         app_internal: "%env(APP_INTERNAL)%"
         app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
-
-        app_certificate: "%env(APP_CERTIFICATE)%"
-        app_ssl_key: "%env(APP_SSL_KEY)%"
+        app_url: "%env(APP_URL)%"
+        app_session_duration: "%env(APP_SESSION_DURATION)%"
+        app_mollie_key: "%env(APP_MOLLIE_KEY)%"
 
         # Security Details
         app_commonground_id: "%env(APP_COMMONGROUND_ID)%"
@@ -356,5 +353,3 @@ twig:
 
         nlx_outway: "%env(NLX_OUTWAY)%"
         nlx_inway: "%env(NLX_INWAY)%"
-        
-    
