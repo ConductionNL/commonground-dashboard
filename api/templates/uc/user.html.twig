@@ -115,6 +115,7 @@
 
             <div class="page-inner">
                 <div class="row">
+                    {% if resource.roles is defined and resource.roles is not empty %}
                     <div style="margin-top: -50px;" class="col-md-12">
                         <div class="card p-4 full-height">
                             <div class="card-header">
@@ -153,6 +154,7 @@
 
                         </div><!-- /.card -->
                     </div><!-- /.col -->
+                    {% endif %}
                 </div><!-- /.row -->
             </div><!-- /.page-inner -->
 

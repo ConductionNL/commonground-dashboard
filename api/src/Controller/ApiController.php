@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * The API controller handles all requests that should be redirected to a component for the benefit of AJAX Calls.
+ * The API test handles all requests that should be redirected to a component for the benefit of AJAX Calls.
  *
  * Class ApiController
  *
@@ -55,7 +55,7 @@ class ApiController extends AbstractController
         if ($request->isMethod('POST')) {
             $results = $apiService->createResource(json_decode($request->getContent(), true), $component, $type);
         } elseif ($request->isMethod('GET')) {
-            $results = $apiService->getResourceList($component, $type, $request->query->all());
+            $results = $apiService->getResourceList($component, $type, $request->server->get('QUERY_STRING'));
         } else {
             throw new HttpException(405, 'METHOD NOT ALLOWED');
         }

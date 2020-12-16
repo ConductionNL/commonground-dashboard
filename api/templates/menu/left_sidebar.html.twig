@@ -14,7 +14,6 @@
                     </li>
                 {% endfor %}
             {% endif %}
-
             {# request filters #}
             {% if commonground_component_health('vrc') %}
                 <li class="nav-section">
@@ -52,93 +51,95 @@
                 </li>
             {% endif %}
 
-            <li class="nav-section">
-                <h4 style="color: black" class="text-section">{{ 'components'|trans|capitalize }}</h4>
-            </li>
+            {% if 'group.beheerder' in app.user.roles %}
 
-            {# Tender component #}
-            {% if commonground_component_health('chrc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#locations" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'tenders'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="locations">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_chrc_tenders") }}">
+                <li class="nav-section">
+                    <h4 style="color: black" class="text-section">{{ 'components'|trans|capitalize }}</h4>
+                </li>
+
+                {# Tender component #}
+                {% if commonground_component_health('chrc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#locations" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'tenders'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="locations">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_chrc_tenders") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'tenders'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_tenderstages") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_tenderstages") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'tender stages'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_groups") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_groups") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'groups'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_entries") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_entries") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'entries'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_questions") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_questions") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'questions'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_answers") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_answers") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'answers'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_proposals") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_proposals") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'proposals'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_pitches") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_pitches") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'pitches'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_pitchstages") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_pitchstages") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'pitch stages'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_chrc_deals") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_chrc_deals") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'deals'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# Location component #}
-            {% if commonground_component_health('lc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#locations" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'locations'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="locations">
-                        <ul class="nav nav-collapse">
+                {# Location component #}
+                {% if commonground_component_health('lc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#locations" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'locations'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="locations">
+                            <ul class="nav nav-collapse">
                                 <li>
                                     <a href="{{ path("app_lc_accommodations") }}">
                                         <span style="color: #575962"
@@ -151,178 +152,181 @@
                                               class="sub-item">{{ 'places'|trans|capitalize }}</span>
                                     </a>
                                 </li>
-                            <li>
-                                <a href="{{ path("app_lc_properties") }}">
+                                <li>
+                                    <a href="{{ path("app_lc_properties") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'properties'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# instemming service #}
-            {% if commonground_component_health('irc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#assents" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'assents'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="assents">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_irc_assents") }}">
+                {# instemming service #}
+                {% if commonground_component_health('irc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#assents" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'assents'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="assents">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_irc_assents") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'assents'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# agenda component #}
-            {% if commonground_component_health('arc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#ac" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'calendar'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="ac">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_arc_calendars") }}">
+                {# agenda component #}
+                {% if commonground_component_health('arc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#ac" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'calendar'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="ac">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_arc_calendars") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'calendars'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_arc_resources") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_arc_resources") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'resources'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# berichten service #}
-            {% if commonground_component_health('bs') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#bs" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'messages'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="bs">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_bs_messages") }}">
+                {# berichten service #}
+                {% if commonground_component_health('bs') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#bs" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'messages'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="bs">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_bs_messages") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'messages'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bs_services") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bs_services") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'services'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# grafregistartie component #}
-            {% if commonground_component_health('grc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="graves">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_grc_graves") }}">
+                {# grafregistartie component #}
+                {% if commonground_component_health('grc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#graves" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'Grave registration'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="graves">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_grc_graves") }}">
                                     <span style="color: #575962"
                                           class="sub-item">{{ 'graves'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_grc_gravetypes") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_grc_gravetypes") }}">
                                     <span style="color: #575962"
                                           class="sub-item">{{ 'gravetypes'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_grc_cemeteries") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_grc_cemeteries") }}">
                                     <span style="color: #575962"
                                           class="sub-item">{{ 'cemeteries'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_grc_gravecovers") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_grc_gravecovers") }}">
                                     <span style="color: #575962"
                                           class="sub-item">{{ 'grave covers'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# contact catalogus #}
-            {% if commonground_component_health('cc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#contacts" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'contacts'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="contacts">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_cc_people") }}">
+                {# contact catalogus #}
+                {% if commonground_component_health('cc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#contacts" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'contacts'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="contacts">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_cc_people") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'people'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_cc_organizations") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_organizations") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'organizations'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_cc_contactlists") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_contactlists") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'contact lists'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_cc_addresses") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_addresses") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'addresses'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_cc_emails") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_emails") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'emails'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_cc_telephones") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_cc_telephones") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'telephones'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+
             {% endif %}
 
             {% if 'group.beheerder' in app.user.roles %}
+
                 <li class="nav-section">
                     <h4 style="color: black" class="text-section">{{ 'configurations'|trans|capitalize }}</h4>
                 </li>
@@ -425,12 +429,12 @@
                         </a>
                         <div class="collapse" id="configuration_vsbe">
                             <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="{{ path("app_vsbe_rules") }}">
+                                <li>
+                                    <a href="{{ path("app_vsbe_rules") }}">
                                             <span style="color: #575962"
                                                   class="sub-item">{{ 'rules'|trans|capitalize }}</span>
-                                        </a>
-                                    </li>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ path("app_vsbe_results") }}">
                                             <span style="color: #575962"
@@ -529,130 +533,131 @@
                         </div>
                     </li>
                 {% endif %}
-            {% endif %}
 
-            <li class="nav-section">
-                <h4 style="color: black" class="text-section">{{ 'products'|trans|capitalize }}</h4>
-            </li>
+                <li class="nav-section">
+                    <h4 style="color: black" class="text-section">{{ 'products'|trans|capitalize }}</h4>
+                </li>
 
-            {# order registartie component #}
-            {% if commonground_component_health('orc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#orc" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'orders'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="orc">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_orc_orders") }}">
+                {# order registartie component #}
+                {% if commonground_component_health('orc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#orc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'orders'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="orc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_orc_orders") }}">
                                     <span style="color: #575962"
                                           class="sub-item">{{ 'orders'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_orc_taxes") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_orc_taxes") }}">
                                     <span style="color: #575962"
                                           class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# betaalservice #}
-            {% if commonground_component_health('bc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="bc">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_bc_invoices") }}">
+                {# betaalservice #}
+                {% if commonground_component_health('bc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#bc" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'payments'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="bc">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_bc_invoices") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'invoices'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bc_payments") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bc_payments") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'payments'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bc_taxes") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bc_taxes") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_bc_services") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_bc_services") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'services'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            {% endif %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
 
-            {# product en diensten component #}
-            {% if commonground_component_health('pdc') %}
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#products" class="" aria-expanded="false">
-                        <p style="color: #575962">{{ 'products'|trans|capitalize }}</p>
-                        <span style="color: #575962" class="caret"></span>
-                    </a>
-                    <div class="collapse" id="products">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ path("app_pdc_products") }}">
+                {# product en diensten component #}
+                {% if commonground_component_health('pdc') %}
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#products" class="" aria-expanded="false">
+                            <p style="color: #575962">{{ 'products'|trans|capitalize }}</p>
+                            <span style="color: #575962" class="caret"></span>
+                        </a>
+                        <div class="collapse" id="products">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path("app_pdc_products") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'products'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_pdc_groups") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_pdc_groups") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'groups'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_pdc_offers") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_pdc_offers") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'offers'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_pdc_taxes") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_pdc_taxes") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'taxes'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_pdc_catalogues") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_pdc_catalogues") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'catalogues'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_pdc_suppliers") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_pdc_suppliers") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'suppliers'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path("app_pdc_customertypes") }}">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("app_pdc_customertypes") }}">
                                         <span style="color: #575962"
                                               class="sub-item">{{ 'customer types'|trans|capitalize }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                
             {% endif %}
         </ul>
         <img style="margin-left: 25px;margin-top: 20px; width: 200px; display:none;"

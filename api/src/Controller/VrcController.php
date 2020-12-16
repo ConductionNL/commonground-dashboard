@@ -38,6 +38,7 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/requests/{filterStatus}", defaults={"filterStatus"="none"})
+     * @Template
      */
     public function requestsAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator, ParameterBagInterface $params, $filterStatus)
     {
@@ -46,40 +47,44 @@ class VrcController extends AbstractController
         $variables['subtitle'] = $translator->trans('all').' '.$translator->trans('requests');
         $variables['thisPath'] = 'app_vrc_requests';
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-        $query = '';
+//        $query = [];
+
+        $query = $request->query->all();
 
         $variables['requestType'] = $request->query->get('requestType');
 
         if ($request->query->get('status')) {
-            $variables['status'] = $query['status'];
+            $variables['status'] = $request->query->get('status');
         }
 
         if ($this->getUser()->getOrganization()) {
-            if (isset($query) && !empty($query)) {
-                $query = $query.'&organization='.$this->getUser()->getOrganization();
-            } else {
-                $query = $query.'organization='.$this->getUser()->getOrganization();
-            }
+            $query['organization'] = $this->getUser()->getOrganization();
+//            if (isset($query) && !empty($query)) {
+//
+//            } else {
+//                $query['organization'] = $this->getUser()->getOrganization();
+//            }
         }
         if (isset($variables['requestType'])) {
             $variables['requestType'] = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'request_types', 'id' => $variables['requestType']]);
-
-            if (isset($query) && !empty($query)) {
-                $query = $query.'&requestType='.$variables['requestType'];
-            } else {
-                $query = $query.'requestType='.$variables['requestType'];
-            }
+            $query['requestType'] = $variables['requestType'];
+//
+//            if (isset($query) && !empty($query)) {
+//                $query = $query.'&requestType='.$variables['requestType'];
+//            } else {
+//            }
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
         } else {
             if ($filterStatus == 'none') {
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
             } else {
-                if (isset($query)) {
-                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "$query&status=$filterStatus")['hydra:member'];
-                } else {
-                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
-                }
+//                if (isset($query)) {
+                $query['status'] = $filterStatus;
+                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+//                } else {
+//                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
+//                }
             }
         }
 
@@ -87,8 +92,6 @@ class VrcController extends AbstractController
             if (isset($_POST['filter'])) {
                 $filters = $request->request->all();
 
-//                var_dump($filters);
-                //die;
                 $typeFilter = $request->request->get('typeFilter');
                 $referenceFilter = $request->request->get('referenceFilter');
                 $createdFilter = $request->request->get('createdFilter');
@@ -96,19 +99,20 @@ class VrcController extends AbstractController
                 $statusFilter = $request->request->get('statusFilter');
 
                 if (isset($typeFilter) && !empty($typeFilter)) {
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&requestType='.$typeFilter;
-                    } else {
-                        $query = $query.'requestType='.$typeFilter;
-                    }
+//                    if (isset($query) && !empty($query)) {
+//                        $query = $query.'&requestType='.$typeFilter;
+//                    } else {
+                    $query['requestType'] = $typeFilter;
+//                    }
                 }
 
                 if (isset($referenceFilter) && !empty($referenceFilter)) {
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&reference='.$referenceFilter;
-                    } else {
-                        $query = $query.'reference='.$referenceFilter;
-                    }
+                    $query['reference'] = $referenceFilter;
+//                    if (isset($query) && !empty($query)) {
+//                        $query = $query.'&reference='.$referenceFilter;
+//                    } else {
+//                        $query = $query.'reference='.$referenceFilter;
+//                    }
                 }
 
                 if (isset($createdFilter) && !empty($createdFilter)) {
@@ -118,11 +122,12 @@ class VrcController extends AbstractController
                     $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
                     $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
 
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
-                    } else {
-                        $query = $query.'dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
-                    }
+//                    if (isset($query) && !empty($query)) {
+                    $query['dateCreated[strictly_before]'] = $date2;
+                    $query['dateCreated[strictly_after]'] = $date1;
+//                    } else {
+//                        $query = $query.'dateCreated[strictly_before]='.$date2.'&dateCreated[strictly_after]='.$date1;
+//                    }
                 }
 
                 if (isset($modifiedFilter) && !empty($modifiedFilter)) {
@@ -131,20 +136,21 @@ class VrcController extends AbstractController
                     // Because you cant filter for 1 date we have to filter between 2 dates
                     $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
                     $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
-
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
-                    } else {
-                        $query = $query.'dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
-                    }
+                    $query['dateModified[strictly_before]'] = $date2;
+                    $query['dateModified[strictly_after]'] = $date1;
+//                    if (isset($query) && !empty($query)) {
+//                        $query = $query.'&dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
+//                    } else {
+//                        $query = $query.'dateModified[strictly_before]='.$date2.'&dateModified[strictly_after]='.$date1;
+//                    }
                 }
 
                 if (isset($statusFilter) && !empty($statusFilter)) {
-                    if (isset($query) && !empty($query)) {
-                        $query = $query.'&status='.$statusFilter;
-                    } else {
-                        $query = $query.'status='.$statusFilter;
-                    }
+//                    if (isset($query) && !empty($query)) {
+                    $query['status'] = $statusFilter;
+//                    } else {
+//                        $query = $query.'status='.$statusFilter;
+//                    }
                 }
 
                 $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
@@ -167,18 +173,19 @@ class VrcController extends AbstractController
             return $response;
         }
 
+        $variables['query'] = $query;
+
         /* If we have specific view for this request type use that instead */
-        if (array_key_exists('requestType', $variables) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
+        if (!empty($variables['requestType']) && $this->get('twig')->getLoader()->exists('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig')) {
             return $this->render('vrc/requests_templates/'.$variables['requestType']['id'].'.html.twig', $variables);
         } else {
             return $this->render('vrc/requests.html.twig', $variables);
         }
-
-        return $this->render('vrc/requests.html.twig', $variables);
     }
 
     /**
      * @Route("/request/{id}")
+     * @Template
      */
     public function requestAction(Request $request, CommonGroundService $commonGroundService, RequestService $requestService, TranslatorInterface $translator, $id)
     {
@@ -245,17 +252,29 @@ class VrcController extends AbstractController
         }
 
         $variables['requestTypes'] = $commonGroundService->getResourceList(['component' => 'vtc', 'type' => 'request_types'])['hydra:member'];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'], ['limit'=>100])['hydra:member'];
 
         if ($request->isMethod('POST')) {
 
             // Passing the variables to the resource
+
             $resource = $request->request->all();
 
             // if we have a resource we want to use that id
             if (array_key_exists('resource', $variables)) {
                 $resource['@id'] = $variables['resource']['@id'];
                 $resource['id'] = $variables['resource']['id'];
+                if (array_key_exists('requestType', $variables['resource'])) {
+                    $resource['requestType'] = $variables['resource']['requestType'];
+                } elseif (key_exists('requestType', $variables)) {
+                    $resource['requestType'] = $variables['requestType']['@id'];
+                }
+
+                if (key_exists('properties', $variables['resource']) && key_exists('properties', $resource)) {
+                    $resource['properties'] = array_merge($variables['resource']['properties'], $resource['properties']);
+                } elseif (key_exists('properties', $variables['resource'])) {
+                    $resource['properties'] = $variables['resource']['properties'];
+                }
             }
 
             if (array_key_exists('memo', $resource)) {
@@ -291,17 +310,45 @@ class VrcController extends AbstractController
                 }
                 $task = $commonGroundService->saveResource($task, ['component' => 'tc', 'type' => 'tasks']);
             }
+
+            // If we township gets changed unset grave and cemetery
+            if (key_exists('newPropName', $resource) && !empty($variables['resource']['properties']['gemeente']) && 'gemeente' == $resource['newPropName'] && $variables['resource']['properties']['gemeente'] != $resource['newProp']) {
+                unset($resource['properties']['soort_graf']);
+                unset($resource['properties']['begraafplaats']);
+            }
+
             if (array_key_exists('newProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
                 $item['properties']['temp'] = 'temp';
                 $item['properties'][$resource['newPropName']] = $resource['newProp'];
 
                 unset($item['properties']['temp']);
+
                 $resource['properties'] = $item['properties'];
+
+                // Specific code to fix assent aanvrager/rechthebbende
+                if ($resource['newPropName'] == 'aanvrager/rechthebbende') {
+                    for ($i = 0; $i < count($resource['properties']['aanvrager/rechthebbende']); $i++) {
+                        $resource['properties']['aanvrager/rechthebbende'][$i]['name'] = 'Instemmingsverzoek voor Aanvragen begrafenis';
+                        $resource['properties']['aanvrager/rechthebbende'][$i]['description'] = 'U heeft een instemmingsverzoek ontvangen als aanvrager/rechthebbende voor een Aavragen begrafenis aangevraagd door '.$commonGroundService->getResource($this->getUser()->getOrganization())['name'].'.';
+                        $resource['properties']['aanvrager/rechthebbende'][$i]['requester'] = $this->getUser()->getOrganization();
+                        if (empty($resource['properties']['aanvrager/rechthebbende'][$i]['status']) || $resource['properties']['aanvrager/rechthebbende'][$i]['status'] != 'granted') {
+                            $resource['properties']['aanvrager/rechthebbende'][$i]['status'] = 'requested';
+                        }
+                        if ($i > 1) {
+                            unset($resource['properties']['aanvrager/rechthebbende'][$i]);
+                        }
+                    }
+                    $resource['properties']['aanvrager/rechthebbende'] = $resource['properties']['aanvrager/rechthebbende'][0];
+                    unset($resource['properties']['aanvrager/rechthebbende'][0]);
+                }
+
+                unset($resource['newPropName']);
+                unset($resource['newProp']);
             }
 
             if (array_key_exists('unsetProp', $resource)) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
                 unset($item['properties'][$resource['unsetProp']]);
                 if (count($item['properties']) < 1) {
                     $resource['properties'] = [];
@@ -313,13 +360,13 @@ class VrcController extends AbstractController
             $files = $request->files->all();
 
             if (key_exists('newProp', $files) && $file = $files['newProp']) {
-                $item = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], [], true);
+                $item = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id], [], true);
 
                 //We are going to need a JWT token for the DRC and ZTC here
 
                 $token = $commonGroundService->getJwtToken('ztc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
-                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
+                $infoObjectTypes = $commonGroundService->getResourceList(['component' => 'ztc', 'type' => 'informatieobjecttypen'])['results'];
 
                 foreach ($infoObjectTypes as $infoObjectType) {
                     if ($infoObjectType['omschrijving'] == 'Document') {
@@ -339,7 +386,7 @@ class VrcController extends AbstractController
                 $token = $commonGroundService->getJwtToken('drc');
                 $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
 
-                $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
+                $result = $commonGroundService->createResource($drc, ['component' => 'drc', 'type' => 'enkelvoudiginformatieobjecten']);
 
                 $item['properties'][$resource['newPropName']] = $result['url'];
 
@@ -350,7 +397,7 @@ class VrcController extends AbstractController
 
             // Fix for properties not being nullabe @todo long term fix should be implemented
             if (!array_key_exists('properties', $resource)) {
-                $resource['properties'] = [];
+                $resource['properties'] = null;
             }
             $variables['resource'] = $commonGroundService->saveResource($resource, (['component' => 'vrc', 'type' => 'requests']));
 
