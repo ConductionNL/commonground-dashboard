@@ -35,7 +35,7 @@
 	<div class="wrapper wrapper-login">
 		<div class="container container-login animated fadeIn">
 			<h3 class="text-center">{{ commonground_application()['name'] }}</h3>
-            <form action="{{ commonground_path('app_user_login') }}" method="post" class="login-form">
+            <form action="{{ path('app_user_login') }}" method="post" class="login-form">
                 {% set flashes = [] %}
                 {% for label, messages in app.flashes() %}
                     {% for message in messages %}
@@ -45,7 +45,6 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
-                
                 <div class="form-group form-floating-label">
                     <input id="username" name="username" type="text" class="form-control input-border-bottom" required>
                     <label for="username" class="placeholder">Username</label>

@@ -34,9 +34,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}",
+					"raw": "{{baseUrl}}/wrc",
 					"host": [
 						"{{baseUrl}}"
+					],
+					"path": [
+						"wrc"
 					]
 				}
 			},
@@ -82,12 +85,12 @@
 	],
 	"variable": [
 		{
-			"id": "177a8b73-0340-41a3-9524-91d0058ec5da",
+			"id": "14061ee5-ae6b-4ede-b467-a725019c0f33",
 			"key": "baseUrl",
 			"value": "localhost"
 		},
 		{
-			"id": "95d3eccd-5171-49e3-9b1e-161cd886fed4",
+			"id": "eb638f8d-df69-4704-b5fc-6bee009cafe7",
 			"key": "authorization",
 			"value": "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
 		}

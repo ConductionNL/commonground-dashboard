@@ -1,4 +1,5 @@
 <div class="input input--horizontal">
+    <input type="hidden" value="{{ property.name }}" name="newPropName">
     <div>
         <label class="input__label" for="{{ property.id }}" id="{{ property.id }}_label">
             {% if property.icon is defined and property.icon is not empty %}
@@ -19,10 +20,10 @@
                                 <div id="{{ value }}" style="line-height: 15px">
                                     <p id="{{ value }}">Email: {{ getuige.email }}</p>
                                     <p id="{{ value }}">Telefoon: {{ getuige.telephone }}</p>
-                                    <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="properties[{{ property.name }}][{{ value }}][email]">
-                                    <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="properties[{{ property.name }}][{{ value }}][telephone]">
-                                    <input type="hidden" id="{{ value }}" value="{{ getuige.givenName }}" name="properties[{{ property.name }}][{{ value }}][givenName]">
-                                    <input type="hidden" id="{{ value }}" value="{{ getuige.familyName }}" name="properties[{{ property.name }}][{{ value }}][familyName]">
+                                    <input class="form-control form-control-lg" type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="newProp[emails][0][email]">
+                                    <input class="form-control form-control-lg" type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="newProp[telephones][0][telephone]">
+                                    <input class="form-control form-control-lg" type="hidden" id="{{ value }}" value="{{ getuige.givenName }}" name="newProp[givenName]">
+                                    <input class="form-control form-control-lg" type="hidden" id="{{ value }}" value="{{ getuige.familyName }}" name="newProp[familyName]">
                                     <button class="btn btn-primary" id="{{ value }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
                                 </div>
                             </div>
@@ -31,36 +32,36 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="personForm" class="col-sm-12">
+            <div id="personForm{{ property.id }}" class="col-sm-12">
                 {% if property.defaultValue is defined and property.defaultValue is not empty %}
                     {% set assent = commonground_resource(include(template_from_string(property.defaultValue))) %}
                 {% endif %}
                 <div>
 
                     {% if property.configuration is not defined or property.configuration.givenName is defined and property.configuration.givenName %}
-                    <label class="input__label" for="voornaam">Voornaam</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text" {% if value is defined and value is not empty %} value="{{ value.voornamen }}" {% endif %}>
+                    <label class="input__label" for="voornaam">{{ 'given name'|trans|capitalize }}</label>
+                    <input class="form-control form-control-lg" style="width: 100%" id="getuigenVoornaam" type="text" {% if value is defined and value is not empty %} value="{{ value.voornamen }}" {% endif %}>
                     {% endif %}
                     {% if property.configuration is not defined or property.configuration.familyName is defined and property.configuration.familyName %}
-                    <label class="input__label" for="achternaam">Achternaam</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text" {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
+                    <label class="input__label" for="achternaam">{{ 'family name'|trans|capitalize }}</label>
+                    <input class="form-control form-control-lg" style="width: 100%" id="getuigenAchternaam" type="text" {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
                     {% endif %}
                     {% if property.configuration is not defined or property.configuration.email is defined and property.configuration.email %}
-                    <label class="input__label" for="email">Email</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
+                    <label class="input__label" for="email">{{ 'e-mail address'|trans|capitalize }}</label>
+                    <input class="form-control form-control-lg" style="width: 100%" id="getuigenEmail" type="email">
                     {% endif %}
                     <span id="inputResult"></span>
                     {% if property.configuration is not defined or property.configuration.telephone and property.configuration.telephone %}
-                    <label class="input__label" for="telephone">Telefoonnummer</label>
-                        <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon" type="tel">
+                    <label class="input__label" for="telephone">{{ 'phone number'|trans|capitalize }}</label>
+                        <input class="form-control form-control-lg" style="width: 100%" id="getuigenTelefoon" type="tel">
                     {% endif %}
                     {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
-                    <label class="input__label" for="placeOfBirth">Geborteplaats</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="placeOfBirth" type="text">
+                    <label class="input__label" for="placeOfBirth">{{ 'place of birth'|trans|capitalize }}</label>
+                    <input class="form-control form-control-lg" style="width: 100%" id="placeOfBirth" type="text">
                     {% endif %}
                     {% if property.configuration.birthday is defined and property.configuration.birthday %}
-                    <label class="input__label" for="birthday">Geboortedatum</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="birthday" type="date">
+                    <label class="input__label" for="birthday">{{ 'date of birth'|trans|capitalize }}</label>
+                    <input class="form-control form-control-lg" style="width: 100%" id="birthday" type="date">
                     {% endif %}
                     <button class="btn" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Toevoegen</button>
                 </div>
@@ -72,52 +73,53 @@
         {% endif %}
         <div id="personForm">
             {% if  property.configuration is not defined or property.configuration is empty or property.configuration.givenName is defined and property.configuration.givenName %}
-                <label class="input__label" for="voornaam">Voornaam</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text" name="properties[{{ property.name }}][givenName]" value="{% if value.givenName is defined and value.givenName is not empty %}{{ value.givenName }}{% endif %}">
+                <label class="input__label" for="voornaam">{{ 'given name'|trans|capitalize }}</label>
+                <input class="form-control form-control-m" style="width: 100%" type="text" name="newProp[givenName]" value="{% if value.givenName is defined and value.givenName is not empty %}{{ value.givenName }}{% endif %}">
             {% endif %}
             {% if property.configuration is not defined or property.configuration is empty or  property.configuration.familyName is defined and property.configuration.familyName %}
-                <label class="input__label" for="achternaam">Achternaam</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text" name="properties[{{ property.name }}][familyName]" value="{% if value.familyName is defined and value.familyName is not empty %}{{ value.familyName }}{% endif %}">
+                <label class="input__label" for="achternaam">{{ 'family name'|trans|capitalize }}</label>
+                <input class="form-control form-control-m" style="width: 100%" type="text" name="newProp[familyName]" value="{% if value.familyName is defined and value.familyName is not empty %}{{ value.familyName }}{% endif %}">
             {% endif %}
             {% if property.configuration is not defined or property.configuration is empty or  property.configuration.email is defined and property.configuration.email %}
-                <label class="input__label" for="email">Email</label>
-                <input class="input__control input__control--text" style="width: 100%" type="email" name="properties[{{ property.name }}][emails][][email]" value="{% if value.emails[0].email is defined and value.emails[0].email is not empty %}{{ value.emails[0].email }}{% endif %}">
+                <label class="input__label" for="email">{{ 'e-mail address'|trans|capitalize }}</label>
+                <input class="form-control form-control-m" style="width: 100%" type="email" name="newProp[emails][][email]" value="{% if value.emails[0].email is defined and value.emails[0].email is not empty %}{{ value.emails[0].email }}{% endif %}">
             {% endif %}
             {% if property.configuration is not defined or property.configuration is empty or property.configuration.telephone is defined and property.configuration.telephone %}
-                <label class="input__label" for="telephone">Telefoonnummer</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="properties[{{ property.name }}][telephones][][telephone]" value="{% if value.telephones[0].telephone is defined and value.telephones[0].telephone is not empty %}{{ value.telephones[0].telephone }}{% endif %}">
+                <label class="input__label" for="telephone">{{ 'phone number'|trans|capitalize }}</label>
+                <input class="form-control form-control-m" style="width: 100%" type="tel"  name="newProp[telephones][][telephone]" value="{% if value.telephones[0].telephone is defined and value.telephones[0].telephone is not empty %}{{ value.telephones[0].telephone }}{% endif %}">
             {% endif %}
             {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
-                <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="properties[{{ property.name }}][placeOfBirth]">
+                <label class="input__label" for="placeOfBirth">{{ 'place of birth'|trans|capitalize }}</label>
+                <input class="form-control form-control-m" style="width: 100%" type="tel"  name="newProp[placeOfBirth]">
             {% endif %}
             {% if property.configuration.birthday is defined and property.configuration.birthday %}
-                <label class="input__label" for="birthday">Verjaardag</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="properties[{{ property.name }}][birthday]">
+                <label class="input__label" for="birthday">{{ 'date of birth'|trans|capitalize }}</label>
+                <input class="form-control form-control-m" style="width: 100%" type="tel"  name="newProp[birthday]">
             {% endif %}
             {% if property.configuration.address is defined and property.configuration.address %}
                 <span>Adres</span>
                         <label class="input__label" for="street">{{ 'streetname'|trans|capitalize }}</label>
-                        <input class="input__control input__control--text" id="street" style="width: 100%" type="text" name="properties[{{ property.name }}][adresses][0][street]"
+                        <input class="form-control form-control-m" id="street" style="width: 100%" type="text" name="newProp[adresses][0][street]"
                             {% if value.adresses.0.street is defined %} value="{{ value.adresses.0.street }}"{% endif %}>
                         <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                        <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="properties[{{ property.name }}][adresses][0][houseNumber]"
+                        <input required class="form-control form-control-m" id="houseNumber" style="width: 100%" type="text" name="newProp[adresses][0][houseNumber]"
                             {% if value.adresses.0.houseNumber is defined %} value="{{ value.adresses.0.houseNumber }}"{% endif %}>
-                        <label class="input__label" for="houseNumberSuffix">Toevoeging</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="text"  name="properties[{{ property.name }}][adresses][0][houseNumberSuffix]"
+                        <label class="input__label" for="houseNumberSuffix">{{ 'house number suffix'|trans|capitalize }}</label>
+                        <input class="form-control form-control-m" style="width: 100%" type="text"  name="newProp[adresses][0][houseNumberSuffix]"
                             {% if value.adresses.0.houseNumberSuffix is defined %} value="{{ value.adresses.0.houseNumberSuffix }}"{% endif %}>
                         <label class="input__label" for="postalCode">{{ 'postal code'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                        <input required class="input__control input__control--text" id="postalCode" style="width: 100%" type="text" name="properties[{{ property.name }}][adresses][0][postalCode]"
+                        <input required class="form-control form-control-m" id="postalCode" style="width: 100%" type="text" name="newProp[adresses][0][postalCode]"
                             {% if value.adresses.0.postalCode is defined %} value="{{ value.adresses.0.postalCode }}"{% endif %}>
                         <label class="input__label" for="locality">{{ 'locality'|trans|capitalize }}</label>
-                        <input class="input__control input__control--text" id="locality" style="width: 100%" type="text" name="properties[{{ property.name }}][adresses][0][locality]"
+                        <input class="form-control form-control-m" id="locality" style="width: 100%" type="text" name="newProp[adresses][0][locality]"
                             {% if value.adresses.0.locality is defined %} value="{{ value.adresses.0.locality }}"{% endif %}>
             {% endif %}
         </div>
     {% endif %}
 </div>
 <script>
-    let personForm = document.getElementById("personForm");
+
+    personForm = document.getElementById("personForm{{ property.id }}");
 
     function addGetuigen(propertyName, items) {
         let input = document.getElementById('getuigenEmail');
@@ -163,10 +165,10 @@
             hVoornaam.value = voornaam;
             hAchternaam.value = achternaam;
 
-            hEmail.name = 'properties['+ propertyName +']['+ counter.toString() +'][emails][][email]';
-            hTelefoon.name = 'properties['+ propertyName +']['+ counter.toString() +'][telephones][][telephone]';
-            hVoornaam.name = 'properties['+ propertyName +']['+ counter.toString() +'][givenName]';
-            hAchternaam.name = 'properties['+ propertyName +']['+ counter.toString() +'][familyName]';
+            hEmail.name = 'newProp['+ propertyName +']['+ counter.toString() +'][emails][][email]';
+            hTelefoon.name = 'newProp['+ propertyName +']['+ counter.toString() +'][telephones][][telephone]';
+            hVoornaam.name = 'newProp['+ propertyName +']['+ counter.toString() +'][givenName]';
+            hAchternaam.name = 'newProp['+ propertyName +']['+ counter.toString() +'][familyName]';
 
 
             let outerDiv = document.createElement('div');
@@ -201,7 +203,7 @@
             button.addEventListener('click', function(){
                 removeGetuigen(outerDiv, '{{ property.maxItems }}');
             });
-            button.className = 'btn btn-primary';
+            button.className = 'btn btn-primary mt-3';
             button.setAttribute('style', 'background-color: red; margin-bottom: 5px; width:100%;')
             button.type = 'button';
             button.id = counter.toString();
