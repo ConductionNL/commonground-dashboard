@@ -9,7 +9,7 @@ info:
     - Enviroment: dev
     - Version: V1.0
     - Repository: [online](https://github.com/ConductionNL/Commonground-dashboard) / [zip](https://github.com/ConductionNL/Commonground-dashboard/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/db-php) 
     - Datamodel: [postman](schema/db.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
     
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
@@ -2391,12 +2391,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-12-16 14:32:41'
+        example: '2020-12-17 08:14:02'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-12-16 14:32:41'
+        example: '2020-12-17 08:14:02'
     required: []
   AuditTrail-write:
     properties:
@@ -2444,12 +2444,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-12-16 14:32:41'
+        example: '2020-12-17 08:14:02'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-12-16 14:32:41'
+        example: '2020-12-17 08:14:02'
     required: []
   ChangeLog-write:
     properties:

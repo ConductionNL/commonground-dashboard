@@ -14,10 +14,10 @@ settings:
   type: application
   repro: https://github.com/ConductionNL/Commonground-dashboard
   demo: https://db.zuid-drecht.nl
-  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  container: https://hub.docker.com/repository/docker/conduction/db-php
   domain: zuid-drecht.nl
-  subdomain: pc
-  subpath: pc
+  subdomain: false
+  subpath: 
   subpathRouting: true
   organisationName: Gemeente Zuid Drecht
   email: info@zuid-drecht.nl

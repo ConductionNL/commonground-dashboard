@@ -3,10 +3,10 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2020-12-16T14:31:27.1927689Z"
-    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
-      interface beschikbaar.&#039;'
-    digest: c42c105891b938ca4871ac8991ede1c6bcc912f0559c541d574b9e4e9ad90a5c
+    created: "2020-12-17T08:12:28.9155373Z"
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
+      beschikbaar.
+    digest: e68569cdbedfa273c2ee080ad2ff6e037c9f12c78f24b13d8ec61d6cc20cbb75
     home: zuid-drecht.nl
     icon: zuid-drecht.nl
     name: db
@@ -18,7 +18,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2020-12-16T14:31:27.2225474Z"
+    created: "2020-12-17T08:12:28.9272813Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -47,4 +47,4 @@ entries:
     urls:
     - charts/postgresql-10.1.1.tgz
     version: 10.1.1
-generated: "2020-12-16T14:31:27.1683585Z"
+generated: "2020-12-17T08:12:28.8905663Z"
