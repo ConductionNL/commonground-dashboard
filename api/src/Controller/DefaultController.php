@@ -17,7 +17,7 @@ class DefaultController extends AbstractController
      */
     public function indexAction()
     {
-        if (!$this->getUser()){
+        if (!$this->getUser()) {
             return $this->redirect($this->generateUrl('app_user_login'));
         }
 
