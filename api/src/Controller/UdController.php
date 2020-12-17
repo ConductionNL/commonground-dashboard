@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class UdController.
@@ -23,13 +23,13 @@ class UdController extends AbstractController
      * @Route("/persoonlijk")
      * @Template
      */
-    public function indexAction(Request $request, CommonGroundService $commonGroundService, TranslatorInterface $translator)
+    public function indexAction(Request $request, CommonGroundService $commonGroundService)
     {
         $variables = [];
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
         $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "organization={$this->getUser()->getOrganization()}")['hydra:member'];
-        $variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])['hydra:member'];
-        $variables['events'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'events'], "calendar.organization={$this->getUser()->getOrganization()}")['hydra:member'];
+        //$variables['tasks'] = $commonGroundService->getResourceList(['component' => 'tc', 'type' => 'tasks'])['hydra:member'];
+        //$variables['events'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'events'], "calendar.organization={$this->getUser()->getOrganization()}")['hydra:member'];
 
         return $variables;
     }
