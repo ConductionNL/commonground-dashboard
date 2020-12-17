@@ -57,7 +57,8 @@ security:
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   authorisationProviderUser: https://uc.zuid-drecht.nl
   authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
-
+  certificate: 
+  sslKey: 
 
 php:
   repository: docker.io/conduction/protocomponent-php
