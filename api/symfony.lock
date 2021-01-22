@@ -137,6 +137,9 @@
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -151,6 +154,9 @@
         "files": [
             ".php_cs.dist"
         ]
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.37"
@@ -501,6 +507,9 @@
     },
     "symfony/property-info": {
         "version": "v4.3.1"
+    },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.1.10"
     },
     "symfony/routing": {
         "version": "4.2",

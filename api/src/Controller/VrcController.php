@@ -74,19 +74,20 @@ class VrcController extends AbstractController
 //            } else {
 //            }
             $variables['subtitle'] = 'alle '.$variables['requestType']['name'];
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+            $response = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
         } else {
             if ($filterStatus == 'none') {
-                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+                $response = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query);
             } else {
 //                if (isset($query)) {
                 $query['status'] = $filterStatus;
-                $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query)['hydra:member'];
+                $response = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], $query);
 //                } else {
 //                    $variables['resources'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], "status=$filterStatus")['hydra:member'];
 //                }
             }
         }
+        $variables['resources'] = $response['hydra:member'];
 
         if ($request->isMethod('POST')) {
             if (isset($_POST['filter'])) {
@@ -159,6 +160,14 @@ class VrcController extends AbstractController
 
         // Tadaa a very simple download function
         if ($request->query->get('download')) {
+            $iterator = 1;
+            while(key_exists('hydra:view', $response) && key_exists('hydra:next', $response['hydra:view']) && $iterator < 5){
+                $iterator++;
+                $response = $commonGroundService->getResourceList($commonGroundService->cleanUrl(['component' =>'vrc']).$response['hydra:view']['hydra:next'], array_merge($query, ['page' => $iterator]));
+                $variables['resources'] = array_merge($variables['resources'], $response['hydra:member']);
+            }
+
+
             $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
 
             $response = new Response();
