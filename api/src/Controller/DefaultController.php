@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 /**
  * Class DefaultController.
@@ -21,6 +22,6 @@ class DefaultController extends AbstractController
             return $this->redirect($this->generateUrl('app_user_login'));
         }
 
-        return $this->redirect($this->generateUrl('app_ud_index'));
+        return $this->redirect($this->generateUrl('app_ud_index', [], UrlGenerator::RELATIVE_PATH));
     }
 }
