@@ -160,7 +160,9 @@ class VrcController extends AbstractController
 
         // Tadaa a very simple download function
         if ($request->query->get('download')) {
+            $iterator = 1;
             while (key_exists('hydra:view', $response) && key_exists('hydra:next', $response['hydra:view'])) {
+                $iterator++;
                 $response = $commonGroundService->getResourceList($commonGroundService->cleanUrl(['component' =>'vrc']).$response['hydra:view']['hydra:next'], array_merge($query, ['page' => $iterator]));
                 $variables['resources'] = array_merge($variables['resources'], $response['hydra:member']);
             }
