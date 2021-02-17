@@ -1,13 +1,13 @@
 publiccodeYmlVersion: "0.2"
 
-name: db
+name: commonground-dashboard
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/Commonground-dashboard"
 landingURL: "https://db.zuid-drecht.nl"
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git"
 softwareVersion: "V1.0"
 releaseDate: "2021-17-02"
-logo: zuid-drecht.nl
+logo: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -120,3 +120,4 @@ dependsOn:
 installations:
     - type: helm
       url: "https://raw.githubusercontent.com/ConductionNL/Commonground-dashboard/master/api/helm/"
+
