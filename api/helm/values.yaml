@@ -9,7 +9,7 @@ settings:
   title: Zuid Drecht DashBboard
   version: V1.0
   majorVersion: v1
-  id: 1163e443-5f9c-4aa6-802c-c619a14986c9
+  id: 9f4db8c6-7eb3-4cc2-b481-9280aae99679
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
   repro: https://github.com/ConductionNL/Commonground-dashboard
@@ -51,7 +51,7 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "1163e443-5f9c-4aa6-802c-c619a14986c9"
+  commongroundId: "9f4db8c6-7eb3-4cc2-b481-9280aae99679"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
