@@ -28,6 +28,9 @@
     "composer/ca-bundle": {
         "version": "1.2.6"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99.1"
+    },
     "composer/semver": {
         "version": "1.5.0"
     },
@@ -227,6 +230,9 @@
     "ocramius/proxy-manager": {
         "version": "2.8.0"
     },
+    "pclzip/pclzip": {
+        "version": "2.8.2"
+    },
     "php": {
         "version": "7.4"
     },
@@ -259,6 +265,12 @@
     },
     "psr/event-dispatcher": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
