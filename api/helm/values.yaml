@@ -11,8 +11,8 @@ settings:
   repro: https://github.com/ConductionNL/Commonground-dashboard
   demo: https://db.zuid-drecht.nl
   domain: zuid-drecht.nl
-  subdomain: false
-  subpath: 
+  subdomain: commonground-dashboard
+  subpath: commonground-dashboard
   subpathRouting: true
   env: dev
   web: false
