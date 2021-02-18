@@ -8,7 +8,7 @@ entries:
       beschikbaar.
     digest: 97d51a94205100c6c4dc909fee6a2e4c2af52fc65a3cae0f5e48bd697d88153c
     home: zuid-drecht.nl
-    icon: zuid-drecht.nl
+    icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     name: db
     urls:
     - db-0.1.0.tgz
