@@ -1,9 +1,11 @@
 # commonground-dashboard
+[![StyleCI](https://github.styleci.io/repos/231819815/shield?branch=master)](https://github.styleci.io/repos/231819815?branch=master)
+[![Docker Image CI](https://github.com/ConductionNL/commonground-dashboard/workflows/Docker%20Image%20CI/badge.svg?branch=master)](https://github.com/ConductionNL/commonground-dashboard/actions?query=workflow%3A"Docker+Image+CI")
+[![Artifacthub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/commonground-dashboard)](https://artifacthub.io/packages/helm/commonground-dashboard/commonground-dashboard)
 
 Description
 ----
-Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
-
+Het Common Ground Dashboard biedt basale beheer- en behandelmogelijkheden op Common Ground componenten en voegt vooral veel waarde toe in ontwikkel-context, waarbij data in componenten moet worden aangepast of moet worden ingezien voor testdoeleinden. In combinatie met het EVC Component biedt het dashboard echter ook de mogelijkheid om Common Ground omgevingen in te richten en te beheren. Hierbij kan bijvoorbeeld worden gedacht aan het installeren en configureren van containers.
 Additional Information
 ----
 
